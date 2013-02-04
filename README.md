@@ -1,4 +1,4 @@
 WeCase
 ======
 
-LinuxSinaWeiboClient
+Linux SinaWeibo Client
