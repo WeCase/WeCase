@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
+    <width>402</width>
     <height>205</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_username">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -49,7 +49,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_passwd">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -87,7 +87,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_status">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -126,17 +126,30 @@
     <string>Auto Login</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushButton_log">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>30</x>
      <y>140</y>
-     <width>321</width>
+     <width>151</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>GO!</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_new">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>140</y>
+     <width>151</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>New account</string>
    </property>
   </widget>
  </widget>
