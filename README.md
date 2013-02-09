@@ -1,6 +1,7 @@
 WeCase
 ======
+The Linux Sina Weibo Client
 
-Linux Sina Weibo Client
-
-IRC Channel #wecase @freenode
+IRC Channel
+------
+#wecase @ freenode
