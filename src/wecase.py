@@ -13,7 +13,7 @@
 
 import sys
 from PyQt4 import QtCore, QtGui
-from ui.MainWindow import Ui_frm_MainWindow
+from MainWindow_ui import Ui_frm_MainWindow
 
 
 class WeCaseWindow(QtGui.QMainWindow):
