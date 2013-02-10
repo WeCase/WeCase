@@ -40,10 +40,14 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
+        self.setupMyUi()
         self.setupSignals()
 
     def setupSignals(self):
         self.pushButton_log.clicked.connect(self.login)
+
+    def setupMyUi(self):
+        self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
 
     def login(self):
         username = self.cmb_Users.currentText()
