@@ -70,10 +70,15 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_my">
        <attribute name="title">
         <string>我的</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QListView" name="listView_4"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_msg">
        <attribute name="title">
@@ -81,7 +86,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QListView" name="listView_4"/>
+         <widget class="QListView" name="listView_5"/>
         </item>
        </layout>
       </widget>
