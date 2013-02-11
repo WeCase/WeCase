@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
 #
-# Created: Mon Feb 11 18:19:48 2013
+# Created: Mon Feb 11 19:25:22 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,19 +23,17 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(800, 435)
-        MainWindow.setAutoFillBackground(False)
-        MainWindow.setTabShape(QtGui.QTabWidget.Rounded)
-        MainWindow.setDockOptions(QtGui.QMainWindow.AllowNestedDocks|QtGui.QMainWindow.AllowTabbedDocks|QtGui.QMainWindow.AnimatedDocks)
-        MainWindow.setUnifiedTitleAndToolBarOnMac(False)
-        self.centralwidget = QtGui.QWidget(MainWindow)
-        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+class Ui_NewPostWindow(object):
+    def setupUi(self, NewPostWindow):
+        NewPostWindow.setObjectName(_fromUtf8("NewPostWindow"))
+        NewPostWindow.resize(562, 386)
+        NewPostWindow.setAutoFillBackground(False)
+        NewPostWindow.setProperty("unifiedTitleAndToolBarOnMac", False)
+        self.gridLayout_3 = QtGui.QGridLayout(NewPostWindow)
+        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
+        self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(self.centralwidget)
+        self.widget = QtGui.QWidget(NewPostWindow)
         self.widget.setMinimumSize(QtCore.QSize(0, 200))
         self.widget.setObjectName(_fromUtf8("widget"))
         self.gridLayout = QtGui.QGridLayout(self.widget)
@@ -49,7 +47,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.widget)
         spacerItem = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         self.verticalLayout.addItem(spacerItem)
-        self.widget_2 = QtGui.QWidget(self.centralwidget)
+        self.widget_2 = QtGui.QWidget(NewPostWindow)
         self.widget_2.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.gridLayout_2 = QtGui.QGridLayout(self.widget_2)
@@ -73,16 +71,16 @@ class Ui_MainWindow(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem1, 0, 3, 1, 1)
         self.verticalLayout.addWidget(self.widget_2)
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.gridLayout_3.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(NewPostWindow)
+        QtCore.QMetaObject.connectSlotsByName(NewPostWindow)
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "New Message", None))
-        self.pushButton_at.setText(_translate("MainWindow", "At", None))
-        self.pushButton_picture.setText(_translate("MainWindow", "Picture", None))
-        self.pushButton_send.setText(_translate("MainWindow", "Send", None))
-        self.pushButton_location.setText(_translate("MainWindow", "Location", None))
-        self.pushButton_cancel.setText(_translate("MainWindow", "Cancel", None))
+    def retranslateUi(self, NewPostWindow):
+        NewPostWindow.setWindowTitle(_translate("NewPostWindow", "New Message", None))
+        self.pushButton_at.setText(_translate("NewPostWindow", "At", None))
+        self.pushButton_picture.setText(_translate("NewPostWindow", "Picture", None))
+        self.pushButton_send.setText(_translate("NewPostWindow", "Send", None))
+        self.pushButton_location.setText(_translate("NewPostWindow", "Location", None))
+        self.pushButton_cancel.setText(_translate("NewPostWindow", "Cancel", None))
 
