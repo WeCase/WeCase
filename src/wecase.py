@@ -12,6 +12,8 @@
 
 
 import sys
+reload(sys)
+sys.setdefaultencoding('UTF-8')
 import urllib
 import httplib
 from weibo import APIClient
@@ -58,6 +60,7 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
         client = self.authorize(username, password)
 
         if client:
+            wecase_new.client = client
             wecase_main.client = client
             wecase_main.get_all_timeline()
             wecase_main.get_my_timeline()
@@ -220,9 +223,36 @@ class WeSettingsWindow(QtGui.QWidget, Ui_SettingWindow):
 
 
 class NewpostWindow(QtGui.QWidget, Ui_NewPostWindow):
+    client = None
+    image = None
+
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
+        self.setupSignals()
+
+    def setupSignals(self):
+        self.pushButton_picture.clicked.connect(self.add_image)
+        self.pushButton_send.clicked.connect(self.send_tweet)
+
+    def send_tweet(self):
+        text = unicode(self.textEdit.toPlainText())
+
+        if self.image:
+            self.client.statuses.upload.post(status=text, pic=open(self.image))
+        else:
+            self.client.statuses.update.post(status=text)
+
+        self.image = None
+        self.close()
+
+    def add_image(self):
+        if self.image:
+            self.image = None
+            self.pushButton_picture.setText("Picture")
+        else:
+            self.image = unicode(QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)"))
+            self.pushButton_picture.setText("Remove the picture")
 
 
 if __name__ == "__main__":
