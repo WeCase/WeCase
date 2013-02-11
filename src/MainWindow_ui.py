@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Mon Feb 11 13:50:13 2013
+# Created: Mon Feb 11 16:18:53 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -67,6 +67,9 @@ class Ui_frm_MainWindow(object):
         self.listView_3.setObjectName(_fromUtf8("listView_3"))
         self.verticalLayout_4.addWidget(self.listView_3)
         self.tabWidget.addTab(self.tab_comment, _fromUtf8(""))
+        self.tab = QtGui.QWidget()
+        self.tab.setObjectName(_fromUtf8("tab"))
+        self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.tab_msg = QtGui.QWidget()
         self.tab_msg.setObjectName(_fromUtf8("tab_msg"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.tab_msg)
@@ -146,7 +149,7 @@ class Ui_frm_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(frm_MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(frm_MainWindow)
 
     def retranslateUi(self, frm_MainWindow):
@@ -154,6 +157,7 @@ class Ui_frm_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_weibo), _translate("frm_MainWindow", "微博", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_atme), _translate("frm_MainWindow", "@我", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_comment), _translate("frm_MainWindow", "评论", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("frm_MainWindow", "我的", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_msg), _translate("frm_MainWindow", "私信", None))
         self.pushButton_me.setText(_translate("frm_MainWindow", "Me", None))
         self.pushButton_refresh.setText(_translate("frm_MainWindow", "Refresh", None))
