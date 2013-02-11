@@ -1,5 +1,8 @@
 WeCase
 ======
+
+Description
+------
 The Linux Sina Weibo Client
 
 IRC Channel
