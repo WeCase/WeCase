@@ -59,7 +59,10 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
 
         if client:
             wecase_main.client = client
-            wecase_main.status()
+            wecase_main.get_all_timeline()
+            wecase_main.get_my_timeline()
+            wecase_main.get_mentions_timeline()
+            wecase_main.get_comment_to_me()
             wecase_main.show()
             self.close()
         else:
@@ -119,35 +122,85 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def setupMyUi(self):
         self.listView.setWordWrap(True)
+        self.listView_2.setWordWrap(True)
+        self.listView_3.setWordWrap(True)
+        self.listView_4.setWordWrap(True)
 
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
         self.action_Settings.triggered.connect(self.settings_show)
         self.action_Log_out.triggered.connect(self.logout)
-        self.action_Refresh.triggered.connect(self.status)
+        self.action_Refresh.triggered.connect(self.get_all_timeline)
 
         self.pushButton_settings.clicked.connect(self.settings_show)
-        self.pushButton_refresh.clicked.connect(self.status)
+        self.pushButton_refresh.clicked.connect(self.get_all_timeline)
         self.pushButton_new.clicked.connect(self.new_tweet)
 
     def setupModels(self):
-        # Test only
-        self.timeline = QtGui.QStringListModel(self)
-        self.listView.setModel(self.timeline)
+        self.all_timeline = QtGui.QStringListModel(self)
+        self.listView.setModel(self.all_timeline)
+        self.mentions = QtGui.QStringListModel(self)
+        self.listView_2.setModel(self.mentions)
+        self.comment_to_me = QtGui.QStringListModel(self)
+        self.listView_3.setModel(self.comment_to_me)
+        self.my_timeline = QtGui.QStringListModel(self)
+        self.listView_4.setModel(self.my_timeline)
 
-    def status(self):
-        # Test only
-        self.timeline_string = []
+    # XXX: get_all_timeline, get_my_timeline,
+    # get_mentions_timeline, get_comment_to_me are almost same.
+    # TODO: DRY! Write a new class for messages.
 
-        statuses = self.client.statuses.home_timeline.get().statuses
-        for status in statuses:
-            self.timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
-                                        (status['created_at'],
-                                         status['user']['name'],
-                                         status['text']))
+    def get_all_timeline(self):
+        self.all_timeline_string = []
 
-        self.timeline_StringList = QtCore.QStringList(self.timeline_string)
-        self.timeline.setStringList(self.timeline_StringList)
+        all_timelines = self.client.statuses.home_timeline.get().statuses
+        for timeline in all_timelines:
+            self.all_timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                            (timeline['created_at'],
+                                             timeline['user']['name'],
+                                             timeline['text']))
+
+        self.all_timeline_StringList = QtCore.QStringList(self.all_timeline_string)
+        self.all_timeline.setStringList(self.all_timeline_StringList)
+
+    def get_my_timeline(self):
+        self.my_timeline_string = []
+
+        my_timelines = self.client.statuses.user_timeline.get().statuses
+        for timeline in my_timelines:
+            self.my_timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                            (timeline['created_at'],
+                                             timeline['user']['name'],
+                                             timeline['text']))
+
+        self.my_timeline_StringList = QtCore.QStringList(self.my_timeline_string)
+        self.my_timeline.setStringList(self.my_timeline_StringList)
+
+    def get_mentions_timeline(self):
+        self.mentions_string = []
+
+        mentions_timelines = self.client.statuses.mentions.get().statuses
+        for timeline in mentions_timelines:
+            self.mentions_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                        (timeline['created_at'],
+                                         timeline['user']['name'],
+                                         timeline['text']))
+
+        self.mentions_StringList = QtCore.QStringList(self.mentions_string)
+        self.mentions.setStringList(self.mentions_StringList)
+
+    def get_comment_to_me(self):
+        self.comments_to_me_string = []
+
+        comments_to_me = self.client.comments.to_me.get().comments
+        for comment in comments_to_me:
+            self.comments_to_me_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                            (comment['created_at'],
+                                             comment['user']['name'],
+                                             comment['text']))
+
+        self.comments_to_me_StringList = QtCore.QStringList(self.comments_to_me_string)
+        self.comment_to_me.setStringList(self.comments_to_me_StringList)
 
     def settings_show(self):
         wecase_settings.show()
