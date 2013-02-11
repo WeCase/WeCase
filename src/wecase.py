@@ -169,9 +169,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         my_timelines = self.client.statuses.user_timeline.get().statuses
         for timeline in my_timelines:
             self.my_timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
-                                            (timeline['created_at'],
-                                             timeline['user']['name'],
-                                             timeline['text']))
+                                           (timeline['created_at'],
+                                            timeline['user']['name'],
+                                            timeline['text']))
 
         self.my_timeline_StringList = QtCore.QStringList(self.my_timeline_string)
         self.my_timeline.setStringList(self.my_timeline_StringList)
@@ -195,9 +195,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         comments_to_me = self.client.comments.to_me.get().comments
         for comment in comments_to_me:
             self.comments_to_me_string.append("%s\nAuthor: %s\nText: %s\n" %
-                                            (comment['created_at'],
-                                             comment['user']['name'],
-                                             comment['text']))
+                                              (comment['created_at'],
+                                               comment['user']['name'],
+                                               comment['text']))
 
         self.comments_to_me_StringList = QtCore.QStringList(self.comments_to_me_string)
         self.comment_to_me.setStringList(self.comments_to_me_StringList)
