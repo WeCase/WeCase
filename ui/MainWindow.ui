@@ -32,12 +32,27 @@
         <height>25</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <stylestrategy>PreferDefault</stylestrategy>
+       </font>
+      </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabWidgetPage1">
        <attribute name="title">
         <string>微博</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>@我</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>评论</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tabWidgetPage2">
@@ -104,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>404</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -145,8 +160,8 @@
     <addaction name="actionUpdate"/>
    </widget>
    <addaction name="menu_WeCase"/>
-   <addaction name="menuHelp"/>
    <addaction name="menuO_ptions"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_About">
