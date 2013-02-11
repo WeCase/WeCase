@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Mon Feb 11 16:18:53 2013
+# Created: Mon Feb 11 16:22:53 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -149,7 +149,7 @@ class Ui_frm_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(frm_MainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(frm_MainWindow)
 
     def retranslateUi(self, frm_MainWindow):
