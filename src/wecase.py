@@ -57,6 +57,7 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
 
         if client:
             wecase_main.client = client
+            wecase_main.status()
             wecase_main.show()
             self.close()
         else:
@@ -110,6 +111,30 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
+        self.setupMyUi()
+        self.setupModels()
+
+    def setupMyUi(self):
+        self.listView.setWordWrap(True)
+
+    def setupModels(self):
+        # Test only
+        self.timeline = QtGui.QStringListModel()
+        self.listView.setModel(self.timeline)
+
+    def status(self):
+        # Test only
+        self.timeline_string = []
+
+        statuses = self.client.statuses.user_timeline.get().statuses
+        for status in statuses:
+            self.timeline_string.append("%s\nText: %s\n" %
+                                        (status['created_at'],
+                                         status['text']))
+
+        self.timeline_StringList = QtCore.QStringList(self.timeline_string)
+        self.timeline.setStringList(self.timeline_StringList)
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
@@ -117,4 +142,3 @@ if __name__ == "__main__":
     wecase_main = WeCaseWindow()
     wecase_login.show()
     sys.exit(app.exec_())
-
