@@ -119,7 +119,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def setupModels(self):
         # Test only
-        self.timeline = QtGui.QStringListModel()
+        self.timeline = QtGui.QStringListModel(self)
         self.listView.setModel(self.timeline)
 
     def status(self):
