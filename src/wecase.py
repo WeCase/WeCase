@@ -112,9 +112,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupUi(self)
 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    wecase_login = LoginWindow()
-    wecase_main = WeCaseWindow()
-    wecase_login.show()
-    sys.exit(app.exec_())
+    try:
+        app = QtGui.QApplication(sys.argv)
+        wecase_login = LoginWindow()
+        wecase_main = WeCaseWindow()
+        wecase_login.show()
+        sys.exit(app.exec_())
+    except KeyboardInterrupt:
+        print "Ctrl+C Pressed!"
+        sys.exit()
 
