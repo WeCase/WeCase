@@ -18,6 +18,10 @@ from weibo import APIClient
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
+from SettingWindow_ui import Ui_SettingWindow
+# NewpostWindow still uses Ui_MainWindow as its name.
+# someone should fix it
+from NewpostWindow_ui import Ui_MainWindow
 
 APP_KEY = "1011524190"
 APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
@@ -112,10 +116,21 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
         self.setupMyUi()
+        self.setupSignals()
         self.setupModels()
 
     def setupMyUi(self):
         self.listView.setWordWrap(True)
+
+    def setupSignals(self):
+        self.action_Exit.triggered.connect(self.close)
+        self.action_Settings.triggered.connect(self.settings_show)
+        self.action_Log_out.triggered.connect(self.logout)
+        self.action_Refresh.triggered.connect(self.status)
+
+        self.pushButton_settings.clicked.connect(self.settings_show)
+        self.pushButton_refresh.clicked.connect(self.status)
+        self.pushButton_new.clicked.connect(self.new_tweet)
 
     def setupModels(self):
         # Test only
@@ -135,10 +150,36 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.timeline_StringList = QtCore.QStringList(self.timeline_string)
         self.timeline.setStringList(self.timeline_StringList)
 
+    def settings_show(self):
+        wecase_settings.show()
+
+    def logout(self):
+        wecase_login.show()
+        self.close()
+
+    def new_tweet(self):
+        wecase_new.show()
+
+
+class WeSettingsWindow(QtGui.QMainWindow, Ui_SettingWindow):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.setupUi(self)
+
+
+class NewpostWindow(QtGui.QMainWindow, Ui_MainWindow):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.setupUi(self)
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
+
     wecase_login = LoginWindow()
     wecase_main = WeCaseWindow()
+    wecase_settings = WeSettingsWindow()
+    wecase_new = NewpostWindow()
+
     wecase_login.show()
     sys.exit(app.exec_())
