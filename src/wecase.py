@@ -19,9 +19,7 @@ from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
-# NewpostWindow still uses Ui_MainWindow as its name.
-# someone should fix it
-from NewpostWindow_ui import Ui_MainWindow
+from NewpostWindow_ui import Ui_NewPostWindow
 
 APP_KEY = "1011524190"
 APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
@@ -167,7 +165,7 @@ class WeSettingsWindow(QtGui.QMainWindow, Ui_SettingWindow):
         self.setupUi(self)
 
 
-class NewpostWindow(QtGui.QMainWindow, Ui_MainWindow):
+class NewpostWindow(QtGui.QWidget, Ui_NewPostWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
