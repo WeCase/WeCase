@@ -159,7 +159,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.show()
 
 
-class WeSettingsWindow(QtGui.QMainWindow, Ui_SettingWindow):
+class WeSettingsWindow(QtGui.QWidget, Ui_SettingWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
