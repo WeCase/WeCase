@@ -80,16 +80,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_msg">
-       <attribute name="title">
-        <string>私信</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <item>
-         <widget class="QListView" name="listView_5"/>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
     <item>
