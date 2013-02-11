@@ -139,10 +139,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # Test only
         self.timeline_string = []
 
-        statuses = self.client.statuses.user_timeline.get().statuses
+        statuses = self.client.statuses.home_timeline.get().statuses
         for status in statuses:
-            self.timeline_string.append("%s\nText: %s\n" %
+            self.timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
                                         (status['created_at'],
+                                         status['user']['name'],
                                          status['text']))
 
         self.timeline_StringList = QtCore.QStringList(self.timeline_string)
