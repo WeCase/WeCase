@@ -58,25 +58,6 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QComboBox" name="cmb_LogStatus">
-             <item>
-              <property name="text">
-               <string>On Line</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Leave</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Invisible</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
             <widget class="QCheckBox" name="chk_Remember">
              <property name="text">
               <string>Remember Me</string>

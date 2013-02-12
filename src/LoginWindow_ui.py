@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'LoginWindow.ui'
+# Form implementation generated from reading ui file 'ui/LoginWindow.ui'
 #
-# Created: Mon Feb 11 13:50:04 2013
+# Created: Tue Feb 12 17:06:04 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -56,12 +56,6 @@ class Ui_frm_Login(object):
         self.verticalLayout.addWidget(self.txt_Password)
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.cmb_LogStatus = QtGui.QComboBox(frm_Login)
-        self.cmb_LogStatus.setObjectName(_fromUtf8("cmb_LogStatus"))
-        self.cmb_LogStatus.addItem(_fromUtf8(""))
-        self.cmb_LogStatus.addItem(_fromUtf8(""))
-        self.cmb_LogStatus.addItem(_fromUtf8(""))
-        self.horizontalLayout_2.addWidget(self.cmb_LogStatus)
         self.chk_Remember = QtGui.QCheckBox(frm_Login)
         self.chk_Remember.setObjectName(_fromUtf8("chk_Remember"))
         self.horizontalLayout_2.addWidget(self.chk_Remember)
@@ -96,9 +90,6 @@ class Ui_frm_Login(object):
         self.label_username.setText(_translate("frm_Login", "User Name:", None))
         self.label_passwd.setText(_translate("frm_Login", "Password:", None))
         self.label_status.setText(_translate("frm_Login", "Status:", None))
-        self.cmb_LogStatus.setItemText(0, _translate("frm_Login", "On Line", None))
-        self.cmb_LogStatus.setItemText(1, _translate("frm_Login", "Leave", None))
-        self.cmb_LogStatus.setItemText(2, _translate("frm_Login", "Invisible", None))
         self.chk_Remember.setText(_translate("frm_Login", "Remember Me", None))
         self.chk_AutoLogin.setText(_translate("frm_Login", "Auto Login", None))
         self.pushButton_log.setText(_translate("frm_Login", "GO!", None))
