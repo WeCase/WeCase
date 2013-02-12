@@ -185,6 +185,10 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_About">
+   <property name="icon">
+    <iconset resource="wecase.qrc">
+     <normaloff>:/IMG/img/where_s_my_weibo.svg</normaloff>:/IMG/img/where_s_my_weibo.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;About...</string>
    </property>
@@ -200,11 +204,19 @@
    </property>
   </action>
   <action name="action_Exit">
+   <property name="icon">
+    <iconset resource="wecase.qrc">
+     <normaloff>:/IMG/img/application-exit.svg</normaloff>:/IMG/img/application-exit.svg</iconset>
+   </property>
    <property name="text">
     <string>&amp;Exit</string>
    </property>
   </action>
   <action name="action_Settings">
+   <property name="icon">
+    <iconset resource="wecase.qrc">
+     <normaloff>:/IMG/img/preferences-other.png</normaloff>:/IMG/img/preferences-other.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Settings</string>
    </property>
@@ -215,6 +227,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="wecase.qrc"/>
+ </resources>
  <connections/>
 </ui>

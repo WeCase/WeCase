@@ -256,18 +256,6 @@ class NewpostWindow(QtGui.QWidget, Ui_NewPostWindow):
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    try:
-        app = QtGui.QApplication(sys.argv)
-        wecase_login = LoginWindow()
-        wecase_main = WeCaseWindow()
-        wecase_login.show()
-        sys.exit(app.exec_())
-    except KeyboardInterrupt:
-        print "Ctrl+C Pressed!"
-        sys.exit()
-
-=======
     app = QtGui.QApplication(sys.argv)
 
     wecase_login = LoginWindow()
@@ -277,4 +265,3 @@ if __name__ == "__main__":
 
     wecase_login.show()
     sys.exit(app.exec_())
->>>>>>> 2c1fcd5ce236b6b9b46dc7dbb2fabf6c193c66ce

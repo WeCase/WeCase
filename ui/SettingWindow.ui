@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Settings</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="wecase.qrc">
+    <normaloff>:/IMG/img/preferences-other.png</normaloff>:/IMG/img/preferences-other.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -60,6 +64,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="wecase.qrc"/>
+ </resources>
  <connections/>
 </ui>

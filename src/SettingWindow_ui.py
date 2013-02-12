@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/SettingWindow.ui'
+# Form implementation generated from reading ui file '../ui/SettingWindow.ui'
 #
-# Created: Mon Feb 11 19:32:16 2013
-#      by: PyQt4 UI code generator 4.9.6
+# Created: Tue Feb 12 09:45:51 2013
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,21 +12,15 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
         SettingWindow.setObjectName(_fromUtf8("SettingWindow"))
         SettingWindow.resize(521, 600)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/preferences-other.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        SettingWindow.setWindowIcon(icon)
         self.gridLayout_2 = QtGui.QGridLayout(SettingWindow)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.verticalLayout = QtGui.QVBoxLayout()
@@ -59,9 +53,10 @@ class Ui_SettingWindow(object):
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
 
     def retranslateUi(self, SettingWindow):
-        SettingWindow.setWindowTitle(_translate("SettingWindow", "Settings", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("SettingWindow", "Tab 1", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("SettingWindow", "Tab 2", None))
-        self.pushButton_OK.setText(_translate("SettingWindow", "&OK", None))
-        self.pushButton_Cancel.setText(_translate("SettingWindow", "&Cancel", None))
+        SettingWindow.setWindowTitle(QtGui.QApplication.translate("SettingWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("SettingWindow", "Tab 1", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("SettingWindow", "Tab 2", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_OK.setText(QtGui.QApplication.translate("SettingWindow", "&OK", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_Cancel.setText(QtGui.QApplication.translate("SettingWindow", "&Cancel", None, QtGui.QApplication.UnicodeUTF8))
 
+import wecase_rc
