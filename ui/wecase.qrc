@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="IMG">
+    <file>img/where_s_my_weibo.svg</file>
+    <file>img/application-exit.svg</file>
+    <file>img/preferences-other.png</file>
+  </qresource>
+  <qresource prefix="LICENSE" lang="English">
+    <file>LICENSE</file>
+  </qresource>
+</RCC>
