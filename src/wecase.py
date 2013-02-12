@@ -185,15 +185,25 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.listView_3.setWordWrap(True)
         self.listView_4.setWordWrap(True)
 
+        self.listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.listView_2.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.listView_3.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.listView_4.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
         self.action_Settings.triggered.connect(self.settings_show)
         self.action_Log_out.triggered.connect(self.logout)
-        self.action_Refresh.triggered.connect(self.get_all_timeline)
+        self.action_Refresh.triggered.connect(self.refresh)
 
         self.pushButton_settings.clicked.connect(self.settings_show)
-        self.pushButton_refresh.clicked.connect(self.get_all_timeline)
+        self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
+
+        self.listView.connect(self.listView, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
+        self.listView_2.connect(self.listView_2, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
+        self.listView_3.connect(self.listView_3, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.comments_context)
+        self.listView_4.connect(self.listView_4, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
 
     def setupModels(self):
         self.all_timeline = QtGui.QStandardItemModel(self)
@@ -239,6 +249,83 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def new_tweet(self):
         wecase_new.show()
+
+    def general_context(self, point):
+        general_menu = QtGui.QMenu("Menu", self)
+
+        action_Comment = QtGui.QAction("Comment", self)
+        action_Repost = QtGui.QAction("Repost", self)
+        action_Favorite = QtGui.QAction("Favorite", self)
+        action_Un_Favorite = QtGui.QAction("Un-Favorite", self)
+
+        action_Comment.triggered.connect(self.comment)
+        action_Repost.triggered.connect(self.repost)
+        action_Favorite.triggered.connect(self.favorite)
+        action_Un_Favorite.triggered.connect(self.un_favorite)
+
+        general_menu.addAction(action_Comment)
+        general_menu.addAction(action_Repost)
+        general_menu.addAction(action_Favorite)
+        general_menu.addAction(action_Un_Favorite)
+
+        # Show the context menu.
+        if self.tabWidget.currentIndex() == 0:
+            general_menu.exec_(self.listView.mapToGlobal(point))
+        elif self.tabWidget.currentIndex() == 1:
+            general_menu.exec_(self.listView_2.mapToGlobal(point))
+        elif self.tabWidget.currentIndex() == 3:
+            general_menu.exec_(self.listView_4.mapToGlobal(point))
+
+    def comments_context(self, point):
+        comment_menu = QtGui.QMenu("Menu", self)
+        action_Reply = QtGui.QAction("Reply", self)
+        action_Reply.triggered.connect(self.reply)
+        comment_menu.addAction(action_Reply)
+
+    def comment(self):
+        pass
+
+    def repost(self):
+        pass
+
+    def favorite(self):
+        if self.tabWidget.currentIndex() == 0:
+            row = self.listView.currentIndex().row()
+            idstr = self.all_timeline.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            row = self.listView_2.currentIndex().row()
+            idstr = self.mentions.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 3:
+            row = self.listView_4.currentIndex().row()
+            idstr = self.my_timeline.item(row, 1).text()
+
+        self.client.favorites.create.post(id=int(idstr))
+
+    def un_favorite(self):
+        if self.tabWidget.currentIndex() == 0:
+            row = self.listView.currentIndex().row()
+            idstr = self.all_timeline.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            row = self.listView_2.currentIndex().row()
+            idstr = self.mentions.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 3:
+            row = self.listView_4.currentIndex().row()
+            idstr = self.my_timeline.item(row, 1).text()
+
+        self.client.favorites.destroy.post(id=int(idstr))
+
+    def reply(self):
+        pass
+
+    def refresh(self):
+        if self.tabWidget.currentIndex() == 0:
+            self.get_all_timeline()
+        elif self.tabWidget.currentIndex() == 1:
+            self.get_mentions_timeline()
+        elif self.tabWidget.currentIndex() == 2:
+            self.get_comment_to_me()
+        elif self.tabWidget.currentIndex() == 3:
+            self.get_my_timeline()
 
 
 class WeSettingsWindow(QtGui.QWidget, Ui_SettingWindow):
