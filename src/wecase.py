@@ -88,7 +88,7 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
     def saveConfig(self):
         self.config['passwd'] = self.passwd
         self.config['last_login'] = self.last_login
-        self.config['auto_login'] = self.auto_login
+        self.config['auto_login'] = self.chk_AutoLogin.isChecked()
 
     def non_block_login(self):
         # HACK: use a QTimer to login in another Thread
@@ -106,7 +106,10 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
 
         if client:
             if self.chk_Remember.isChecked():
+                self.passwd[unicode(self.username)] = unicode(self.password)
+                self.last_login = unicode(self.username)
                 self.saveConfig()
+
             wecase_new.client = client
             wecase_main.client = client
             wecase_main.get_all_timeline()
