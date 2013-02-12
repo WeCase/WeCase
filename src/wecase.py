@@ -12,12 +12,16 @@
 
 
 import sys
+reload(sys)
+sys.setdefaultencoding('UTF-8')
 import urllib
 import httplib
 from weibo import APIClient
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
+from SettingWindow_ui import Ui_SettingWindow
+from NewpostWindow_ui import Ui_NewPostWindow
 
 APP_KEY = "1011524190"
 APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
@@ -56,7 +60,12 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
         client = self.authorize(username, password)
 
         if client:
+            wecase_new.client = client
             wecase_main.client = client
+            wecase_main.get_all_timeline()
+            wecase_main.get_my_timeline()
+            wecase_main.get_mentions_timeline()
+            wecase_main.get_comment_to_me()
             wecase_main.show()
             self.close()
         else:
@@ -110,8 +119,144 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
+        self.setupMyUi()
+        self.setupSignals()
+        self.setupModels()
+
+    def setupMyUi(self):
+        self.listView.setWordWrap(True)
+        self.listView_2.setWordWrap(True)
+        self.listView_3.setWordWrap(True)
+        self.listView_4.setWordWrap(True)
+
+    def setupSignals(self):
+        self.action_Exit.triggered.connect(self.close)
+        self.action_Settings.triggered.connect(self.settings_show)
+        self.action_Log_out.triggered.connect(self.logout)
+        self.action_Refresh.triggered.connect(self.get_all_timeline)
+
+        self.pushButton_settings.clicked.connect(self.settings_show)
+        self.pushButton_refresh.clicked.connect(self.get_all_timeline)
+        self.pushButton_new.clicked.connect(self.new_tweet)
+
+    def setupModels(self):
+        self.all_timeline = QtGui.QStringListModel(self)
+        self.listView.setModel(self.all_timeline)
+        self.mentions = QtGui.QStringListModel(self)
+        self.listView_2.setModel(self.mentions)
+        self.comment_to_me = QtGui.QStringListModel(self)
+        self.listView_3.setModel(self.comment_to_me)
+        self.my_timeline = QtGui.QStringListModel(self)
+        self.listView_4.setModel(self.my_timeline)
+
+    # XXX: get_all_timeline, get_my_timeline,
+    # get_mentions_timeline, get_comment_to_me are almost same.
+    # TODO: DRY! Write a new class for messages.
+
+    def get_all_timeline(self):
+        self.all_timeline_string = []
+
+        all_timelines = self.client.statuses.home_timeline.get().statuses
+        for timeline in all_timelines:
+            self.all_timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                            (timeline['created_at'],
+                                             timeline['user']['name'],
+                                             timeline['text']))
+
+        self.all_timeline_StringList = QtCore.QStringList(self.all_timeline_string)
+        self.all_timeline.setStringList(self.all_timeline_StringList)
+
+    def get_my_timeline(self):
+        self.my_timeline_string = []
+
+        my_timelines = self.client.statuses.user_timeline.get().statuses
+        for timeline in my_timelines:
+            self.my_timeline_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                           (timeline['created_at'],
+                                            timeline['user']['name'],
+                                            timeline['text']))
+
+        self.my_timeline_StringList = QtCore.QStringList(self.my_timeline_string)
+        self.my_timeline.setStringList(self.my_timeline_StringList)
+
+    def get_mentions_timeline(self):
+        self.mentions_string = []
+
+        mentions_timelines = self.client.statuses.mentions.get().statuses
+        for timeline in mentions_timelines:
+            self.mentions_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                        (timeline['created_at'],
+                                         timeline['user']['name'],
+                                         timeline['text']))
+
+        self.mentions_StringList = QtCore.QStringList(self.mentions_string)
+        self.mentions.setStringList(self.mentions_StringList)
+
+    def get_comment_to_me(self):
+        self.comments_to_me_string = []
+
+        comments_to_me = self.client.comments.to_me.get().comments
+        for comment in comments_to_me:
+            self.comments_to_me_string.append("%s\nAuthor: %s\nText: %s\n" %
+                                              (comment['created_at'],
+                                               comment['user']['name'],
+                                               comment['text']))
+
+        self.comments_to_me_StringList = QtCore.QStringList(self.comments_to_me_string)
+        self.comment_to_me.setStringList(self.comments_to_me_StringList)
+
+    def settings_show(self):
+        wecase_settings.show()
+
+    def logout(self):
+        wecase_login.show()
+        self.close()
+
+    def new_tweet(self):
+        wecase_new.show()
+
+
+class WeSettingsWindow(QtGui.QWidget, Ui_SettingWindow):
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.setupUi(self)
+
+
+class NewpostWindow(QtGui.QWidget, Ui_NewPostWindow):
+    client = None
+    image = None
+
+    def __init__(self, parent=None):
+        QtGui.QWidget.__init__(self, parent)
+        self.setupUi(self)
+        self.setupSignals()
+
+    def setupSignals(self):
+        self.pushButton_picture.clicked.connect(self.add_image)
+        self.pushButton_send.clicked.connect(self.send_tweet)
+
+    def send_tweet(self):
+        text = unicode(self.textEdit.toPlainText())
+
+        if self.image:
+            self.client.statuses.upload.post(status=text, pic=open(self.image))
+        else:
+            self.client.statuses.update.post(status=text)
+
+        self.image = None
+        self.close()
+
+    def add_image(self):
+        if self.image:
+            self.image = None
+            self.pushButton_picture.setText("Picture")
+        else:
+            self.image = unicode(QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)"))
+            self.pushButton_picture.setText("Remove the picture")
+
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     try:
         app = QtGui.QApplication(sys.argv)
         wecase_login = LoginWindow()
@@ -122,3 +267,14 @@ if __name__ == "__main__":
         print "Ctrl+C Pressed!"
         sys.exit()
 
+=======
+    app = QtGui.QApplication(sys.argv)
+
+    wecase_login = LoginWindow()
+    wecase_main = WeCaseWindow()
+    wecase_settings = WeSettingsWindow()
+    wecase_new = NewpostWindow()
+
+    wecase_login.show()
+    sys.exit(app.exec_())
+>>>>>>> 2c1fcd5ce236b6b9b46dc7dbb2fabf6c193c66ce

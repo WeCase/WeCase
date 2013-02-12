@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'SettingWindow.ui'
+# Form implementation generated from reading ui file 'ui/SettingWindow.ui'
 #
-# Created: Mon Feb 11 13:50:21 2013
+# Created: Mon Feb 11 19:32:16 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,11 +27,11 @@ class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
         SettingWindow.setObjectName(_fromUtf8("SettingWindow"))
         SettingWindow.resize(521, 600)
-        self.centralwidget = QtGui.QWidget(SettingWindow)
-        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+        self.gridLayout_2 = QtGui.QGridLayout(SettingWindow)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.tabWidget = QtGui.QTabWidget(self.centralwidget)
+        self.tabWidget = QtGui.QTabWidget(SettingWindow)
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
@@ -40,7 +40,7 @@ class Ui_SettingWindow(object):
         self.tab_2.setObjectName(_fromUtf8("tab_2"))
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
-        self.widget = QtGui.QWidget(self.centralwidget)
+        self.widget = QtGui.QWidget(SettingWindow)
         self.widget.setMinimumSize(QtCore.QSize(0, 30))
         self.widget.setObjectName(_fromUtf8("widget"))
         self.gridLayout = QtGui.QGridLayout(self.widget)
@@ -53,7 +53,7 @@ class Ui_SettingWindow(object):
         self.pushButton_Cancel.setObjectName(_fromUtf8("pushButton_Cancel"))
         self.gridLayout.addWidget(self.pushButton_Cancel, 0, 1, 1, 1)
         self.verticalLayout.addWidget(self.widget)
-        SettingWindow.setCentralWidget(self.centralwidget)
+        self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
         self.retranslateUi(SettingWindow)
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)

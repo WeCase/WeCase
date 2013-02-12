@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainWindow.ui'
+# Form implementation generated from reading ui file '../ui/MainWindow.ui'
 #
-# Created: Mon Feb 11 13:50:13 2013
+# Created: Mon Feb 11 21:29:28 2013
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -67,14 +67,14 @@ class Ui_frm_MainWindow(object):
         self.listView_3.setObjectName(_fromUtf8("listView_3"))
         self.verticalLayout_4.addWidget(self.listView_3)
         self.tabWidget.addTab(self.tab_comment, _fromUtf8(""))
-        self.tab_msg = QtGui.QWidget()
-        self.tab_msg.setObjectName(_fromUtf8("tab_msg"))
-        self.verticalLayout_5 = QtGui.QVBoxLayout(self.tab_msg)
-        self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
-        self.listView_4 = QtGui.QListView(self.tab_msg)
+        self.tab_my = QtGui.QWidget()
+        self.tab_my.setObjectName(_fromUtf8("tab_my"))
+        self.verticalLayout_6 = QtGui.QVBoxLayout(self.tab_my)
+        self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
+        self.listView_4 = QtGui.QListView(self.tab_my)
         self.listView_4.setObjectName(_fromUtf8("listView_4"))
-        self.verticalLayout_5.addWidget(self.listView_4)
-        self.tabWidget.addTab(self.tab_msg, _fromUtf8(""))
+        self.verticalLayout_6.addWidget(self.listView_4)
+        self.tabWidget.addTab(self.tab_my, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
         self.widget = QtGui.QWidget(self.centralwidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
@@ -154,7 +154,7 @@ class Ui_frm_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_weibo), _translate("frm_MainWindow", "微博", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_atme), _translate("frm_MainWindow", "@我", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_comment), _translate("frm_MainWindow", "评论", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_msg), _translate("frm_MainWindow", "私信", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_my), _translate("frm_MainWindow", "我的", None))
         self.pushButton_me.setText(_translate("frm_MainWindow", "Me", None))
         self.pushButton_refresh.setText(_translate("frm_MainWindow", "Refresh", None))
         self.pushButton_new.setText(_translate("frm_MainWindow", "New Weibo", None))

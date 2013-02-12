@@ -38,7 +38,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_weibo">
        <attribute name="title">
@@ -70,16 +70,11 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_my">
        <attribute name="title">
         <string>我的</string>
        </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_msg">
-       <attribute name="title">
-        <string>私信</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <widget class="QListView" name="listView_4"/>
         </item>
