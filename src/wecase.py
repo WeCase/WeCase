@@ -196,13 +196,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.pushButton_new.clicked.connect(self.new_tweet)
 
     def setupModels(self):
-        self.all_timeline = QtGui.QStringListModel(self)
+        self.all_timeline = QtGui.QStandardItemModel(self)
         self.listView.setModel(self.all_timeline)
-        self.mentions = QtGui.QStringListModel(self)
+        self.mentions = QtGui.QStandardItemModel(self)
         self.listView_2.setModel(self.mentions)
-        self.comment_to_me = QtGui.QStringListModel(self)
+        self.comment_to_me = QtGui.QStandardItemModel(self)
         self.listView_3.setModel(self.comment_to_me)
-        self.my_timeline = QtGui.QStringListModel(self)
+        self.my_timeline = QtGui.QStandardItemModel(self)
         self.listView_4.setModel(self.my_timeline)
 
     # XXX: get_all_timeline, get_my_timeline,
@@ -210,52 +210,52 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     # TODO: DRY! Write a new class for messages.
 
     def get_all_timeline(self):
-        self.all_timeline_list = QtCore.QStringList()
-
         all_timelines = self.client.statuses.home_timeline.get().statuses
-        for timeline in all_timelines:
-            self.all_timeline_list.append("%s\nAuthor: %s\nText: %s\n" %
-                                          (timeline['created_at'],
-                                           timeline['user']['name'],
-                                           timeline['text']))
-
-        self.all_timeline.setStringList(self.all_timeline_list)
+        for count, timeline in enumerate(all_timelines):
+            item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n" %
+                                               (timeline['created_at'],
+                                                timeline['user']['name'],
+                                                timeline['text']))
+            item_id = QtGui.QStandardItem(timeline['idstr'])
+            self.all_timeline.setItem(count, 0, item_content)
+            self.all_timeline.setItem(count, 1, item_id)
 
     def get_my_timeline(self):
-        self.my_timeline_list = QtCore.QStringList()
-
         my_timelines = self.client.statuses.user_timeline.get().statuses
-        for timeline in my_timelines:
-            self.my_timeline_list.append("%s\nAuthor: %s\nText: %s\n" %
-                                           (timeline['created_at'],
-                                            timeline['user']['name'],
-                                            timeline['text']))
 
-        self.my_timeline.setStringList(self.my_timeline_list)
+        for count, timeline in enumerate(my_timelines):
+            item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n" %
+                                               (timeline['created_at'],
+                                                timeline['user']['name'],
+                                                timeline['text']))
+            item_id = QtGui.QStandardItem(timeline['idstr'])
+            self.my_timeline.setItem(count, 0, item_content)
+            self.my_timeline.setItem(count, 1, item_id)
+
 
     def get_mentions_timeline(self):
-        self.mentions_list = QtCore.QStringList()
-
         mentions_timelines = self.client.statuses.mentions.get().statuses
-        for timeline in mentions_timelines:
-            self.mentions_list.append("%s\nAuthor: %s\nText: %s\n" %
-                                        (timeline['created_at'],
-                                         timeline['user']['name'],
-                                         timeline['text']))
 
-        self.mentions.setStringList(self.mentions_list)
+        for count, timeline in enumerate(mentions_timelines):
+            item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n" %
+                                                (timeline['created_at'],
+                                                 timeline['user']['name'],
+                                                 timeline['text']))
+            item_id = QtGui.QStandardItem(timeline['idstr'])
+            self.mentions.setItem(count, 0, item_content)
+            self.mentions.setItem(count, 1, item_id)
 
     def get_comment_to_me(self):
-        self.comments_to_me_list = QtCore.QStringList()
-
         comments_to_me = self.client.comments.to_me.get().comments
-        for comment in comments_to_me:
-            self.comments_to_me_list.append("%s\nAuthor: %s\nText: %s\n" %
-                                              (comment['created_at'],
-                                               comment['user']['name'],
-                                               comment['text']))
 
-        self.comment_to_me.setStringList(self.comments_to_me_list)
+        for count, comment in enumerate(comments_to_me):
+            item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n" %
+                                               (comment['created_at'],
+                                                comment['user']['name'],
+                                                comment['text']))
+            item_id = QtGui.QStandardItem(comment['idstr'])
+            self.comment_to_me.setItem(count, 0, item_content)
+            self.comment_to_me.setItem(count, 1, item_id)
 
     def settings_show(self):
         wecase_settings.show()
