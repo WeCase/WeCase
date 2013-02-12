@@ -14,8 +14,10 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('UTF-8')
+import os
 import urllib
 import httplib
+import shelve
 from weibo import APIClient
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
@@ -38,28 +40,71 @@ OAUTH2_PARAMETER = {'client_id':       APP_KEY,
                     'state':           '',
                     'ticket':          '',
                     'withOfficalFlag': 0}
+config_path = os.environ['HOME'] + '/.config/wecase/config_db'
 
 
 class LoginWindow(QtGui.QWidget, Ui_frm_Login):
+    passwd = {}
+    last_login = ""
+    auto_login = False
+
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        self.loadConfig()
         self.setupUi(self)
         self.setupMyUi()
-        self.setupSignals()
-
     def setupSignals(self):
-        self.pushButton_log.clicked.connect(self.login)
+        self.pushButton_log.clicked.connect(self.non_block_login)
+        self.chk_AutoLogin.clicked.connect(self.auto_login_clicked)
+        QtCore.QObject.connect(self.cmb_Users, QtCore.SIGNAL("currentIndexChanged(QString)"), self.setPassword)
 
     def setupMyUi(self):
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
+        self.cmb_Users.addItem(self.last_login)
+        self.chk_AutoLogin.setChecked(self.auto_login)
+
+        for username in self.passwd.keys():
+            if username == self.last_login:
+                continue
+            self.cmb_Users.addItem(username)
+
+        if self.cmb_Users.currentText():
+            self.setPassword(self.cmb_Users.currentText())
+
+        if self.auto_login:
+            self.non_block_login()
+
+    def loadConfig(self):
+        self.config = shelve.open(config_path, 'c')
+        try:
+            self.passwd = self.config['passwd']
+            self.last_login = self.config['last_login']
+            self.auto_login = self.config['auto_login']
+        except KeyError:
+            pass
+
+    def saveConfig(self):
+        self.config['passwd'] = self.passwd
+        self.config['last_login'] = self.last_login
+        self.config['auto_login'] = self.auto_login
+
+    def non_block_login(self):
+        # HACK: use a QTimer to login in another Thread
+        self.login_timer = QtCore.QTimer()
+        QtCore.QObject.connect(self.login_timer, QtCore.SIGNAL("timeout()"), self.login)
+        self.login_timer.start(20)
 
     def login(self):
-        username = self.cmb_Users.currentText()
-        password = self.txt_Password.text()
+        self.login_timer.stop()
 
-        client = self.authorize(username, password)
+        self.username = self.cmb_Users.currentText()
+        self.password = self.txt_Password.text()
+
+        client = self.authorize(self.username, self.password)
 
         if client:
+            if self.chk_Remember.isChecked():
+                self.saveConfig()
             wecase_new.client = client
             wecase_main.client = client
             wecase_main.get_all_timeline()
@@ -71,6 +116,7 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
         else:
             QtGui.QMessageBox.critical(None, "Authorize Failed!",
                                        "Check your account and password!")
+
 
     def authorize(self, username, password):
         # TODO: This method is very messy, maybe do some cleanup?
@@ -111,6 +157,12 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
         client.set_access_token(access_token, expires_in)
 
         return client
+
+    def setPassword(self, username):
+        self.txt_Password.setText(self.passwd[unicode(username)])
+
+    def auto_login_clicked(self):
+        self.chk_Remember.setChecked(self.chk_AutoLogin.isChecked())
 
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
@@ -256,6 +308,11 @@ class NewpostWindow(QtGui.QWidget, Ui_NewPostWindow):
 
 
 if __name__ == "__main__":
+    try:
+        os.mkdir(config_path.replace("/config_db", ""))
+    except OSError:
+        pass
+
     app = QtGui.QApplication(sys.argv)
 
     wecase_login = LoginWindow()
