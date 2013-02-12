@@ -53,6 +53,8 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
         self.loadConfig()
         self.setupUi(self)
         self.setupMyUi()
+        self.setupSignals()
+
     def setupSignals(self):
         self.pushButton_log.clicked.connect(self.non_block_login)
         self.chk_AutoLogin.clicked.connect(self.auto_login_clicked)
@@ -116,7 +118,6 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
         else:
             QtGui.QMessageBox.critical(None, "Authorize Failed!",
                                        "Check your account and password!")
-
 
     def authorize(self, username, password):
         # TODO: This method is very messy, maybe do some cleanup?
