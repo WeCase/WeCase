@@ -395,7 +395,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.client.favorites.destroy.post(id=int(idstr))
 
     def reply(self):
-        print self.listView_3.verticalScrollBar().value() == self.listView_3.verticalScrollBar().maximum()
         row = self.listView_3.currentIndex().row()
         idstr = self.comment_to_me.item(row, 2).text()
         cidstr = self.comment_to_me.item(row, 1).text()
