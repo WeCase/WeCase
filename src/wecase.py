@@ -183,6 +183,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         for listView in self.listViews:
             listView.setWordWrap(True)
             listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+            listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
 
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
