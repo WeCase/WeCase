@@ -281,6 +281,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         action_Reply = QtGui.QAction("Reply", self)
         action_Reply.triggered.connect(self.reply)
         comment_menu.addAction(action_Reply)
+        comment_menu.exec_(self.listView_3.mapToGlobal(point))
 
     def comment(self):
         pass
