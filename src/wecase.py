@@ -407,13 +407,17 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def refresh(self):
         if self.tabWidget.currentIndex() == 0:
-            self.get_all_timeline()
+            self.all_timeline.clear()
+            self.get_all_timeline(page=1)
         elif self.tabWidget.currentIndex() == 1:
-            self.get_mentions_timeline()
+            self.mentions.clear()
+            self.get_mentions_timeline(page=1)
         elif self.tabWidget.currentIndex() == 2:
-            self.get_comment_to_me()
+            self.get_comment_to_me.clear()
+            self.get_comment_to_me(page=1)
         elif self.tabWidget.currentIndex() == 3:
-            self.get_my_timeline()
+            self.my_timeline.clear()
+            self.get_my_timeline(page=1)
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
