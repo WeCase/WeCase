@@ -321,58 +321,42 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         comment_menu.exec_(self.listView_3.mapToGlobal(point))
 
     def comment(self):
-        if self.tabWidget.currentIndex() == 0:
-            row = self.listView.currentIndex().row()
-            idstr = self.all_timeline.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 1:
-            row = self.listView_2.currentIndex().row()
-            idstr = self.mentions.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 3:
-            row = self.listView_4.currentIndex().row()
-            idstr = self.my_timeline.item(row, 1).text()
+        listView = get_current_listView()
+        model = get_current_model()
+
+        row = listView.currentIndex().row()
+        idstr = model.item(row, 1).text()
 
         wecase_new = NewpostWindow(action="reply", id=int(idstr))
         wecase_new.client = self.client
         wecase_new.exec_()
 
     def repost(self):
-        if self.tabWidget.currentIndex() == 0:
-            row = self.listView.currentIndex().row()
-            idstr = self.all_timeline.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 1:
-            row = self.listView_2.currentIndex().row()
-            idstr = self.mentions.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 3:
-            row = self.listView_4.currentIndex().row()
-            idstr = self.my_timeline.item(row, 1).text()
+        listView = get_current_listView()
+        model = get_current_model()
+
+        row = listView.currentIndex().row()
+        idstr = model.item(row, 1).text()
 
         wecase_new = NewpostWindow(action="retweet", id=int(idstr))
         wecase_new.client = self.client
         wecase_new.exec_()
 
     def favorite(self):
-        if self.tabWidget.currentIndex() == 0:
-            row = self.listView.currentIndex().row()
-            idstr = self.all_timeline.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 1:
-            row = self.listView_2.currentIndex().row()
-            idstr = self.mentions.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 3:
-            row = self.listView_4.currentIndex().row()
-            idstr = self.my_timeline.item(row, 1).text()
+        listView = get_current_listView()
+        model = get_current_model()
+
+        row = listView.currentIndex().row()
+        idstr = model.item(row, 1).text()
 
         self.client.favorites.create.post(id=int(idstr))
 
     def un_favorite(self):
-        if self.tabWidget.currentIndex() == 0:
-            row = self.listView.currentIndex().row()
-            idstr = self.all_timeline.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 1:
-            row = self.listView_2.currentIndex().row()
-            idstr = self.mentions.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 3:
-            row = self.listView_4.currentIndex().row()
-            idstr = self.my_timeline.item(row, 1).text()
+        listView = get_current_listView()
+        model = get_current_model()
+
+        row = listView.currentIndex().row()
+        idstr = model.item(row, 1).text()
 
         self.client.favorites.destroy.post(id=int(idstr))
 
@@ -386,22 +370,23 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.exec_()
 
     def refresh(self):
-        if self.tabWidget.currentIndex() == 0:
-            self.all_timeline.clear()
-            self.get_all_timeline(page=1)
-        elif self.tabWidget.currentIndex() == 1:
-            self.mentions.clear()
-            self.get_mentions_timeline(page=1)
-        elif self.tabWidget.currentIndex() == 2:
-            self.comment_to_me.clear()
-            self.get_comment_to_me(page=1)
-        elif self.tabWidget.currentIndex() == 3:
-            self.my_timeline.clear()
-            self.get_my_timeline(page=1)
+        model = self.get_current_model()
+        get_timeline = self.get_current_function()
+
+        model.clear()
+        get_timeline(page=1)
 
     def get_current_listView(self):
         listviews = {0: self.listView, 1: self.listView_2, 2: self.listView_3, 3: self.listView_4}
         return listviews[self.tabWidget.currentIndex()]
+
+    def get_current_model(self):
+        models = {0: self.all_timeline, 1: self.mentions, 2: self.comment_to_me, 3: self.my_timeline}
+        return models[self.tabWidget.currentIndex()]
+
+    def get_current_function(self):
+        functions = {0: self.get_all_timeline, 1: self.get_mentions_timeline, 2: self.get_comment_to_me, 3: self.get_my_timeline}
+        return functions[self.tabWidget.currentIndex()]
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
