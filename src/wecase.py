@@ -413,7 +413,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.mentions.clear()
             self.get_mentions_timeline(page=1)
         elif self.tabWidget.currentIndex() == 2:
-            self.get_comment_to_me.clear()
+            self.comment_to_me.clear()
             self.get_comment_to_me(page=1)
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline.clear()
