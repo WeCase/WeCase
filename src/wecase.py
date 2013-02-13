@@ -204,6 +204,37 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.listView_3.connect(self.listView_3, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.comments_context)
         self.listView_4.connect(self.listView_4, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
 
+        self.listView.verticalScrollBar().connect(self.listView.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
+        self.listView_2.verticalScrollBar().connect(self.listView_2.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
+        self.listView_3.verticalScrollBar().connect(self.listView_3.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
+        self.listView_4.verticalScrollBar().connect(self.listView_4.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
+
+    def load_more(self, value):
+        if self.tabWidget.currentIndex() == 0:
+            max_value = self.listView.verticalScrollBar().maximum()
+        elif self.tabWidget.currentIndex() == 1:
+            max_value = self.listView_2.verticalScrollBar().maximum()
+        elif self.tabWidget.currentIndex() == 2:
+            max_value = self.listView_3.verticalScrollBar().maximum()
+        elif self.tabWidget.currentIndex() == 3:
+            max_value = self.listView_4.verticalScrollBar().maximum()
+
+        if value < max_value:
+            return
+
+        if self.tabWidget.currentIndex() == 0:
+            self.all_timeline_page += 1
+            self.get_all_timeline(self.all_timeline_page)
+        elif self.tabWidget.currentIndex() == 1:
+            self.mentions_page += 1
+            self.get_mentions_timeline(self.mentions_page)
+        elif self.tabWidget.currentIndex() == 2:
+            self.comment_to_me_page += 1
+            self.get_comment_to_me(self.comment_to_me_page)
+        elif self.tabWidget.currentIndex() == 3:
+            self.my_timeline_page += 1
+            self.get_my_timeline(self.my_timeline_page)
+
     def setupModels(self):
         self.all_timeline = QtGui.QStandardItemModel(self)
         self.listView.setModel(self.all_timeline)
@@ -215,7 +246,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.listView_4.setModel(self.my_timeline)
 
     def get_timeline(self, timeline, model):
-        for count, item in enumerate(timeline):
+        rowCount = model.rowCount()
+        for count_this_time, item in enumerate(timeline):
+            count = rowCount + count_this_time
             try:
                 item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n↘\n" %
                                 (item['created_at'], item['user']['name'], item['text'])
@@ -236,21 +269,29 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             model.setItem(count, 1, item_id)
             model.setItem(count, 2, item_source_id)
 
-    def get_all_timeline(self):
-        all_timelines = self.client.statuses.home_timeline.get().statuses
+            # process UI's event, or UI will freeze.
+            if count_this_time % 2 == 0:
+                app.processEvents()
+
+    def get_all_timeline(self, page=1):
+        all_timelines = self.client.statuses.home_timeline.get(page=page).statuses
         self.get_timeline(all_timelines, self.all_timeline)
+        self.all_timeline_page = page
 
-    def get_my_timeline(self):
-        my_timelines = self.client.statuses.user_timeline.get().statuses
+    def get_my_timeline(self, page=1):
+        my_timelines = self.client.statuses.user_timeline.get(page=page).statuses
         self.get_timeline(my_timelines, self.my_timeline)
+        self.my_timeline_page = page
 
-    def get_mentions_timeline(self):
-        mentions_timelines = self.client.statuses.mentions.get().statuses
+    def get_mentions_timeline(self, page=1):
+        mentions_timelines = self.client.statuses.mentions.get(page=page).statuses
         self.get_timeline(mentions_timelines, self.mentions)
+        self.mentions_page = page
 
-    def get_comment_to_me(self):
-        comments_to_me = self.client.comments.to_me.get().comments
+    def get_comment_to_me(self, page=1):
+        comments_to_me = self.client.comments.to_me.get(page=page).comments
         self.get_timeline(comments_to_me, self.comment_to_me)
+        self.comment_to_me_page = page
 
     def settings_show(self):
         wecase_settings.show()
@@ -354,6 +395,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.client.favorites.destroy.post(id=int(idstr))
 
     def reply(self):
+        print self.listView_3.verticalScrollBar().value() == self.listView_3.verticalScrollBar().maximum()
         row = self.listView_3.currentIndex().row()
         idstr = self.comment_to_me.item(row, 2).text()
         cidstr = self.comment_to_me.item(row, 1).text()
