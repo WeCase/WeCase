@@ -43,7 +43,7 @@ OAUTH2_PARAMETER = {'client_id':       APP_KEY,
 config_path = os.environ['HOME'] + '/.config/wecase/config_db'
 
 
-class LoginWindow(QtGui.QWidget, Ui_frm_Login):
+class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     passwd = {}
     last_login = ""
     auto_login = False
@@ -110,7 +110,6 @@ class LoginWindow(QtGui.QWidget, Ui_frm_Login):
                 self.last_login = unicode(self.username)
                 self.saveConfig()
 
-            wecase_new.client = client
             wecase_main.client = client
             wecase_main.get_all_timeline()
             wecase_main.get_my_timeline()
@@ -256,7 +255,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.close()
 
     def new_tweet(self):
-        wecase_new.show()
+        wecase_new = NewpostWindow()
+        wecase_new.client = self.client
+        wecase_new.exec_()
 
     def general_context(self, point):
         general_menu = QtGui.QMenu("Menu", self)
@@ -287,15 +288,42 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def comments_context(self, point):
         comment_menu = QtGui.QMenu("Menu", self)
         action_Reply = QtGui.QAction("Reply", self)
-        action_Reply.triggered.connect(self.reply)
+        action_Reply.triggered.connect(self.comment)
         comment_menu.addAction(action_Reply)
         comment_menu.exec_(self.listView_3.mapToGlobal(point))
 
     def comment(self):
-        pass
+        if self.tabWidget.currentIndex() == 0:
+            row = self.listView.currentIndex().row()
+            idstr = self.all_timeline.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            row = self.listView_2.currentIndex().row()
+            idstr = self.mentions.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 2:
+            row = self.listView_3.currentIndex().row()
+            idstr = self.comment_to_me.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 3:
+            row = self.listView_4.currentIndex().row()
+            idstr = self.my_timeline.item(row, 1).text()
+
+        wecase_new = NewpostWindow(action="reply", id=int(idstr))
+        wecase_new.client = self.client
+        wecase_new.exec_()
 
     def repost(self):
-        pass
+        if self.tabWidget.currentIndex() == 0:
+            row = self.listView.currentIndex().row()
+            idstr = self.all_timeline.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            row = self.listView_2.currentIndex().row()
+            idstr = self.mentions.item(row, 1).text()
+        elif self.tabWidget.currentIndex() == 3:
+            row = self.listView_4.currentIndex().row()
+            idstr = self.my_timeline.item(row, 1).text()
+
+        wecase_new = NewpostWindow(action="retweet", id=int(idstr))
+        wecase_new.client = self.client
+        wecase_new.exec_()
 
     def favorite(self):
         if self.tabWidget.currentIndex() == 0:
@@ -337,24 +365,45 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.get_my_timeline()
 
 
-class WeSettingsWindow(QtGui.QWidget, Ui_SettingWindow):
+class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
 
 
-class NewpostWindow(QtGui.QWidget, Ui_NewPostWindow):
+class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     client = None
     image = None
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, action="new", id=None):
         QtGui.QWidget.__init__(self, parent)
+        self.action = action
+        self.id = id
         self.setupUi(self)
         self.setupSignals()
 
+    def setupMyUi(self):
+        if self.action == "new":
+            self.pushButton_send.clicked.connect(self.send_tweet)
+
     def setupSignals(self):
         self.pushButton_picture.clicked.connect(self.add_image)
-        self.pushButton_send.clicked.connect(self.send_tweet)
+        if self.action == "new":
+            self.pushButton_send.clicked.connect(self.send_tweet)
+        elif self.action == "retweet":
+            self.pushButton_send.clicked.connect(self.retweet)
+        elif self.action == "reply":
+            self.pushButton_send.clicked.connect(self.reply)
+
+    def retweet(self):
+        text = unicode(self.textEdit.toPlainText())
+        self.client.statuses.repost.post(id=int(self.id), status=text)
+        self.close()
+
+    def reply(self):
+        text = unicode(self.textEdit.toPlainText())
+        self.client.comments.create.post(id=int(self.id), comment=text)
+        self.close()
 
     def send_tweet(self):
         text = unicode(self.textEdit.toPlainText())
@@ -387,7 +436,6 @@ if __name__ == "__main__":
     wecase_login = LoginWindow()
     wecase_main = WeCaseWindow()
     wecase_settings = WeSettingsWindow()
-    wecase_new = NewpostWindow()
 
     wecase_login.show()
     sys.exit(app.exec_())
