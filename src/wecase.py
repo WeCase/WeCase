@@ -227,9 +227,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                                                (item['created_at'], item['user']['name'], item['text']))
 
             item_id = QtGui.QStandardItem(item['idstr'])
+            try:
+                item_source_id = QtGui.QStandardItem(item['status']['idstr'])
+            except KeyError:
+                item_source_id = QtGui.QStandardItem("")
 
             model.setItem(count, 0, item_content)
             model.setItem(count, 1, item_id)
+            model.setItem(count, 2, item_source_id)
 
     def get_all_timeline(self):
         all_timelines = self.client.statuses.home_timeline.get().statuses
@@ -288,7 +293,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def comments_context(self, point):
         comment_menu = QtGui.QMenu("Menu", self)
         action_Reply = QtGui.QAction("Reply", self)
-        action_Reply.triggered.connect(self.comment)
+        action_Reply.triggered.connect(self.reply)
         comment_menu.addAction(action_Reply)
         comment_menu.exec_(self.listView_3.mapToGlobal(point))
 
@@ -299,9 +304,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         elif self.tabWidget.currentIndex() == 1:
             row = self.listView_2.currentIndex().row()
             idstr = self.mentions.item(row, 1).text()
-        elif self.tabWidget.currentIndex() == 2:
-            row = self.listView_3.currentIndex().row()
-            idstr = self.comment_to_me.item(row, 1).text()
         elif self.tabWidget.currentIndex() == 3:
             row = self.listView_4.currentIndex().row()
             idstr = self.my_timeline.item(row, 1).text()
@@ -352,7 +354,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.client.favorites.destroy.post(id=int(idstr))
 
     def reply(self):
-        pass
+        row = self.listView_3.currentIndex().row()
+        idstr = self.comment_to_me.item(row, 2).text()
+        cidstr = self.comment_to_me.item(row, 1).text()
+
+        wecase_new = NewpostWindow(action="reply", id=int(idstr), cid=int(cidstr))
+        wecase_new.client = self.client
+        wecase_new.exec_()
+
 
     def refresh(self):
         if self.tabWidget.currentIndex() == 0:
@@ -375,10 +384,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     client = None
     image = None
 
-    def __init__(self, parent=None, action="new", id=None):
+    def __init__(self, parent=None, action="new", id=None, cid=None):
         QtGui.QWidget.__init__(self, parent)
         self.action = action
         self.id = id
+        self.cid = cid
         self.setupUi(self)
         self.setupSignals()
 
@@ -393,6 +403,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.pushButton_send.clicked.connect(self.send_tweet)
         elif self.action == "retweet":
             self.pushButton_send.clicked.connect(self.retweet)
+        elif self.action == "comment":
+            self.pushButton_send.clicked.connect(self.comment)
         elif self.action == "reply":
             self.pushButton_send.clicked.connect(self.reply)
 
@@ -401,9 +413,14 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.client.statuses.repost.post(id=int(self.id), status=text)
         self.close()
 
-    def reply(self):
+    def comment(self):
         text = unicode(self.textEdit.toPlainText())
         self.client.comments.create.post(id=int(self.id), comment=text)
+        self.close()
+
+    def reply(self):
+        text = unicode(self.textEdit.toPlainText())
+        self.client.comments.reply.post(id=int(self.id), cid=int(self.cid), comment=text)
         self.close()
 
     def send_tweet(self):
