@@ -217,8 +217,16 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def get_timeline(self, timeline, model):
         for count, item in enumerate(timeline):
-            item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n" %
+            try:
+                item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n↘\n" %
+                                (item['created_at'], item['user']['name'], item['text'])
+                                + "    Time: %s\n    Author: %s\n    Text: %s\n\n" %
+                                (item['retweeted_status']['created_at'], item['retweeted_status']['user']['name'],
+                                 item['retweeted_status']['text']))
+            except KeyError:
+                item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n\n" %
                                                (item['created_at'], item['user']['name'], item['text']))
+
             item_id = QtGui.QStandardItem(item['idstr'])
 
             model.setItem(count, 0, item_content)
