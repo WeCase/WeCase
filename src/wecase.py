@@ -385,7 +385,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.client = self.client
         wecase_new.exec_()
 
-
     def refresh(self):
         if self.tabWidget.currentIndex() == 0:
             self.all_timeline.clear()
@@ -403,7 +402,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def get_current_listView(self):
         listviews = {0: self.listView, 1: self.listView_2, 2: self.listView_3, 3: self.listView_4}
         return listviews[self.tabWidget.currentIndex()]
-
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
