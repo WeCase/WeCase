@@ -321,8 +321,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         comment_menu.exec_(self.listView_3.mapToGlobal(point))
 
     def comment(self):
-        listView = get_current_listView()
-        model = get_current_model()
+        listView = self.get_current_listView()
+        model = self.get_current_model()
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
@@ -332,8 +332,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.exec_()
 
     def repost(self):
-        listView = get_current_listView()
-        model = get_current_model()
+        listView = self.get_current_listView()
+        model = self.get_current_model()
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
@@ -343,8 +343,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.exec_()
 
     def favorite(self):
-        listView = get_current_listView()
-        model = get_current_model()
+        listView = self.get_current_listView()
+        model = self.get_current_model()
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
@@ -352,8 +352,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.client.favorites.create.post(id=int(idstr))
 
     def un_favorite(self):
-        listView = get_current_listView()
-        model = get_current_model()
+        listView = self.get_current_listView()
+        model = self.get_current_model()
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
