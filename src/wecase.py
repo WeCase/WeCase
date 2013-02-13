@@ -387,6 +387,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.pushButton_send.clicked.connect(self.send_tweet)
 
     def setupSignals(self):
+        self.pushButton_cancel.clicked.connect(self.close)
         self.pushButton_picture.clicked.connect(self.add_image)
         if self.action == "new":
             self.pushButton_send.clicked.connect(self.send_tweet)
