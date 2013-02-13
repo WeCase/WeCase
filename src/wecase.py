@@ -174,20 +174,15 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.setupUi(self)
+        self.listViews = [self.listView, self.listView_2, self.listView_3, self.listView_4]
         self.setupMyUi()
         self.setupSignals()
         self.setupModels()
 
     def setupMyUi(self):
-        self.listView.setWordWrap(True)
-        self.listView_2.setWordWrap(True)
-        self.listView_3.setWordWrap(True)
-        self.listView_4.setWordWrap(True)
-
-        self.listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.listView_2.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.listView_3.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.listView_4.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        for listView in self.listViews:
+            listView.setWordWrap(True)
+            listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
 
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
@@ -199,25 +194,15 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
 
-        self.listView.connect(self.listView, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
-        self.listView_2.connect(self.listView_2, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
-        self.listView_3.connect(self.listView_3, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.comments_context)
-        self.listView_4.connect(self.listView_4, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
+        for listView in self.listViews:
+            listView.connect(listView, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.general_context)
+            listView.verticalScrollBar().connect(listView.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
 
-        self.listView.verticalScrollBar().connect(self.listView.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
-        self.listView_2.verticalScrollBar().connect(self.listView_2.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
-        self.listView_3.verticalScrollBar().connect(self.listView_3.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
-        self.listView_4.verticalScrollBar().connect(self.listView_4.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
+        self.listView_3.connect(self.listView_3, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.comments_context)
 
     def load_more(self, value):
-        if self.tabWidget.currentIndex() == 0:
-            max_value = self.listView.verticalScrollBar().maximum()
-        elif self.tabWidget.currentIndex() == 1:
-            max_value = self.listView_2.verticalScrollBar().maximum()
-        elif self.tabWidget.currentIndex() == 2:
-            max_value = self.listView_3.verticalScrollBar().maximum()
-        elif self.tabWidget.currentIndex() == 3:
-            max_value = self.listView_4.verticalScrollBar().maximum()
+        listView = self.get_current_listView()
+        max_value = listView.verticalScrollBar().maximum()
 
         if value < max_value:
             return
@@ -324,12 +309,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         general_menu.addAction(action_Un_Favorite)
 
         # Show the context menu.
-        if self.tabWidget.currentIndex() == 0:
-            general_menu.exec_(self.listView.mapToGlobal(point))
-        elif self.tabWidget.currentIndex() == 1:
-            general_menu.exec_(self.listView_2.mapToGlobal(point))
-        elif self.tabWidget.currentIndex() == 3:
-            general_menu.exec_(self.listView_4.mapToGlobal(point))
+        listView = self.get_current_listView()
+        if listView != self.listView_3:
+            general_menu.exec_(listView.mapToGlobal(point))
 
     def comments_context(self, point):
         comment_menu = QtGui.QMenu("Menu", self)
@@ -417,6 +399,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline.clear()
             self.get_my_timeline(page=1)
+
+    def get_current_listView(self):
+        listviews = {0: self.listView, 1: self.listView_2, 2: self.listView_3, 3: self.listView_4}
+        return listviews[self.tabWidget.currentIndex()]
+
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
