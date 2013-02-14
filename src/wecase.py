@@ -239,15 +239,24 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         for count_this_time, item in enumerate(timeline):
             count = rowCount + count_this_time
             try:
+                # Retweet
                 item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s<br>↘<br>" %
                                 (item['created_at'], item['user']['name'], item['text'])
                                 + "    Time: %s<br>    Author: %s<br>    Text: %s<br>" %
                                 (item['retweeted_status']['created_at'], item['retweeted_status']['user']['name'],
                                  item['retweeted_status']['text']))
-                item_source_id = QtGui.QStandardItem(item['status']['idstr'])
+                item_retweet_content = QtGui.QStandardItem(' // @' + item['user']['name'] + ": " + item['text'])
             except KeyError:
+                # Normal
                 item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s<br>" %
                                                (item['created_at'], item['user']['name'], item['text']))
+                item_retweet_content = QtGui.QStandardItem("")
+
+            try:
+                # Comment
+                item_source_id = QtGui.QStandardItem(item['status']['idstr'])
+            except KeyError:
+                # Normal
                 item_source_id = QtGui.QStandardItem("")
 
             item_id = QtGui.QStandardItem(item['idstr'])
@@ -255,6 +264,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             model.setItem(count, 0, item_content)
             model.setItem(count, 1, item_id)
             model.setItem(count, 2, item_source_id)
+            model.setItem(count, 3, item_retweet_content)
 
             # process UI's event, or UI will freeze.
             if count_this_time % 2 == 0:
@@ -329,7 +339,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
 
-        wecase_new = NewpostWindow(action="reply", id=int(idstr))
+        wecase_new = NewpostWindow(action="comment", id=int(idstr))
         wecase_new.client = self.client
         wecase_new.exec_()
 
@@ -339,8 +349,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
+        text = model.item(row, 3).text()
 
-        wecase_new = NewpostWindow(action="retweet", id=int(idstr))
+        wecase_new = NewpostWindow(action="retweet", id=int(idstr), text=text)
         wecase_new.client = self.client
         wecase_new.exec_()
 
@@ -401,12 +412,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     client = None
     image = None
 
-    def __init__(self, parent=None, action="new", id=None, cid=None):
+    def __init__(self, parent=None, action="new", id=None, cid=None, text=""):
         QtGui.QWidget.__init__(self, parent)
         self.action = action
         self.id = id
         self.cid = cid
         self.setupUi(self)
+        self.textEdit.setText(text)
         self.setupSignals()
 
     def setupMyUi(self):
