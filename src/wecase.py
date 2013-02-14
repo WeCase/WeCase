@@ -244,15 +244,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                                 + "    Time: %s<br>    Author: %s<br>    Text: %s<br>" %
                                 (item['retweeted_status']['created_at'], item['retweeted_status']['user']['name'],
                                  item['retweeted_status']['text']))
+                item_source_id = QtGui.QStandardItem(item['status']['idstr'])
             except KeyError:
                 item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s<br>" %
                                                (item['created_at'], item['user']['name'], item['text']))
+                item_source_id = QtGui.QStandardItem("")
 
             item_id = QtGui.QStandardItem(item['idstr'])
-            try:
-                item_source_id = QtGui.QStandardItem(item['status']['idstr'])
-            except KeyError:
-                item_source_id = QtGui.QStandardItem("")
 
             model.setItem(count, 0, item_content)
             model.setItem(count, 1, item_id)
