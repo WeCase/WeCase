@@ -512,7 +512,7 @@ class HTMLDelegate(QtGui.QStyledItemDelegate):
         doc.setTextWidth(option.rect.width())
 
         options.text = ""
-        style.drawControl(QtGui.QStyle.CE_ItemViewItem, options, painter);
+        style.drawControl(QtGui.QStyle.CE_ItemViewItem, options, painter)
 
         ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
 
@@ -530,7 +530,7 @@ class HTMLDelegate(QtGui.QStyledItemDelegate):
 
     def sizeHint(self, option, index):
         options = QtGui.QStyleOptionViewItemV4(option)
-        self.initStyleOption(options,index)
+        self.initStyleOption(options, index)
 
         doc = QtGui.QTextDocument()
         doc.setHtml(options.text)
