@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '../ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Tue Feb 12 09:45:39 2013
+# Created: Thu Feb 14 09:29:04 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,6 +18,9 @@ class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
         frm_MainWindow.resize(404, 669)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/LOGO_48x48.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        frm_MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(frm_MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
@@ -114,23 +117,23 @@ class Ui_frm_MainWindow(object):
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         frm_MainWindow.setStatusBar(self.statusbar)
         self.action_About = QtGui.QAction(frm_MainWindow)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/where_s_my_weibo.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_About.setIcon(icon)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/where_s_my_weibo.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_About.setIcon(icon1)
         self.action_About.setObjectName(_fromUtf8("action_About"))
         self.action_Refresh = QtGui.QAction(frm_MainWindow)
         self.action_Refresh.setObjectName(_fromUtf8("action_Refresh"))
         self.action_Log_out = QtGui.QAction(frm_MainWindow)
         self.action_Log_out.setObjectName(_fromUtf8("action_Log_out"))
         self.action_Exit = QtGui.QAction(frm_MainWindow)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/application-exit.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_Exit.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/application-exit.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_Exit.setIcon(icon2)
         self.action_Exit.setObjectName(_fromUtf8("action_Exit"))
         self.action_Settings = QtGui.QAction(frm_MainWindow)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/preferences-other.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_Settings.setIcon(icon2)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/preferences-other.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_Settings.setIcon(icon3)
         self.action_Settings.setObjectName(_fromUtf8("action_Settings"))
         self.actionUpdate = QtGui.QAction(frm_MainWindow)
         self.actionUpdate.setObjectName(_fromUtf8("actionUpdate"))

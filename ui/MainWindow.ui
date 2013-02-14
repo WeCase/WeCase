@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>WeCase</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="wecase.qrc">
+    <normaloff>:/IMG/img/LOGO_48x48.png</normaloff>:/IMG/img/LOGO_48x48.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
