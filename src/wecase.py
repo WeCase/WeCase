@@ -180,10 +180,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupModels()
 
     def setupMyUi(self):
+        self.delegate = HTMLDelegate()
         for listView in self.listViews:
             listView.setWordWrap(True)
             listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
             listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+            listView.setItemDelegate(self.delegate)
+            listView.setSpacing(3)
 
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
@@ -236,13 +239,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         for count_this_time, item in enumerate(timeline):
             count = rowCount + count_this_time
             try:
-                item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n↘\n" %
+                item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s<br>↘<br>" %
                                 (item['created_at'], item['user']['name'], item['text'])
-                                + "    Time: %s\n    Author: %s\n    Text: %s\n\n" %
+                                + "    Time: %s<br>    Author: %s<br>    Text: %s" %
                                 (item['retweeted_status']['created_at'], item['retweeted_status']['user']['name'],
                                  item['retweeted_status']['text']))
             except KeyError:
-                item_content = QtGui.QStandardItem("%s\nAuthor: %s\nText: %s\n\n" %
+                item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s" %
                                                (item['created_at'], item['user']['name'], item['text']))
 
             item_id = QtGui.QStandardItem(item['idstr'])
@@ -457,6 +460,44 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             self.image = unicode(QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)"))
             self.pushButton_picture.setText("Remove the picture")
+
+class HTMLDelegate(QtGui.QStyledItemDelegate):
+    def paint(self, painter, option, index):
+        options = QtGui.QStyleOptionViewItemV4(option)
+        self.initStyleOption(options, index)
+        options.text = options.text.replace(" ", "&nbsp;")
+
+        style = QtGui.QApplication.style() if options.widget is None else options.widget.style()
+
+        doc = QtGui.QTextDocument()
+        doc.setHtml(options.text)
+        doc.setTextWidth(option.rect.width())
+
+        options.text = ""
+        style.drawControl(QtGui.QStyle.CE_ItemViewItem, options, painter);
+
+        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
+
+        # Highlighting text if item is selected
+        #if (optionV4.state & QStyle::State_Selected)
+            #ctx.palette.setColor(QPalette::Text, optionV4.palette.color(QPalette::Active, QPalette::HighlightedText));
+
+        textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        painter.save()
+        painter.translate(textRect.topLeft())
+        painter.setClipRect(textRect.translated(-textRect.topLeft()))
+        doc.documentLayout().draw(painter, ctx)
+
+        painter.restore()
+
+    def sizeHint(self, option, index):
+        options = QtGui.QStyleOptionViewItemV4(option)
+        self.initStyleOption(options,index)
+
+        doc = QtGui.QTextDocument()
+        doc.setHtml(options.text)
+        doc.setTextWidth(options.rect.width())
+        return QtCore.QSize(doc.idealWidth(), (doc.size().height()))
 
 
 if __name__ == "__main__":
