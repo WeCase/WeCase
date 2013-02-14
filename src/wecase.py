@@ -97,6 +97,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.login_timer.start(20)
 
     def login(self):
+        self.pushButton_log.setText("Login, waiting...")
+        self.pushButton_log.setEnabled(False)
         self.login_timer.stop()
 
         self.username = self.cmb_Users.currentText()
@@ -120,6 +122,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         else:
             QtGui.QMessageBox.critical(None, "Authorize Failed!",
                                        "Check your account and password!")
+        self.pushButton_log.setText("GO!")
+        self.pushButton_log.setEnabled(True)
 
     def authorize(self, username, password):
         # TODO: This method is very messy, maybe do some cleanup?
