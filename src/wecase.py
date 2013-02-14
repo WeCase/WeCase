@@ -329,7 +329,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
 
-        wecase_new = NewpostWindow(action="comment", id=int(idstr))
+        wecase_new = NewpostWindow(action="reply", id=int(idstr))
         wecase_new.client = self.client
         wecase_new.exec_()
 
