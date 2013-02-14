@@ -18,7 +18,7 @@ import os
 import urllib
 import httplib
 import shelve
-from weibo import APIClient
+from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
@@ -439,26 +439,45 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def retweet(self):
         text = unicode(self.textEdit.toPlainText())
-        self.client.statuses.repost.post(id=int(self.id), status=text)
+        try:
+            self.client.statuses.repost.post(id=int(self.id), status=text)
+        except APIError as e:
+            self.error(e)
+            return
+
         self.close()
 
     def comment(self):
         text = unicode(self.textEdit.toPlainText())
-        self.client.comments.create.post(id=int(self.id), comment=text)
+        try:
+            self.client.comments.create.post(id=int(self.id), comment=text)
+        except APIError as e:
+            self.error(e)
+            return
+
         self.close()
 
     def reply(self):
         text = unicode(self.textEdit.toPlainText())
-        self.client.comments.reply.post(id=int(self.id), cid=int(self.cid), comment=text)
+        try:
+            self.client.comments.reply.post(id=int(self.id), cid=int(self.cid), comment=text)
+        except APIError as e:
+            self.error(e)
+            return
+
         self.close()
 
     def send_tweet(self):
         text = unicode(self.textEdit.toPlainText())
 
-        if self.image:
-            self.client.statuses.upload.post(status=text, pic=open(self.image))
-        else:
-            self.client.statuses.update.post(status=text)
+        try:
+            if self.image:
+                self.client.statuses.upload.post(status=text, pic=open(self.image))
+            else:
+                self.client.statuses.update.post(status=text)
+        except APIError as e:
+            self.error(e)
+            return
 
         self.image = None
         self.close()
@@ -470,6 +489,15 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             self.image = unicode(QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)"))
             self.pushButton_picture.setText("Remove the picture")
+
+    def error(self, e):
+        e = unicode(e)
+        if "Text too long" in e:
+            QtGui.QMessageBox.warning(None, "Text too long!",
+                                      "Please remove some text.")
+        else:
+            QtGui.QMessageBox.warning(None, "Unknown error!", e)
+
 
 class HTMLDelegate(QtGui.QStyledItemDelegate):
     def paint(self, painter, option, index):
