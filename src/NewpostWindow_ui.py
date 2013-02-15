@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'NewpostWindow.ui'
 #
-# Created: Fri Feb 15 18:34:30 2013
+# Created: Fri Feb 15 20:03:01 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_NewPostWindow(object):
     def setupUi(self, NewPostWindow):
         NewPostWindow.setObjectName(_fromUtf8("NewPostWindow"))
-        NewPostWindow.resize(562, 386)
+        NewPostWindow.resize(562, 292)
         NewPostWindow.setAutoFillBackground(False)
         NewPostWindow.setProperty("unifiedTitleAndToolBarOnMac", False)
         self.gridLayout_3 = QtGui.QGridLayout(NewPostWindow)
@@ -30,11 +30,6 @@ class Ui_NewPostWindow(object):
         self.gridLayout = QtGui.QGridLayout(self.widget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.textEdit = QtGui.QTextEdit(self.widget)
-        self.textEdit.setMouseTracking(True)
-        self.textEdit.setFrameShadow(QtGui.QFrame.Sunken)
-        self.textEdit.setObjectName(_fromUtf8("textEdit"))
-        self.gridLayout.addWidget(self.textEdit, 0, 0, 1, 1)
         self.label = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Arial Black"))
@@ -45,6 +40,11 @@ class Ui_NewPostWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
+        self.textEdit = QtGui.QTextEdit(self.widget)
+        self.textEdit.setMouseTracking(True)
+        self.textEdit.setFrameShadow(QtGui.QFrame.Sunken)
+        self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.gridLayout.addWidget(self.textEdit, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.widget)
         spacerItem = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
         self.verticalLayout.addItem(spacerItem)
