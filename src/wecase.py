@@ -432,6 +432,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def setupSignals(self):
         self.pushButton_cancel.clicked.connect(self.close)
         self.pushButton_picture.clicked.connect(self.add_image)
+        self.textEdit.textChanged.connect(self.check_chars)
         if self.action == "new":
             self.pushButton_send.clicked.connect(self.send_tweet)
         elif self.action == "retweet":
@@ -501,7 +502,21 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                       "Please remove some text.")
         else:
             QtGui.QMessageBox.warning(None, "Unknown error!", e)
-
+    
+    #check textEdit characters. 
+    #if it larger than 140, 
+    #Send Button will be disabled 
+    #and label will show red chars.
+    def check_chars(self):
+        text = unicode(self.textEdit.toPlainText())
+        numLens = 140 - len(text)
+        if numLens >= 0:
+            self.label.setStyleSheet("color:black;")
+            self.pushButton_send.setEnabled(True)
+        else:
+            self.label.setStyleSheet("color:red;")
+            self.pushButton_send.setEnabled(False)
+        self.label.setText(str(numLens))
 
 class HTMLDelegate(QtGui.QStyledItemDelegate):
     def paint(self, painter, option, index):

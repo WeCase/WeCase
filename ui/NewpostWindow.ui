@@ -41,6 +41,28 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <family>Arial Black</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>140</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -69,38 +91,10 @@
         </size>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton_at">
-          <property name="text">
-           <string>At</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_picture">
-          <property name="text">
-           <string>Picture</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QPushButton" name="pushButton_send">
-          <property name="text">
-           <string>Send</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QPushButton" name="pushButton_location">
           <property name="text">
            <string>Location</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="pushButton_cancel">
-          <property name="text">
-           <string>Cancel</string>
           </property>
          </widget>
         </item>
@@ -116,6 +110,34 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="pushButton_cancel">
+          <property name="text">
+           <string>Cancel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="pushButton_picture">
+          <property name="text">
+           <string>Picture</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_at">
+          <property name="text">
+           <string>At</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QPushButton" name="pushButton_send">
+          <property name="text">
+           <string>Send</string>
+          </property>
+         </widget>
         </item>
        </layout>
        <zorder>pushButton_at</zorder>
