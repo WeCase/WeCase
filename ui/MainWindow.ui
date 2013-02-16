@@ -14,7 +14,7 @@
    <string>WeCase</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="wecase.qrc">
+   <iconset resource="../文档/git/WeCase/ui/wecase.qrc">
     <normaloff>:/IMG/img/LOGO_48x48.png</normaloff>:/IMG/img/LOGO_48x48.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -143,7 +143,7 @@
      <x>0</x>
      <y>0</y>
      <width>404</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -155,7 +155,7 @@
    <property name="minimumSize">
     <size>
      <width>0</width>
-     <height>25</height>
+     <height>0</height>
     </size>
    </property>
    <property name="defaultUp">
@@ -190,7 +190,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_About">
    <property name="icon">
-    <iconset resource="wecase.qrc">
+    <iconset resource="../文档/git/WeCase/ui/wecase.qrc">
      <normaloff>:/IMG/img/where_s_my_weibo.svg</normaloff>:/IMG/img/where_s_my_weibo.svg</iconset>
    </property>
    <property name="text">
@@ -209,7 +209,7 @@
   </action>
   <action name="action_Exit">
    <property name="icon">
-    <iconset resource="wecase.qrc">
+    <iconset resource="../文档/git/WeCase/ui/wecase.qrc">
      <normaloff>:/IMG/img/application-exit.svg</normaloff>:/IMG/img/application-exit.svg</iconset>
    </property>
    <property name="text">
@@ -218,7 +218,7 @@
   </action>
   <action name="action_Settings">
    <property name="icon">
-    <iconset resource="wecase.qrc">
+    <iconset resource="../文档/git/WeCase/ui/wecase.qrc">
      <normaloff>:/IMG/img/preferences-other.png</normaloff>:/IMG/img/preferences-other.png</iconset>
    </property>
    <property name="text">
@@ -232,7 +232,7 @@
   </action>
  </widget>
  <resources>
-  <include location="wecase.qrc"/>
+  <include location="../文档/git/WeCase/ui/wecase.qrc"/>
  </resources>
  <connections/>
 </ui>
