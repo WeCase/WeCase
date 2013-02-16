@@ -423,6 +423,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.cid = cid
         self.setupUi(self)
         self.textEdit.setText(text)
+        self.check_chars()
         self.setupSignals()
 
     def setupMyUi(self):
@@ -502,10 +503,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                       "Please remove some text.")
         else:
             QtGui.QMessageBox.warning(None, "Unknown error!", e)
-    
-    #check textEdit characters. 
-    #if it larger than 140, 
-    #Send Button will be disabled 
+
+    #check textEdit characters.
+    #if it larger than 140,
+    #Send Button will be disabled
     #and label will show red chars.
     def check_chars(self):
         text = unicode(self.textEdit.toPlainText())
