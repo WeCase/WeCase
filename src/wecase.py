@@ -504,11 +504,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             QtGui.QMessageBox.warning(None, "Unknown error!", e)
 
-    #check textEdit characters.
-    #if it larger than 140,
-    #Send Button will be disabled
-    #and label will show red chars.
     def check_chars(self):
+        '''Check textEdit's characters.
+        If it larger than 140, Send Button will be disabled
+        and label will show red chars.'''
+
         text = unicode(self.textEdit.toPlainText())
         numLens = 140 - len(text)
         if numLens >= 0:
