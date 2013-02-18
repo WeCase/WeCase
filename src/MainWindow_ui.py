@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Sat Feb 16 17:01:50 2013
+# Created: Tue Feb 19 05:16:01 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
-        frm_MainWindow.resize(404, 669)
+        frm_MainWindow.resize(305, 652)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/LOGO_48x48.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_MainWindow.setWindowIcon(icon)
@@ -97,7 +97,7 @@ class Ui_frm_MainWindow(object):
         frm_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(frm_MainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 404, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 305, 23))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
