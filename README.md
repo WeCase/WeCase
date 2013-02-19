@@ -4,7 +4,8 @@ WeCase
 Description
 ------
 The Linux Sina Weibo Client
-特别说明：在使用 l11n 框架职权，严禁任何人以任何理由翻译界面！
+
+特别说明：在使用 l11n 框架之前，严禁任何人以任何理由翻译界面！
 
 IRC Channel
 ------
