@@ -536,8 +536,14 @@ class HTMLDelegate(QtGui.QStyledItemDelegate):
 
         ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
 
-        textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        # Can not get correct position under Oxygen.
+        # Maybe a bug (KDE #315428), but can not comfirm now.
+        # So that's a workaround from a KDE developer.
+        textRect = options.rect
+
         painter.save()
+
         painter.translate(textRect.topLeft())
         painter.setClipRect(textRect.translated(-textRect.topLeft()))
         doc.documentLayout().draw(painter, ctx)
