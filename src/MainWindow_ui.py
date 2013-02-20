@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Tue Feb 19 05:16:01 2013
+# Created: Wed Feb 20 16:52:34 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,15 +82,19 @@ class Ui_frm_MainWindow(object):
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.pushButton_me = QtGui.QPushButton(self.widget)
+        self.pushButton_me.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_me.setObjectName(_fromUtf8("pushButton_me"))
         self.gridLayout.addWidget(self.pushButton_me, 0, 2, 1, 1)
         self.pushButton_refresh = QtGui.QPushButton(self.widget)
+        self.pushButton_refresh.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_refresh.setObjectName(_fromUtf8("pushButton_refresh"))
         self.gridLayout.addWidget(self.pushButton_refresh, 0, 0, 1, 1)
         self.pushButton_new = QtGui.QPushButton(self.widget)
+        self.pushButton_new.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_new.setObjectName(_fromUtf8("pushButton_new"))
         self.gridLayout.addWidget(self.pushButton_new, 0, 1, 1, 1)
         self.pushButton_settings = QtGui.QPushButton(self.widget)
+        self.pushButton_settings.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_settings.setObjectName(_fromUtf8("pushButton_settings"))
         self.gridLayout.addWidget(self.pushButton_settings, 1, 0, 1, 1)
         self.verticalLayout.addWidget(self.widget)
