@@ -383,7 +383,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
-        text = '//' + model.item(row, 4).text()
+        if model.item(row, 0).text() == "retweet":
+            text = "//@%s: %s" % (model.item(row, 2).text(), model.item(row, 4).text())
+        else:
+            text = ""
 
         wecase_new = NewpostWindow(action="retweet", id=int(idstr), text=text)
         wecase_new.client = self.client
