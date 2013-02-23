@@ -41,6 +41,7 @@ OAUTH2_PARAMETER = {'client_id':       APP_KEY,
                     'ticket':          '',
                     'withOfficalFlag': 0}
 config_path = os.environ['HOME'] + '/.config/wecase/config_db'
+cache_path = os.environ['HOME'] + '/.cache/wecase/'
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
@@ -184,13 +185,12 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupModels()
 
     def setupMyUi(self):
-        self.delegate = HTMLDelegate()
+        self.delegate = TweetDelegate()
         for listView in self.listViews:
             listView.setWordWrap(True)
             listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
             listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
             listView.setItemDelegate(self.delegate)
-            listView.setSpacing(3)
 
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
@@ -239,38 +239,68 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.listView_4.setModel(self.my_timeline)
 
     def get_timeline(self, timeline, model):
+        def prefetchImage(url):
+            filename = url.split("/")[-2]
+
+            if not os.path.exists(cache_path + filename):
+                urllib.urlretrieve(url, cache_path + filename)
+            return
+
         rowCount = model.rowCount()
+
         for count_this_time, item in enumerate(timeline):
             count = rowCount + count_this_time
-            try:
-                # Retweet
-                item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s<br>↘<br>" %
-                                (item['created_at'], item['user']['name'], item['text'])
-                                + "    Time: %s<br>    Author: %s<br>    Text: %s<br>" %
-                                (item['retweeted_status']['created_at'], item['retweeted_status']['user']['name'],
-                                 item['retweeted_status']['text']))
-                item_retweet_content = QtGui.QStandardItem(' // @' + item['user']['name'] + ": " + item['text'])
-            except KeyError:
-                # Normal
-                item_content = QtGui.QStandardItem("%s<br>Author: %s<br>Text: %s<br>" %
-                                               (item['created_at'], item['user']['name'], item['text']))
-                item_retweet_content = QtGui.QStandardItem("")
+            prefetchImage(item['user']['profile_image_url'])
 
-            try:
-                # Comment
-                item_source_id = QtGui.QStandardItem(item['status']['idstr'])
-            except KeyError:
-                # Normal
-                item_source_id = QtGui.QStandardItem("")
+            # tweet (default), comment or retweet?
+            item_type = QtGui.QStandardItem("tweet")
 
+            # simple tweet or comment
             item_id = QtGui.QStandardItem(item['idstr'])
+            item_author = QtGui.QStandardItem(item['user']['name'])
+            item_author_avator = QtGui.QStandardItem(item['user']['profile_image_url'])
+            item_content = QtGui.QStandardItem(item['text'])
+            item_content_time = QtGui.QStandardItem(item['created_at'])
 
-            model.setItem(count, 0, item_content)
+            # comment only
+            try:
+                item_comment_to_original_id = QtGui.QStandardItem(item['status']['idstr'])
+                item_type = QtGui.QStandardItem("comment")
+            except KeyError:
+                # not a comment
+                pass
+
+            # original tweet (if retweeted)
+            try:
+                item_original_id = QtGui.QStandardItem(item['retweeted_status']['idstr'])
+                item_original_content = QtGui.QStandardItem(item['retweeted_status']['text'])
+                item_original_author = QtGui.QStandardItem(item['retweeted_status']['user']['name'])
+                item_original_time = QtGui.QStandardItem(item['retweeted_status']['created_at'])
+                item_type = QtGui.QStandardItem("retweet")
+            except KeyError:
+                # not retweeted
+                pass
+
+            # tweet
+            model.setItem(count, 0, item_type)
             model.setItem(count, 1, item_id)
-            model.setItem(count, 2, item_source_id)
-            model.setItem(count, 3, item_retweet_content)
+            model.setItem(count, 2, item_author)
+            model.setItem(count, 3, item_author_avator)
+            model.setItem(count, 4, item_content)
+            model.setItem(count, 5, item_content_time)
 
-            # process UI's event, or UI will freeze.
+            if item_type.text() == "comment":
+                # comment
+                model.setItem(count, 6, item_comment_to_original_id)
+
+            if item_type.text() == "retweet":
+                # retweet
+                model.setItem(count, 7, item_original_id)
+                model.setItem(count, 8, item_original_content)
+                model.setItem(count, 9, item_original_author)
+                model.setItem(count, 10, item_original_time)
+
+            # process UI's event when we get every two item, or UI will freeze.
             if count_this_time % 2 == 0:
                 app.processEvents()
 
@@ -353,7 +383,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         row = listView.currentIndex().row()
         idstr = model.item(row, 1).text()
-        text = model.item(row, 3).text()
+        if model.item(row, 0).text() == "retweet":
+            text = "//@%s: %s" % (model.item(row, 2).text(), model.item(row, 4).text())
+        else:
+            text = ""
 
         wecase_new = NewpostWindow(action="retweet", id=int(idstr), text=text)
         wecase_new.client = self.client
@@ -379,7 +412,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def reply(self):
         row = self.listView_3.currentIndex().row()
-        idstr = self.comment_to_me.item(row, 2).text()
+        idstr = self.comment_to_me.item(row, 6).text()
         cidstr = self.comment_to_me.item(row, 1).text()
 
         wecase_new = NewpostWindow(action="reply", id=int(idstr), cid=int(cidstr))
@@ -519,48 +552,160 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.pushButton_send.setEnabled(False)
         self.label.setText(str(numLens))
 
-class HTMLDelegate(QtGui.QStyledItemDelegate):
+
+class TweetRendering(QtGui.QStyledItemDelegate):
+    def __init__(self):
+        QtGui.QStyledItemDelegate.__init__(self)
+
+    def loadImage(self, url):
+        # image has been prefetched, so just load it
+        filename = url.split("/")[-2]
+        pixmap = QtGui.QPixmap(cache_path + filename)
+        return pixmap
+
     def paint(self, painter, option, index):
+        # some initializations for rendering
         options = QtGui.QStyleOptionViewItemV4(option)
         self.initStyleOption(options, index)
-        options.text = options.text.replace(" ", "&nbsp;")
-
+        options.text = ""  # remove the original text, render our own text
         style = QtGui.QApplication.style() if options.widget is None else options.widget.style()
-
-        doc = QtGui.QTextDocument()
-        doc.setHtml(options.text)
-        doc.setTextWidth(option.rect.width())
-
-        options.text = ""
         style.drawControl(QtGui.QStyle.CE_ItemViewItem, options, painter)
 
-        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
+        # get data from model
+        typ              = index.model().index(index.row(),  0).data().toString()
+        author           = index.model().index(index.row(),  2).data().toString()
+        author_avator    = index.model().index(index.row(),  3).data().toString()
+        content          = index.model().index(index.row(),  4).data().toString()
+        content_time     = index.model().index(index.row(),  5).data().toString()
+        original_content = index.model().index(index.row(),  8).data().toString()
+        original_author  = index.model().index(index.row(),  9).data().toString()
+        original_time    = index.model().index(index.row(), 10).data().toString()
 
-        # Highlighting text if item is selected
-        #if (optionV4.state & QStyle::State_Selected)
-            #ctx.palette.setColor(QPalette::Text, optionV4.palette.color(QPalette::Active, QPalette::HighlightedText));
+        # position for rendering
+        # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        # Can not get correct position under Oxygen.
+        # Maybe a bug (KDE #315428), but can not comfirm now.
+        # So that's a workaround from a KDE developer.
+        textRect = options.rect
 
-        textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        # draw avator
         painter.save()
-        painter.translate(textRect.topLeft())
-        painter.setClipRect(textRect.translated(-textRect.topLeft()))
-        doc.documentLayout().draw(painter, ctx)
-
+        avator = self.loadImage(str(author_avator))
+        avator = avator.scaled(32, 32)
+        painter.drawPixmap(textRect.topLeft() + QtCore.QPoint(2, 0), avator)
         painter.restore()
 
+        # draw author's name
+        painter.save()
+        painter.translate(textRect.left() + 32, textRect.top() + 1)
+        painter.setClipRect(textRect.translated(-textRect.topLeft()))
+        doc = QtGui.QTextDocument()
+        doc.setHtml(author)
+        doc.setTextWidth(option.rect.width())
+        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
+        doc.documentLayout().draw(painter, ctx)
+        painter.restore()
+
+        # draw time
+        painter.save()
+        painter.translate(textRect.left() + 32, textRect.top() + 16 + 1)
+        painter.setClipRect(textRect.translated(-textRect.topLeft()))
+        doc = QtGui.QTextDocument()
+        doc.setHtml(content_time)
+        doc.setTextWidth(option.rect.width())
+        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
+        doc.documentLayout().draw(painter, ctx)
+        painter.restore()
+
+        # draw content
+        painter.save()
+        painter.translate(textRect.left() + 32, textRect.top() + 16 + 1 + 16)
+        painter.setClipRect(textRect.translated(-textRect.topLeft()))
+        doc = QtGui.QTextDocument()
+        doc.setHtml(content)
+        doc.setTextWidth(option.rect.width() - 50)
+        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
+        doc.documentLayout().draw(painter, ctx)
+        content_height = doc.size().height()
+        painter.restore()
+
+        # draw original content (if retweeted)
+        if typ == "retweet":
+            painter.save()
+            painter.translate(textRect.left() + 32 + 32, textRect.top() + content_height + 16 + 1 + 16)
+            painter.setClipRect(textRect.translated(-textRect.topLeft()))
+            doc = QtGui.QTextDocument()
+            doc.setHtml("@%s: %s" % (original_author, original_content))
+            doc.setTextWidth(option.rect.width() - 82)
+            ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
+            doc.documentLayout().draw(painter, ctx)
+            painter.restore()
+
     def sizeHint(self, option, index):
+        # some initializations for rendering
         options = QtGui.QStyleOptionViewItemV4(option)
         self.initStyleOption(options, index)
+        options.text = ""  # remove the original text, render our own text
 
+        height = 0
+
+        # get data from model
+        typ              = index.model().index(index.row(), 0).data().toString()
+        content          = index.model().index(index.row(), 4).data().toString()
+        original_content = index.model().index(index.row(), 8).data().toString()
+        original_author  = index.model().index(index.row(), 9).data().toString()
+
+        # author's name
+        height += 1
+
+        # time
+        height += 16
+
+        # content
+        height += 16
         doc = QtGui.QTextDocument()
-        doc.setHtml(options.text)
-        doc.setTextWidth(options.rect.width())
-        return QtCore.QSize(doc.idealWidth(), (doc.size().height()))
+        doc.setHtml(content)
+        doc.setTextWidth(option.rect.width())
+        height += doc.size().height()
+        content_width = doc.size().width()
+
+        # HACK: extra space
+        height += 10
+
+        # draw original content (if retweeted)
+        if typ == "retweet":
+            height += 16
+            doc.setHtml("@%s: %s" % (original_author, original_content))
+            doc.setTextWidth(option.rect.width() - 82)
+            height += doc.size().height() - 8  # HACK: Remove space
+            content_width = doc.size().width()
+
+        return content_width, height
+
+
+class TweetDelegate(QtGui.QStyledItemDelegate):
+    def __init__(self):
+        QtGui.QStyledItemDelegate.__init__(self)
+
+    def paint(self, painter, option, index):
+        tweet = TweetRendering()
+        tweet.paint(painter, option, index)
+
+    def sizeHint(self, option, index):
+        tweet = TweetRendering()
+        width, height = tweet.sizeHint(option, index)
+
+        return QtCore.QSize(width, height)
 
 
 if __name__ == "__main__":
     try:
         os.mkdir(config_path.replace("/config_db", ""))
+    except OSError:
+        pass
+
+    try:
+        os.mkdir(cache_path)
     except OSError:
         pass
 
