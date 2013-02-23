@@ -282,7 +282,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             except KeyError:
                 # not retweeted
                 pass
-            
+
             # thumb pic
             try:
                 item_thumb_pic = None
@@ -574,8 +574,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 class TweetRendering(QtGui.QStyledItemDelegate):
     def __init__(self):
         QtGui.QStyledItemDelegate.__init__(self)
-        self.IMG_AVATOR = -2 #type avator
-        self.IMG_THUMB = -1  #type thumbnail image
+        self.IMG_AVATOR = -2  # type avator
+        self.IMG_THUMB = -1   # type thumbnail image
 
     def loadImage(self, url, img_type=-2):
         # image has been prefetched, so just load it
@@ -600,7 +600,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         original_content = index.model().index(index.row(),  8).data().toString()
         original_author  = index.model().index(index.row(),  9).data().toString()
         original_time    = index.model().index(index.row(), 10).data().toString()
-        thumbnail_pic    = index.model().index(index.row(), 11).data().toString() #get thubmnail_pic
+        thumbnail_pic    = index.model().index(index.row(), 11).data().toString()  # get thubmnail_pic
 
         # position for rendering
         # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
@@ -685,7 +685,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         content          = index.model().index(index.row(), 4).data().toString()
         original_content = index.model().index(index.row(), 8).data().toString()
         original_author  = index.model().index(index.row(), 9).data().toString()
-        thumbnail_pic    = index.model().index(index.row(), 11).data().toString() #get thubmnail_pic
+        thumbnail_pic    = index.model().index(index.row(), 11).data().toString()  # get thubmnail_pic
 
         # author's name
         height += 1
@@ -711,13 +711,13 @@ class TweetRendering(QtGui.QStyledItemDelegate):
             doc.setTextWidth(option.rect.width() - 82)
             height += doc.size().height() - 8  # HACK: Remove space
             content_width = doc.size().width()
-        
+
         # show pic
         if thumbnail_pic != "":
             height += 16
             thumb = self.loadImage(str(thumbnail_pic), self.IMG_THUMB)
             height += thumb.height()
-        
+
         return content_width, height
 
 
