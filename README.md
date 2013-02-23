@@ -4,6 +4,7 @@ WeCase
 Description
 ------
 The Linux Sina Weibo Client
+This project is under heavy development.
 
 **特别说明：在使用 l10n 框架之前，严禁任何人以任何理由翻译界面！**
 
