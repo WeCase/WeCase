@@ -183,6 +183,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupMyUi()
         self.setupSignals()
         self.setupModels()
+        self.IMG_AVATOR = -2
+        self.IMG_THUMB = -1
 
     def setupMyUi(self):
         self.delegate = TweetDelegate()
@@ -239,8 +241,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.listView_4.setModel(self.my_timeline)
 
     def get_timeline(self, timeline, model):
-        def prefetchImage(url):
-            filename = url.split("/")[-2]
+        def prefetchImage(url, img_type=-2):
+            filename = url.split("/")[img_type]
 
             if not os.path.exists(cache_path + filename):
                 urllib.urlretrieve(url, cache_path + filename)
@@ -250,7 +252,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         for count_this_time, item in enumerate(timeline):
             count = rowCount + count_this_time
-            prefetchImage(item['user']['profile_image_url'])
+            prefetchImage(item['user']['profile_image_url'], self.IMG_AVATOR)
 
             # tweet (default), comment or retweet?
             item_type = QtGui.QStandardItem("tweet")
@@ -280,6 +282,18 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             except KeyError:
                 # not retweeted
                 pass
+            
+            # thumb pic
+            try:
+                item_thumb_pic = None
+                prefetchImage(item['thumbnail_pic'], self.IMG_THUMB)
+                item_thumb_pic = QtGui.QStandardItem(item['thumbnail_pic'])
+            except KeyError:
+                try:
+                    prefetchImage(item['retweeted_status']['thumbnail_pic'])
+                    item_thumb_pic = QtGui.QStandardItem(item['retweeted_status']['thumbnail_pic'])
+                except KeyError:
+                    pass
 
             # tweet
             model.setItem(count, 0, item_type)
@@ -299,6 +313,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 model.setItem(count, 8, item_original_content)
                 model.setItem(count, 9, item_original_author)
                 model.setItem(count, 10, item_original_time)
+
+            if not item_thumb_pic is None:
+                # thumb pic
+                model.setItem(count, 11, item_thumb_pic)
 
             # process UI's event when we get every two item, or UI will freeze.
             if count_this_time % 2 == 0:
@@ -556,10 +574,12 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 class TweetRendering(QtGui.QStyledItemDelegate):
     def __init__(self):
         QtGui.QStyledItemDelegate.__init__(self)
+        self.IMG_AVATOR = -2 #type avator
+        self.IMG_THUMB = -1  #type thumbnail image
 
-    def loadImage(self, url):
+    def loadImage(self, url, img_type=-2):
         # image has been prefetched, so just load it
-        filename = url.split("/")[-2]
+        filename = url.split("/")[img_type]
         pixmap = QtGui.QPixmap(cache_path + filename)
         return pixmap
 
@@ -580,6 +600,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         original_content = index.model().index(index.row(),  8).data().toString()
         original_author  = index.model().index(index.row(),  9).data().toString()
         original_time    = index.model().index(index.row(), 10).data().toString()
+        thumbnail_pic    = index.model().index(index.row(), 11).data().toString() #get thubmnail_pic
 
         # position for rendering
         # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
@@ -590,9 +611,9 @@ class TweetRendering(QtGui.QStyledItemDelegate):
 
         # draw avator
         painter.save()
-        avator = self.loadImage(str(author_avator))
+        avator = self.loadImage(str(author_avator), self.IMG_AVATOR)
         avator = avator.scaled(32, 32)
-        painter.drawPixmap(textRect.topLeft() + QtCore.QPoint(2, 0), avator)
+        painter.drawPixmap(textRect.topLeft() + QtCore.QPoint(2, 4), avator)
         painter.restore()
 
         # draw author's name
@@ -627,6 +648,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
         doc.documentLayout().draw(painter, ctx)
         content_height = doc.size().height()
+        content_width = doc.size().width()
         painter.restore()
 
         # draw original content (if retweeted)
@@ -639,6 +661,15 @@ class TweetRendering(QtGui.QStyledItemDelegate):
             doc.setTextWidth(option.rect.width() - 82)
             ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
             doc.documentLayout().draw(painter, ctx)
+            content_height += doc.size().height()
+            painter.restore()
+
+        # Show picture
+        if thumbnail_pic != "":
+            painter.save()
+            thumb = self.loadImage(str(thumbnail_pic), self.IMG_THUMB)
+            center_left = (content_width - thumb.width()) / 2
+            painter.drawPixmap(textRect.topLeft() + QtCore.QPoint(center_left, content_height + 16 + 1 + 16), thumb)
             painter.restore()
 
     def sizeHint(self, option, index):
@@ -654,6 +685,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         content          = index.model().index(index.row(), 4).data().toString()
         original_content = index.model().index(index.row(), 8).data().toString()
         original_author  = index.model().index(index.row(), 9).data().toString()
+        thumbnail_pic    = index.model().index(index.row(), 11).data().toString() #get thubmnail_pic
 
         # author's name
         height += 1
@@ -679,7 +711,13 @@ class TweetRendering(QtGui.QStyledItemDelegate):
             doc.setTextWidth(option.rect.width() - 82)
             height += doc.size().height() - 8  # HACK: Remove space
             content_width = doc.size().width()
-
+        
+        # show pic
+        if thumbnail_pic != "":
+            height += 16
+            thumb = self.loadImage(str(thumbnail_pic), self.IMG_THUMB)
+            height += thumb.height()
+        
         return content_width, height
 
 
