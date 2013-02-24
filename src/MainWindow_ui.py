@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainWindow.ui'
+# Form implementation generated from reading ui file '../ui/MainWindow.ui'
 #
-# Created: Sun Feb 24 09:11:30 2013
+# Created: Sun Feb 24 13:51:17 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
-        frm_MainWindow.resize(402, 652)
+        frm_MainWindow.resize(323, 652)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_MainWindow.setWindowIcon(icon)
@@ -81,23 +81,24 @@ class Ui_frm_MainWindow(object):
         self.gridLayout = QtGui.QGridLayout(self.widget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
         self.pushButton_me = QtGui.QPushButton(self.widget)
         self.pushButton_me.setObjectName(_fromUtf8("pushButton_me"))
-        self.gridLayout.addWidget(self.pushButton_me, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_me, 0, 3, 1, 1)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 0, 4, 1, 1)
         self.pushButton_refresh = QtGui.QPushButton(self.widget)
         self.pushButton_refresh.setObjectName(_fromUtf8("pushButton_refresh"))
-        self.gridLayout.addWidget(self.pushButton_refresh, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_refresh, 0, 1, 1, 1)
         self.pushButton_new = QtGui.QPushButton(self.widget)
         self.pushButton_new.setObjectName(_fromUtf8("pushButton_new"))
-        self.gridLayout.addWidget(self.pushButton_new, 0, 1, 1, 1)
-        self.pushButton_settings = QtGui.QPushButton(self.widget)
-        self.pushButton_settings.setObjectName(_fromUtf8("pushButton_settings"))
-        self.gridLayout.addWidget(self.pushButton_settings, 0, 3, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_new, 0, 2, 1, 1)
         self.verticalLayout.addWidget(self.widget)
         frm_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(frm_MainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 402, 24))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 323, 24))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -154,14 +155,13 @@ class Ui_frm_MainWindow(object):
 
     def retranslateUi(self, frm_MainWindow):
         frm_MainWindow.setWindowTitle(QtGui.QApplication.translate("frm_MainWindow", "WeCase", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_weibo), QtGui.QApplication.translate("frm_MainWindow", "微博", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_atme), QtGui.QApplication.translate("frm_MainWindow", "@我", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_comment), QtGui.QApplication.translate("frm_MainWindow", "评论", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_my), QtGui.QApplication.translate("frm_MainWindow", "我的", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_weibo), QtGui.QApplication.translate("frm_MainWindow", "Weibo", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_atme), QtGui.QApplication.translate("frm_MainWindow", "@Me", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_comment), QtGui.QApplication.translate("frm_MainWindow", "Comments", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_my), QtGui.QApplication.translate("frm_MainWindow", "My tweet", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_me.setText(QtGui.QApplication.translate("frm_MainWindow", "Me", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_refresh.setText(QtGui.QApplication.translate("frm_MainWindow", "Refresh", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_new.setText(QtGui.QApplication.translate("frm_MainWindow", "New Weibo", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_settings.setText(QtGui.QApplication.translate("frm_MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
         self.menu_WeCase.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&WeCase", None, QtGui.QApplication.UnicodeUTF8))
         self.menuHelp.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
         self.menuO_ptions.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&Options", None, QtGui.QApplication.UnicodeUTF8))
