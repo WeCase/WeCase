@@ -228,16 +228,16 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         if self.tabWidget.currentIndex() == 0:
             self.all_timeline_page += 1
-            self.get_all_timeline(self.all_timeline_page)
+            thread.start_new_thread(self.get_all_timeline, (self.all_timeline_page, ))
         elif self.tabWidget.currentIndex() == 1:
             self.mentions_page += 1
-            self.get_mentions_timeline(self.mentions_page)
+            thread.start_new_thread(self.get_mentions_timeline, (self.mentions_page, ))
         elif self.tabWidget.currentIndex() == 2:
             self.comment_to_me_page += 1
-            self.get_comment_to_me(self.comment_to_me_page)
+            thread.start_new_thread(self.get_comment_to_me, (self.comment_to_me_page, ))
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline_page += 1
-            self.get_my_timeline(self.my_timeline_page)
+            thread.start_new_thread(self.get_my_timeline, (self.my_timeline_page, ))
 
     def setupModels(self):
         self.all_timeline = QtGui.QStandardItemModel(self)
@@ -525,6 +525,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.setText(text)
         self.check_chars()
         self.setupSignals()
+        self.notify = Notify(time=1)
 
     def setupMyUi(self):
         if self.action == "new":
@@ -547,6 +548,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = unicode(self.textEdit.toPlainText())
         try:
             self.client.statuses.repost.post(id=int(self.id), status=text)
+            self.notify.showMessage("WeCase", "Retweet Success!")
         except APIError as e:
             self.error(e)
             return
@@ -557,6 +559,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = unicode(self.textEdit.toPlainText())
         try:
             self.client.comments.create.post(id=int(self.id), comment=text)
+            self.notify.showMessage("WeCase", "Comment Success!")
         except APIError as e:
             self.error(e)
             return
@@ -567,6 +570,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = unicode(self.textEdit.toPlainText())
         try:
             self.client.comments.reply.post(id=int(self.id), cid=int(self.cid), comment=text)
+            self.notify.showMessage("WeCase", "Reply Success!")
         except APIError as e:
             self.error(e)
             return
@@ -581,6 +585,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 self.client.statuses.upload.post(status=text, pic=open(self.image))
             else:
                 self.client.statuses.update.post(status=text)
+
+            self.notify.showMessage("WeCase", "Tweet Success!")
         except APIError as e:
             self.error(e)
             return
@@ -758,7 +764,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
             height += 16
             doc.setHtml("@%s: %s" % (original_author, original_content))
             doc.setTextWidth(option.rect.width() - 82)
-            height += doc.size().height() - 8  # HACK: Remove space
+            height += doc.size().height()
             content_width = doc.size().width()
 
         # show pic
