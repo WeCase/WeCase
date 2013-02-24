@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'SettingWindow.ui'
 #
-# Created: Fri Feb 15 17:00:05 2013
+# Created: Sun Feb 24 08:41:38 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,10 +42,15 @@ class Ui_SettingWindow(object):
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.pushButton_OK = QtGui.QPushButton(self.widget)
         self.pushButton_OK.setObjectName(_fromUtf8("pushButton_OK"))
-        self.gridLayout.addWidget(self.pushButton_OK, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_OK, 0, 1, 1, 1)
         self.pushButton_Cancel = QtGui.QPushButton(self.widget)
         self.pushButton_Cancel.setObjectName(_fromUtf8("pushButton_Cancel"))
-        self.gridLayout.addWidget(self.pushButton_Cancel, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_Cancel, 0, 2, 1, 1)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
+        self.pushButton = QtGui.QPushButton(self.widget)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.gridLayout.addWidget(self.pushButton, 0, 3, 1, 1)
         self.verticalLayout.addWidget(self.widget)
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
@@ -59,5 +64,6 @@ class Ui_SettingWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("SettingWindow", "Tab 2", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_OK.setText(QtGui.QApplication.translate("SettingWindow", "&OK", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_Cancel.setText(QtGui.QApplication.translate("SettingWindow", "&Cancel", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("SettingWindow", "&Apply", None, QtGui.QApplication.UnicodeUTF8))
 
 import wecase_rc
