@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'LoginWindow.ui'
 #
-# Created: Sun Feb 24 08:41:14 2013
+# Created: Sun Feb 24 09:11:18 2013
 #      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,6 +18,9 @@ class Ui_frm_Login(object):
     def setupUi(self, frm_Login):
         frm_Login.setObjectName(_fromUtf8("frm_Login"))
         frm_Login.resize(387, 182)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        frm_Login.setWindowIcon(icon)
         self.gridLayout = QtGui.QGridLayout(frm_Login)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.verticalLayout_3 = QtGui.QVBoxLayout()
@@ -86,3 +89,4 @@ class Ui_frm_Login(object):
         self.pushButton_log.setText(QtGui.QApplication.translate("frm_Login", "GO!", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_new.setText(QtGui.QApplication.translate("frm_Login", "New account", None, QtGui.QApplication.UnicodeUTF8))
 
+import wecase_rc

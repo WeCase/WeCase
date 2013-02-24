@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Fri Feb 22 17:29:59 2013
-#      by: PyQt4 UI code generator 4.9.6
+# Created: Sun Feb 24 09:11:30 2013
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,23 +12,14 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
-        frm_MainWindow.resize(386, 652)
+        frm_MainWindow.resize(402, 652)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/LOGO_48x48.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(frm_MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
@@ -106,7 +97,7 @@ class Ui_frm_MainWindow(object):
         frm_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(frm_MainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 386, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 402, 24))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -162,23 +153,23 @@ class Ui_frm_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(frm_MainWindow)
 
     def retranslateUi(self, frm_MainWindow):
-        frm_MainWindow.setWindowTitle(_translate("frm_MainWindow", "WeCase", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_weibo), _translate("frm_MainWindow", "微博", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_atme), _translate("frm_MainWindow", "@我", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_comment), _translate("frm_MainWindow", "评论", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_my), _translate("frm_MainWindow", "我的", None))
-        self.pushButton_me.setText(_translate("frm_MainWindow", "Me", None))
-        self.pushButton_refresh.setText(_translate("frm_MainWindow", "Refresh", None))
-        self.pushButton_new.setText(_translate("frm_MainWindow", "New Weibo", None))
-        self.pushButton_settings.setText(_translate("frm_MainWindow", "Settings", None))
-        self.menu_WeCase.setTitle(_translate("frm_MainWindow", "&WeCase", None))
-        self.menuHelp.setTitle(_translate("frm_MainWindow", "&Help", None))
-        self.menuO_ptions.setTitle(_translate("frm_MainWindow", "&Options", None))
-        self.action_About.setText(_translate("frm_MainWindow", "&About...", None))
-        self.action_Refresh.setText(_translate("frm_MainWindow", "&Refresh", None))
-        self.action_Log_out.setText(_translate("frm_MainWindow", "&Log out", None))
-        self.action_Exit.setText(_translate("frm_MainWindow", "&Exit", None))
-        self.action_Settings.setText(_translate("frm_MainWindow", "&Settings", None))
-        self.actionUpdate.setText(_translate("frm_MainWindow", "&Update", None))
+        frm_MainWindow.setWindowTitle(QtGui.QApplication.translate("frm_MainWindow", "WeCase", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_weibo), QtGui.QApplication.translate("frm_MainWindow", "微博", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_atme), QtGui.QApplication.translate("frm_MainWindow", "@我", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_comment), QtGui.QApplication.translate("frm_MainWindow", "评论", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_my), QtGui.QApplication.translate("frm_MainWindow", "我的", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_me.setText(QtGui.QApplication.translate("frm_MainWindow", "Me", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_refresh.setText(QtGui.QApplication.translate("frm_MainWindow", "Refresh", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_new.setText(QtGui.QApplication.translate("frm_MainWindow", "New Weibo", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_settings.setText(QtGui.QApplication.translate("frm_MainWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.menu_WeCase.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&WeCase", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuHelp.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuO_ptions.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&Options", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_About.setText(QtGui.QApplication.translate("frm_MainWindow", "&About...", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Refresh.setText(QtGui.QApplication.translate("frm_MainWindow", "&Refresh", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Log_out.setText(QtGui.QApplication.translate("frm_MainWindow", "&Log out", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Exit.setText(QtGui.QApplication.translate("frm_MainWindow", "&Exit", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Settings.setText(QtGui.QApplication.translate("frm_MainWindow", "&Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionUpdate.setText(QtGui.QApplication.translate("frm_MainWindow", "&Update", None, QtGui.QApplication.UnicodeUTF8))
 
 import wecase_rc

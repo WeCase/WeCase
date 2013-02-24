@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
+    <width>402</width>
     <height>652</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="wecase.qrc">
-    <normaloff>:/IMG/img/LOGO_48x48.png</normaloff>:/IMG/img/LOGO_48x48.png</iconset>
+    <normaloff>:/IMG/img/WeCase.svg</normaloff>:/IMG/img/WeCase.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -142,8 +142,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>386</width>
-     <height>20</height>
+     <width>402</width>
+     <height>24</height>
     </rect>
    </property>
    <property name="sizePolicy">

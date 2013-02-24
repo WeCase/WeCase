@@ -1,5 +1,11 @@
 <RCC>
   <qresource prefix="IMG">
+    <file>img/wc_1024r.png</file>
+    <file>img/WeCase.svg</file>
+    <file>img/WeCase 16.png</file>
+    <file>img/WeCase 80.png</file>
+    <file>img/WeCase 256.png</file>
+    <file>img/WeCase 854.png</file>
     <file>img/LOGO_16x16.png</file>
     <file>img/LOGO_24x24.png</file>
     <file>img/LOGO_32x32.png</file>

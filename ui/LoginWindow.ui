@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Log in</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="wecase.qrc">
+    <normaloff>:/IMG/img/WeCase.svg</normaloff>:/IMG/img/WeCase.svg</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -141,6 +145,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="wecase.qrc"/>
+ </resources>
  <connections/>
 </ui>
