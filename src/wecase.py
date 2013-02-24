@@ -290,7 +290,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 item_thumb_pic = QtGui.QStandardItem(item['thumbnail_pic'])
             except KeyError:
                 try:
-                    prefetchImage(item['retweeted_status']['thumbnail_pic'])
+                    prefetchImage(item['retweeted_status']['thumbnail_pic'], self.IMG_THUMB)
                     item_thumb_pic = QtGui.QStandardItem(item['retweeted_status']['thumbnail_pic'])
                 except KeyError:
                     pass
