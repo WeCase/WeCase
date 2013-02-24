@@ -200,7 +200,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.action_Log_out.triggered.connect(self.logout)
         self.action_Refresh.triggered.connect(self.refresh)
 
-        self.pushButton_settings.clicked.connect(self.settings_show)
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
 
@@ -603,11 +602,11 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         thumbnail_pic    = index.model().index(index.row(), 11).data().toString()  # get thubmnail_pic
 
         # position for rendering
-        # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
         # Can not get correct position under Oxygen.
         # Maybe a bug (KDE #315428), but can not comfirm now.
         # So that's a workaround from a KDE developer.
-        textRect = options.rect
+        #textRect = options.rect
 
         # draw avator
         painter.save()
