@@ -18,7 +18,7 @@ import os
 import urllib
 import httplib
 import shelve
-import notify2  # you should install python-notify2
+import pynotify
 import thread
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui
@@ -793,9 +793,9 @@ class TweetDelegate(QtGui.QStyledItemDelegate):
 
 class Notify():
     def __init__(self, appname="WeCase", time=5):
-        notify2.init(appname)
+        pynotify.init(appname)
         self.timeout = time
-        self.n = notify2.Notification(appname)
+        self.n = pynotify.Notification(appname)
 
     def showMessage(self, title, text, image=""):
         self.n.update(title, text, image)
