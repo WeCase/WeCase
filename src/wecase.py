@@ -374,9 +374,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         num_msg = 0
         # TODO:we need settings window, to controll their displaying or not
         if reminds['status'] != 0:
-            msg += "%d unread message(s)\n" % reminds['status']
+            # Note: do NOT send notify here, or users will crazy.
             self.tabWidget.setTabText(0, "Weibo(%d)" % reminds['status'])
-            num_msg += 1
 
         if reminds['mention_status'] != 0:
             msg += "%d unread @ME\n" % reminds['mention_status']
