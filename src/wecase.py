@@ -18,6 +18,8 @@ import os
 import urllib
 import httplib
 import shelve
+import pynotify
+import thread
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
@@ -114,6 +116,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
                 self.saveConfig()
 
             wecase_main.client = client
+            wecase_main.get_uid()
             wecase_main.get_all_timeline()
             wecase_main.get_my_timeline()
             wecase_main.get_mentions_timeline()
@@ -175,6 +178,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
+    uid = None
 
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
@@ -185,6 +189,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupModels()
         self.IMG_AVATOR = -2
         self.IMG_THUMB = -1
+        self.TIMER_INTERVAL = 30  # TODO:30 Seconds by default, can be modify with settings window
+        self.notify = Notify()
+        thread.start_new_thread(self.timer.start, (self.TIMER_INTERVAL * 1000, ))  # it can run in a new thread
 
     def setupMyUi(self):
         self.delegate = TweetDelegate()
@@ -193,6 +200,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             listView.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
             listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
             listView.setItemDelegate(self.delegate)
+        self.timer = QtCore.QTimer()  # check new unread_count
 
     def setupSignals(self):
         self.action_Exit.triggered.connect(self.close)
@@ -200,6 +208,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.action_Log_out.triggered.connect(self.logout)
         self.action_Refresh.triggered.connect(self.refresh)
 
+        #self.pushButton_settings.clicked.connect(self.settings_show)
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
 
@@ -208,6 +217,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             listView.verticalScrollBar().connect(listView.verticalScrollBar(), QtCore.SIGNAL("valueChanged(int)"), self.load_more)
 
         self.listView_3.connect(self.listView_3, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.comments_context)
+        QtCore.QObject.connect(self.timer, QtCore.SIGNAL("timeout()"), self.show_notify)
 
     def load_more(self, value):
         listView = self.get_current_listView()
@@ -218,16 +228,16 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         if self.tabWidget.currentIndex() == 0:
             self.all_timeline_page += 1
-            self.get_all_timeline(self.all_timeline_page)
+            thread.start_new_thread(self.get_all_timeline, (self.all_timeline_page, ))
         elif self.tabWidget.currentIndex() == 1:
             self.mentions_page += 1
-            self.get_mentions_timeline(self.mentions_page)
+            thread.start_new_thread(self.get_mentions_timeline, (self.mentions_page, ))
         elif self.tabWidget.currentIndex() == 2:
             self.comment_to_me_page += 1
-            self.get_comment_to_me(self.comment_to_me_page)
+            thread.start_new_thread(self.get_comment_to_me, (self.comment_to_me_page, ))
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline_page += 1
-            self.get_my_timeline(self.my_timeline_page)
+            thread.start_new_thread(self.get_my_timeline, (self.my_timeline_page, ))
 
     def setupModels(self):
         self.all_timeline = QtGui.QStandardItemModel(self)
@@ -325,6 +335,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         all_timelines = self.client.statuses.home_timeline.get(page=page).statuses
         self.get_timeline(all_timelines, self.all_timeline)
         self.all_timeline_page = page
+        self.tabWidget.setTabText(0, "Weibo")
 
     def get_my_timeline(self, page=1):
         my_timelines = self.client.statuses.user_timeline.get(page=page).statuses
@@ -335,11 +346,50 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         mentions_timelines = self.client.statuses.mentions.get(page=page).statuses
         self.get_timeline(mentions_timelines, self.mentions)
         self.mentions_page = page
+        self.tabWidget.setTabText(1, "@ME")
 
     def get_comment_to_me(self, page=1):
         comments_to_me = self.client.comments.to_me.get(page=page).comments
         self.get_timeline(comments_to_me, self.comment_to_me)
         self.comment_to_me_page = page
+        self.tabWidget.setTabText(2, "Comments")
+
+    def get_remind(self, uid):
+        '''this function is used to get unread_count
+        from Weibo API. uid is necessary.'''
+
+        reminds = self.client.remind.unread_count.get(uid=uid)
+        return reminds
+
+    def get_uid(self):
+        '''How can I get my uid? here it is'''
+        try:
+            self.uid = self.client.account.get_uid.get().uid
+        except AttributeError as err:
+            return None
+
+    def show_notify(self):
+        reminds = self.get_remind(self.uid)
+        msg = "You have:\n"
+        num_msg = 0
+        # TODO:we need settings window, to controll their displaying or not
+        if reminds['status'] != 0:
+            msg += "%d unread message(s)\n" % reminds['status']
+            self.tabWidget.setTabText(0, "Weibo(%d)" % reminds['status'])
+            num_msg += 1
+
+        if reminds['mention_status'] != 0:
+            msg += "%d unread @ME\n" % reminds['mention_status']
+            self.tabWidget.setTabText(1, "@Me(%d)" % reminds['mention_status'])
+            num_msg += 1
+
+        if reminds['cmt'] != 0:
+            msg += "%d unread comment(s)\n" % reminds['cmt']
+            self.tabWidget.setTabText(2, "Comments(%d)" % reminds['cmt'])
+            num_msg += 1
+
+        if num_msg != 0:
+            self.notify.showMessage("WeCase", msg, image="notification-message-email")  # TODO:image can use our images in rcc
 
     def settings_show(self):
         wecase_settings.show()
@@ -475,6 +525,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.setText(text)
         self.check_chars()
         self.setupSignals()
+        self.notify = Notify(time=1)
 
     def setupMyUi(self):
         if self.action == "new":
@@ -497,6 +548,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = unicode(self.textEdit.toPlainText())
         try:
             self.client.statuses.repost.post(id=int(self.id), status=text)
+            self.notify.showMessage("WeCase", "Retweet Success!")
         except APIError as e:
             self.error(e)
             return
@@ -507,6 +559,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = unicode(self.textEdit.toPlainText())
         try:
             self.client.comments.create.post(id=int(self.id), comment=text)
+            self.notify.showMessage("WeCase", "Comment Success!")
         except APIError as e:
             self.error(e)
             return
@@ -517,6 +570,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = unicode(self.textEdit.toPlainText())
         try:
             self.client.comments.reply.post(id=int(self.id), cid=int(self.cid), comment=text)
+            self.notify.showMessage("WeCase", "Reply Success!")
         except APIError as e:
             self.error(e)
             return
@@ -531,6 +585,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 self.client.statuses.upload.post(status=text, pic=open(self.image))
             else:
                 self.client.statuses.update.post(status=text)
+
+            self.notify.showMessage("WeCase", "Tweet Success!")
         except APIError as e:
             self.error(e)
             return
@@ -602,11 +658,11 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         thumbnail_pic    = index.model().index(index.row(), 11).data().toString()  # get thubmnail_pic
 
         # position for rendering
-        textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
+        # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
         # Can not get correct position under Oxygen.
         # Maybe a bug (KDE #315428), but can not comfirm now.
         # So that's a workaround from a KDE developer.
-        #textRect = options.rect
+        textRect = options.rect
 
         # draw avator
         painter.save()
@@ -708,7 +764,7 @@ class TweetRendering(QtGui.QStyledItemDelegate):
             height += 16
             doc.setHtml("@%s: %s" % (original_author, original_content))
             doc.setTextWidth(option.rect.width() - 82)
-            height += doc.size().height() - 8  # HACK: Remove space
+            height += doc.size().height()
             content_width = doc.size().width()
 
         # show pic
@@ -734,6 +790,17 @@ class TweetDelegate(QtGui.QStyledItemDelegate):
 
         return QtCore.QSize(width, height)
 
+
+class Notify():
+    def __init__(self, appname="WeCase", time=5):
+        pynotify.init(appname)
+        self.timeout = time
+        self.n = pynotify.Notification(appname)
+
+    def showMessage(self, title, text, image=""):
+        self.n.update(title, text, image)
+        self.n.set_timeout(self.timeout * 1000)  # TODO:user should be able to adjust the time by settings window
+        self.n.show()
 
 if __name__ == "__main__":
     try:
