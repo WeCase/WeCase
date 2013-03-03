@@ -21,7 +21,7 @@ import shelve
 import pynotify
 import thread
 from weibo import APIClient, APIError
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore, QtGui, QtWebKit
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
@@ -624,7 +624,6 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.pushButton_send.setEnabled(False)
         self.label.setText(str(numLens))
 
-
 class TweetRendering(QtGui.QStyledItemDelegate):
     def __init__(self):
         QtGui.QStyledItemDelegate.__init__(self)
@@ -636,6 +635,13 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         filename = url.split("/")[img_type]
         pixmap = QtGui.QPixmap(cache_path + filename)
         return pixmap
+
+    def heightByWidth(self, QWebPage, width):
+        # Why 10? It is a magic number...
+        QWebPage.setViewportSize(QtCore.QSize(width, 10))
+        result_size = QWebPage.mainFrame().contentsSize()
+        result_height = result_size.height()
+        return result_height
 
     def paint(self, painter, option, index):
         # some initializations for rendering
@@ -674,35 +680,34 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         painter.save()
         painter.translate(textRect.left() + 32, textRect.top() + 1)
         painter.setClipRect(textRect.translated(-textRect.topLeft()))
-        doc = QtGui.QTextDocument()
-        doc.setHtml(author)
-        doc.setTextWidth(option.rect.width())
-        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
-        doc.documentLayout().draw(painter, ctx)
+        webPage = CWebPage()
+        webPage.mainFrame().setHtml(author)
+        webPage.setViewportSize(QtCore.QSize(options.rect.width(), self.heightByWidth(webPage, options.rect.width())))
+        webPage.mainFrame().render(painter)
         painter.restore()
 
         # draw time
         painter.save()
+        painter.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
         painter.translate(textRect.left() + 32, textRect.top() + 16 + 1)
         painter.setClipRect(textRect.translated(-textRect.topLeft()))
-        doc = QtGui.QTextDocument()
-        doc.setHtml(content_time)
-        doc.setTextWidth(option.rect.width())
-        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
-        doc.documentLayout().draw(painter, ctx)
+        webPage = CWebPage()
+        webPage.mainFrame().setHtml(content_time)
+        webPage.setViewportSize(QtCore.QSize(options.rect.width(), self.heightByWidth(webPage, options.rect.width())))
+        webPage.mainFrame().render(painter)
         painter.restore()
 
         # draw content
         painter.save()
+        painter.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
         painter.translate(textRect.left() + 32, textRect.top() + 16 + 1 + 16)
         painter.setClipRect(textRect.translated(-textRect.topLeft()))
-        doc = QtGui.QTextDocument()
-        doc.setHtml(content)
-        doc.setTextWidth(option.rect.width() - 50)
-        ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
-        doc.documentLayout().draw(painter, ctx)
-        content_height = doc.size().height()
-        content_width = doc.size().width()
+        webPage = CWebPage()
+        webPage.mainFrame().setHtml(content)
+        webPage.setViewportSize(QtCore.QSize(options.rect.width() - 40, self.heightByWidth(webPage, options.rect.width() - 40)))
+        webPage.mainFrame().render(painter)
+        content_height = webPage.mainFrame().contentsSize().height()
+        content_width = options.rect.width()
         painter.restore()
 
         # draw original content (if retweeted)
@@ -710,12 +715,11 @@ class TweetRendering(QtGui.QStyledItemDelegate):
             painter.save()
             painter.translate(textRect.left() + 32 + 32, textRect.top() + content_height + 16 + 1 + 16)
             painter.setClipRect(textRect.translated(-textRect.topLeft()))
-            doc = QtGui.QTextDocument()
-            doc.setHtml("@%s: %s" % (original_author, original_content))
-            doc.setTextWidth(option.rect.width() - 82)
-            ctx = QtGui.QAbstractTextDocumentLayout.PaintContext()
-            doc.documentLayout().draw(painter, ctx)
-            content_height += doc.size().height()
+            webPage = CWebPage()
+            webPage.mainFrame().setHtml("@%s: %s" % (original_author, original_content))
+            webPage.setViewportSize(QtCore.QSize(options.rect.width() - 80, self.heightByWidth(webPage, options.rect.width() - 80)))
+            webPage.mainFrame().render(painter)
+            content_height += webPage.mainFrame().contentsSize().height()
             painter.restore()
 
         # Show picture
@@ -749,22 +753,22 @@ class TweetRendering(QtGui.QStyledItemDelegate):
 
         # content
         height += 16
-        doc = QtGui.QTextDocument()
-        doc.setHtml(content)
-        doc.setTextWidth(option.rect.width())
-        height += doc.size().height()
-        content_width = doc.size().width()
 
-        # HACK: extra space
-        height += 10
+        webPage = CWebPage()
+        webPage.mainFrame().setHtml(content)
+        webPage.setViewportSize(QtCore.QSize(options.rect.width() - 40, self.heightByWidth(webPage, options.rect.width() - 40)))
+
+        height += webPage.mainFrame().contentsSize().height()
+        content_width = options.rect.width()
 
         # draw original content (if retweeted)
         if typ == "retweet":
             height += 16
-            doc.setHtml("@%s: %s" % (original_author, original_content))
-            doc.setTextWidth(option.rect.width() - 82)
-            height += doc.size().height()
-            content_width = doc.size().width()
+            webPage = CWebPage()
+            webPage.mainFrame().setHtml("@%s: %s" % (original_author, original_content))
+            webPage.setViewportSize(QtCore.QSize(options.rect.width() - 80, self.heightByWidth(webPage, options.rect.width() - 80)))
+            height += webPage.mainFrame().contentsSize().height()
+            content_width = webPage.mainFrame().contentsSize().width()
 
         # show pic
         if thumbnail_pic != "":
@@ -800,6 +804,20 @@ class Notify():
         self.n.update(title, text, image)
         self.n.set_timeout(self.timeout * 1000)  # TODO:user should be able to adjust the time by settings window
         self.n.show()
+
+
+class CWebPage(QtWebKit.QWebPage):
+    def __init__(self):
+        QtWebKit.QWebPage.__init__(self)
+
+        pal = self.palette()
+        pal.setBrush(QtGui.QPalette.Base, QtCore.Qt.transparent)
+        self.setPalette(pal)
+
+        settings = QtWebKit.QWebSettings.globalSettings()
+        settings.setFontFamily(QtWebKit.QWebSettings.StandardFont, QtGui.QFont().defaultFamily())
+        settings.setFontSize(QtWebKit.QWebSettings.DefaultFontSize, QtGui.QFont().pointSize() + 3)
+
 
 if __name__ == "__main__":
     try:
