@@ -688,7 +688,6 @@ class TweetRendering(QtGui.QStyledItemDelegate):
 
         # draw time
         painter.save()
-        painter.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
         painter.translate(textRect.left() + 32, textRect.top() + 16 + 1)
         painter.setClipRect(textRect.translated(-textRect.topLeft()))
         webPage = CWebPage()
@@ -699,7 +698,6 @@ class TweetRendering(QtGui.QStyledItemDelegate):
 
         # draw content
         painter.save()
-        painter.setRenderHints(QtGui.QPainter.Antialiasing | QtGui.QPainter.SmoothPixmapTransform)
         painter.translate(textRect.left() + 32, textRect.top() + 16 + 1 + 16)
         painter.setClipRect(textRect.translated(-textRect.topLeft()))
         webPage = CWebPage()
