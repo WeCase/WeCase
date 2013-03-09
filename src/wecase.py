@@ -46,6 +46,101 @@ config_path = os.environ['HOME'] + '/.config/wecase/config_db'
 cache_path = os.environ['HOME'] + '/.cache/wecase/'
 
 
+class TweetModel(QtCore.QAbstractListModel):
+    def __init__(self, prototype, parent=None):
+        QtCore.QAbstractListModel.__init__(self, parent)
+        self.setRoleNames(prototype.roleNames())
+        self.tweets = []
+
+    def appendRow(self, item):
+        self.insertRow(self.rowCount(), item)
+
+    def clear(self):
+        del self.tweets
+        self.tweets = []
+
+    def data(self, index, role):
+        return self.tweets[index.row()].data(role)
+
+    def insertRow(self, row, item):
+        self.beginInsertRows(QtCore.QModelIndex(), row, row)
+        self.tweets.insert(row, item)
+        self.endInsertRows()
+
+    def rowCount(self, parent=QtCore.QModelIndex()):
+        return len(self.tweets)
+
+
+class TweetItem(QtCore.QAbstractItemModel):
+    typeRole            = QtCore.Qt.UserRole +  1
+    idRole              = QtCore.Qt.UserRole +  2
+    authorRole          = QtCore.Qt.UserRole +  3
+    avatarRole          = QtCore.Qt.UserRole +  4
+    contentRole         = QtCore.Qt.UserRole +  5
+    timeRole            = QtCore.Qt.UserRole +  6
+    originalIdRole      = QtCore.Qt.UserRole +  7
+    originalContentRole = QtCore.Qt.UserRole +  8
+    originalAuthorRole  = QtCore.Qt.UserRole +  9
+    originalTimeRole    = QtCore.Qt.UserRole + 10
+    thumbnailPicRole    = QtCore.Qt.UserRole + 11
+
+    def __init__(self, type=None, id=None, author=None, avatar=None, content=None, time=None, original_id=None, original_content=None, original_author=None, original_time=None, thumbnail_pic=None, parent=None):
+        QtCore.QAbstractItemModel.__init__(self, parent)
+
+        self.type = type
+        self.id = id
+        self.author = author
+        self.avatar = avatar
+        self.content = content
+        self.time = time
+        self.original_id = original_id
+        self.original_content = original_content
+        self.original_author = original_author
+        self.original_time = original_time
+        self.thumbnail_pic = thumbnail_pic
+
+    def roleNames(self):
+        names = {}
+        names[self.typeRole] = "type"
+        names[self.idRole] = "id"
+        names[self.authorRole] = "author"
+        names[self.avatarRole] = "avatar"
+        names[self.contentRole] = "content"
+        names[self.timeRole] = "time"
+        names[self.originalIdRole] = "original_id"
+        names[self.originalContentRole] = "original_content"
+        names[self.originalAuthorRole] = "original_author"
+        names[self.originalTimeRole] = "original_time"
+        names[self.thumbnailPicRole] = "thumbnail_pic"
+        return names
+
+    def data(self, role):
+        if role == self.typeRole:
+            return self.type
+        elif role == self.idRole:
+            return self.id
+        elif role == self.authorRole:
+            return self.author
+        elif role == self.avatarRole:
+            return self.avatar
+        elif role == self.contentRole:
+            return self.content
+        elif role == self.timeRole:
+            return self.time
+        elif role == self.originalIdRole:
+            return self.original_id
+        elif role == self.originalContentRole:
+            return self.original_content
+        elif role == self.originalAuthorRole:
+            return self.original_author
+        elif role == self.originalTimeRole:
+            return self.original_time
+        elif role == self.thumbnailPicRole:
+            return self.thumbnail_pic
+        else:
+            return QtCore.QVariant()
+
+
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     passwd = {}
     last_login = ""
@@ -187,7 +282,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupMyUi()
         self.setupSignals()
         self.setupModels()
-        self.IMG_AVATOR = -2
+        self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
         self.TIMER_INTERVAL = 30  # TODO:30 Seconds by default, can be modify with settings window
         self.notify = Notify()
@@ -240,13 +335,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             thread.start_new_thread(self.get_my_timeline, (self.my_timeline_page, ))
 
     def setupModels(self):
-        self.all_timeline = QtGui.QStandardItemModel(self)
+        self.all_timeline = TweetModel(TweetItem(), self)
         self.listView.setModel(self.all_timeline)
-        self.mentions = QtGui.QStandardItemModel(self)
+        self.mentions = TweetModel(TweetItem(), self)
         self.listView_2.setModel(self.mentions)
-        self.comment_to_me = QtGui.QStandardItemModel(self)
+        self.comment_to_me = TweetModel(TweetItem(), self)
         self.listView_3.setModel(self.comment_to_me)
-        self.my_timeline = QtGui.QStandardItemModel(self)
+        self.my_timeline = TweetModel(TweetItem(), self)
         self.listView_4.setModel(self.my_timeline)
 
     def get_timeline(self, timeline, model):
@@ -257,37 +352,34 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 urllib.urlretrieve(url, cache_path + filename)
             return
 
-        rowCount = model.rowCount()
-
-        for count_this_time, item in enumerate(timeline):
-            count = rowCount + count_this_time
-            prefetchImage(item['user']['profile_image_url'], self.IMG_AVATOR)
+        for count, item in enumerate(timeline):
+            prefetchImage(item['user']['profile_image_url'], self.IMG_AVATAR)
 
             # tweet (default), comment or retweet?
-            item_type = QtGui.QStandardItem("tweet")
+            item_type = "tweet"
 
             # simple tweet or comment
-            item_id = QtGui.QStandardItem(item['idstr'])
-            item_author = QtGui.QStandardItem(item['user']['name'])
-            item_author_avator = QtGui.QStandardItem(item['user']['profile_image_url'])
-            item_content = QtGui.QStandardItem(item['text'])
-            item_content_time = QtGui.QStandardItem(item['created_at'])
+            item_id = item['idstr']
+            item_author = item['user']['name']
+            item_author_avatar = item['user']['profile_image_url']
+            item_content = item['text']
+            item_content_time = item['created_at']
 
             # comment only
             try:
-                item_comment_to_original_id = QtGui.QStandardItem(item['status']['idstr'])
-                item_type = QtGui.QStandardItem("comment")
+                item_comment_to_original_id = item['status']['idstr']
+                item_type = "comment"
             except KeyError:
                 # not a comment
                 pass
 
             # original tweet (if retweeted)
             try:
-                item_original_id = QtGui.QStandardItem(item['retweeted_status']['idstr'])
-                item_original_content = QtGui.QStandardItem(item['retweeted_status']['text'])
-                item_original_author = QtGui.QStandardItem(item['retweeted_status']['user']['name'])
-                item_original_time = QtGui.QStandardItem(item['retweeted_status']['created_at'])
-                item_type = QtGui.QStandardItem("retweet")
+                item_original_id = item['retweeted_status']['idstr']
+                item_original_content = item['retweeted_status']['text']
+                item_original_author = item['retweeted_status']['user']['name']
+                item_original_time = item['retweeted_status']['created_at']
+                item_type = "retweet"
             except KeyError:
                 # not retweeted
                 pass
@@ -296,39 +388,33 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             try:
                 item_thumb_pic = None
                 prefetchImage(item['thumbnail_pic'], self.IMG_THUMB)
-                item_thumb_pic = QtGui.QStandardItem(item['thumbnail_pic'])
+                item_thumb_pic = item['thumbnail_pic']
             except KeyError:
                 try:
                     prefetchImage(item['retweeted_status']['thumbnail_pic'], self.IMG_THUMB)
-                    item_thumb_pic = QtGui.QStandardItem(item['retweeted_status']['thumbnail_pic'])
+                    item_thumb_pic = item['retweeted_status']['thumbnail_pic']
                 except KeyError:
                     pass
 
             # tweet
-            model.setItem(count, 0, item_type)
-            model.setItem(count, 1, item_id)
-            model.setItem(count, 2, item_author)
-            model.setItem(count, 3, item_author_avator)
-            model.setItem(count, 4, item_content)
-            model.setItem(count, 5, item_content_time)
+            tweet = TweetItem(type=item_type, id=item_id, author=item_author, avatar=item_author_avatar, content=item_content, time=item_content_time)
 
-            if item_type.text() == "comment":
+            if item_type == "comment":
                 # comment
-                model.setItem(count, 6, item_comment_to_original_id)
+                tweet = TweetItem(type=item_type, id=item_id, author=item_author, avatar=item_author_avatar, content=item_content, time=item_content_time, original_id=item_comment_to_original_id)
 
-            if item_type.text() == "retweet":
+            if item_type == "retweet":
                 # retweet
-                model.setItem(count, 7, item_original_id)
-                model.setItem(count, 8, item_original_content)
-                model.setItem(count, 9, item_original_author)
-                model.setItem(count, 10, item_original_time)
+                tweet = TweetItem(type=item_type, id=item_id, author=item_author, avatar=item_author_avatar, content=item_content, time=item_content_time, original_id=item_original_id, original_content=item_original_content, original_author=item_original_author, original_time=item_original_time)
 
             if not item_thumb_pic is None:
                 # thumb pic
-                model.setItem(count, 11, item_thumb_pic)
+                tweet.thumbnail_pic = item_thumb_pic
+
+            model.appendRow(tweet)
 
             # process UI's event when we get every two item, or UI will freeze.
-            if count_this_time % 2 == 0:
+            if count % 2 == 0:
                 app.processEvents()
 
     def get_all_timeline(self, page=1):
@@ -365,7 +451,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         '''How can I get my uid? here it is'''
         try:
             self.uid = self.client.account.get_uid.get().uid
-        except AttributeError as err:
+        except AttributeError:
             return None
 
     def show_notify(self):
@@ -434,10 +520,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def comment(self):
         listView = self.get_current_listView()
-        model = self.get_current_model()
-
-        row = listView.currentIndex().row()
-        idstr = model.item(row, 1).text()
+        index = listView.currentIndex()
+        idstr = index.data(TweetItem.idRole).toString()
 
         wecase_new = NewpostWindow(action="comment", id=int(idstr))
         wecase_new.client = self.client
@@ -445,12 +529,12 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def repost(self):
         listView = self.get_current_listView()
-        model = self.get_current_model()
+        index = listView.currentIndex()
+        idstr = index.data(TweetItem.idRole).toString()
 
-        row = listView.currentIndex().row()
-        idstr = model.item(row, 1).text()
-        if model.item(row, 0).text() == "retweet":
-            text = "//@%s: %s" % (model.item(row, 2).text(), model.item(row, 4).text())
+        if index.data(TweetItem.typeRole) == "retweet":
+            text = "//@%s: %s" % (index.data(TweetItem.contentRole).toString(),
+                                  index.data(TweetItem.originalContentRole).toString())
         else:
             text = ""
 
@@ -460,26 +544,22 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def favorite(self):
         listView = self.get_current_listView()
-        model = self.get_current_model()
-
-        row = listView.currentIndex().row()
-        idstr = model.item(row, 1).text()
+        index = listView.currentIndex()
+        idstr = index.data(TweetItem.idRole).toString()
 
         self.client.favorites.create.post(id=int(idstr))
 
     def un_favorite(self):
         listView = self.get_current_listView()
-        model = self.get_current_model()
-
-        row = listView.currentIndex().row()
-        idstr = model.item(row, 1).text()
+        index = listView.currentIndex()
+        idstr = index.data(TweetItem.idRole).toString()
 
         self.client.favorites.destroy.post(id=int(idstr))
 
     def reply(self):
-        row = self.listView_3.currentIndex().row()
-        idstr = self.comment_to_me.item(row, 6).text()
-        cidstr = self.comment_to_me.item(row, 1).text()
+        index = self.listView_3.currentIndex()
+        idstr = index.data(TweetItem.originalIdRole).toString()
+        cidstr = index.data(TweetItem.idRole).toString()
 
         wecase_new = NewpostWindow(action="reply", id=int(idstr), cid=int(cidstr))
         wecase_new.client = self.client
@@ -628,7 +708,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 class TweetRendering(QtGui.QStyledItemDelegate):
     def __init__(self):
         QtGui.QStyledItemDelegate.__init__(self)
-        self.IMG_AVATOR = -2  # type avator
+        self.IMG_AVATAR = -2  # type avatar
         self.IMG_THUMB = -1   # type thumbnail image
 
     def loadImage(self, url, img_type=-2):
@@ -646,15 +726,14 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         style.drawControl(QtGui.QStyle.CE_ItemViewItem, options, painter)
 
         # get data from model
-        typ              = index.model().index(index.row(),  0).data().toString()
-        author           = index.model().index(index.row(),  2).data().toString()
-        author_avator    = index.model().index(index.row(),  3).data().toString()
-        content          = index.model().index(index.row(),  4).data().toString()
-        content_time     = index.model().index(index.row(),  5).data().toString()
-        original_content = index.model().index(index.row(),  8).data().toString()
-        original_author  = index.model().index(index.row(),  9).data().toString()
-        original_time    = index.model().index(index.row(), 10).data().toString()
-        thumbnail_pic    = index.model().index(index.row(), 11).data().toString()  # get thubmnail_pic
+        typ              = index.data(TweetItem.typeRole).toString()
+        author           = index.data(TweetItem.authorRole).toString()
+        author_avatar    = index.data(TweetItem.avatarRole).toString()
+        content          = index.data(TweetItem.contentRole).toString()
+        content_time     = index.data(TweetItem.timeRole).toString()
+        original_content = index.data(TweetItem.originalContentRole).toString()
+        original_author  = index.data(TweetItem.originalAuthorRole).toString()
+        thumbnail_pic    = index.data(TweetItem.thumbnailPicRole).toString()  # get thubmnail_pic
 
         # position for rendering
         # textRect = style.subElementRect(QtGui.QStyle.SE_ItemViewItemText, options)
@@ -663,11 +742,11 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         # So that's a workaround from a KDE developer.
         textRect = options.rect
 
-        # draw avator
+        # draw avatar
         painter.save()
-        avator = self.loadImage(str(author_avator), self.IMG_AVATOR)
-        avator = avator.scaled(32, 32)
-        painter.drawPixmap(textRect.topLeft() + QtCore.QPoint(2, 4), avator)
+        avatar = self.loadImage(str(author_avatar), self.IMG_AVATAR)
+        avatar = avatar.scaled(32, 32)
+        painter.drawPixmap(textRect.topLeft() + QtCore.QPoint(2, 4), avatar)
         painter.restore()
 
         # draw author's name
@@ -735,11 +814,11 @@ class TweetRendering(QtGui.QStyledItemDelegate):
         height = 0
 
         # get data from model
-        typ              = index.model().index(index.row(), 0).data().toString()
-        content          = index.model().index(index.row(), 4).data().toString()
-        original_content = index.model().index(index.row(), 8).data().toString()
-        original_author  = index.model().index(index.row(), 9).data().toString()
-        thumbnail_pic    = index.model().index(index.row(), 11).data().toString()  # get thubmnail_pic
+        typ              = index.data(TweetItem.typeRole).toString()
+        content          = index.data(TweetItem.contentRole).toString()
+        original_content = index.data(TweetItem.originalContentRole).toString()
+        original_author  = index.data(TweetItem.originalAuthorRole).toString()
+        thumbnail_pic    = index.data(TweetItem.thumbnailPicRole).toString()  # get thubmnail_pic
 
         # author's name
         height += 1
