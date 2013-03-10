@@ -533,8 +533,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         idstr = index.data(TweetItem.idRole).toString()
 
         if index.data(TweetItem.typeRole) == "retweet":
-            text = "//@%s: %s" % (index.data(TweetItem.contentRole).toString(),
-                                  index.data(TweetItem.originalContentRole).toString())
+            text = "//@%s: %s" % (index.data(TweetItem.authorRole).toString(),
+                                  index.data(TweetItem.contentRole).toString())
         else:
             text = ""
 
