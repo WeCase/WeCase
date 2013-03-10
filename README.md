@@ -24,5 +24,5 @@ Installation Guide
 1. Install PyQt4 `sudo apt-get install python-qt4` or `yum install PyQt4`
 2. Get the source code `git clone git://github.com/WeCase/WeCase.git`
 3. `cd WeCase`
-4. Install SDK `cd sdk; python2 setup.py build; python2 setup.py install`
-5. Run `python2 /src/wecase.py`
+4. Install SDK `cd sdk; sudo python2 setup.py install`
+5. Run `python2 ./src/wecase.py` in root directory of the source code.
