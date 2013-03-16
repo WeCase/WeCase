@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'NewpostWindow.ui'
+# Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
 #
-# Created: Fri Feb 15 20:03:01 2013
-#      by: PyQt4 UI code generator 4.9.3
+# Created: Sun Mar 17 01:16:35 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_NewPostWindow(object):
     def setupUi(self, NewPostWindow):
@@ -79,11 +88,11 @@ class Ui_NewPostWindow(object):
         QtCore.QMetaObject.connectSlotsByName(NewPostWindow)
 
     def retranslateUi(self, NewPostWindow):
-        NewPostWindow.setWindowTitle(QtGui.QApplication.translate("NewPostWindow", "New Message", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("NewPostWindow", "140", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_location.setText(QtGui.QApplication.translate("NewPostWindow", "Location", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_cancel.setText(QtGui.QApplication.translate("NewPostWindow", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_picture.setText(QtGui.QApplication.translate("NewPostWindow", "Picture", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_at.setText(QtGui.QApplication.translate("NewPostWindow", "At", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_send.setText(QtGui.QApplication.translate("NewPostWindow", "Send", None, QtGui.QApplication.UnicodeUTF8))
+        NewPostWindow.setWindowTitle(_translate("NewPostWindow", "New Message", None))
+        self.label.setText(_translate("NewPostWindow", "140", None))
+        self.pushButton_location.setText(_translate("NewPostWindow", "Location", None))
+        self.pushButton_cancel.setText(_translate("NewPostWindow", "Cancel", None))
+        self.pushButton_picture.setText(_translate("NewPostWindow", "Picture", None))
+        self.pushButton_at.setText(_translate("NewPostWindow", "At", None))
+        self.pushButton_send.setText(_translate("NewPostWindow", "Send", None))
 
