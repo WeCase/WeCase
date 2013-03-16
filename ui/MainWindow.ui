@@ -21,66 +21,46 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTabWidget" name="tabWidget">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>25</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="sizeIncrement">
-       <size>
-        <width>0</width>
-        <height>25</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <stylestrategy>PreferDefault</stylestrategy>
-       </font>
-      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab_weibo">
+      <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Weibo</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QListView" name="listView"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_atme">
-       <attribute name="title">
-        <string>@Me</string>
-       </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QListView" name="listView_2"/>
+         <widget class="QDeclarativeView" name="homeView"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_comment">
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>@ME</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QDeclarativeView" name="mentionsView"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
        <attribute name="title">
         <string>Comments</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QListView" name="listView_3"/>
+         <widget class="QDeclarativeView" name="commentsView"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_my">
+      <widget class="QWidget" name="tab_4">
        <attribute name="title">
         <string>My tweet</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QListView" name="listView_4"/>
+         <widget class="QDeclarativeView" name="myView"/>
         </item>
        </layout>
       </widget>
@@ -162,7 +142,7 @@
      <x>0</x>
      <y>0</y>
      <width>323</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -250,6 +230,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QDeclarativeView</class>
+   <extends>QGraphicsView</extends>
+   <header>QtDeclarative/QDeclarativeView</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="wecase.qrc"/>
  </resources>
