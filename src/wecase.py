@@ -622,7 +622,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.image = None
             self.pushButton_picture.setText("Picture")
         else:
-            self.image = QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)")[0]
+            self.image = QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)")
             self.pushButton_picture.setText("Remove the picture")
 
     def error(self, e):
