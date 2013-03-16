@@ -41,6 +41,8 @@ OAUTH2_PARAMETER = {'client_id':       APP_KEY,
                     'withOfficalFlag': 0}
 config_path = os.environ['HOME'] + '/.config/wecase/config_db'
 cache_path = os.environ['HOME'] + '/.cache/wecase/'
+myself_name = sys.argv[0].split('/')[-1]
+myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 
 class TweetModel(QtCore.QAbstractListModel):
@@ -289,7 +291,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.timer = QtCore.QTimer()  # check new unread_count
         for tweetView in self.tweetViews:
             tweetView.setResizeMode(tweetView.SizeRootObjectToView)
-            tweetView.setSource(QtCore.QUrl.fromLocalFile("./ui/TweetList.qml"))
+            tweetView.setSource(QtCore.QUrl.fromLocalFile(myself_path + "/ui/TweetList.qml"))
             tweetView.rootContext().setContextProperty("mainWindow", self)
 
     def setupSignals(self):
