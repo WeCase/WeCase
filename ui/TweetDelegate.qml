@@ -43,7 +43,7 @@ Item  {
             return 90 + tweetImageHeight;
         }
         else {
-            return statusText.paintedHeight + tweetImageHeight + 25;
+            return statusText.paintedHeight + tweetImageHeight + 20;
         }
     }
 
@@ -219,9 +219,9 @@ Item  {
     Text {
         id: sinceText
         text: tweetSinceTime
-        anchors.top: (statusText.paintedHeight < 80) ? avatarBackground.bottom : tweetImageLoader.bottom;
+        anchors.top: avatarBackground.bottom
         anchors.leftMargin: 11
-        anchors.topMargin: (statusText.paintedHeight < 80) ? 5 + getImageHeight(): 0
+        anchors.topMargin: 5
         anchors.left: parent.left
         font.family: "Segoe UI"
         font.pointSize: 7
