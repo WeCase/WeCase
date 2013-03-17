@@ -109,7 +109,8 @@ class TweetItem(QtCore.QAbstractItemModel):
         # See http://coolshell.cn/articles/5075.html for more details.
         passedSeconds = (now_utc - create_utc).seconds
 
-        if passedSeconds < 0:
+        # datetime do not support nagetive numbers
+        if now_utc < create_utc:
             return "Time travel!"
         if passedSeconds < 60:
             return "%.0f seconds ago" % (passedSeconds)
