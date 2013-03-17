@@ -12,6 +12,8 @@
 
 import sys
 import os
+from datetime import datetime
+from dateutil import parser as time_parser
 import urllib.request, urllib.parse, urllib.error
 import http.client
 import shelve
@@ -98,6 +100,26 @@ class TweetItem(QtCore.QAbstractItemModel):
         self.original_time = original_time
         self.thumbnail_pic = thumbnail_pic
 
+    def sinceTimeString(self, createTime):
+        create = time_parser.parse(createTime)
+        create_utc = (create - create.utcoffset()).replace(tzinfo=None)
+        now_utc = datetime.utcnow()
+
+        # Always compare UTC time, do NOT compare LOCAL time.
+        # See http://coolshell.cn/articles/5075.html for more details.
+        passedSeconds = (now_utc - create_utc).seconds
+
+        if passedSeconds < 0:
+            return "Time travel!"
+        if passedSeconds < 60:
+            return "%.0f seconds ago" % (passedSeconds)
+        if passedSeconds < 3600:
+            return "%.0f minutes ago" % (passedSeconds / 60)
+        if passedSeconds < 86400:
+            return "%.0f hours ago" % (passedSeconds / 3600)
+
+        return "%.0f days ago" % (passedSeconds / 86400)
+
     def roleNames(self):
         names = {}
         names[self.typeRole] = "type"
@@ -125,7 +147,7 @@ class TweetItem(QtCore.QAbstractItemModel):
         elif role == self.contentRole:
             return self.content
         elif role == self.timeRole:
-            return self.time
+            return self.sinceTimeString(self.time)
         elif role == self.originalIdRole:
             return self.original_id
         elif role == self.originalContentRole:
