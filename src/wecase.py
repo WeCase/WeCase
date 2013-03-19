@@ -438,19 +438,21 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.get_timeline(my_timelines, self.my_timeline)
         self.my_timeline_page = page
 
-    def get_mentions_timeline(self, page=1):
+    def get_mentions_timeline(self, page=1, reset_remind=False):
         mentions_timelines = self.client.statuses.mentions.get(page=page).statuses
         self.get_timeline(mentions_timelines, self.mentions)
         self.mentions_page = page
         self.tabWidget.setTabText(1, "@ME")
-        self.client.remind.set_count.post(type="mention_status")
+        if reset_remind:
+            self.client.remind.set_count.post(type="mention_status")
 
-    def get_comment_to_me(self, page=1):
+    def get_comment_to_me(self, page=1, reset_remind=False):
         comments_to_me = self.client.comments.to_me.get(page=page).comments
         self.get_timeline(comments_to_me, self.comment_to_me)
         self.comment_to_me_page = page
         self.tabWidget.setTabText(2, "Comments")
-        self.client.remind.set_count.post(type="cmt")
+        if reset_remind:
+            self.client.remind.set_count.post(type="cmt")
 
     def get_remind(self, uid):
         '''this function is used to get unread_count
@@ -539,7 +541,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         get_timeline = self.get_current_function()
 
         model.clear()
-        get_timeline(page=1)
+        get_timeline(page=1, reset_remind=True)
 
     def get_current_tweetView(self):
         tweetViews = {1: self.homeView, 2: self.mentionsView, 3: self.commentsView}
