@@ -443,12 +443,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.get_timeline(mentions_timelines, self.mentions)
         self.mentions_page = page
         self.tabWidget.setTabText(1, "@ME")
+        self.client.remind.set_count.post(type="mention_status")
 
     def get_comment_to_me(self, page=1):
         comments_to_me = self.client.comments.to_me.get(page=page).comments
         self.get_timeline(comments_to_me, self.comment_to_me)
         self.comment_to_me_page = page
         self.tabWidget.setTabText(2, "Comments")
+        self.client.remind.set_count.post(type="cmt")
 
     def get_remind(self, uid):
         '''this function is used to get unread_count
