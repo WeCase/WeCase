@@ -26,4 +26,4 @@ Installation Guide
 3. `cd WeCase`
 4. Get the sdk `git submodule init; git submodule update`
 5. Install SDK `cd sdk; sudo python3 setup.py install`
-6. Run `python2 ./src/wecase.py` in root directory of the source code.
+6. Run `python3 ./src/wecase.py` in root directory of the source code.
