@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- Linux Sina Weibo Client
@@ -25,6 +25,7 @@ from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
 from NewpostWindow_ui import Ui_NewPostWindow
+from AboutWindow_ui import Ui_About_Dialog
 
 APP_KEY = "1011524190"
 APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
@@ -322,6 +323,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.action_Settings.triggered.connect(self.settings_show)
         self.action_Log_out.triggered.connect(self.logout)
         self.action_Refresh.triggered.connect(self.refresh)
+        self.action_About.triggered.connect(self.about_show)
 
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
@@ -488,6 +490,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def settings_show(self):
         wecase_settings.show()
+
+    def about_show(self):
+        wecase_about.show()
 
     def logout(self):
         wecase_login.show()
@@ -684,6 +689,11 @@ class Notify():
         self.n.show()
 
 
+class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
+    def __init__(self, parent=None):
+        QtGui.QDialog.__init__(self, parent)
+        self.setupUi(self)
+
 if __name__ == "__main__":
     try:
         os.mkdir(config_path.replace("/config_db", ""))
@@ -700,6 +710,7 @@ if __name__ == "__main__":
     wecase_login = LoginWindow()
     wecase_main = WeCaseWindow()
     wecase_settings = WeSettingsWindow()
+    wecase_about = AboutWindow()
 
     wecase_login.show()
     sys.exit(app.exec_())
