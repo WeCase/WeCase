@@ -18,7 +18,7 @@ import urllib.request, urllib.parse, urllib.error
 import http.client
 import shelve
 import notify2 as pynotify
-import _thread # TODO: Uses threading instead of _thread
+import _thread  # TODO: Uses threading instead of _thread
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
@@ -546,7 +546,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         urllib.request.urlretrieve(original_pic, localfile)
 
         os.popen("xdg-open " + localfile)  # xdg-open is common?
-        
+
     def refresh(self):
         model = self.get_current_model()
         get_timeline = self.get_current_function()
