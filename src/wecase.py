@@ -537,6 +537,16 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.client = self.client
         wecase_new.exec_()
 
+    @QtCore.pyqtSlot(str)
+    def look_orignal_pic(self, thumbnail_pic):
+        original_pic = thumbnail_pic.replace("thumbnail", "large")  # A simple trick ... ^_^
+        extname = original_pic.split("/")[-1].split(".")[-1]
+        localfile = cache_path + "Preview." + extname
+
+        urllib.request.urlretrieve(original_pic, localfile)
+
+        os.popen("xdg-open " + localfile)  # xdg-open is common?
+        
     def refresh(self):
         model = self.get_current_model()
         get_timeline = self.get_current_function()

@@ -8,6 +8,6 @@ Image {
         anchors.fill: parent
 
         // not implemented
-        onClicked: console.log("Clicked a image: " + thumbnail_pic);
+        onClicked: mainWindow.look_orignal_pic(thumbnail_pic)
     }
 }
