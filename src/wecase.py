@@ -19,6 +19,7 @@ import http.client
 import shelve
 import notify2 as pynotify
 import threading
+from WTimer import WTimer
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
@@ -309,10 +310,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.IMG_THUMB = -1
         self.TIMER_INTERVAL = 30  # TODO:30 Seconds by default, can be modify with settings window
         self.notify = Notify()
-        threading.Thread(None, self.timer.start, (self.TIMER_INTERVAL * 1000, ))  # it can run in a new thread
+        self.timer = WTimer(self.TIMER_INTERVAL, self.show_notify)
+        self.timer.start()
 
     def setupMyUi(self):
-        self.timer = QtCore.QTimer()  # check new unread_count
         for tweetView in self.tweetViews:
             tweetView.setResizeMode(tweetView.SizeRootObjectToView)
             tweetView.setSource(QtCore.QUrl.fromLocalFile(myself_path + "/ui/TweetList.qml"))
@@ -327,8 +328,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
-
-        QtCore.QObject.connect(self.timer, QtCore.SIGNAL("timeout()"), self.show_notify)
 
     @QtCore.pyqtSlot()
     def load_more(self):
