@@ -542,15 +542,20 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.client = self.client
         wecase_new.exec_()
 
-    @QtCore.pyqtSlot(str)
+    @QtCore.pyqtSlot(str, result=int)
     def look_orignal_pic(self, thumbnail_pic):
         original_pic = thumbnail_pic.replace("thumbnail", "large")  # A simple trick ... ^_^
         extname = original_pic.split("/")[-1].split(".")[-1]
         localfile = cache_path + "Preview." + extname
 
+        # do not block user interface!
+        # TODO: Use a new thread to download images.
+        app.processEvents()
+        app.processEvents()
         urllib.request.urlretrieve(original_pic, localfile)
 
         os.popen("xdg-open " + localfile)  # xdg-open is common?
+        return True
 
     def refresh(self):
         model = self.get_current_model()
