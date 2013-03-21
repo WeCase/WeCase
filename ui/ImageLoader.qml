@@ -9,10 +9,8 @@ Image {
 
         onClicked: {
             busy.on = true;
-            console.log("Animation!");
             if (mainWindow.look_orignal_pic(thumbnail_pic)) {
                 busy.on = false;
-                console.log("No Animation!");
             }
         }
     }
