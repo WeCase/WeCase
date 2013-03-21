@@ -18,7 +18,7 @@ import urllib.request, urllib.parse, urllib.error
 import http.client
 import shelve
 import notify2 as pynotify
-import _thread  # TODO: Uses threading instead of _thread
+import threading
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
@@ -309,7 +309,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.IMG_THUMB = -1
         self.TIMER_INTERVAL = 30  # TODO:30 Seconds by default, can be modify with settings window
         self.notify = Notify()
-        _thread.start_new_thread(self.timer.start, (self.TIMER_INTERVAL * 1000, ))  # it can run in a new thread
+        threading.Thread(None, self.timer.start, (self.TIMER_INTERVAL * 1000, ))  # it can run in a new thread
 
     def setupMyUi(self):
         self.timer = QtCore.QTimer()  # check new unread_count
@@ -334,16 +334,16 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def load_more(self):
         if self.tabWidget.currentIndex() == 0:
             self.all_timeline_page += 1
-            _thread.start_new_thread(self.get_all_timeline, (self.all_timeline_page, ))
+            threading.Thread(None, self.get_all_timeline, (self.all_timeline_page, ))
         elif self.tabWidget.currentIndex() == 1:
             self.mentions_page += 1
-            _thread.start_new_thread(self.get_mentions_timeline, (self.mentions_page, ))
+            threading.Thread(None, self.get_mentions_timeline, (self.mentions_page, ))
         elif self.tabWidget.currentIndex() == 2:
             self.comment_to_me_page += 1
-            _thread.start_new_thread(self.get_comment_to_me, (self.comment_to_me_page, ))
+            threading.Thread(None, self.get_comment_to_me, (self.comment_to_me_page, ))
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline_page += 1
-            _thread.start_new_thread(self.get_my_timeline, (self.my_timeline_page, ))
+            threading.Thread(None, self.get_my_timeline, (self.my_timeline_page, ))
 
     def setupModels(self):
         self.all_timeline = TweetModel(TweetItem(), self)
