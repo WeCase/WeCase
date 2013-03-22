@@ -7,6 +7,10 @@ Rectangle {
 
     color: "#ffffff"
 
+    function positionViewAtBeginning() { 
+        tweetListView.positionViewAtBeginning();
+    }
+
     ListView {
         id: tweetListView
         anchors.fill: parent;
@@ -58,7 +62,6 @@ Rectangle {
             onMoreButtonClicked: console.log("Clicked a user: " + tweetScreenName)
             onHashtagLinkClicked: console.log("Clicked a tag: " + hashtag)
             onMentionLinkClicked: console.log("Clicked a mention: " + screenname)
-
         }
 
         onMovementEnded: {

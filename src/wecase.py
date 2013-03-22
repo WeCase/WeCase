@@ -178,7 +178,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.setupSignals()
 
     def setupSignals(self):
-        self.pushButton_log.clicked.connect(self.non_block_login)
+        self.pushButton_log.clicked.connect(self.login)
         self.chk_AutoLogin.clicked.connect(self.auto_login_clicked)
         QtCore.QObject.connect(self.cmb_Users, QtCore.SIGNAL("currentIndexChanged(QString)"), self.setPassword)
 
@@ -196,7 +196,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.setPassword(self.cmb_Users.currentText())
 
         if self.auto_login:
-            self.non_block_login()
+            self.login()
 
     def loadConfig(self):
         self.config = shelve.open(config_path, 'c')
@@ -212,28 +212,18 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.config['last_login'] = self.last_login
         self.config['auto_login'] = self.chk_AutoLogin.isChecked()
 
-    def non_block_login(self):
-        # HACK: use a QTimer to login in another Thread
-        self.login_timer = QtCore.QTimer()
-        QtCore.QObject.connect(self.login_timer, QtCore.SIGNAL("timeout()"), self.login)
-        self.login_timer.start(20)
-
     def login(self):
         self.pushButton_log.setText("Login, waiting...")
         self.pushButton_log.setEnabled(False)
-        self.login_timer.stop()
+        app.processEvents()
+        app.processEvents()
 
-        self.username = self.cmb_Users.currentText()
-        self.password = self.txt_Password.text()
-
-        client = self.authorize(self.username, self.password)
-
+        client = self.ui_authorize()
         if client:
             if self.chk_Remember.isChecked():
                 self.passwd[str(self.username)] = str(self.password)
                 self.last_login = str(self.username)
                 self.saveConfig()
-
             wecase_main.client = client
             wecase_main.get_uid()
             wecase_main.get_all_timeline()
@@ -247,6 +237,14 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
                                        "Check your account and password!")
         self.pushButton_log.setText("GO!")
         self.pushButton_log.setEnabled(True)
+
+    def ui_authorize(self):
+        self.username = self.cmb_Users.currentText()
+        self.password = self.txt_Password.text()
+        client = self.authorize(self.username, self.password)
+
+        if client:
+            return client
 
     def authorize(self, username, password):
         # TODO: This method is very messy, maybe do some cleanup?
@@ -299,6 +297,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
     uid = None
     signalSetTabText = QtCore.pyqtSignal(int, str)
+    signalLoadFinished = QtCore.pyqtSignal()
 
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
@@ -330,6 +329,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
         self.signalSetTabText.connect(self.setTabText)
+        self.signalLoadFinished.connect(self.moveToTop)
 
     @QtCore.pyqtSlot()
     def load_more(self):
@@ -425,25 +425,24 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 tweet.thumbnail_pic = item_thumb_pic
 
             model.appendRow(tweet)
-
-            # process UI's event when we get every two item, or UI will freeze.
-            app.processEvents()
+        self.signalLoadFinished.emit()
 
     def get_all_timeline(self, page=1, reset_remind=False):
+        self.homeView.rootObject().positionViewAtBeginning()
         all_timelines = self.client.statuses.home_timeline.get(page=page).statuses
-        self.get_timeline(all_timelines, self.all_timeline)
+        threading.Thread(group=None, target=self.get_timeline, args=(all_timelines, self.all_timeline)).start()
         self.all_timeline_page = page
         if reset_remind:
             self.tabWidget.setTabText(0, "Weibo")
 
     def get_my_timeline(self, page=1, reset_remind=False):
         my_timelines = self.client.statuses.user_timeline.get(page=page).statuses
-        self.get_timeline(my_timelines, self.my_timeline)
+        threading.Thread(group=None, target=self.get_timeline, args=(my_timelines, self.my_timeline)).start()
         self.my_timeline_page = page
 
     def get_mentions_timeline(self, page=1, reset_remind=False):
         mentions_timelines = self.client.statuses.mentions.get(page=page).statuses
-        self.get_timeline(mentions_timelines, self.mentions)
+        threading.Thread(group=None, target=self.get_timeline, args=(mentions_timelines, self.mentions)).start()
         self.mentions_page = page
         if reset_remind:
             self.client.remind.set_count.post(type="mention_status")
@@ -451,7 +450,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def get_comment_to_me(self, page=1, reset_remind=False):
         comments_to_me = self.client.comments.to_me.get(page=page).comments
-        self.get_timeline(comments_to_me, self.comment_to_me)
+        threading.Thread(group=None, target=self.get_timeline, args=(comments_to_me, self.comment_to_me)).start()
         self.comment_to_me_page = page
         if reset_remind:
             self.client.remind.set_count.post(type="cmt")
@@ -505,6 +504,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     @QtCore.pyqtSlot(int, str)
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
+
+    @QtCore.pyqtSlot()
+    def moveToTop(self):
+        self.get_current_tweetView().rootObject().positionViewAtBeginning()
 
     def settings_show(self):
         wecase_settings.show()
@@ -578,7 +581,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         get_timeline(page=1, reset_remind=True)
 
     def get_current_tweetView(self):
-        tweetViews = {1: self.homeView, 2: self.mentionsView, 3: self.commentsView}
+        tweetViews = {0: self.homeView, 1: self.mentionsView, 2: self.commentsView, 3: self.myView}
         return tweetViews[self.tabWidget.currentIndex()]
 
     def get_current_model(self):
