@@ -334,19 +334,15 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         if self.tabWidget.currentIndex() == 0:
             self.all_timeline_page += 1
             self.get_all_timeline(self.all_timeline_page)
-            #threading.Thread(None, self.get_all_timeline, (self.all_timeline_page, ))
         elif self.tabWidget.currentIndex() == 1:
             self.mentions_page += 1
             self.get_mentions_timeline(self.mentions_page)
-            #threading.Thread(None, self.get_mentions_timeline, (self.mentions_page, ))
         elif self.tabWidget.currentIndex() == 2:
             self.comment_to_me_page += 1
             self.get_comment_to_me(comment_to_me_page)
-            #threading.Thread(None, self.get_comment_to_me, (self.comment_to_me_page, ))
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline_page += 1
             self.get_my_timeline(my_timeline_page)
-            #threading.Thread(None, self.get_my_timeline, (self.my_timeline_page, ))
 
     def setupModels(self):
         self.all_timeline = TweetModel(TweetItem(), self)
@@ -474,6 +470,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             return None
 
     def show_notify(self):
+        # HACK: not login yet, pass notify checking
+        if not self.isVisible():
+            return
+
         reminds = self.get_remind(self.uid)
         msg = "You have:\n"
         num_msg = 0
@@ -735,4 +735,7 @@ if __name__ == "__main__":
     wecase_about = AboutWindow()
 
     wecase_login.show()
+    
+    # stop notify thread
+    wecase_main.timer.stopped = True
     sys.exit(app.exec_())
