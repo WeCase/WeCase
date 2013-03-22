@@ -298,6 +298,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
     uid = None
+    signalSetTabText = QtCore.pyqtSignal(int, str)
 
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
@@ -328,6 +329,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         self.pushButton_refresh.clicked.connect(self.refresh)
         self.pushButton_new.clicked.connect(self.new_tweet)
+        self.signalSetTabText.connect(self.setTabText)
 
     @QtCore.pyqtSlot()
     def load_more(self):
@@ -339,10 +341,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.get_mentions_timeline(self.mentions_page)
         elif self.tabWidget.currentIndex() == 2:
             self.comment_to_me_page += 1
-            self.get_comment_to_me(comment_to_me_page)
+            self.get_comment_to_me(self.comment_to_me_page)
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline_page += 1
-            self.get_my_timeline(my_timeline_page)
+            self.get_my_timeline(self.my_timeline_page)
 
     def setupModels(self):
         self.all_timeline = TweetModel(TweetItem(), self)
@@ -470,6 +472,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             return None
 
     def show_notify(self):
+        # This function is run in another thread by WTimer.
+        # Do not modify UI directly. Send signal and react it in a slot only.
+        # We use SIGNAL self.signalSetTabText and SLOT self.setTabText()
+        # to display unread count
+
         # HACK: not login yet, pass notify checking
         if not self.isVisible():
             return
@@ -480,20 +487,24 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # TODO: we need settings window, to controll their displaying or not
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
-            self.tabWidget.setTabText(0, "Weibo(%d)" % reminds['status'])
+            self.signalSetTabText.emit(0, "Weibo(%d)" % reminds['status'])
 
         if reminds['mention_status'] != 0:
             msg += "%d unread @ME\n" % reminds['mention_status']
-            self.tabWidget.setTabText(1, "@Me(%d)" % reminds['mention_status'])
+            self.signalSetTabText.emit(1, "@Me(%d)" % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] != 0:
             msg += "%d unread comment(s)\n" % reminds['cmt']
-            self.tabWidget.setTabText(2, "Comments(%d)" % reminds['cmt'])
+            self.signalSetTabText.emit(2, "Comments(%d)" % reminds['cmt'])
             num_msg += 1
 
         if num_msg != 0:
             self.notify.showMessage("WeCase", msg, image="notification-message-email")  # TODO: image can use our images in rcc
+
+    @QtCore.pyqtSlot(int, str)
+    def setTabText(self, index, string):
+        self.tabWidget.setTabText(index, string)
 
     def settings_show(self):
         wecase_settings.show()
@@ -735,7 +746,7 @@ if __name__ == "__main__":
     wecase_about = AboutWindow()
 
     wecase_login.show()
-    
+
     # stop notify thread
     wecase_main.timer.stopped = True
     sys.exit(app.exec_())
