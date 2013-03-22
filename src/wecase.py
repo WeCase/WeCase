@@ -747,6 +747,10 @@ if __name__ == "__main__":
 
     wecase_login.show()
 
+    exit_status = app.exec_()
+
+    # Cleanup code here.
     # stop notify thread
     wecase_main.timer.stopped = True
-    sys.exit(app.exec_())
+
+    sys.exit(exit_status)
