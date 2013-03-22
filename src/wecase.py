@@ -297,7 +297,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
     uid = None
     signalSetTabText = QtCore.pyqtSignal(int, str)
-    signalLoadFinished = QtCore.pyqtSignal()
+    signalLoadFinished = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
@@ -356,7 +356,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.my_timeline = TweetModel(TweetItem(), self)
         self.myView.rootContext().setContextProperty("mymodel", self.my_timeline)
 
-    def get_timeline(self, timeline, model):
+    def get_timeline(self, timeline, model, more=False):
         def prefetchImage(url, img_type=-2):
             # disabled. QML can fetch images by itself
             filename = url.split("/")[img_type]
@@ -425,32 +425,31 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 tweet.thumbnail_pic = item_thumb_pic
 
             model.appendRow(tweet)
-        self.signalLoadFinished.emit()
+        self.signalLoadFinished.emit(more)
 
-    def get_all_timeline(self, page=1, reset_remind=False):
-        self.homeView.rootObject().positionViewAtBeginning()
+    def get_all_timeline(self, page=1, reset_remind=False, more=False):
         all_timelines = self.client.statuses.home_timeline.get(page=page).statuses
-        threading.Thread(group=None, target=self.get_timeline, args=(all_timelines, self.all_timeline)).start()
+        threading.Thread(group=None, target=self.get_timeline, args=(all_timelines, self.all_timeline, more)).start()
         self.all_timeline_page = page
         if reset_remind:
             self.tabWidget.setTabText(0, "Weibo")
 
-    def get_my_timeline(self, page=1, reset_remind=False):
+    def get_my_timeline(self, page=1, reset_remind=False, more=False):
         my_timelines = self.client.statuses.user_timeline.get(page=page).statuses
-        threading.Thread(group=None, target=self.get_timeline, args=(my_timelines, self.my_timeline)).start()
+        threading.Thread(group=None, target=self.get_timeline, args=(my_timelines, self.my_timeline, more)).start()
         self.my_timeline_page = page
 
-    def get_mentions_timeline(self, page=1, reset_remind=False):
+    def get_mentions_timeline(self, page=1, reset_remind=False, more=False):
         mentions_timelines = self.client.statuses.mentions.get(page=page).statuses
-        threading.Thread(group=None, target=self.get_timeline, args=(mentions_timelines, self.mentions)).start()
+        threading.Thread(group=None, target=self.get_timeline, args=(mentions_timelines, self.mentions, more)).start()
         self.mentions_page = page
         if reset_remind:
             self.client.remind.set_count.post(type="mention_status")
             self.tabWidget.setTabText(1, "@ME")
 
-    def get_comment_to_me(self, page=1, reset_remind=False):
+    def get_comment_to_me(self, page=1, reset_remind=False, more=False):
         comments_to_me = self.client.comments.to_me.get(page=page).comments
-        threading.Thread(group=None, target=self.get_timeline, args=(comments_to_me, self.comment_to_me)).start()
+        threading.Thread(group=None, target=self.get_timeline, args=(comments_to_me, self.comment_to_me, more)).start()
         self.comment_to_me_page = page
         if reset_remind:
             self.client.remind.set_count.post(type="cmt")
@@ -505,9 +504,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
 
-    @QtCore.pyqtSlot()
-    def moveToTop(self):
-        self.get_current_tweetView().rootObject().positionViewAtBeginning()
+    @QtCore.pyqtSlot(int)
+    def moveToTop(self, more):
+        if more:
+            self.get_current_tweetView().rootObject().positionViewAtBeginning()
 
     def settings_show(self):
         wecase_settings.show()
@@ -578,7 +578,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         get_timeline = self.get_current_function()
 
         model.clear()
-        get_timeline(page=1, reset_remind=True)
+        get_timeline(page=1, reset_remind=True, more=True)
 
     def get_current_tweetView(self):
         tweetViews = {0: self.homeView, 1: self.mentionsView, 2: self.commentsView, 3: self.myView}
