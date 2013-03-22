@@ -333,16 +333,20 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def load_more(self):
         if self.tabWidget.currentIndex() == 0:
             self.all_timeline_page += 1
-            threading.Thread(None, self.get_all_timeline, (self.all_timeline_page, ))
+            self.get_all_timeline(self.all_timeline_page)
+            #threading.Thread(None, self.get_all_timeline, (self.all_timeline_page, ))
         elif self.tabWidget.currentIndex() == 1:
             self.mentions_page += 1
-            threading.Thread(None, self.get_mentions_timeline, (self.mentions_page, ))
+            self.get_mentions_timeline(self.mentions_page)
+            #threading.Thread(None, self.get_mentions_timeline, (self.mentions_page, ))
         elif self.tabWidget.currentIndex() == 2:
             self.comment_to_me_page += 1
-            threading.Thread(None, self.get_comment_to_me, (self.comment_to_me_page, ))
+            self.get_comment_to_me(comment_to_me_page)
+            #threading.Thread(None, self.get_comment_to_me, (self.comment_to_me_page, ))
         elif self.tabWidget.currentIndex() == 3:
             self.my_timeline_page += 1
-            threading.Thread(None, self.get_my_timeline, (self.my_timeline_page, ))
+            self.get_my_timeline(my_timeline_page)
+            #threading.Thread(None, self.get_my_timeline, (self.my_timeline_page, ))
 
     def setupModels(self):
         self.all_timeline = TweetModel(TweetItem(), self)
@@ -425,8 +429,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             model.appendRow(tweet)
 
             # process UI's event when we get every two item, or UI will freeze.
-            if count % 2 == 0 or 1 + 1 == 2:
-                app.processEvents()
+            app.processEvents()
 
     def get_all_timeline(self, page=1, reset_remind=False):
         all_timelines = self.client.statuses.home_timeline.get(page=page).statuses
