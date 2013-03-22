@@ -201,7 +201,7 @@ Item  {
         anchors.right: retweet.left; anchors.rightMargin: 0
         anchors.left: avatarBackground.right; anchors.leftMargin: 10
         textFormat: Text.RichText
-        wrapMode: "WordWrap"
+        wrapMode: "Wrap"
         font.family: "Segoe UI"
         font.pointSize: 9
 
