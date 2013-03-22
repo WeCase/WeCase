@@ -602,6 +602,8 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     client = None
     image = None
+    signalApiError = QtCore.pyqtSignal(str)
+    signalSendSuccessful = QtCore.pyqtSignal()
 
     def __init__(self, parent=None, action="new", id=None, cid=None, text=""):
         QtGui.QDialog.__init__(self, parent)
@@ -622,47 +624,49 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.pushButton_cancel.clicked.connect(self.close)
         self.pushButton_picture.clicked.connect(self.add_image)
         self.textEdit.textChanged.connect(self.check_chars)
+        self.pushButton_send.clicked.connect(self.sender)
+        self.signalApiError.connect(self.error)
+        self.signalSendSuccessful.connect(self.close)
+
+    def sender(self):
         if self.action == "new":
-            self.pushButton_send.clicked.connect(self.send_tweet)
+            threading.Thread(group=None, target=self.send_tweet).start()
         elif self.action == "retweet":
-            self.pushButton_send.clicked.connect(self.retweet)
+            threading.Thread(group=None, target=self.retweet).start()
         elif self.action == "comment":
-            self.pushButton_send.clicked.connect(self.comment)
+            threading.Thread(group=None, target=self.comment).start()
         elif self.action == "reply":
-            self.pushButton_send.clicked.connect(self.reply)
+            threading.Thread(group=None, target=self.reply).start()
 
     def retweet(self):
         text = str(self.textEdit.toPlainText())
         try:
             self.client.statuses.repost.post(id=int(self.id), status=text)
             self.notify.showMessage("WeCase", "Retweet Success!")
+            self.signalSendSuccessful.emit()
         except APIError as e:
-            self.error(e)
+            self.signalApiError.emit(str(e))
             return
-
-        self.close()
 
     def comment(self):
         text = str(self.textEdit.toPlainText())
         try:
             self.client.comments.create.post(id=int(self.id), comment=text)
             self.notify.showMessage("WeCase", "Comment Success!")
+            self.signalSendSuccessful.emit()
         except APIError as e:
-            self.error(e)
+            self.signalApiError.emit(str(e))
             return
-
-        self.close()
 
     def reply(self):
         text = str(self.textEdit.toPlainText())
         try:
             self.client.comments.reply.post(id=int(self.id), cid=int(self.cid), comment=text)
             self.notify.showMessage("WeCase", "Reply Success!")
+            self.signalSendSuccessful.emit()
         except APIError as e:
-            self.error(e)
+            self.signalApiError.emit(str(e))
             return
-
-        self.close()
 
     def send_tweet(self):
         text = str(self.textEdit.toPlainText())
@@ -674,12 +678,12 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 self.client.statuses.update.post(status=text)
 
             self.notify.showMessage("WeCase", "Tweet Success!")
+            self.signalSendSuccessful.emit()
         except APIError as e:
-            self.error(e)
+            self.signalApiError.emit(str(e))
             return
 
         self.image = None
-        self.close()
 
     def add_image(self):
         if self.image:
@@ -689,8 +693,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.image = QtGui.QFileDialog.getOpenFileName(self, "Choose a image", filter="Images (*.png *.jpg *.bmp *.gif)")
             self.pushButton_picture.setText("Remove the picture")
 
+    @QtCore.pyqtSlot(str)
     def error(self, e):
-        e = str(e)
         if "Text too long" in e:
             QtGui.QMessageBox.warning(None, "Text too long!",
                                       "Please remove some text.")
