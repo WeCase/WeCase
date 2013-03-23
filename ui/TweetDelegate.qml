@@ -26,19 +26,9 @@ Item  {
     signal hashtagLinkClicked(string hashtag)
     signal mentionLinkClicked(string screenname)
 
-    function getImageHeight() {
-        if (tweetImageLoader.item == null) {
-            var tweetImageHeight = 0;
-        }
-        else {
-            var tweetImageHeight = tweetImageLoader.item.paintedHeight;
-        }
-        return tweetImageHeight
-    }
-
     width: ListView.view.width;
     height: {
-        var tweetImageHeight = getImageHeight()
+        var tweetImageHeight = tweetImage.paintedHeight
         if (statusText.paintedHeight < 80) {
             return 90 + tweetImageHeight;
         }
@@ -63,6 +53,10 @@ Item  {
         var ret2 = ret1.replace(/(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a href='$1'>$1</a>");
         var ret3 = ret2.replace(/[#]+[a-zA-Z0-9_\u4e00-\u9fa5]+[#]/g, '<a href="tag://$&">$&</a>')
         return ret3;
+    }
+
+    function imageLoaded() {
+        busy.on = false;
     }
 
     Image {
@@ -208,13 +202,30 @@ Item  {
         onLinkActivated: container.handleLink(link);
     }
 
-    Loader {  
-        id: tweetImageLoader  
+    Image {
+        id: tweetImage
+        visible: thumbnail_pic
         anchors.top: statusText.bottom
         anchors.topMargin: thumbnail_pic ? 10 : 0;
         anchors.horizontalCenter: parent.horizontalCenter
-        source: thumbnail_pic ? "ImageLoader.qml" : ""
-    } 
+        source: thumbnail_pic
+
+        MouseArea { 
+            anchors.fill: parent
+
+            onClicked: {
+                busy.on = true;
+                mainWindow.look_orignal_pic(thumbnail_pic, tweetid);
+            }
+        }
+
+        BusyIndicator {
+            id: busy
+            scale: 0.5
+            anchors.horizontalCenter: parent.horizontalCenter
+            on: false
+        }
+    }
 
     Text {
         id: sinceText

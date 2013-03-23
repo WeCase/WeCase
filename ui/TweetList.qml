@@ -11,6 +11,21 @@ Rectangle {
         tweetListView.positionViewAtBeginning();
     }
 
+    function imageLoaded(tweetid) {
+        var item = getDelegateInstanceAt(tweetid)
+        item.imageLoaded()
+    }
+
+    function getDelegateInstanceAt(tweetid) {
+        for (var i = 0; i < tweetListView.contentItem.children.length; i++) {
+            var item = tweetListView.contentItem.children[i];
+            if (item.tweetid == tweetid) {
+                return item;
+            }
+        }
+        return undefined;
+    }
+
     ListView {
         id: tweetListView
         anchors.fill: parent;
@@ -56,7 +71,7 @@ Rectangle {
             onFavoriteButtonClicked: favorite()
             onRetweetButtonClicked: mainWindow.repost(tweetid, retweet_string())
             onCommentButtonClicked: mainWindow.comment(tweetid)
-            onReplyButtonClicked: mainWindow.reply(original_id, tweetid) 
+            onReplyButtonClicked: mainWindow.reply(original_id, tweetid)
 
             // not implemented
             onMoreButtonClicked: console.log("Clicked a user: " + tweetScreenName)

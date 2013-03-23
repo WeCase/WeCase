@@ -298,6 +298,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     uid = None
     signalSetTabText = QtCore.pyqtSignal(int, str)
     signalLoadFinished = QtCore.pyqtSignal(int)
+    signalImageLoaded = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
@@ -330,6 +331,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.pushButton_new.clicked.connect(self.new_tweet)
         self.signalSetTabText.connect(self.setTabText)
         self.signalLoadFinished.connect(self.moveToTop)
+        self.signalImageLoaded.connect(self.imageLoaded)
 
     @QtCore.pyqtSlot()
     def load_more(self):
@@ -509,6 +511,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         if more:
             self.get_current_tweetView().rootObject().positionViewAtBeginning()
 
+    @QtCore.pyqtSlot(str)
+    def imageLoaded(self, tweetid):
+        self.get_current_tweetView().rootObject().imageLoaded(tweetid)
+
     def settings_show(self):
         wecase_settings.show()
 
@@ -558,20 +564,18 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.client = self.client
         wecase_new.exec_()
 
-    @QtCore.pyqtSlot(str, result=int)
-    def look_orignal_pic(self, thumbnail_pic):
+    @QtCore.pyqtSlot(str, str)
+    def look_orignal_pic(self, thumbnail_pic, tweetid):
+        threading.Thread(group=None, target=self.fetch_open_original_pic, args=(thumbnail_pic, tweetid)).start()
+
+    def fetch_open_original_pic(self, thumbnail_pic, tweetid):
         original_pic = thumbnail_pic.replace("thumbnail", "large")  # A simple trick ... ^_^
         extname = original_pic.split("/")[-1].split(".")[-1]
         localfile = cache_path + "Preview." + extname
-
-        # do not block user interface!
-        # TODO: Use a new thread to download images.
-        app.processEvents()
-        app.processEvents()
         urllib.request.urlretrieve(original_pic, localfile)
 
         os.popen("xdg-open " + localfile)  # xdg-open is common?
-        return True
+        self.signalImageLoaded.emit(tweetid)
 
     def refresh(self):
         model = self.get_current_model()
