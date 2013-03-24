@@ -598,9 +598,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def fetch_open_original_pic(self, thumbnail_pic, tweetid):
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
-        extname = original_pic.split("/")[-1].split(".")[-1]
-        localfile = cache_path + "Preview." + extname
-        urllib.request.urlretrieve(original_pic, localfile)
+        localfile = cache_path + original_pic.split("/")[-1]
+        if not os.path.exists(localfile):
+            urllib.request.urlretrieve(original_pic, localfile)
 
         os.popen("xdg-open " + localfile)  # xdg-open is common?
         self.signalImageLoaded.emit(tweetid)
