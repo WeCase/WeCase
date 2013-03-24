@@ -299,6 +299,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def auto_login_clicked(self):
         self.chk_Remember.setChecked(self.chk_AutoLogin.isChecked())
 
+    def closeEvent(self, event):
+        self.config.close()
+
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
