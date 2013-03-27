@@ -23,7 +23,7 @@ import notify2 as pynotify
 import threading
 from WTimer import WTimer
 from weibo import APIClient, APIError
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore, QtGui, QtDeclarative
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
@@ -646,6 +646,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def __init__(self, parent=None, action="new", id=None, cid=None, text=""):
         QtGui.QDialog.__init__(self, parent)
+        self.script = JavaScript(QtCore.QUrl.fromLocalFile(myself_path + "/ui/JavaScript.qml"))
         self.action = action
         self.id = id
         self.cid = cid
@@ -666,7 +667,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.pushButton_send.clicked.connect(self.sender)
         self.signalApiError.connect(self.error)
         self.signalSendSuccessful.connect(self.close)
-
+    
     def sender(self):
         if self.action == "new":
             threading.Thread(group=None, target=self.send_tweet).start()
@@ -750,8 +751,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         If it larger than 140, Send Button will be disabled
         and label will show red chars.'''
 
-        text = str(self.textEdit.toPlainText())
-        numLens = 140 - len(text)
+        text = self.textEdit.toPlainText()
+        numLens = 140 - self.script.fucking_getLength(text, 140)
         if numLens >= 0:
             self.label.setStyleSheet("color:black;")
             self.pushButton_send.setEnabled(True)
@@ -780,6 +781,16 @@ class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
         self.setupUi(self)
 
 
+class JavaScript():
+    def __init__(self, file):
+        self.view = QtDeclarative.QDeclarativeView()
+        self.view.setSource(file)
+
+    def __getattr__(self, name):
+        obj = eval("self.view.rootObject().%s" % name)
+        return obj
+
+
 if __name__ == "__main__":
     try:
         os.mkdir(config_path.replace("/config_db", ""))
@@ -790,9 +801,9 @@ if __name__ == "__main__":
         os.mkdir(cache_path)
     except OSError:
         pass
-
+   
     app = QtGui.QApplication(sys.argv)
-
+    
     wecase_login = LoginWindow()
     wecase_main = WeCaseWindow()
     wecase_settings = WeSettingsWindow()
