@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Sat Mar 30 19:01:22 2013
+# Created: Sat Mar 30 19:26:45 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,6 +82,11 @@ class Ui_NewPostWindow(object):
 
         self.retranslateUi(NewPostWindow)
         QtCore.QObject.connect(self.pushButton_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.close)
+        QtCore.QObject.connect(self.pushButton_picture, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.addImage)
+        QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("apiError(QString)")), NewPostWindow.showError)
+        QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("sendSuccessful()")), NewPostWindow.close)
+        QtCore.QObject.connect(self.textEdit, QtCore.SIGNAL(_fromUtf8("textChanged()")), NewPostWindow.checkChars)
+        QtCore.QObject.connect(self.pushButton_send, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.send)
         QtCore.QMetaObject.connectSlotsByName(NewPostWindow)
 
     def retranslateUi(self, NewPostWindow):

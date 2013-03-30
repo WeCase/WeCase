@@ -153,8 +153,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>409</x>
-     <y>353</y>
+     <x>494</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
      <x>280</x>
@@ -162,5 +162,93 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_picture</sender>
+   <signal>clicked()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>addImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NewPostWindow</sender>
+   <signal>apiError(QString)</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>showError(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NewPostWindow</sender>
+   <signal>sendSuccessful()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textEdit</sender>
+   <signal>textChanged()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>checkChars()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_send</sender>
+   <signal>clicked()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>send()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>534</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>528</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <signal>apiError(QString)</signal>
+  <signal>sendSuccessful()</signal>
+  <slot>addImage()</slot>
+  <slot>checkChars()</slot>
+  <slot>send()</slot>
+  <slot>showError(QString)</slot>
+ </slots>
 </ui>
