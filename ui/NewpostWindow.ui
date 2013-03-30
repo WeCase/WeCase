@@ -92,13 +92,6 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="2">
-         <widget class="QPushButton" name="pushButton_location">
-          <property name="text">
-           <string>Location</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -111,7 +104,7 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="4">
+        <item row="0" column="3">
          <widget class="QPushButton" name="pushButton_cancel">
           <property name="text">
            <string>Cancel</string>
@@ -128,11 +121,11 @@
         <item row="0" column="0">
          <widget class="QPushButton" name="pushButton_at">
           <property name="text">
-           <string>At</string>
+           <string>@</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="5">
+        <item row="0" column="4">
          <widget class="QPushButton" name="pushButton_send">
           <property name="text">
            <string>Send</string>
@@ -142,7 +135,6 @@
        </layout>
        <zorder>pushButton_at</zorder>
        <zorder>pushButton_picture</zorder>
-       <zorder>pushButton_location</zorder>
        <zorder>pushButton_cancel</zorder>
        <zorder>pushButton_send</zorder>
        <zorder>horizontalSpacer</zorder>
