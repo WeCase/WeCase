@@ -18,7 +18,7 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import http.client
-import shelve
+from configparser import ConfigParser
 import notify2 as pynotify
 import threading
 from WTimer import WTimer
@@ -171,10 +171,6 @@ class TweetItem(QtCore.QAbstractItemModel):
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
-    passwd = {}
-    last_login = ""
-    auto_login = False
-
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.loadConfig()
@@ -199,18 +195,21 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.login()
 
     def loadConfig(self):
-        self.config = shelve.open(config_path, 'c')
-        try:
-            self.passwd = self.config['passwd']
-            self.last_login = self.config['last_login']
-            self.auto_login = self.config['auto_login']
-        except KeyError:
-            pass
+        self.config = ConfigParser()
+        self.config.read(config_path)
+
+        if not self.config.has_section('login'):
+            self.config['login'] = {}
+
+        self.login_config = self.config['login']
+        self.passwd = eval(self.login_config.get('passwd', "{}"))
+        self.last_login = str(self.login_config.get('last_login', ""))
+        self.auto_login = self.login_config.getboolean('auto_login', 0)
 
     def saveConfig(self):
-        self.config['passwd'] = self.passwd
-        self.config['last_login'] = self.last_login
-        self.config['auto_login'] = self.chk_AutoLogin.isChecked()
+        self.login_config['passwd'] = str(self.passwd)
+        self.login_config['last_login'] = self.last_login
+        self.login_config['auto_login'] = str(self.chk_AutoLogin.isChecked())
 
     def login(self):
         self.pushButton_log.setText("Login, waiting...")
@@ -287,10 +286,12 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         return client
 
     def setPassword(self, username):
-        self.txt_Password.setText(self.passwd[str(username)])
+        if username:
+            self.txt_Password.setText(self.passwd[str(username)])
 
     def closeEvent(self, event):
-        self.config.close()
+        with open(config_path, "w+") as config_file:
+            self.config.write(config_file)
 
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
