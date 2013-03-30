@@ -2,13 +2,34 @@
 <ui version="4.0">
  <class>frm_Login</class>
  <widget class="QDialog" name="frm_Login">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>387</width>
-    <height>182</height>
+    <width>312</width>
+    <height>133</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>312</width>
+    <height>133</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>312</width>
+    <height>133</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Log in</string>
@@ -29,12 +50,18 @@
            <property name="text">
             <string>User Name:</string>
            </property>
+           <property name="buddy">
+            <cstring>cmb_Users</cstring>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_passwd">
            <property name="text">
             <string>Password:</string>
+           </property>
+           <property name="buddy">
+            <cstring>txt_Password</cstring>
            </property>
           </widget>
          </item>
@@ -117,6 +144,9 @@
          <property name="text">
           <string>GO!</string>
          </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -145,6 +175,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pushButton_log</tabstop>
+  <tabstop>cmb_Users</tabstop>
+  <tabstop>txt_Password</tabstop>
+  <tabstop>chk_Remember</tabstop>
+  <tabstop>chk_AutoLogin</tabstop>
+  <tabstop>pushButton_new</tabstop>
+ </tabstops>
  <resources>
   <include location="wecase.qrc"/>
  </resources>

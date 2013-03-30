@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/LoginWindow.ui'
 #
-# Created: Sat Mar 30 17:30:02 2013
+# Created: Sat Mar 30 17:52:14 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,15 @@ except AttributeError:
 class Ui_frm_Login(object):
     def setupUi(self, frm_Login):
         frm_Login.setObjectName(_fromUtf8("frm_Login"))
-        frm_Login.resize(387, 182)
+        frm_Login.setWindowModality(QtCore.Qt.WindowModal)
+        frm_Login.resize(312, 133)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(frm_Login.sizePolicy().hasHeightForWidth())
+        frm_Login.setSizePolicy(sizePolicy)
+        frm_Login.setMinimumSize(QtCore.QSize(312, 133))
+        frm_Login.setMaximumSize(QtCore.QSize(312, 133))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_Login.setWindowIcon(icon)
@@ -75,6 +83,7 @@ class Ui_frm_Login(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.pushButton_log = QtGui.QPushButton(frm_Login)
+        self.pushButton_log.setDefault(True)
         self.pushButton_log.setObjectName(_fromUtf8("pushButton_log"))
         self.horizontalLayout.addWidget(self.pushButton_log)
         self.pushButton_new = QtGui.QPushButton(frm_Login)
@@ -84,9 +93,16 @@ class Ui_frm_Login(object):
         self.horizontalLayout.addItem(spacerItem2)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
         self.gridLayout.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
+        self.label_username.setBuddy(self.cmb_Users)
+        self.label_passwd.setBuddy(self.txt_Password)
 
         self.retranslateUi(frm_Login)
         QtCore.QMetaObject.connectSlotsByName(frm_Login)
+        frm_Login.setTabOrder(self.pushButton_log, self.cmb_Users)
+        frm_Login.setTabOrder(self.cmb_Users, self.txt_Password)
+        frm_Login.setTabOrder(self.txt_Password, self.chk_Remember)
+        frm_Login.setTabOrder(self.chk_Remember, self.chk_AutoLogin)
+        frm_Login.setTabOrder(self.chk_AutoLogin, self.pushButton_new)
 
     def retranslateUi(self, frm_Login):
         frm_Login.setWindowTitle(_translate("frm_Login", "Log in", None))
