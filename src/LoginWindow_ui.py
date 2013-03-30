@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/LoginWindow.ui'
 #
-# Created: Sat Mar 30 17:52:14 2013
+# Created: Sat Mar 30 18:20:39 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -97,6 +97,9 @@ class Ui_frm_Login(object):
         self.label_passwd.setBuddy(self.txt_Password)
 
         self.retranslateUi(frm_Login)
+        QtCore.QObject.connect(self.cmb_Users, QtCore.SIGNAL(_fromUtf8("currentIndexChanged(QString)")), frm_Login.setPassword)
+        QtCore.QObject.connect(self.chk_AutoLogin, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.chk_Remember.setChecked)
+        QtCore.QObject.connect(self.pushButton_log, QtCore.SIGNAL(_fromUtf8("clicked()")), frm_Login.login)
         QtCore.QMetaObject.connectSlotsByName(frm_Login)
         frm_Login.setTabOrder(self.pushButton_log, self.cmb_Users)
         frm_Login.setTabOrder(self.cmb_Users, self.txt_Password)

@@ -180,16 +180,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.loadConfig()
         self.setupUi(self)
         self.setupMyUi()
-        self.setupSignals()
-
-    def setupSignals(self):
-        self.pushButton_log.clicked.connect(self.login)
-        self.chk_AutoLogin.clicked.connect(self.auto_login_clicked)
-        QtCore.QObject.connect(self.cmb_Users,
-                               QtCore.SIGNAL("currentIndexChanged(QString)"),
-                               self.setPassword)
 
     def setupMyUi(self):
+        self.show()
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
         self.cmb_Users.addItem(self.last_login)
         self.chk_AutoLogin.setChecked(self.auto_login)
@@ -295,9 +288,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     def setPassword(self, username):
         self.txt_Password.setText(self.passwd[str(username)])
-
-    def auto_login_clicked(self):
-        self.chk_Remember.setChecked(self.chk_AutoLogin.isChecked())
 
     def closeEvent(self, event):
         self.config.close()
@@ -812,12 +802,10 @@ if __name__ == "__main__":
 
     app = QtGui.QApplication(sys.argv)
 
-    wecase_login = LoginWindow()
     wecase_main = WeCaseWindow()
+    wecase_login = LoginWindow()
     wecase_settings = WeSettingsWindow()
     wecase_about = AboutWindow()
-
-    wecase_login.show()
 
     exit_status = app.exec_()
 

@@ -186,5 +186,58 @@
  <resources>
   <include location="wecase.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cmb_Users</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>frm_Login</receiver>
+   <slot>setPassword(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>254</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chk_AutoLogin</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>chk_Remember</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>118</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_log</sender>
+   <signal>clicked()</signal>
+   <receiver>frm_Login</receiver>
+   <slot>login()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>92</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>53</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setPassword(QString)</slot>
+  <slot>login()</slot>
+ </slots>
 </ui>
