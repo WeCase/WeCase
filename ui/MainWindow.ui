@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>323</width>
-    <height>652</height>
+    <width>295</width>
+    <height>637</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,7 +141,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>323</width>
+     <width>295</width>
      <height>22</height>
     </rect>
    </property>
@@ -240,5 +240,179 @@
  <resources>
   <include location="wecase.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>action_Exit</sender>
+   <signal>triggered()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_About</sender>
+   <signal>triggered()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>showAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Settings</sender>
+   <signal>triggered()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>showSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Log_out</sender>
+   <signal>triggered()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>logout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Refresh</sender>
+   <signal>triggered()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>refresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_refresh</sender>
+   <signal>clicked()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>refresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>610</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>627</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_new</sender>
+   <signal>clicked()</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>postTweet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>606</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frm_MainWindow</sender>
+   <signal>timelineLoaded(int)</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>moveToTop(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>593</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frm_MainWindow</sender>
+   <signal>imageLoaded(QString)</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>setLoaded(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>318</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>147</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>frm_MainWindow</sender>
+   <signal>tabTextChanged(int,QString)</signal>
+   <receiver>frm_MainWindow</receiver>
+   <slot>setTabText(int,QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>318</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>147</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>tabTextChanged(int,QString)</signal>
+  <signal>timelineLoaded(int)</signal>
+  <signal>imageLoaded(QString)</signal>
+  <slot>showSettings()</slot>
+  <slot>showAbout()</slot>
+  <slot>logout()</slot>
+  <slot>refresh()</slot>
+  <slot>postTweet()</slot>
+  <slot>setTabText(int,QString)</slot>
+  <slot>moveToTop(int)</slot>
+  <slot>setLoaded(QString)</slot>
+ </slots>
 </ui>

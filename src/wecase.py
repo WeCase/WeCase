@@ -296,9 +296,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
     uid = None
-    signalSetTabText = QtCore.pyqtSignal(int, str)
-    signalLoadFinished = QtCore.pyqtSignal(int)
-    signalImageLoaded = QtCore.pyqtSignal(str)
+    timelineLoaded = QtCore.pyqtSignal(int)
+    imageLoaded = QtCore.pyqtSignal(str)
+    tabTextChanged = QtCore.pyqtSignal(int, str)
 
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
@@ -307,7 +307,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                            self.myView]
         self.setupModels()
         self.setupMyUi()
-        self.setupSignals()
         self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
         self.TIMER_INTERVAL = 30  # TODO: Can be modify with settings window
@@ -321,19 +320,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             tweetView.setSource(
                 QtCore.QUrl.fromLocalFile(myself_path + "/ui/TweetList.qml"))
             tweetView.rootContext().setContextProperty("mainWindow", self)
-
-    def setupSignals(self):
-        self.action_Exit.triggered.connect(self.close)
-        self.action_Settings.triggered.connect(self.settings_show)
-        self.action_Log_out.triggered.connect(self.logout)
-        self.action_Refresh.triggered.connect(self.refresh)
-        self.action_About.triggered.connect(self.about_show)
-
-        self.pushButton_refresh.clicked.connect(self.refresh)
-        self.pushButton_new.clicked.connect(self.new_tweet)
-        self.signalSetTabText.connect(self.setTabText)
-        self.signalLoadFinished.connect(self.moveToTop)
-        self.signalImageLoaded.connect(self.imageLoaded)
 
     @QtCore.pyqtSlot()
     def load_more(self):
@@ -434,7 +420,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 tweet.thumbnail_pic = item_thumb_pic
 
             model.appendRow(tweet)
-        self.signalLoadFinished.emit(more)
+        self.timelineLoaded.emit(more)
 
     def get_all_timeline(self, page=1, reset_remind=False, more=False):
         all_timelines = self.client.statuses.home_timeline.get(
@@ -489,7 +475,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def show_notify(self):
         # This function is run in another thread by WTimer.
         # Do not modify UI directly. Send signal and react it in a slot only.
-        # We use SIGNAL self.signalSetTabText and SLOT self.setTabText()
+        # We use SIGNAL self.tabTextChanged and SLOT self.setTabText()
         # to display unread count
 
         # HACK: not login yet, pass notify checking
@@ -502,17 +488,17 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # TODO: we need settings window, to controll their displaying or not
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
-            self.signalSetTabText.emit(0, "Weibo(%d)" % reminds['status'])
+            self.tabTextChanged.emit(0, "Weibo(%d)" % reminds['status'])
 
         if reminds['mention_status'] != 0:
             msg += "%d unread @ME\n" % reminds['mention_status']
-            self.signalSetTabText.emit(1,
+            self.tabTextChanged.emit(1,
                                        "@Me(%d)" % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] != 0:
             msg += "%d unread comment(s)\n" % reminds['cmt']
-            self.signalSetTabText.emit(2, "Comments(%d)" % reminds['cmt'])
+            self.tabTextChanged.emit(2, "Comments(%d)" % reminds['cmt'])
             num_msg += 1
 
         if num_msg != 0:
@@ -520,30 +506,27 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.notify.showMessage("WeCase", msg,
                                     image="notification-message-email")
 
-    @QtCore.pyqtSlot(int, str)
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
 
-    @QtCore.pyqtSlot(int)
     def moveToTop(self, more):
         if more:
             self.get_current_tweetView().rootObject().positionViewAtBeginning()
 
-    @QtCore.pyqtSlot(str)
-    def imageLoaded(self, tweetid):
+    def setLoaded(self, tweetid):
         self.get_current_tweetView().rootObject().imageLoaded(tweetid)
 
-    def settings_show(self):
+    def showSettings(self):
         wecase_settings.show()
 
-    def about_show(self):
+    def showAbout(self):
         wecase_about.show()
 
     def logout(self):
         wecase_login.show()
         self.close()
 
-    def new_tweet(self):
+    def postTweet(self):
         wecase_new = NewpostWindow()
         wecase_new.client = self.client
         wecase_new.exec_()
@@ -604,7 +587,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             urllib.request.urlretrieve(original_pic, localfile)
 
         os.popen("xdg-open " + localfile)  # xdg-open is common?
-        self.signalImageLoaded.emit(tweetid)
+        self.imageLoaded.emit(tweetid)
 
     def refresh(self):
         model = self.get_current_model()

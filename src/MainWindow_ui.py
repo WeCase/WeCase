@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/MainWindow.ui'
 #
-# Created: Sat Mar 30 18:20:39 2013
+# Created: Sat Mar 30 19:01:22 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
-        frm_MainWindow.resize(323, 652)
+        frm_MainWindow.resize(295, 637)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_MainWindow.setWindowIcon(icon)
@@ -97,7 +97,7 @@ class Ui_frm_MainWindow(object):
         frm_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(frm_MainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 323, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 295, 22))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -150,6 +150,16 @@ class Ui_frm_MainWindow(object):
 
         self.retranslateUi(frm_MainWindow)
         self.tabWidget.setCurrentIndex(0)
+        QtCore.QObject.connect(self.action_Exit, QtCore.SIGNAL(_fromUtf8("triggered()")), frm_MainWindow.close)
+        QtCore.QObject.connect(self.action_About, QtCore.SIGNAL(_fromUtf8("triggered()")), frm_MainWindow.showAbout)
+        QtCore.QObject.connect(self.action_Settings, QtCore.SIGNAL(_fromUtf8("triggered()")), frm_MainWindow.showSettings)
+        QtCore.QObject.connect(self.action_Log_out, QtCore.SIGNAL(_fromUtf8("triggered()")), frm_MainWindow.logout)
+        QtCore.QObject.connect(self.action_Refresh, QtCore.SIGNAL(_fromUtf8("triggered()")), frm_MainWindow.refresh)
+        QtCore.QObject.connect(self.pushButton_refresh, QtCore.SIGNAL(_fromUtf8("clicked()")), frm_MainWindow.refresh)
+        QtCore.QObject.connect(self.pushButton_new, QtCore.SIGNAL(_fromUtf8("clicked()")), frm_MainWindow.postTweet)
+        QtCore.QObject.connect(frm_MainWindow, QtCore.SIGNAL(_fromUtf8("timelineLoaded(int)")), frm_MainWindow.moveToTop)
+        QtCore.QObject.connect(frm_MainWindow, QtCore.SIGNAL(_fromUtf8("imageLoaded(QString)")), frm_MainWindow.setLoaded)
+        QtCore.QObject.connect(frm_MainWindow, QtCore.SIGNAL(_fromUtf8("tabTextChanged(int,QString)")), frm_MainWindow.setTabText)
         QtCore.QMetaObject.connectSlotsByName(frm_MainWindow)
 
     def retranslateUi(self, frm_MainWindow):
