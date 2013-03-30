@@ -599,6 +599,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                          args=(thumbnail_pic, tweetid)).start()
 
     def fetch_open_original_pic(self, thumbnail_pic, tweetid):
+        """Fetch and open original pic from thumbnail pic url.
+           Pictures will stored in cache directory. If we already have a same
+           name in cache directory, just open it. If we don't, then download it
+           first."""
+        # XXX: This function is NOT thread-safe!
+        # Click a single picture for many time will download a image for many
+        # times, and the picture may be overwrite, we will get a broken image.
+
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
         localfile = cache_path + original_pic.split("/")[-1]
@@ -667,7 +675,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.pushButton_send.clicked.connect(self.sender)
         self.signalApiError.connect(self.error)
         self.signalSendSuccessful.connect(self.close)
-    
+
     def sender(self):
         if self.action == "new":
             threading.Thread(group=None, target=self.send_tweet).start()
@@ -801,9 +809,9 @@ if __name__ == "__main__":
         os.mkdir(cache_path)
     except OSError:
         pass
-   
+
     app = QtGui.QApplication(sys.argv)
-    
+
     wecase_login = LoginWindow()
     wecase_main = WeCaseWindow()
     wecase_settings = WeSettingsWindow()
