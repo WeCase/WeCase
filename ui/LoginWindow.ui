@@ -235,9 +235,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_new</sender>
+   <signal>clicked()</signal>
+   <receiver>frm_Login</receiver>
+   <slot>openRegisterPage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>112</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setPassword(QString)</slot>
   <slot>login()</slot>
+  <slot>openRegisterPage()</slot>
  </slots>
 </ui>

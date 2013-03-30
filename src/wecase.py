@@ -12,6 +12,7 @@
 
 import sys
 import os
+import webbrowser
 from datetime import datetime
 from dateutil import parser as time_parser
 import urllib.request
@@ -288,6 +289,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def setPassword(self, username):
         if username:
             self.txt_Password.setText(self.passwd[str(username)])
+
+    def openRegisterPage(self):
+        webbrowser.open("http://weibo.com/signup/signup.php")
 
     def closeEvent(self, event):
         with open(config_path, "w+") as config_file:
