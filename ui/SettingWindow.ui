@@ -43,14 +43,7 @@
         </size>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_OK">
-          <property name="text">
-           <string>&amp;OK</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
+        <item row="0" column="3">
          <widget class="QPushButton" name="pushButton_Cancel">
           <property name="text">
            <string>&amp;Cancel</string>
@@ -70,10 +63,10 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="3">
-         <widget class="QPushButton" name="pushButton">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="pushButton_OK">
           <property name="text">
-           <string>&amp;Apply</string>
+           <string>&amp;OK</string>
           </property>
          </widget>
         </item>
@@ -92,11 +85,27 @@
    <sender>pushButton_Cancel</sender>
    <signal>clicked()</signal>
    <receiver>SettingWindow</receiver>
-   <slot>close()</slot>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>382</x>
      <y>567</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_OK</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>363</x>
+     <y>578</y>
     </hint>
     <hint type="destinationlabel">
      <x>260</x>

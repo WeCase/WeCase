@@ -522,7 +522,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.get_current_tweetView().rootObject().imageLoaded(tweetid)
 
     def showSettings(self):
-        wecase_settings.show()
+        if wecase_settings.exec_():
+            pass
 
     def showAbout(self):
         wecase_about.show()
