@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/SettingWindow.ui'
 #
-# Created: Sun Mar 31 14:15:14 2013
+# Created: Sun Mar 31 16:35:01 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
         SettingWindow.setObjectName(_fromUtf8("SettingWindow"))
-        SettingWindow.resize(521, 600)
+        SettingWindow.resize(437, 136)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/preferences-other.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         SettingWindow.setWindowIcon(icon)
@@ -38,6 +38,26 @@ class Ui_SettingWindow(object):
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.tab)
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.label = QtGui.QLabel(self.tab)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.horizontalLayout.addWidget(self.label)
+        self.intervalSlider = QtGui.QSlider(self.tab)
+        self.intervalSlider.setMinimum(5)
+        self.intervalSlider.setMaximum(360)
+        self.intervalSlider.setSingleStep(30)
+        self.intervalSlider.setPageStep(0)
+        self.intervalSlider.setProperty("value", 5)
+        self.intervalSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.intervalSlider.setObjectName(_fromUtf8("intervalSlider"))
+        self.horizontalLayout.addWidget(self.intervalSlider)
+        self.intervalLabel = QtGui.QLabel(self.tab)
+        self.intervalLabel.setObjectName(_fromUtf8("intervalLabel"))
+        self.horizontalLayout.addWidget(self.intervalLabel)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName(_fromUtf8("tab_2"))
@@ -63,10 +83,13 @@ class Ui_SettingWindow(object):
         self.retranslateUi(SettingWindow)
         QtCore.QObject.connect(self.pushButton_Cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.reject)
         QtCore.QObject.connect(self.pushButton_OK, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.accept)
+        QtCore.QObject.connect(self.intervalSlider, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), SettingWindow.setIntervalText)
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
 
     def retranslateUi(self, SettingWindow):
         SettingWindow.setWindowTitle(_translate("SettingWindow", "Settings", None))
+        self.label.setText(_translate("SettingWindow", "Interval for notify checking", None))
+        self.intervalLabel.setText(_translate("SettingWindow", "? ms", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("SettingWindow", "Tab 1", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("SettingWindow", "Tab 2", None))
         self.pushButton_Cancel.setText(_translate("SettingWindow", "&Cancel", None))

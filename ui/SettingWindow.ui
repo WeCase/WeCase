@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>521</width>
-    <height>600</height>
+    <width>437</width>
+    <height>136</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,6 +26,48 @@
         <attribute name="title">
          <string>Tab 1</string>
         </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Interval for notify checking</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="intervalSlider">
+             <property name="minimum">
+              <number>5</number>
+             </property>
+             <property name="maximum">
+              <number>360</number>
+             </property>
+             <property name="singleStep">
+              <number>30</number>
+             </property>
+             <property name="pageStep">
+              <number>0</number>
+             </property>
+             <property name="value">
+              <number>5</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="intervalLabel">
+             <property name="text">
+              <string>? ms</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
@@ -88,8 +130,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>567</y>
+     <x>427</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>260</x>
@@ -104,8 +146,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>578</y>
+     <x>361</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>260</x>
@@ -113,5 +155,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>intervalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>setIntervalText(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>setIntervalText(int)</slot>
+ </slots>
 </ui>

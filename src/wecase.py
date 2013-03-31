@@ -312,11 +312,28 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                            self.myView]
         self.setupModels()
         self.setupMyUi()
+        self.loadConfig()
         self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
-        self.TIMER_INTERVAL = 30  # TODO: Can be modify with settings window
         self.notify = Notify()
-        self.timer = WTimer(self.TIMER_INTERVAL, self.show_notify)
+        self.applyConfig()
+
+    def loadConfig(self):
+        self.config = ConfigParser()
+        self.config.read(config_path)
+
+        if not self.config.has_section('main'):
+            self.config['main'] = {}
+
+        self.main_config = self.config['main']
+        self.timer_interval = int(self.main_config.get('notify_interval', 30))
+
+    def applyConfig(self):
+        try:
+            self.timer.stopped = True
+        except AttributeError:
+            pass
+        self.timer = WTimer(self.timer_interval, self.show_notify)
         self.timer.start()
 
     def setupMyUi(self):
@@ -523,7 +540,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def showSettings(self):
         if wecase_settings.exec_():
-            pass
+            self.loadConfig()
+            self.applyConfig()
 
     def showAbout(self):
         wecase_about.show()
@@ -623,6 +641,46 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
+        self.loadConfig()
+
+    def transformInterval(self, sliderValue):
+        return (sliderValue // 60, sliderValue % 60)
+
+    def setIntervalText(self, sliderValue):
+        self.intervalLabel.setText("%i min %i sec" % (
+            self.transformInterval(sliderValue)))
+
+    def loadConfig(self):
+        self.config = ConfigParser()
+        self.config.read(config_path)
+
+        if not self.config.has_section('main'):
+            self.config['main'] = {}
+
+        self.main_config = self.config['main']
+        self.intervalSlider.setValue(int(self.main_config.get(
+            'notify_interval', "30")))
+        self.setIntervalText(self.intervalSlider.value())
+
+    def saveConfig(self):
+        self.config = ConfigParser()
+        self.config.read(config_path)
+
+        if not self.config.has_section('main'):
+            self.config['main'] = {}
+
+        self.main_config = self.config['main']
+        self.main_config['notify_interval'] = str(self.intervalSlider.value())
+
+        with open(config_path, "w+") as config_file:
+            self.config.write(config_file)
+
+    def accept(self):
+        self.saveConfig()
+        self.done(True)
+
+    def reject(self):
+        self.done(False)
 
 
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
