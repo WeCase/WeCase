@@ -107,14 +107,14 @@
         <item row="0" column="3">
          <widget class="QPushButton" name="pushButton_cancel">
           <property name="text">
-           <string>Cancel</string>
+           <string>&amp;Cancel</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="pushButton_picture">
           <property name="text">
-           <string>Picture</string>
+           <string>&amp;Picture</string>
           </property>
          </widget>
         </item>
@@ -128,7 +128,7 @@
         <item row="0" column="4">
          <widget class="QPushButton" name="pushButton_send">
           <property name="text">
-           <string>Send</string>
+           <string>&amp;Send</string>
           </property>
          </widget>
         </item>

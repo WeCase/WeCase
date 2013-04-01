@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/MainWindow.ui'
 #
-# Created: Sun Mar 31 16:35:01 2013
+# Created: Mon Apr  1 12:20:46 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -168,9 +168,9 @@ class Ui_frm_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("frm_MainWindow", "@ME", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("frm_MainWindow", "Comments", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("frm_MainWindow", "My tweet", None))
-        self.pushButton_me.setText(_translate("frm_MainWindow", "Me", None))
-        self.pushButton_refresh.setText(_translate("frm_MainWindow", "Refresh", None))
-        self.pushButton_new.setText(_translate("frm_MainWindow", "New Weibo", None))
+        self.pushButton_me.setText(_translate("frm_MainWindow", "&Me", None))
+        self.pushButton_refresh.setText(_translate("frm_MainWindow", "&Refresh", None))
+        self.pushButton_new.setText(_translate("frm_MainWindow", "&New Weibo", None))
         self.menu_WeCase.setTitle(_translate("frm_MainWindow", "&WeCase", None))
         self.menuHelp.setTitle(_translate("frm_MainWindow", "&Help", None))
         self.menuO_ptions.setTitle(_translate("frm_MainWindow", "&Options", None))

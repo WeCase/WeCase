@@ -91,14 +91,14 @@
            <item>
             <widget class="QCheckBox" name="chk_Remember">
              <property name="text">
-              <string>Remember Me</string>
+              <string>&amp;Remember Me</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QCheckBox" name="chk_AutoLogin">
              <property name="text">
-              <string>Auto Login</string>
+              <string>&amp;Auto Login</string>
              </property>
             </widget>
            </item>
@@ -142,7 +142,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_log">
          <property name="text">
-          <string>GO!</string>
+          <string>&amp;Go!</string>
          </property>
          <property name="default">
           <bool>true</bool>
@@ -152,7 +152,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_new">
          <property name="text">
-          <string>New account</string>
+          <string>&amp;New account</string>
          </property>
         </widget>
        </item>

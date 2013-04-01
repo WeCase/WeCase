@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Sun Mar 31 16:35:01 2013
+# Created: Mon Apr  1 12:20:46 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
