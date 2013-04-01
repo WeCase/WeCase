@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file './ui/AboutWindow.ui'
 #
-# Created: Sun Mar 31 16:35:01 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Mon Apr  1 12:13:10 2013
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,21 +12,19 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_About_Dialog(object):
     def setupUi(self, About_Dialog):
         About_Dialog.setObjectName(_fromUtf8("About_Dialog"))
-        About_Dialog.resize(338, 434)
+        About_Dialog.resize(354, 435)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(About_Dialog.sizePolicy().hasHeightForWidth())
+        About_Dialog.setSizePolicy(sizePolicy)
+        About_Dialog.setMinimumSize(QtCore.QSize(354, 435))
+        About_Dialog.setMaximumSize(QtCore.QSize(354, 435))
         self.verticalLayout = QtGui.QVBoxLayout(About_Dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.gridLayout = QtGui.QGridLayout()
@@ -42,6 +40,13 @@ class Ui_About_Dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayout.addWidget(self.label_2, 1, 1, 1, 1)
         self.label_3 = QtGui.QLabel(About_Dialog)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy)
+        self.label_3.setMinimumSize(QtCore.QSize(96, 96))
+        self.label_3.setMaximumSize(QtCore.QSize(96, 96))
         self.label_3.setText(_fromUtf8(""))
         self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase 80.png")))
         self.label_3.setScaledContents(True)
@@ -774,19 +779,19 @@ class Ui_About_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(About_Dialog)
 
     def retranslateUi(self, About_Dialog):
-        About_Dialog.setWindowTitle(_translate("About_Dialog", "About", None))
-        self.label.setText(_translate("About_Dialog", "WeCase", None))
-        self.label_2.setText(_translate("About_Dialog", "A Linux weibo client", None))
-        self.label_4.setText(_translate("About_Dialog", "WeCase is a simple, but not crude weibo client which is running on Linux desktop.\n"
+        About_Dialog.setWindowTitle(QtGui.QApplication.translate("About_Dialog", "About", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("About_Dialog", "WeCase", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("About_Dialog", "A Linux weibo client", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("About_Dialog", "WeCase is a simple, but not crude weibo client which is running on Linux desktop.\n"
 "\n"
 "This software is released under GPL vsersion 3 or later. For more details, see http://www.gnu.org\n"
 "\n"
 "Anyone can use, modify and redistribute this software.\n"
 "\n"
-"This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.intro), _translate("About_Dialog", "Intro", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.contirbutor), _translate("About_Dialog", "Contributor", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.gpl_license), _translate("About_Dialog", "GPL License", None))
-        self.Btn_Close.setText(_translate("About_Dialog", "Close", None))
+"This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.intro), QtGui.QApplication.translate("About_Dialog", "Intro", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.contirbutor), QtGui.QApplication.translate("About_Dialog", "Contributor", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.gpl_license), QtGui.QApplication.translate("About_Dialog", "GPL License", None, QtGui.QApplication.UnicodeUTF8))
+        self.Btn_Close.setText(QtGui.QApplication.translate("About_Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import wecase_rc

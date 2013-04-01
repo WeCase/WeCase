@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file './ui/MainWindow.ui'
 #
-# Created: Sun Mar 31 16:35:01 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Mon Apr  1 12:13:10 2013
+#      by: PyQt4 UI code generator 4.9.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,16 +12,7 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
@@ -163,23 +154,23 @@ class Ui_frm_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(frm_MainWindow)
 
     def retranslateUi(self, frm_MainWindow):
-        frm_MainWindow.setWindowTitle(_translate("frm_MainWindow", "WeCase", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("frm_MainWindow", "Weibo", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("frm_MainWindow", "@ME", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("frm_MainWindow", "Comments", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("frm_MainWindow", "My tweet", None))
-        self.pushButton_me.setText(_translate("frm_MainWindow", "Me", None))
-        self.pushButton_refresh.setText(_translate("frm_MainWindow", "Refresh", None))
-        self.pushButton_new.setText(_translate("frm_MainWindow", "New Weibo", None))
-        self.menu_WeCase.setTitle(_translate("frm_MainWindow", "&WeCase", None))
-        self.menuHelp.setTitle(_translate("frm_MainWindow", "&Help", None))
-        self.menuO_ptions.setTitle(_translate("frm_MainWindow", "&Options", None))
-        self.action_About.setText(_translate("frm_MainWindow", "&About...", None))
-        self.action_Refresh.setText(_translate("frm_MainWindow", "&Refresh", None))
-        self.action_Log_out.setText(_translate("frm_MainWindow", "&Log out", None))
-        self.action_Exit.setText(_translate("frm_MainWindow", "&Exit", None))
-        self.action_Settings.setText(_translate("frm_MainWindow", "&Settings", None))
-        self.actionUpdate.setText(_translate("frm_MainWindow", "&Update", None))
+        frm_MainWindow.setWindowTitle(QtGui.QApplication.translate("frm_MainWindow", "WeCase", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("frm_MainWindow", "Weibo", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("frm_MainWindow", "@ME", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("frm_MainWindow", "Comments", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QtGui.QApplication.translate("frm_MainWindow", "My tweet", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_me.setText(QtGui.QApplication.translate("frm_MainWindow", "Me", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_refresh.setText(QtGui.QApplication.translate("frm_MainWindow", "Refresh", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_new.setText(QtGui.QApplication.translate("frm_MainWindow", "New Weibo", None, QtGui.QApplication.UnicodeUTF8))
+        self.menu_WeCase.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&WeCase", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuHelp.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuO_ptions.setTitle(QtGui.QApplication.translate("frm_MainWindow", "&Options", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_About.setText(QtGui.QApplication.translate("frm_MainWindow", "&About...", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Refresh.setText(QtGui.QApplication.translate("frm_MainWindow", "&Refresh", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Log_out.setText(QtGui.QApplication.translate("frm_MainWindow", "&Log out", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Exit.setText(QtGui.QApplication.translate("frm_MainWindow", "&Exit", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_Settings.setText(QtGui.QApplication.translate("frm_MainWindow", "&Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionUpdate.setText(QtGui.QApplication.translate("frm_MainWindow", "&Update", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import QtDeclarative
 import wecase_rc
