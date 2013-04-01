@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/LoginWindow.ui'
 #
-# Created: Mon Apr  1 12:20:46 2013
+# Created: Mon Apr  1 12:30:48 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -113,9 +113,9 @@ class Ui_frm_Login(object):
         self.label_username.setText(_translate("frm_Login", "User Name:", None))
         self.label_passwd.setText(_translate("frm_Login", "Password:", None))
         self.label_status.setText(_translate("frm_Login", "Status:", None))
-        self.chk_Remember.setText(_translate("frm_Login", "Remember Me", None))
-        self.chk_AutoLogin.setText(_translate("frm_Login", "Auto Login", None))
-        self.pushButton_log.setText(_translate("frm_Login", "GO!", None))
-        self.pushButton_new.setText(_translate("frm_Login", "New account", None))
+        self.chk_Remember.setText(_translate("frm_Login", "&Remember Me", None))
+        self.chk_AutoLogin.setText(_translate("frm_Login", "&Auto Login", None))
+        self.pushButton_log.setText(_translate("frm_Login", "&Go!", None))
+        self.pushButton_new.setText(_translate("frm_Login", "&New account", None))
 
 import wecase_rc

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/AboutWindow.ui'
 #
-# Created: Mon Apr  1 12:20:46 2013
+# Created: Mon Apr  1 12:30:48 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,14 @@ except AttributeError:
 class Ui_About_Dialog(object):
     def setupUi(self, About_Dialog):
         About_Dialog.setObjectName(_fromUtf8("About_Dialog"))
-        About_Dialog.resize(338, 434)
+        About_Dialog.resize(354, 435)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(About_Dialog.sizePolicy().hasHeightForWidth())
+        About_Dialog.setSizePolicy(sizePolicy)
+        About_Dialog.setMinimumSize(QtCore.QSize(354, 435))
+        About_Dialog.setMaximumSize(QtCore.QSize(354, 435))
         self.verticalLayout = QtGui.QVBoxLayout(About_Dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.gridLayout = QtGui.QGridLayout()
@@ -42,6 +49,13 @@ class Ui_About_Dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.gridLayout.addWidget(self.label_2, 1, 1, 1, 1)
         self.label_3 = QtGui.QLabel(About_Dialog)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy)
+        self.label_3.setMinimumSize(QtCore.QSize(96, 96))
+        self.label_3.setMaximumSize(QtCore.QSize(96, 96))
         self.label_3.setText(_fromUtf8(""))
         self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase 80.png")))
         self.label_3.setScaledContents(True)

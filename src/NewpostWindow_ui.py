@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Mon Apr  1 12:20:46 2013
+# Created: Mon Apr  1 12:30:48 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -92,8 +92,8 @@ class Ui_NewPostWindow(object):
     def retranslateUi(self, NewPostWindow):
         NewPostWindow.setWindowTitle(_translate("NewPostWindow", "New Message", None))
         self.label.setText(_translate("NewPostWindow", "140", None))
-        self.pushButton_cancel.setText(_translate("NewPostWindow", "Cancel", None))
-        self.pushButton_picture.setText(_translate("NewPostWindow", "Picture", None))
+        self.pushButton_cancel.setText(_translate("NewPostWindow", "&Cancel", None))
+        self.pushButton_picture.setText(_translate("NewPostWindow", "&Picture", None))
         self.pushButton_at.setText(_translate("NewPostWindow", "@", None))
-        self.pushButton_send.setText(_translate("NewPostWindow", "Send", None))
+        self.pushButton_send.setText(_translate("NewPostWindow", "&Send", None))
 
