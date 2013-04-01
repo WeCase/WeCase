@@ -327,6 +327,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         self.main_config = self.config['main']
         self.timer_interval = int(self.main_config.get('notify_interval', 30))
+        self.remindMentions = self.main_config.getboolean('remind_mentions', 1)
+        self.remindComments = self.main_config.getboolean('remind_comments', 1)
 
     def applyConfig(self):
         try:
@@ -507,24 +509,24 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         reminds = self.get_remind(self.uid)
         msg = "You have:\n"
         num_msg = 0
-        # TODO: we need settings window, to controll their displaying or not
+
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
             self.tabTextChanged.emit(0, "Weibo(%d)" % reminds['status'])
 
-        if reminds['mention_status'] != 0:
+        if reminds['mention_status'] and self.remindMentions:
             msg += "%d unread @ME\n" % reminds['mention_status']
             self.tabTextChanged.emit(1,
                                        "@Me(%d)" % reminds['mention_status'])
             num_msg += 1
 
-        if reminds['cmt'] != 0:
+        if reminds['cmt'] and self.remindComments:
             msg += "%d unread comment(s)\n" % reminds['cmt']
             self.tabTextChanged.emit(2, "Comments(%d)" % reminds['cmt'])
             num_msg += 1
 
         if num_msg != 0:
-            #TODO: image can use our images in rcc
+            # TODO: image can use our images in rcc
             self.notify.showMessage("WeCase", msg,
                                     image="notification-message-email")
 
@@ -661,6 +663,10 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.intervalSlider.setValue(int(self.main_config.get(
             'notify_interval', "30")))
         self.setIntervalText(self.intervalSlider.value())
+        self.commentsChk.setChecked(self.main_config.getboolean(
+            "remind_comments", True))
+        self.mentionsChk.setChecked(self.main_config.getboolean(
+            "remind_mentions", True))
 
     def saveConfig(self):
         self.config = ConfigParser()
@@ -671,6 +677,8 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 
         self.main_config = self.config['main']
         self.main_config['notify_interval'] = str(self.intervalSlider.value())
+        self.main_config['remind_comments'] = str(self.commentsChk.isChecked())
+        self.main_config['remind_mentions'] = str(self.mentionsChk.isChecked())
 
         with open(config_path, "w+") as config_file:
             self.config.write(config_file)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/AboutWindow.ui'
 #
-# Created: Mon Apr  1 12:30:48 2013
+# Created: Mon Apr  1 21:49:29 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
