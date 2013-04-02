@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/SettingWindow.ui'
 #
-# Created: Mon Apr  1 21:49:29 2013
+# Created: Tue Apr  2 17:25:09 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
         SettingWindow.setObjectName(_fromUtf8("SettingWindow"))
-        SettingWindow.resize(432, 143)
+        SettingWindow.resize(360, 187)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -46,9 +46,7 @@ class Ui_SettingWindow(object):
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
-        self.gridLayout_3 = QtGui.QGridLayout(self.tab)
-        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
-        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
@@ -68,6 +66,24 @@ class Ui_SettingWindow(object):
         self.intervalLabel.setObjectName(_fromUtf8("intervalLabel"))
         self.horizontalLayout_2.addWidget(self.intervalLabel)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
+        self.timeoutDefine = QtGui.QLabel(self.tab)
+        self.timeoutDefine.setObjectName(_fromUtf8("timeoutDefine"))
+        self.horizontalLayout_4.addWidget(self.timeoutDefine)
+        self.timeoutSlider = QtGui.QSlider(self.tab)
+        self.timeoutSlider.setMinimum(1)
+        self.timeoutSlider.setMaximum(100)
+        self.timeoutSlider.setSingleStep(30)
+        self.timeoutSlider.setPageStep(0)
+        self.timeoutSlider.setProperty("value", 1)
+        self.timeoutSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.timeoutSlider.setObjectName(_fromUtf8("timeoutSlider"))
+        self.horizontalLayout_4.addWidget(self.timeoutSlider)
+        self.timeoutLabel = QtGui.QLabel(self.tab)
+        self.timeoutLabel.setObjectName(_fromUtf8("timeoutLabel"))
+        self.horizontalLayout_4.addWidget(self.timeoutLabel)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.label_2 = QtGui.QLabel(self.tab)
@@ -84,7 +100,6 @@ class Ui_SettingWindow(object):
         self.horizontalLayout.addWidget(self.commentsChk)
         self.horizontalLayout_3.addLayout(self.horizontalLayout)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
-        self.gridLayout_3.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
         self.widget = QtGui.QWidget(SettingWindow)
@@ -105,6 +120,7 @@ class Ui_SettingWindow(object):
         self.verticalLayout.setStretch(0, 6)
         self.verticalLayout.setStretch(1, 1)
         self.intervalDefine.setBuddy(self.intervalSlider)
+        self.timeoutDefine.setBuddy(self.intervalSlider)
         self.label_2.setBuddy(self.mentionsChk)
 
         self.retranslateUi(SettingWindow)
@@ -112,12 +128,15 @@ class Ui_SettingWindow(object):
         QtCore.QObject.connect(self.pushButton_Cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.reject)
         QtCore.QObject.connect(self.pushButton_OK, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.accept)
         QtCore.QObject.connect(self.intervalSlider, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), SettingWindow.setIntervalText)
+        QtCore.QObject.connect(self.timeoutSlider, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), SettingWindow.setTimeoutText)
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
 
     def retranslateUi(self, SettingWindow):
         SettingWindow.setWindowTitle(_translate("SettingWindow", "Settings", None))
         self.intervalDefine.setText(_translate("SettingWindow", "Interval for notify checking", None))
         self.intervalLabel.setText(_translate("SettingWindow", "? ms", None))
+        self.timeoutDefine.setText(_translate("SettingWindow", "Timeout for popup notify", None))
+        self.timeoutLabel.setText(_translate("SettingWindow", "? ms", None))
         self.label_2.setText(_translate("SettingWindow", "Remind me when I have:", None))
         self.mentionsChk.setText(_translate("SettingWindow", "@ Me", None))
         self.commentsChk.setText(_translate("SettingWindow", "Comments", None))

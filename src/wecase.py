@@ -315,7 +315,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.loadConfig()
         self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
-        self.notify = Notify()
+        self.notify = Notify(timeout=self.notify_timeout)
         self.applyConfig()
 
     def loadConfig(self):
@@ -327,6 +327,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         self.main_config = self.config['main']
         self.timer_interval = int(self.main_config.get('notify_interval', 30))
+        self.notify_timeout = int(self.main_config.get('notify_timeout', 5))
         self.remindMentions = self.main_config.getboolean('remind_mentions', 1)
         self.remindComments = self.main_config.getboolean('remind_comments', 1)
 
@@ -337,6 +338,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             pass
         self.timer = WTimer(self.timer_interval, self.show_notify)
         self.timer.start()
+        self.notify.timeout = self.notify_timeout
 
     def setupMyUi(self):
         for tweetView in self.tweetViews:
@@ -517,7 +519,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         if reminds['mention_status'] and self.remindMentions:
             msg += "%d unread @ME\n" % reminds['mention_status']
             self.tabTextChanged.emit(1,
-                                       "@Me(%d)" % reminds['mention_status'])
+                                     "@Me(%d)" % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] and self.remindComments:
@@ -651,6 +653,9 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.intervalLabel.setText("%i min %i sec" % (
             self.transformInterval(sliderValue)))
 
+    def setTimeoutText(self, sliderValue):
+        self.timeoutLabel.setText("%i sec" % sliderValue)
+
     def loadConfig(self):
         self.config = ConfigParser()
         self.config.read(config_path)
@@ -662,6 +667,9 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.intervalSlider.setValue(int(self.main_config.get(
             'notify_interval', "30")))
         self.setIntervalText(self.intervalSlider.value())
+        self.timeoutSlider.setValue(int(self.main_config.get(
+            "notify_timeout", "5")))
+        self.setTimeoutText(self.timeoutSlider.value())
         self.commentsChk.setChecked(self.main_config.getboolean(
             "remind_comments", True))
         self.mentionsChk.setChecked(self.main_config.getboolean(
@@ -676,6 +684,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 
         self.main_config = self.config['main']
         self.main_config['notify_interval'] = str(self.intervalSlider.value())
+        self.main_config['notify_timeout'] = str(self.timeoutSlider.value())
         self.main_config['remind_comments'] = str(self.commentsChk.isChecked())
         self.main_config['remind_mentions'] = str(self.mentionsChk.isChecked())
 
@@ -705,7 +714,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.setupUi(self)
         self.textEdit.setText(text)
         self.checkChars()
-        self.notify = Notify(time=1)
+        self.notify = Notify(timeout=1)
 
     def setupMyUi(self):
         if self.action == "new":
@@ -805,14 +814,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
 
 class Notify():
-    def __init__(self, appname="WeCase", time=5):
+    def __init__(self, appname="WeCase", timeout=5):
         pynotify.init(appname)
-        self.timeout = time
+        self.timeout = timeout
         self.n = pynotify.Notification(appname)
 
     def showMessage(self, title, text, image=""):
         self.n.update(title, text, image)
-        # TODO: user should be able to adjust the time by settings window
         self.n.set_timeout(self.timeout * 1000)
         self.n.show()
 
