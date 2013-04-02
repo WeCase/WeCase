@@ -526,9 +526,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             num_msg += 1
 
         if num_msg != 0:
-            # TODO: image can use our images in rcc
             self.notify.showMessage("WeCase", msg,
-                                    image="notification-message-email")
+                                    image=myself_path + "/ui/img/WeCase 80.png")
 
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
