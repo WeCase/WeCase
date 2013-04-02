@@ -49,7 +49,7 @@ Item  {
 
     function addTags(str) {
         // surrounds http links with html link tags
-        var ret1 = str.replace(/@[a-zA-Z0-9_\u4e00-\u9fa5]+/g, '<a href="mention://$&">$&</a>');
+        var ret1 = str.replace(/@[-a-zA-Z0-9_\u4e00-\u9fa5]+/g, '<a href="mention://$&">$&</a>');
         var ret2 = ret1.replace(/(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a href='$1'>$1</a>");
         var ret3 = ret2.replace(/[#]+[a-zA-Z0-9_\u4e00-\u9fa5]+[#]/g, '<a href="tag://$&">$&</a>')
         return ret3;
