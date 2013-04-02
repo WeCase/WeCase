@@ -104,12 +104,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
                 self.passwd[str(self.username)] = str(self.password)
                 self.last_login = str(self.username)
                 self.saveConfig()
-            wecase_main.client = client
-            wecase_main.get_uid()
-            wecase_main.get_all_timeline()
-            wecase_main.get_my_timeline()
-            wecase_main.get_mentions_timeline()
-            wecase_main.get_comment_to_me()
+            wecase_main = WeCaseWindow()
+            wecase_main.init_account(client)
             wecase_main.show()
             self.close()
         else:
@@ -197,6 +193,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.IMG_THUMB = -1
         self.notify = Notify(timeout=self.notify_timeout)
         self.applyConfig()
+
+    def init_account(self, client):
+        self.client = client
+        self.get_uid()
+        self.get_all_timeline()
+        self.get_my_timeline()
+        self.get_mentions_timeline()
+        self.get_comment_to_me()
 
     def loadConfig(self):
         self.config = ConfigParser()
@@ -384,10 +388,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # We use SIGNAL self.tabTextChanged and SLOT self.setTabText()
         # to display unread count
 
-        # HACK: not login yet, pass notify checking
-        if not self.isVisible():
-            return
-
         reminds = self.get_remind(self.uid)
         msg = "You have:\n"
         num_msg = 0
@@ -518,6 +518,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         functions = {0: self.get_all_timeline, 1: self.get_mentions_timeline,
                      2: self.get_comment_to_me, 3: self.get_my_timeline}
         return functions[self.tabWidget.currentIndex()]
+
+    def closeEvent(self, event):
+        self.timer.stopped = True
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
@@ -734,7 +737,6 @@ if __name__ == "__main__":
 
     app = QtGui.QApplication(sys.argv)
 
-    wecase_main = WeCaseWindow()
     wecase_login = LoginWindow()
     wecase_settings = WeSettingsWindow()
     wecase_about = AboutWindow()
@@ -742,7 +744,5 @@ if __name__ == "__main__":
     exit_status = app.exec_()
 
     # Cleanup code here.
-    # stop notify thread
-    wecase_main.timer.stopped = True
 
     sys.exit(exit_status)
