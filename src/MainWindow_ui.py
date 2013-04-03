@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/MainWindow.ui'
 #
-# Created: Tue Apr  2 17:25:09 2013
+# Created: Wed Apr  3 17:04:38 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -104,7 +104,7 @@ class Ui_frm_MainWindow(object):
         sizePolicy.setHeightForWidth(self.menubar.sizePolicy().hasHeightForWidth())
         self.menubar.setSizePolicy(sizePolicy)
         self.menubar.setMinimumSize(QtCore.QSize(0, 0))
-        self.menubar.setDefaultUp(True)
+        self.menubar.setDefaultUp(False)
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menu_WeCase = QtGui.QMenu(self.menubar)
         self.menu_WeCase.setObjectName(_fromUtf8("menu_WeCase"))
