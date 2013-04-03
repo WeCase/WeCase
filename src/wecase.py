@@ -422,15 +422,17 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.get_current_tweetView().rootObject().imageLoaded(tweetid)
 
     def showSettings(self):
+        wecase_settings = WeSettingsWindow()
         if wecase_settings.exec_():
             self.loadConfig()
             self.applyConfig()
 
     def showAbout(self):
-        wecase_about.show()
+        wecase_about = AboutWindow()
+        wecase_about.exec_()
 
     def logout(self):
-        wecase_login.show()
+        wecase_login.exec_()
         self.close()
 
     def postTweet(self):
@@ -738,8 +740,6 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
 
     wecase_login = LoginWindow()
-    wecase_settings = WeSettingsWindow()
-    wecase_about = AboutWindow()
 
     exit_status = app.exec_()
 
