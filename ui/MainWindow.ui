@@ -180,7 +180,6 @@
      <string>&amp;Options</string>
     </property>
     <addaction name="action_Settings"/>
-    <addaction name="actionUpdate"/>
    </widget>
    <addaction name="menu_WeCase"/>
    <addaction name="menuO_ptions"/>

@@ -588,7 +588,6 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     image = None
     apiError = QtCore.pyqtSignal(str)
     sendSuccessful = QtCore.pyqtSignal()
-    javascript_resourre =
 
     def __init__(self, parent=None, action="new", id=None, cid=None, text=""):
         QtGui.QDialog.__init__(self, parent)
