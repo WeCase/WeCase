@@ -54,7 +54,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QTextEdit" name="textEdit">
+         <widget class="WCompleteLineEdit" name="textEdit">
           <property name="mouseTracking">
            <bool>true</bool>
           </property>
@@ -144,6 +144,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WCompleteLineEdit</class>
+   <extends>QTextEdit</extends>
+   <header>WCompleteLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

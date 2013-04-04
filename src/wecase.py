@@ -598,12 +598,24 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.cid = cid
         self.setupUi(self)
         self.textEdit.setText(text)
+        self.textEdit.words_callback = self.mentions_suggest
+        self.textEdit.mention_flag = "@"
         self.checkChars()
         self.notify = Notify(timeout=1)
 
     def setupMyUi(self):
         if self.action == "new":
             self.pushButton_send.clicked.connect(self.send_tweet)
+
+    def mentions_suggest(self, words):
+        ret_users = []
+        word = words.split(' ')[-1].replace('@', '')
+        if not word.strip():
+            return []
+        users = self.client.search.suggestions.at_users.get(q=word, type=0)
+        for user in users:
+            ret_users.append("@" + user['nickname'])
+        return ret_users
 
     def send(self):
         if self.action == "new":

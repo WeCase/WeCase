@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Tue Apr  2 17:25:09 2013
+# Created: Fri Apr  5 02:21:31 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -49,7 +49,7 @@ class Ui_NewPostWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
-        self.textEdit = QtGui.QTextEdit(self.widget)
+        self.textEdit = WCompleteLineEdit(self.widget)
         self.textEdit.setMouseTracking(True)
         self.textEdit.setFrameShadow(QtGui.QFrame.Sunken)
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
@@ -97,3 +97,4 @@ class Ui_NewPostWindow(object):
         self.pushButton_at.setText(_translate("NewPostWindow", "@", None))
         self.pushButton_send.setText(_translate("NewPostWindow", "&Send", None))
 
+from WCompleteLineEdit import WCompleteLineEdit
