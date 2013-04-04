@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/SettingWindow.ui'
 #
-# Created: Tue Apr  2 17:25:09 2013
+# Created: Thu Apr  4 12:14:10 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -102,33 +102,21 @@ class Ui_SettingWindow(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
-        self.widget = QtGui.QWidget(SettingWindow)
-        self.widget.setMinimumSize(QtCore.QSize(0, 30))
-        self.widget.setObjectName(_fromUtf8("widget"))
-        self.gridLayout = QtGui.QGridLayout(self.widget)
-        self.gridLayout.setMargin(0)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
-        self.pushButton_Cancel = QtGui.QPushButton(self.widget)
-        self.pushButton_Cancel.setObjectName(_fromUtf8("pushButton_Cancel"))
-        self.gridLayout.addWidget(self.pushButton_Cancel, 0, 3, 1, 1)
-        self.pushButton_OK = QtGui.QPushButton(self.widget)
-        self.pushButton_OK.setObjectName(_fromUtf8("pushButton_OK"))
-        self.gridLayout.addWidget(self.pushButton_OK, 0, 1, 1, 1)
-        self.verticalLayout.addWidget(self.widget)
+        self.buttonBox = QtGui.QDialogButtonBox(SettingWindow)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
+        self.verticalLayout.addWidget(self.buttonBox)
         self.verticalLayout.setStretch(0, 6)
-        self.verticalLayout.setStretch(1, 1)
         self.intervalDefine.setBuddy(self.intervalSlider)
         self.timeoutDefine.setBuddy(self.intervalSlider)
         self.label_2.setBuddy(self.mentionsChk)
 
         self.retranslateUi(SettingWindow)
         self.tabWidget.setCurrentIndex(0)
-        QtCore.QObject.connect(self.pushButton_Cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.reject)
-        QtCore.QObject.connect(self.pushButton_OK, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.accept)
         QtCore.QObject.connect(self.intervalSlider, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), SettingWindow.setIntervalText)
         QtCore.QObject.connect(self.timeoutSlider, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), SettingWindow.setTimeoutText)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), SettingWindow.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), SettingWindow.reject)
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
 
     def retranslateUi(self, SettingWindow):
@@ -141,7 +129,5 @@ class Ui_SettingWindow(object):
         self.mentionsChk.setText(_translate("SettingWindow", "@ Me", None))
         self.commentsChk.setText(_translate("SettingWindow", "Comments", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("SettingWindow", "Notify", None))
-        self.pushButton_Cancel.setText(_translate("SettingWindow", "&Cancel", None))
-        self.pushButton_OK.setText(_translate("SettingWindow", "&OK", None))
 
 import wecase_rc
