@@ -26,7 +26,7 @@ Dependencies
 3. python-notify2 (python3-notify2)
 4. python-requests (python3-requests)
 
-Note: Some distributions use different packages names, or do not contain `python3-dateutil` or `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
+Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
 
 Installation Guide
 -----
