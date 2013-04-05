@@ -14,16 +14,15 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         self.words_callback = callback
         self.words = words
 
+        self.setupMyUi()
+        self.setupSignals()
+
+    def setupMyUi(self):
         self.listView = QtGui.QListView(self)
         self.model = QtGui.QStringListModel(self)
         self.listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.listView.setWindowFlags(QtCore.Qt.ToolTip)
         self.setLineWrapMode(self.WidgetWidth)
-
-    def setText(self, text, noSave=False):
-        if not noSave:
-            self.text = text
-        super(WCompleteLineEdit, self).setText(text)
 
     def setupSignals(self):
         self.textChanged.connect(self.mentionStates)
@@ -31,20 +30,21 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         self.listView.clicked.connect(self.mouseCompleteText)
         self.callbackFinished.connect(self.showCompleter)
 
-    def guessLength(self):
-        # XXX: 迫不得已的恶心方法，见
-        # http://stackoverflow.com/questions/15814776/
-        # how-do-i-get-the-actual-visible-cursors-line-number
-        text = ""
-        while self.textCursor().columnNumber() == self.textCursor().position():
-            text += "a"
-            self.setText(text, True)
-            self.moveCursorToEnd()
-        self.line_max = self.textCursor().position()
-        self.setText(self.text)
+    def getLine(self):
+        # 获得折行后屏幕上实际的行数
+        cursor = self.textCursor()
+        cursor.movePosition(QtGui.QTextCursor.StartOfLine)
 
-    def getLines(self):
-        return self.textCursor().position() // self.line_max + 1
+        lines = 1
+        while cursor.positionInBlock() > 0:
+            cursor.movePosition(QtGui.QTextCursor.Up)
+            lines += 1
+        block = cursor.block().previous()
+
+        while block.isValid():
+            lines += block.lineCount()
+            block = block.previous()
+        return lines
 
     def getNewText(self, original_text, new_text):
         original_text = original_text.split(self.separator)
@@ -59,10 +59,6 @@ class WCompleteLineEdit(QtGui.QTextEdit):
 
     def focusOutEvent(self, event):
         self.listView.hide()
-
-    def focusInEvent(self, event):
-        self.guessLength()
-        self.setupSignals()
 
     def keyPressEvent(self, event):
         if not self.listView.isHidden():
@@ -155,7 +151,9 @@ class WCompleteLineEdit(QtGui.QTextEdit):
 
         self.listView.setMinimumWidth(self.width())
         self.listView.setMaximumWidth(self.width())
-        p = QtCore.QPoint(0, self.cursorRect().height() * 1.5 * self.getLines())
+
+        # 10 是一个幻数，它不因字体大小的改变而改变，代表弹框与当前行的间隔
+        p = QtCore.QPoint(0, self.cursorRect().height() * self.getLine() + 10)
         x = self.mapToGlobal(p).x()
         y = self.mapToGlobal(p).y()
         self.listView.move(x, y)
