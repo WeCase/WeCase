@@ -217,9 +217,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def applyConfig(self):
         try:
-            self.timer.stopped = True
+            self.timer.stop_event.set()
         except AttributeError:
             pass
+
         self.timer = WTimer(self.timer_interval, self.show_notify)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
@@ -521,7 +522,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         return functions[self.tabWidget.currentIndex()]
 
     def closeEvent(self, event):
-        self.timer.stopped = True
+        self.timer.stop_event.set()
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):

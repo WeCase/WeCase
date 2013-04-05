@@ -10,15 +10,16 @@
 import time
 import threading
 
+
 class WTimer(threading.Thread):
     def __init__(self, sleep_time, run_function):
-    #def __init__(self):
         threading.Thread.__init__(self)
-        self.stopped = False
         self.sleep_time = sleep_time
         self.run_function = run_function
+        # 外部需要停止该线程时触发事件
+        self.stop_event = threading.Event()
 
     def run(self):
-        while not self.stopped:
-            time.sleep(self.sleep_time)
+        while not self.stop_event.is_set():
+            self.stop_event.wait(self.sleep_time)
             self.run_function()
