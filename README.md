@@ -19,9 +19,18 @@ Development Guide
 ------
 Everyone should follow the [Development Guide](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97). Please read it carefully.
 
+Dependencies
+-----
+1. Python 3 
+2. PyQt4 (python3-pyqt, python3-qt4)
+3. python-dateutil (python3-dateutil)
+4. python-notify2 (python3-notify2)
+
+Note: Some distributions use different packages names, or do not contain `python3-dateutil` or `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
+
 Installation Guide
 -----
-1. Install PyQt4 `sudo apt-get install python-qt4` or `yum install PyQt4`
+1. Install the dependencies for WeCase.
 2. Get the source code `git clone git://github.com/WeCase/WeCase.git`
 3. `cd WeCase`
 4. Get the sdk `git submodule init; git submodule update`
