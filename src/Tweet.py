@@ -6,7 +6,7 @@
 
 from PyQt4 import QtCore
 from datetime import datetime
-from dateutil import parser as time_parser
+from WTimeParser import WTimeParser as time_parser
 
 
 class TweetModel(QtCore.QAbstractListModel):
@@ -66,7 +66,7 @@ class TweetItem(QtCore.QAbstractItemModel):
         self.thumbnail_pic = thumbnail_pic
 
     def sinceTimeString(self, createTime):
-        create = time_parser.parse(createTime)
+        create = time_parser().parse(createTime)
         create_utc = (create - create.utcoffset()).replace(tzinfo=None)
         now_utc = datetime.utcnow()
 
