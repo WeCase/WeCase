@@ -52,11 +52,37 @@ myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
+    loginReturn = QtCore.pyqtSignal(object)
+
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.loadConfig()
         self.setupUi(self)
         self.setupMyUi()
+        self.loginReturn.connect(self.checkLogin)
+
+    def accept(self, client):
+        if self.chk_Remember.isChecked():
+            self.passwd[str(self.username)] = str(self.password)
+            self.last_login = str(self.username)
+            self.saveConfig()
+        wecase_main = WeCaseWindow()
+        wecase_main.init_account(client)
+        wecase_main.show()
+        self.done(True)
+
+    def reject(self):
+        QtGui.QMessageBox.critical(None, "Authorize Failed!",
+                                   "Check your account and password!")
+        self.pushButton_log.setText("GO!")
+        self.pushButton_log.setEnabled(True)
+
+    def checkLogin(self, client):
+        print(client)
+        if client:
+            self.accept(client)
+        else:
+            self.reject()
 
     def setupMyUi(self):
         self.show()
@@ -95,32 +121,13 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def login(self):
         self.pushButton_log.setText("Login, waiting...")
         self.pushButton_log.setEnabled(False)
-        app.processEvents()
-        app.processEvents()
-
-        client = self.ui_authorize()
-        if client:
-            if self.chk_Remember.isChecked():
-                self.passwd[str(self.username)] = str(self.password)
-                self.last_login = str(self.username)
-                self.saveConfig()
-            wecase_main = WeCaseWindow()
-            wecase_main.init_account(client)
-            wecase_main.show()
-            self.close()
-        else:
-            QtGui.QMessageBox.critical(None, "Authorize Failed!",
-                                       "Check your account and password!")
-        self.pushButton_log.setText("GO!")
-        self.pushButton_log.setEnabled(True)
+        self.ui_authorize()
 
     def ui_authorize(self):
         self.username = self.cmb_Users.currentText()
         self.password = self.txt_Password.text()
-        client = self.authorize(self.username, self.password)
-
-        if client:
-            return client
+        threading.Thread(group=None, target=self.authorize,
+                         args=(self.username, self.password)).start()
 
     def authorize(self, username, password):
         # TODO: This method is very messy, maybe do some cleanup?
@@ -148,7 +155,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         location = res.getheader('location')
 
         if not location:
-            return None
+            return self.loginReturn.emit(None)
 
         authorize_code = location.split('=')[1]
         conn.close()
@@ -159,8 +166,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         expires_in = r.expires_in
 
         client.set_access_token(access_token, expires_in)
-
-        return client
+        self.loginReturn.emit(client)
 
     def setPassword(self, username):
         if username:
