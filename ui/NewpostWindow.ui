@@ -249,6 +249,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>showSmiley()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>48</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>apiError(QString)</signal>
@@ -257,5 +273,6 @@
   <slot>checkChars()</slot>
   <slot>send()</slot>
   <slot>showError(QString)</slot>
+  <slot>showSmiley()</slot>
  </slots>
 </ui>

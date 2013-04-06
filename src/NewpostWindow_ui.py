@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
+# Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Sat Apr  6 18:05:56 2013
+# Created: Sat Apr  6 21:47:31 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -87,6 +87,7 @@ class Ui_NewPostWindow(object):
         QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("sendSuccessful()")), NewPostWindow.close)
         QtCore.QObject.connect(self.textEdit, QtCore.SIGNAL(_fromUtf8("textChanged()")), NewPostWindow.checkChars)
         QtCore.QObject.connect(self.pushButton_send, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.send)
+        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.showSmiley)
         QtCore.QMetaObject.connectSlotsByName(NewPostWindow)
 
     def retranslateUi(self, NewPostWindow):

@@ -29,6 +29,7 @@ from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
 from NewpostWindow_ui import Ui_NewPostWindow
 from AboutWindow_ui import Ui_About_Dialog
+from SmileyWindow_ui import Ui_SmileyWindow
 
 APP_KEY = "1011524190"
 APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
@@ -701,6 +702,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             QtGui.QMessageBox.warning(None, "Unknown error!", e)
 
+    def showSmiley(self):
+        wecase_smiley = SmileyWindow()
+        wecase_smiley.exec_()
+
     def checkChars(self):
         '''Check textEdit's characters.
         If it larger than 140, Send Button will be disabled
@@ -732,6 +737,11 @@ class Notify():
 
 
 class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
+    def __init__(self, parent=None):
+        QtGui.QDialog.__init__(self, parent)
+        self.setupUi(self)
+
+class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
