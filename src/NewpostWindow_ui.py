@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
 #
-# Created: Sat Apr  6 00:44:00 2013
+# Created: Sat Apr  6 18:05:56 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -64,16 +64,19 @@ class Ui_NewPostWindow(object):
         self.gridLayout_2.setMargin(0)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem1, 0, 1, 1, 1)
-        self.pushButton_cancel = QtGui.QPushButton(self.widget_2)
-        self.pushButton_cancel.setObjectName(_fromUtf8("pushButton_cancel"))
-        self.gridLayout_2.addWidget(self.pushButton_cancel, 0, 2, 1, 1)
+        self.gridLayout_2.addItem(spacerItem1, 0, 2, 1, 1)
         self.pushButton_picture = QtGui.QPushButton(self.widget_2)
         self.pushButton_picture.setObjectName(_fromUtf8("pushButton_picture"))
-        self.gridLayout_2.addWidget(self.pushButton_picture, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_picture, 0, 1, 1, 1)
+        self.pushButton_cancel = QtGui.QPushButton(self.widget_2)
+        self.pushButton_cancel.setObjectName(_fromUtf8("pushButton_cancel"))
+        self.gridLayout_2.addWidget(self.pushButton_cancel, 0, 3, 1, 1)
         self.pushButton_send = QtGui.QPushButton(self.widget_2)
         self.pushButton_send.setObjectName(_fromUtf8("pushButton_send"))
-        self.gridLayout_2.addWidget(self.pushButton_send, 0, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.pushButton_send, 0, 4, 1, 1)
+        self.pushButton = QtGui.QPushButton(self.widget_2)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.gridLayout_2.addWidget(self.pushButton, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.widget_2)
         self.gridLayout_3.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
@@ -89,8 +92,9 @@ class Ui_NewPostWindow(object):
     def retranslateUi(self, NewPostWindow):
         NewPostWindow.setWindowTitle(_translate("NewPostWindow", "New Message", None))
         self.label.setText(_translate("NewPostWindow", "140", None))
-        self.pushButton_cancel.setText(_translate("NewPostWindow", "&Cancel", None))
         self.pushButton_picture.setText(_translate("NewPostWindow", "&Picture", None))
+        self.pushButton_cancel.setText(_translate("NewPostWindow", "&Cancel", None))
         self.pushButton_send.setText(_translate("NewPostWindow", "&Send", None))
+        self.pushButton.setText(_translate("NewPostWindow", "Smiley", None))
 
 from WCompleteLineEdit import WCompleteLineEdit
