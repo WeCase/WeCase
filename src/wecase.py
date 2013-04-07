@@ -24,6 +24,7 @@ from WTimer import WTimer
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui, QtDeclarative
 from Tweet import TweetModel, TweetItem
+from Smiley import SmileyModel, SmileyItem
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
@@ -741,10 +742,24 @@ class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
 
+
 class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
+        self.setupMyUi()
+        self.setupModels()
+
+    def setupMyUi(self):
+        self.smileyView.setResizeMode(self.smileyView.SizeRootObjectToView)
+
+    def setupModels(self):
+        self.smileyModel = SmileyModel(self)
+        self.smileyModel.appendRow(SmileyItem("LoL", "img/smiley/fuyun_thumb.gif"))
+        self.smileyView.rootContext().setContextProperty("SmileyModel",
+                                                       self.smileyModel)
+        self.smileyView.setSource(
+                QtCore.QUrl.fromLocalFile(myself_path + "/ui/SmileyView.qml"))
 
 
 class JavaScript():
