@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/SmileyWindow.ui'
 #
-# Created: Sat Apr  6 21:47:31 2013
+# Created: Sun Apr  7 21:18:44 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_SmileyWindow(object):
     def setupUi(self, SmileyWindow):
         SmileyWindow.setObjectName(_fromUtf8("SmileyWindow"))
-        SmileyWindow.resize(400, 300)
+        SmileyWindow.resize(483, 285)
         self.gridLayout = QtGui.QGridLayout(SmileyWindow)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.smileyView = QtDeclarative.QDeclarativeView(SmileyWindow)

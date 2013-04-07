@@ -22,4 +22,4 @@ class WTimer(threading.Thread):
     def run(self):
         while not self.stop_event.is_set():
             self.stop_event.wait(self.sleep_time)
-            self.run_function()
+            #self.run_function()

@@ -7,7 +7,7 @@ Rectangle {
     GridView {
         id: grid
         anchors.fill: parent
-        cellWidth: 30; cellHeight: 30
+        cellWidth: 36; cellHeight: 40
 
         model: SmileyModel
         delegate: SmileyDelegate {}

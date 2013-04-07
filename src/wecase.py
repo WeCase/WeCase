@@ -24,7 +24,7 @@ from WTimer import WTimer
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui, QtDeclarative
 from Tweet import TweetModel, TweetItem
-from Smiley import SmileyModel, SmileyItem
+from Smiley import SmileyModel, SmileyItem, init_smileies
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
@@ -80,7 +80,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.pushButton_log.setEnabled(True)
 
     def checkLogin(self, client):
-        print(client)
         if client:
             self.accept(client)
         else:
@@ -466,7 +465,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.client.favorites.create.post(id=int(idstr))
             return True
         except:
-            return False
+            return Falset
 
     @QtCore.pyqtSlot(str, result=bool)
     def un_favorite(self, idstr):
@@ -705,7 +704,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def showSmiley(self):
         wecase_smiley = SmileyWindow()
-        wecase_smiley.exec_()
+        if wecase_smiley.exec_():
+            self.textEdit.insert(wecase_smiley.smileyName)
 
     def checkChars(self):
         '''Check textEdit's characters.
@@ -749,17 +749,27 @@ class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
         self.setupUi(self)
         self.setupMyUi()
         self.setupModels()
+        self.smileyName = ""
 
     def setupMyUi(self):
         self.smileyView.setResizeMode(self.smileyView.SizeRootObjectToView)
 
     def setupModels(self):
         self.smileyModel = SmileyModel(self)
-        self.smileyModel.appendRow(SmileyItem("LoL", "img/smiley/fuyun_thumb.gif"))
+        init_smileies("./ui/img/smiley", self.smileyModel, SmileyItem)
         self.smileyView.rootContext().setContextProperty("SmileyModel",
                                                        self.smileyModel)
+        self.smileyView.rootContext().setContextProperty("parentWindow", self)
         self.smileyView.setSource(
                 QtCore.QUrl.fromLocalFile(myself_path + "/ui/SmileyView.qml"))
+
+    def accept(self):
+        self.accepted()
+
+    @QtCore.pyqtSlot(str)
+    def returnSmileyName(self, smileyName):
+        self.smileyName = smileyName
+        self.accepted()
 
 
 class JavaScript():

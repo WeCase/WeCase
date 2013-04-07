@@ -4,6 +4,7 @@ import QtQuick 1.0
 Item {
     width: grid.cellWidth; height: grid.cellHeight
 
+
     Column {
         anchors.fill: parent
         Image { source: path; anchors.horizontalCenter: parent.horizontalCenter }
@@ -14,6 +15,9 @@ Item {
             onClicked: {
                 highlight: color: "lightsteelblue"; radius: 5 
                 grid.currentIndex = index 
+            }
+            onDoubleClicked: {
+                parentWindow.returnSmileyName('[' + name + ']')
             }
         }
     }

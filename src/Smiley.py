@@ -4,6 +4,7 @@
 # WeCase -- This model implemented a model for smileies 
 # Copyright: GPL v3 or later.
 
+import os
 from PyQt4 import QtCore
 
 class SmileyItem(QtCore.QAbstractItemModel):
@@ -11,7 +12,6 @@ class SmileyItem(QtCore.QAbstractItemModel):
         QtCore.QAbstractItemModel.__init__(self, parent)
         self.name = name
         self.path = path
-        print("name: %s, path: %s" % (self.name, self.path))
 
 
 class SmileyModel(QtCore.QAbstractListModel):
@@ -47,3 +47,29 @@ class SmileyModel(QtCore.QAbstractListModel):
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.smileies)
+
+
+def init_smileies(root, smiley_model, smiley_item):
+    def walk(root):
+        for file in os.listdir(root):
+            path = os.path.join(root, file)
+            if os.path.isdir(path):
+                for file in walk(path):
+                    yield file
+            else:
+                yield path
+
+    def is_smiley(filename):
+        filename = filename.split('.')
+        if filename[-1] == "gif":
+            return True
+        else:
+            return False
+
+    for filepath in walk(root):
+        filepath = os.path.abspath(filepath)
+        filename = filepath.split('/')[-1]
+        if is_smiley(filename):
+            smiley_name = os.path.splitext(filepath)[0]
+            file_content = open(smiley_name).read().replace('\n', '')
+            smiley_model.appendRow(smiley_item(file_content, filepath.replace("./ui", "")))
