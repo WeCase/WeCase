@@ -1,4 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This model implemented a general QTextEdit 
+#           with flexible auto-complete
+# Copyright (C) 2013 Tom Li
+# License: GPL v3 or later.
+
+
 import threading
 from PyQt4 import QtGui, QtCore
 
