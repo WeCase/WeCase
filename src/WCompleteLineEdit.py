@@ -21,6 +21,7 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         self.mention = False
         self.words_callback = callback
         self.words = words
+        self.cursor = self.textCursor()
 
         self.setupMyUi()
         self.setupSignals()
@@ -60,13 +61,13 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         original_text[-1] = new_text[-1]
         return self.separator.join(original_text) + self.separator
 
-    def moveCursorToEnd(self):
-        cursor = QtGui.QTextCursor(self.textCursor())
-        cursor.movePosition(QtGui.QTextCursor.EndOfBlock)
-        self.setTextCursor(cursor)
-
     def focusOutEvent(self, event):
         self.listView.hide()
+
+    def selectedText(self):
+        self.cursor.setPosition(0)
+        self.cursor.setPosition(self.textCursor().position(), QtGui.QTextCursor.KeepAnchor)
+        return self.cursor.selectedText()
 
     def keyPressEvent(self, event):
         if not self.listView.isHidden():
@@ -93,10 +94,9 @@ class WCompleteLineEdit(QtGui.QTextEdit):
             elif key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
                 # 补全单词
                 if currentIndex.isValid():
-                    text = self.getNewText(self.toPlainText(),
+                    text = self.getNewText(self.cursor.selectedText(),
                             self.listView.currentIndex().data())
-                    self.setText(text)
-                    self.moveCursorToEnd()
+                    self.cursor.insertText(text)
                 self.listView.hide()
 
             else:
@@ -107,7 +107,8 @@ class WCompleteLineEdit(QtGui.QTextEdit):
             super(WCompleteLineEdit, self).keyPressEvent(event)
 
     def mentionStates(self):
-        text = self.toPlainText()
+        text = self.selectedText()
+
         if not self.mention_flag:
             return True
         if not text:
@@ -118,7 +119,7 @@ class WCompleteLineEdit(QtGui.QTextEdit):
             self.mention = False
 
     def setCompleter(self):
-        text = self.toPlainText()
+        text = self.selectedText()
         text = text.split(self.separator)[-1]
 
         if not text:
@@ -144,8 +145,8 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         self.showCompleter(sl)
 
     def runCallback(self):
-        text = self.toPlainText()
-        text = text.split(self.separator)[-1]
+        text = self.selectedText()
+
         lst = self.words_callback(text)
         self.callbackFinished.emit(lst)
 
@@ -168,7 +169,6 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         self.listView.show()
 
     def mouseCompleteText(self, index):
-        text = self.getNewText(self.toPlainText(), index.data())
-        self.setText(text)
-        self.moveCursorToEnd()
+        text = self.getNewText(self.selectedText(), index.data())
+        self.cursor().insertText(text)
         self.listView.hide()
