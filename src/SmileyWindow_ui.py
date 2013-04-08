@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/SmileyWindow.ui'
 #
-# Created: Sun Apr  7 21:18:44 2013
+# Created: Mon Apr  8 16:40:03 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,10 +26,12 @@ except AttributeError:
 class Ui_SmileyWindow(object):
     def setupUi(self, SmileyWindow):
         SmileyWindow.setObjectName(_fromUtf8("SmileyWindow"))
-        SmileyWindow.resize(483, 285)
+        SmileyWindow.resize(533, 288)
         self.gridLayout = QtGui.QGridLayout(SmileyWindow)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.smileyView = QtDeclarative.QDeclarativeView(SmileyWindow)
+        self.smileyView.setFrameShape(QtGui.QFrame.NoFrame)
+        self.smileyView.setFrameShadow(QtGui.QFrame.Plain)
         self.smileyView.setObjectName(_fromUtf8("smileyView"))
         self.gridLayout.addWidget(self.smileyView, 0, 0, 1, 1)
 
@@ -37,6 +39,6 @@ class Ui_SmileyWindow(object):
         QtCore.QMetaObject.connectSlotsByName(SmileyWindow)
 
     def retranslateUi(self, SmileyWindow):
-        SmileyWindow.setWindowTitle(_translate("SmileyWindow", "Dialog", None))
+        SmileyWindow.setWindowTitle(_translate("SmileyWindow", "Choose a smiley", None))
 
 from PyQt4 import QtDeclarative

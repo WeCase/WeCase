@@ -24,7 +24,7 @@ from WTimer import WTimer
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui, QtDeclarative
 from Tweet import TweetModel, TweetItem
-from Smiley import SmileyModel, SmileyItem, init_smileies
+from Smiley import SmileyModel, SmileyItem
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
@@ -756,7 +756,8 @@ class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
 
     def setupModels(self):
         self.smileyModel = SmileyModel(self)
-        init_smileies("./ui/img/smiley", self.smileyModel, SmileyItem)
+        self.smileyModel.init_smileies(myself_path + "./ui/img/smiley",
+                self.smileyModel, SmileyItem)
         self.smileyView.rootContext().setContextProperty("SmileyModel",
                                                        self.smileyModel)
         self.smileyView.rootContext().setContextProperty("parentWindow", self)
