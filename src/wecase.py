@@ -24,11 +24,13 @@ from WTimer import WTimer
 from weibo import APIClient, APIError
 from PyQt4 import QtCore, QtGui, QtDeclarative
 from Tweet import TweetModel, TweetItem
+from Smiley import SmileyModel, SmileyItem
 from LoginWindow_ui import Ui_frm_Login
 from MainWindow_ui import Ui_frm_MainWindow
 from SettingWindow_ui import Ui_SettingWindow
 from NewpostWindow_ui import Ui_NewPostWindow
 from AboutWindow_ui import Ui_About_Dialog
+from SmileyWindow_ui import Ui_SmileyWindow
 
 APP_KEY = "1011524190"
 APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
@@ -78,7 +80,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.pushButton_log.setEnabled(True)
 
     def checkLogin(self, client):
-        print(client)
         if client:
             self.accept(client)
         else:
@@ -464,7 +465,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.client.favorites.create.post(id=int(idstr))
             return True
         except:
-            return False
+            return Falset
 
     @QtCore.pyqtSlot(str, result=bool)
     def un_favorite(self, idstr):
@@ -701,6 +702,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             QtGui.QMessageBox.warning(None, "Unknown error!", e)
 
+    def showSmiley(self):
+        wecase_smiley = SmileyWindow()
+        if wecase_smiley.exec_():
+            self.textEdit.textCursor().insertText(wecase_smiley.smileyName)
+
     def checkChars(self):
         '''Check textEdit's characters.
         If it larger than 140, Send Button will be disabled
@@ -735,6 +741,33 @@ class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
+
+
+class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
+    def __init__(self, parent=None):
+        QtGui.QDialog.__init__(self, parent)
+        self.setupUi(self)
+        self.setupMyUi()
+        self.setupModels()
+        self.smileyName = ""
+
+    def setupMyUi(self):
+        self.smileyView.setResizeMode(self.smileyView.SizeRootObjectToView)
+
+    def setupModels(self):
+        self.smileyModel = SmileyModel(self)
+        self.smileyModel.init_smileies(myself_path + "./ui/img/smiley",
+                self.smileyModel, SmileyItem)
+        self.smileyView.rootContext().setContextProperty("SmileyModel",
+                                                       self.smileyModel)
+        self.smileyView.rootContext().setContextProperty("parentWindow", self)
+        self.smileyView.setSource(
+                QtCore.QUrl.fromLocalFile(myself_path + "/ui/SmileyView.qml"))
+
+    @QtCore.pyqtSlot(str)
+    def returnSmileyName(self, smileyName):
+        self.smileyName = smileyName
+        self.done(True)
 
 
 class JavaScript():
