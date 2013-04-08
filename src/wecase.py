@@ -705,7 +705,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def showSmiley(self):
         wecase_smiley = SmileyWindow()
         if wecase_smiley.exec_():
-            self.textEdit.insert(wecase_smiley.smileyName)
+            self.textEdit.textCursor().insertText(wecase_smiley.smileyName)
 
     def checkChars(self):
         '''Check textEdit's characters.
@@ -763,13 +763,10 @@ class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
         self.smileyView.setSource(
                 QtCore.QUrl.fromLocalFile(myself_path + "/ui/SmileyView.qml"))
 
-    def accept(self):
-        self.accepted()
-
     @QtCore.pyqtSlot(str)
     def returnSmileyName(self, smileyName):
         self.smileyName = smileyName
-        self.accepted()
+        self.done(True)
 
 
 class JavaScript():
