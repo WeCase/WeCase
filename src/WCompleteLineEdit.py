@@ -11,16 +11,11 @@ import threading
 from PyQt4 import QtGui, QtCore
 
 
-class WCompleteLineEdit(QtGui.QTextEdit):
-    callbackFinished = QtCore.pyqtSignal(list)
+class WAbstractCompleteLineEdit(QtGui.QTextEdit):
+    fetchListFinished = QtCore.pyqtSignal(list)
 
-    def __init__(self, parent=None, words=None, callback=None):
+    def __init__(self, parent=None):
         QtGui.QTextEdit.__init__(self)
-        self.separator = ' '
-        self.mention_flag = None
-        self.mention = False
-        self.words_callback = callback
-        self.words = words
         self.cursor = self.textCursor()
 
         self.setupMyUi()
@@ -34,10 +29,10 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         self.setLineWrapMode(self.WidgetWidth)
 
     def setupSignals(self):
-        self.textChanged.connect(self.mentionStates)
+        self.textChanged.connect(self.needComplete)
         self.textChanged.connect(self.setCompleter)
         self.listView.clicked.connect(self.mouseCompleteText)
-        self.callbackFinished.connect(self.showCompleter)
+        self.fetchListFinished.connect(self.showCompleter)
 
     def getLine(self):
         # 获得折行后屏幕上实际的行数
@@ -55,11 +50,11 @@ class WCompleteLineEdit(QtGui.QTextEdit):
             block = block.previous()
         return lines
 
+    def getCompleteList(self):
+        raise NotImplementedError
+
     def getNewText(self, original_text, new_text):
-        original_text = original_text.split(self.separator)
-        new_text = new_text.split(self.separator)
-        original_text[-1] = new_text[-1]
-        return self.separator.join(original_text) + self.separator
+        raise NotImplementedError
 
     def focusOutEvent(self, event):
         self.listView.hide()
@@ -88,7 +83,7 @@ class WCompleteLineEdit(QtGui.QTextEdit):
                 self.listView.setCurrentIndex(index)
 
             elif key == QtCore.Qt.Key_Escape:
-                #  退出菜单
+                # 退出菜单
                 self.listView.hide()
 
             elif key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
@@ -102,21 +97,12 @@ class WCompleteLineEdit(QtGui.QTextEdit):
             else:
                 # 什么都不做，调用父类 LineEdit 的按键事件
                 self.listView.hide()
-                super(WCompleteLineEdit, self).keyPressEvent(event)
+                super(WAbstractCompleteLineEdit, self).keyPressEvent(event)
         else:
-            super(WCompleteLineEdit, self).keyPressEvent(event)
+            super(WAbstractCompleteLineEdit, self).keyPressEvent(event)
 
-    def mentionStates(self):
-        text = self.selectedText()
-
-        if not self.mention_flag:
-            return True
-        if not text:
-            self.mention = False
-        if text and (text[-1] == self.mention_flag):
-            self.mention = True
-        elif text and (text[-1] == self.separator):
-            self.mention = False
+    def needComplete(self):
+        raise NotImplementedError
 
     def setCompleter(self):
         text = self.selectedText()
@@ -125,30 +111,13 @@ class WCompleteLineEdit(QtGui.QTextEdit):
         if not text:
             self.listView.hide()
             return
-        if not self.words and not self.words_callback:
-            return
-        if not self.mention:
+        if not self.needComplete():
             return
         if (len(text) > 1) and (not self.listView.isHidden()):
             return
 
-        if self.words_callback:
-            threading.Thread(group=None, target=self.runCallback).start()
-            self.showCompleter(["Loading..."])
-            return
-        else:
-            sl = []
-            for word in self.words:
-                if text in word:
-                    sl.append(word)
-
-        self.showCompleter(sl)
-
-    def runCallback(self):
-        text = self.selectedText()
-
-        lst = self.words_callback(text)
-        self.callbackFinished.emit(lst)
+        threading.Thread(group=None, target=self.getCompleteList).start()
+        self.showCompleter(["Loading..."])
 
     def showCompleter(self, lst):
         self.listView.hide()
@@ -170,5 +139,37 @@ class WCompleteLineEdit(QtGui.QTextEdit):
 
     def mouseCompleteText(self, index):
         text = self.getNewText(self.selectedText(), index.data())
-        self.cursor().insertText(text)
+        self.cursor.insertText(text)
         self.listView.hide()
+
+
+class WCompleteLineEdit(WAbstractCompleteLineEdit):
+    mentionFlag = "@"
+    separator = " "
+
+    def __init__(self, parent):
+        super(WCompleteLineEdit, self).__init__(self)
+        self._needComplete = False
+        self.callback = None
+
+    def getCompleteList(self):
+        result = self.callback(self.cursor.selectedText())
+        self.fetchListFinished.emit(result)
+
+    def getNewText(self, original_text, new_text):
+        for index, value in enumerate(original_text):
+            if value == self.mentionFlag:
+                pos = index
+        return original_text[:pos] + new_text + self.separator
+
+    def needComplete(self):
+        if not self.selectedText():
+            return False
+        elif self.selectedText()[-1] == self.mentionFlag:
+            self._needComplete = True
+            return self._needComplete
+        elif self.selectedText()[-1] == self.mentionFlag:
+            self._needComplete = False
+            return self._needComplete
+        else:
+            return self._needComplete

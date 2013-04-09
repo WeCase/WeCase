@@ -12,6 +12,7 @@
 
 import sys
 import os
+import re
 import webbrowser
 import urllib.request
 import urllib.parse
@@ -606,7 +607,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.cid = cid
         self.setupUi(self)
         self.textEdit.setText(text)
-        self.textEdit.words_callback = self.mentions_suggest
+        self.textEdit.callback = self.mentions_suggest
         self.textEdit.mention_flag = "@"
         self.checkChars()
         self.notify = Notify(timeout=1)
@@ -615,9 +616,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         if self.action == "new":
             self.pushButton_send.clicked.connect(self.send_tweet)
 
-    def mentions_suggest(self, words):
+    def mentions_suggest(self, text):
         ret_users = []
-        word = words.split(' ')[-1].replace('@', '')
+        try:
+            print(text)
+            word = re.findall(r'@[-a-zA-Z0-9_\u4e00-\u9fa5]+', text)[-1].replace('@', '')
+        except IndexError:
+            return []
         if not word.strip():
             return []
         users = self.client.search.suggestions.at_users.get(q=word, type=0)
