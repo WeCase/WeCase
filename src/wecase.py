@@ -632,6 +632,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         return ret_users
 
     def send(self):
+        self.pushButton_send.setEnabled(False)
         if self.action == "new":
             threading.Thread(group=None, target=self.new).start()
         elif self.action == "retweet":
@@ -707,6 +708,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                       "Please remove some text.")
         else:
             QtGui.QMessageBox.warning(None, "Unknown error!", e)
+        self.pushButton_send.setEnabled(True)
 
     def showSmiley(self):
         wecase_smiley = SmileyWindow()
