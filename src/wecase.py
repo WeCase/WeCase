@@ -466,7 +466,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.client.favorites.create.post(id=int(idstr))
             return True
         except:
-            return Falset
+            return False
 
     @QtCore.pyqtSlot(str, result=bool)
     def un_favorite(self, idstr):
@@ -511,7 +511,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         get_timeline = self.get_current_function()
 
         model.clear()
-        get_timeline(page=1, reset_remind=True, more=True)
+        threading.Thread(group=None, target=get_timeline,
+                         args=(1, True, True)).start()
 
     def get_current_tweetView(self):
         tweetViews = {0: self.homeView, 1: self.mentionsView,
