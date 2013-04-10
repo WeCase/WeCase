@@ -151,6 +151,7 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
         super(WCompleteLineEdit, self).__init__(self)
         self._needComplete = False
         self.callback = None
+        self.setAcceptRichText(False)  # 禁用富文本，微博很穷的
 
     def getCompleteList(self):
         result = self.callback(self.cursor.selectedText())
