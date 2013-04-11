@@ -23,7 +23,8 @@ import notify2 as pynotify
 import threading
 from WTimer import WTimer
 from weibo import APIClient, APIError
-from PyQt4 import QtCore, QtGui, QtDeclarative
+from PyQt4 import QtCore, QtGui
+from TweetUtils import tweetLength
 from Tweet import TweetModel, TweetItem
 from Smiley import SmileyModel, SmileyItem
 from LoginWindow_ui import Ui_frm_Login
@@ -601,8 +602,6 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def __init__(self, parent=None, action="new", id=None, cid=None, text=""):
         QtGui.QDialog.__init__(self, parent)
-        self.script = JavaScript(QtCore.QUrl.fromLocalFile(
-            myself_path + "/ui/JavaScript.qml"))
         self.action = action
         self.id = id
         self.cid = cid
@@ -721,7 +720,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         and label will show red chars.'''
 
         text = self.textEdit.toPlainText()
-        numLens = 140 - self.script.fucking_getLength(text, 140)
+        numLens = 140 - tweetLength(text)
         if numLens >= 0:
             self.label.setStyleSheet("color:black;")
             self.pushButton_send.setEnabled(True)
@@ -776,16 +775,6 @@ class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
     def returnSmileyName(self, smileyName):
         self.smileyName = smileyName
         self.done(True)
-
-
-class JavaScript():
-    def __init__(self, file):
-        self.view = QtDeclarative.QDeclarativeView()
-        self.view.setSource(file)
-
-    def __getattr__(self, name):
-        obj = eval("self.view.rootObject().%s" % name)
-        return obj
 
 
 if __name__ == "__main__":
