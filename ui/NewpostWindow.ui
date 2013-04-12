@@ -54,7 +54,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QTextEdit" name="textEdit">
+         <widget class="WCompleteLineEdit" name="textEdit">
           <property name="mouseTracking">
            <bool>true</bool>
           </property>
@@ -92,13 +92,6 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="2">
-         <widget class="QPushButton" name="pushButton_location">
-          <property name="text">
-           <string>Location</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -111,47 +104,53 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="4">
-         <widget class="QPushButton" name="pushButton_cancel">
-          <property name="text">
-           <string>Cancel</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="pushButton_picture">
           <property name="text">
-           <string>Picture</string>
+           <string>&amp;Picture</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pushButton_cancel">
+          <property name="text">
+           <string>&amp;Cancel</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="pushButton_send">
+          <property name="text">
+           <string>&amp;Send</string>
           </property>
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton_at">
+         <widget class="QPushButton" name="pushButton">
           <property name="text">
-           <string>At</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QPushButton" name="pushButton_send">
-          <property name="text">
-           <string>Send</string>
+           <string>Smiley</string>
           </property>
          </widget>
         </item>
        </layout>
-       <zorder>pushButton_at</zorder>
        <zorder>pushButton_picture</zorder>
-       <zorder>pushButton_location</zorder>
        <zorder>pushButton_cancel</zorder>
        <zorder>pushButton_send</zorder>
        <zorder>horizontalSpacer</zorder>
+       <zorder>pushButton</zorder>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WCompleteLineEdit</class>
+   <extends>QTextEdit</extends>
+   <header>WCompleteLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -161,8 +160,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>409</x>
-     <y>353</y>
+     <x>494</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
      <x>280</x>
@@ -170,5 +169,110 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_picture</sender>
+   <signal>clicked()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>addImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NewPostWindow</sender>
+   <signal>apiError(QString)</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>showError(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>NewPostWindow</sender>
+   <signal>sendSuccessful()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>280</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textEdit</sender>
+   <signal>textChanged()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>checkChars()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_send</sender>
+   <signal>clicked()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>send()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>534</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>528</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>showSmiley()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>48</x>
+     <y>228</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <signal>apiError(QString)</signal>
+  <signal>sendSuccessful()</signal>
+  <slot>addImage()</slot>
+  <slot>checkChars()</slot>
+  <slot>send()</slot>
+  <slot>showError(QString)</slot>
+  <slot>showSmiley()</slot>
+ </slots>
 </ui>

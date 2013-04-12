@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/LoginWindow.ui'
+# Form implementation generated from reading ui file './ui/LoginWindow.ui'
 #
-# Created: Sun Mar 17 01:16:25 2013
+# Created: Mon Apr  8 16:40:03 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,15 @@ except AttributeError:
 class Ui_frm_Login(object):
     def setupUi(self, frm_Login):
         frm_Login.setObjectName(_fromUtf8("frm_Login"))
-        frm_Login.resize(387, 182)
+        frm_Login.setWindowModality(QtCore.Qt.WindowModal)
+        frm_Login.resize(312, 133)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(frm_Login.sizePolicy().hasHeightForWidth())
+        frm_Login.setSizePolicy(sizePolicy)
+        frm_Login.setMinimumSize(QtCore.QSize(312, 133))
+        frm_Login.setMaximumSize(QtCore.QSize(312, 133))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_Login.setWindowIcon(icon)
@@ -75,6 +83,7 @@ class Ui_frm_Login(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.pushButton_log = QtGui.QPushButton(frm_Login)
+        self.pushButton_log.setDefault(True)
         self.pushButton_log.setObjectName(_fromUtf8("pushButton_log"))
         self.horizontalLayout.addWidget(self.pushButton_log)
         self.pushButton_new = QtGui.QPushButton(frm_Login)
@@ -84,18 +93,29 @@ class Ui_frm_Login(object):
         self.horizontalLayout.addItem(spacerItem2)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
         self.gridLayout.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
+        self.label_username.setBuddy(self.cmb_Users)
+        self.label_passwd.setBuddy(self.txt_Password)
 
         self.retranslateUi(frm_Login)
+        QtCore.QObject.connect(self.cmb_Users, QtCore.SIGNAL(_fromUtf8("currentIndexChanged(QString)")), frm_Login.setPassword)
+        QtCore.QObject.connect(self.chk_AutoLogin, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.chk_Remember.setChecked)
+        QtCore.QObject.connect(self.pushButton_log, QtCore.SIGNAL(_fromUtf8("clicked()")), frm_Login.login)
+        QtCore.QObject.connect(self.pushButton_new, QtCore.SIGNAL(_fromUtf8("clicked()")), frm_Login.openRegisterPage)
         QtCore.QMetaObject.connectSlotsByName(frm_Login)
+        frm_Login.setTabOrder(self.pushButton_log, self.cmb_Users)
+        frm_Login.setTabOrder(self.cmb_Users, self.txt_Password)
+        frm_Login.setTabOrder(self.txt_Password, self.chk_Remember)
+        frm_Login.setTabOrder(self.chk_Remember, self.chk_AutoLogin)
+        frm_Login.setTabOrder(self.chk_AutoLogin, self.pushButton_new)
 
     def retranslateUi(self, frm_Login):
         frm_Login.setWindowTitle(_translate("frm_Login", "Log in", None))
         self.label_username.setText(_translate("frm_Login", "User Name:", None))
         self.label_passwd.setText(_translate("frm_Login", "Password:", None))
         self.label_status.setText(_translate("frm_Login", "Status:", None))
-        self.chk_Remember.setText(_translate("frm_Login", "Remember Me", None))
-        self.chk_AutoLogin.setText(_translate("frm_Login", "Auto Login", None))
-        self.pushButton_log.setText(_translate("frm_Login", "GO!", None))
-        self.pushButton_new.setText(_translate("frm_Login", "New account", None))
+        self.chk_Remember.setText(_translate("frm_Login", "&Remember Me", None))
+        self.chk_AutoLogin.setText(_translate("frm_Login", "&Auto Login", None))
+        self.pushButton_log.setText(_translate("frm_Login", "&Go!", None))
+        self.pushButton_new.setText(_translate("frm_Login", "&New account", None))
 
 import wecase_rc
