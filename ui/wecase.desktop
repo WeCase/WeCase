@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=WeCase
+Name[zh_CN]=微盒
+Name[zh_TW]=微盒
+Name[zh_HK]=微盒
+GenericName=Sina Weibo Client
+GenericName[zh_CN]=新浪微博客户端
+GenericName[zh_TW]=新浪微博客戶端
+GenericName[zh_HK]=新浪微博客戶端
+Comment=Sina Weibo Client
+Comment[zh_CN]=新浪微博客户端
+Comment[zh_TW]=新浪微博客戶端
+Comment[zh_HK]=新浪微博客戶端
+Exec=/usr/bin/wecase
+Terminal=false
+Icon=WeCase
+Categories=Qt;Network;Social;SocialNetwork
