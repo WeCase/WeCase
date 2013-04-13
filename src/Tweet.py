@@ -76,15 +76,15 @@ class TweetItem(QtCore.QAbstractItemModel):
 
         # datetime do not support nagetive numbers
         if now_utc < create_utc:
-            return "Time travel!"
+            return self.tr("Time travel!")
         if passedSeconds < 60:
-            return "%.0f seconds ago" % (passedSeconds)
+            return self.tr("%.0f seconds ago") % (passedSeconds)
         if passedSeconds < 3600:
-            return "%.0f minutes ago" % (passedSeconds / 60)
+            return self.tr("%.0f minutes ago") % (passedSeconds / 60)
         if passedSeconds < 86400:
-            return "%.0f hours ago" % (passedSeconds / 3600)
+            return self.tr("%.0f hours ago") % (passedSeconds / 3600)
 
-        return "%.0f days ago" % (passedSeconds / 86400)
+        return self.tr("%.0f days ago") % (passedSeconds / 86400)
 
     def roleNames(self):
         names = {}

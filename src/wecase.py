@@ -76,9 +76,10 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.done(True)
 
     def reject(self):
-        QtGui.QMessageBox.critical(None, "Authorize Failed!",
-                                   "Check your account and password!")
-        self.pushButton_log.setText("GO!")
+        QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
+                                   self.tr("Check your account and "
+                                           "password!"))
+        self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
 
     def checkLogin(self, client):
@@ -122,7 +123,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.login_config['auto_login'] = str(self.chk_AutoLogin.isChecked())
 
     def login(self):
-        self.pushButton_log.setText("Login, waiting...")
+        self.pushButton_log.setText(self.tr("Login, waiting..."))
         self.pushButton_log.setEnabled(False)
         self.ui_authorize()
 
@@ -349,7 +350,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                          args=(all_timelines, self.all_timeline, more)).start()
         self.all_timeline_page = page
         if reset_remind:
-            self.tabWidget.setTabText(0, "Weibo")
+            self.tabWidget.setTabText(0, self.tr("Weibo"))
 
     def get_my_timeline(self, page=1, reset_remind=False, more=False):
         my_timelines = self.client.statuses.user_timeline.get(
@@ -367,7 +368,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.mentions_page = page
         if reset_remind:
             self.client.remind.set_count.post(type="mention_status")
-            self.tabWidget.setTabText(1, "@ME")
+            self.tabWidget.setTabText(1, self.tr("@ME"))
 
     def get_comment_to_me(self, page=1, reset_remind=False, more=False):
         comments_to_me = self.client.comments.to_me.get(page=page).comments
@@ -376,7 +377,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.comment_to_me_page = page
         if reset_remind:
             self.client.remind.set_count.post(type="cmt")
-            self.tabWidget.setTabText(2, "Comments")
+            self.tabWidget.setTabText(2, self.tr("Comments"))
 
     def get_remind(self, uid):
         '''this function is used to get unread_count
@@ -404,21 +405,23 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
-            self.tabTextChanged.emit(0, "Weibo(%d)" % reminds['status'])
+            self.tabTextChanged.emit(0, self.tr("Weibo(%d)")
+                                        % reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
             msg += "%d unread @ME\n" % reminds['mention_status']
-            self.tabTextChanged.emit(1,
-                                     "@Me(%d)" % reminds['mention_status'])
+            self.tabTextChanged.emit(1, self.tr("@Me(%d)")
+                                        % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] and self.remindComments:
             msg += "%d unread comment(s)\n" % reminds['cmt']
-            self.tabTextChanged.emit(2, "Comments(%d)" % reminds['cmt'])
+            self.tabTextChanged.emit(2, self.tr("Comments(%d)" )
+                                        % reminds['cmt'])
             num_msg += 1
 
         if num_msg != 0:
-            self.notify.showMessage("WeCase", msg)
+            self.notify.showMessage(self.tr("WeCase"), msg)
 
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
@@ -545,11 +548,11 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         return (sliderValue // 60, sliderValue % 60)
 
     def setIntervalText(self, sliderValue):
-        self.intervalLabel.setText("%i min %i sec" % (
-            self.transformInterval(sliderValue)))
+        self.intervalLabel.setText(self.tr("%i min %i sec") %
+                                   (self.transformInterval(sliderValue)))
 
     def setTimeoutText(self, sliderValue):
-        self.timeoutLabel.setText("%i sec" % sliderValue)
+        self.timeoutLabel.setText(self.tr("%i sec") % sliderValue)
 
     def loadConfig(self):
         self.config = ConfigParser()
@@ -645,7 +648,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = str(self.textEdit.toPlainText())
         try:
             self.client.statuses.repost.post(id=int(self.id), status=text)
-            self.notify.showMessage("WeCase", "Retweet Success!")
+            self.notify.showMessage(self.tr("WeCase"),
+                                    self.tr("Retweet Success!"))
             self.sendSuccessful.emit()
         except APIError as e:
             self.apiError.emit(str(e))
@@ -655,7 +659,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = str(self.textEdit.toPlainText())
         try:
             self.client.comments.create.post(id=int(self.id), comment=text)
-            self.notify.showMessage("WeCase", "Comment Success!")
+            self.notify.showMessage(self.tr("WeCase"),
+                                    self.tr("Comment Success!"))
             self.sendSuccessful.emit()
         except APIError as e:
             self.apiError.emit(str(e))
@@ -666,7 +671,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.client.comments.reply.post(id=int(self.id), cid=int(self.cid),
                                             comment=text)
-            self.notify.showMessage("WeCase", "Reply Success!")
+            self.notify.showMessage(self.tr("WeCase"),
+                                    self.tr("Reply Success!"))
             self.sendSuccessful.emit()
         except APIError as e:
             self.apiError.emit(str(e))
@@ -682,7 +688,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             else:
                 self.client.statuses.update.post(status=text)
 
-            self.notify.showMessage("WeCase", "Tweet Success!")
+            self.notify.showMessage(self.tr("WeCase"),
+                                    self.tr("Tweet Success!"))
             self.sendSuccessful.emit()
         except APIError as e:
             self.apiError.emit(str(e))
@@ -691,22 +698,23 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.image = None
 
     def addImage(self):
-        ACCEPT_TYPE = "Images (*.png *.jpg *.bmp *.gif)"
+        ACCEPT_TYPE = self.tr("Images") + "(*.png *.jpg *.bmp *.gif)"
         if self.image:
             self.image = None
-            self.pushButton_picture.setText("Picture")
+            self.pushButton_picture.setText(self.tr("Picture"))
         else:
             self.image = QtGui.QFileDialog.getOpenFileName(self,
-                                                           "Choose a image",
+                                                           self.tr("Choose a "
+                                                              "image"),
                                                            filter=ACCEPT_TYPE)
-            self.pushButton_picture.setText("Remove the picture")
+            self.pushButton_picture.setText(self.tr("Remove the picture"))
 
     def showError(self, e):
         if "Text too long" in e:
-            QtGui.QMessageBox.warning(None, "Text too long!",
-                                      "Please remove some text.")
+            QtGui.QMessageBox.warning(None, self.tr("Text too long!"),
+                                      self.tr("Please remove some text."))
         else:
-            QtGui.QMessageBox.warning(None, "Unknown error!", e)
+            QtGui.QMessageBox.warning(None, self.tr("Unknown error!"), e)
         self.pushButton_send.setEnabled(True)
 
     def showSmiley(self):
@@ -721,10 +729,15 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
         text = self.textEdit.toPlainText()
         numLens = 140 - tweetLength(text)
-        if numLens >= 0:
+        if numLens == 140:
+            # you can not send empty tweet
+            self.pushButton_send.setEnabled(False)
+        elif numLens > 0:
+            # length is okay
             self.label.setStyleSheet("color:black;")
             self.pushButton_send.setEnabled(True)
         else:
+            # text is too long
             self.label.setStyleSheet("color:red;")
             self.pushButton_send.setEnabled(False)
         self.label.setText(str(numLens))
@@ -733,7 +746,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 class Notify():
     image = myself_path + "/ui/img/WeCase 80.png"
 
-    def __init__(self, appname="WeCase", timeout=5):
+    def __init__(self, appname=QtCore.QObject().tr("WeCase"), timeout=5):
         pynotify.init(appname)
         self.timeout = timeout
         self.n = pynotify.Notification(appname)
@@ -789,6 +802,19 @@ if __name__ == "__main__":
         pass
 
     app = QtGui.QApplication(sys.argv)
+
+    # Qt's built-in string translator
+    qt_translator = QtCore.QTranslator(app)
+    qt_translator.load("qt_" + QtCore.QLocale.system().name(),
+                       QtCore.QLibraryInfo.location(
+                       QtCore.QLibraryInfo.TranslationsPath))
+    app.installTranslator(qt_translator)
+
+    # WeCase's own string translator
+    my_translator = QtCore.QTranslator(app)
+    my_translator.load("WeCase_" + QtCore.QLocale.system().name(),
+                       myself_path + "locale")
+    app.installTranslator(my_translator)
 
     wecase_login = LoginWindow()
 
