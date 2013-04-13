@@ -21,27 +21,27 @@
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="52"/>
+        <location filename="ui/AboutWindow.ui" line="55"/>
         <source>A Linux weibo client</source>
         <translation>一款 Linux 微博客户端</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="99"/>
+        <location filename="ui/AboutWindow.ui" line="102"/>
         <source>Intro</source>
         <translation>简介</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="128"/>
+        <location filename="ui/AboutWindow.ui" line="134"/>
         <source>Contributor</source>
         <translation>贡献者</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="138"/>
+        <location filename="ui/AboutWindow.ui" line="144"/>
         <source>GPL License</source>
         <translation>GPL 许可证</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="858"/>
+        <location filename="ui/AboutWindow.ui" line="326"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -54,9 +54,32 @@ This software is released under GPL vsersion 3 or later. For more details, see h
 Anyone can use, modify and redistribute this software.
 
 This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
-        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+        <translation type="obsolete">微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
 该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。
 任何人可以自由使用、修改并再发布该软件 。
+
+软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
+    </message>
+    <message>
+        <location filename="ui/AboutWindow.ui" line="108"/>
+        <source>WeCase is a simple, but not crude weibo client which is running on Linux desktop.
+
+
+This software is released under GPL version 3 or later. For more details, see http://www.gnu.org
+
+
+Anyone can use, modify and redistribute this software.
+
+
+This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
+        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+
+
+该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。
+
+
+任何人可以自由使用、修改并再发布该软件 。
+
 
 软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
     </message>
