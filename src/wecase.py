@@ -729,10 +729,15 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
         text = self.textEdit.toPlainText()
         numLens = 140 - tweetLength(text)
-        if numLens >= 0:
+        if numLens == 140:
+            # you can not send empty tweet
+            self.pushButton_send.setEnabled(False)
+        elif numLens > 0:
+            # length is okay
             self.label.setStyleSheet("color:black;")
             self.pushButton_send.setEnabled(True)
         else:
+            # text is too long
             self.label.setStyleSheet("color:red;")
             self.pushButton_send.setEnabled(False)
         self.label.setText(str(numLens))
