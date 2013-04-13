@@ -175,7 +175,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
     <message>
         <location filename="wecase.py" line="701"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation>图片 (*.png *.jpg *.bmp *.gif) </translation>
+        <translation type="obsolete">图片 (*.png *.jpg *.bmp *.gif) </translation>
     </message>
     <message>
         <location filename="wecase.py" line="704"/>
@@ -206,6 +206,11 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <location filename="wecase.py" line="717"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="701"/>
+        <source>Images</source>
+        <translation>图片</translation>
     </message>
 </context>
 <context>
