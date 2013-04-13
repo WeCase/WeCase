@@ -808,7 +808,7 @@ if __name__ == "__main__":
     # WeCase's own string translator
     my_translator = QtCore.QTranslator(app)
     my_translator.load("WeCase_" + QtCore.QLocale.system().name(),
-                       myself_path + "l10n")
+                       myself_path + "locale")
     app.installTranslator(my_translator)
 
     wecase_login = LoginWindow()
