@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/NewpostWindow.ui'
+# Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
 #
-# Created: Mon Apr  8 16:40:03 2013
+# Created: Sat Apr 13 20:36:28 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -96,6 +96,6 @@ class Ui_NewPostWindow(object):
         self.pushButton_picture.setText(_translate("NewPostWindow", "&Picture", None))
         self.pushButton_cancel.setText(_translate("NewPostWindow", "&Cancel", None))
         self.pushButton_send.setText(_translate("NewPostWindow", "&Send", None))
-        self.pushButton.setText(_translate("NewPostWindow", "Smiley", None))
+        self.pushButton.setText(_translate("NewPostWindow", "S&miley", None))
 
 from WCompleteLineEdit import WCompleteLineEdit

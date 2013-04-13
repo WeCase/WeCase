@@ -54,7 +54,11 @@ This software is released under GPL vsersion 3 or later. For more details, see h
 Anyone can use, modify and redistribute this software.
 
 This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
-        <translation type="unfinished"></translation>
+        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。
+任何人可以自由使用、修改并再发布该软件 。
+
+软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
     </message>
 </context>
 <context>
@@ -110,7 +114,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
     <message>
         <location filename="ui/NewpostWindow.ui" line="131"/>
         <source>Smiley</source>
-        <translation>表情</translation>
+        <translation type="obsolete">表情</translation>
+    </message>
+    <message>
+        <location filename="ui/NewpostWindow.ui" line="131"/>
+        <source>S&amp;miley</source>
+        <translation>表情(&amp;M)</translation>
     </message>
 </context>
 <context>
