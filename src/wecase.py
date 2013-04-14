@@ -103,7 +103,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.show()
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
         self.cmb_Users.addItem(self.last_login)
-        self.chk_AutoLogin.setChecked(self.auto_login)
 
         for username in list(self.passwd.keys()):
             if username == self.last_login:
@@ -111,9 +110,11 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.cmb_Users.addItem(username)
 
         if self.cmb_Users.currentText():
+            self.chk_Remember.setChecked(True)
             self.setPassword(self.cmb_Users.currentText())
 
         if self.auto_login:
+            self.chk_AutoLogin.setChecked(self.auto_login)
             self.login()
 
     def loadConfig(self):
