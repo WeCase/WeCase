@@ -3,7 +3,7 @@
 <context>
     <name>@default</name>
     <message>
-        <location filename="wecase.py" line="744"/>
+        <location filename="wecase.py" line="775"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
@@ -87,22 +87,22 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>LoginWindow</name>
     <message>
-        <location filename="wecase.py" line="79"/>
+        <location filename="wecase.py" line="90"/>
         <source>Authorize Failed!</source>
         <translation>认证失败！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="79"/>
+        <location filename="wecase.py" line="90"/>
         <source>Check your account and password!</source>
         <translation>检查您的账号和密码！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="82"/>
+        <location filename="wecase.py" line="93"/>
         <source>GO!</source>
         <translation>走起！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="126"/>
+        <location filename="wecase.py" line="141"/>
         <source>Login, waiting...</source>
         <translation>登录中，请稍候……</translation>
     </message>
@@ -148,27 +148,27 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="wecase.py" line="691"/>
+        <location filename="wecase.py" line="717"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="651"/>
+        <location filename="wecase.py" line="677"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="662"/>
+        <location filename="wecase.py" line="688"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="674"/>
+        <location filename="wecase.py" line="700"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="691"/>
+        <location filename="wecase.py" line="717"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -178,37 +178,37 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">图片 (*.png *.jpg *.bmp *.gif) </translation>
     </message>
     <message>
-        <location filename="wecase.py" line="704"/>
+        <location filename="wecase.py" line="730"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="706"/>
+        <location filename="wecase.py" line="732"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="710"/>
+        <location filename="wecase.py" line="736"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="714"/>
+        <location filename="wecase.py" line="740"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="714"/>
+        <location filename="wecase.py" line="740"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="717"/>
+        <location filename="wecase.py" line="743"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="701"/>
+        <location filename="wecase.py" line="727"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
@@ -257,6 +257,14 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
     </message>
 </context>
 <context>
+    <name>SmileyWindow</name>
+    <message>
+        <location filename="ui/SmileyWindow.ui" line="14"/>
+        <source>Choose a smiley</source>
+        <translation>选择一个表情</translation>
+    </message>
+</context>
+<context>
     <name>TweetItem</name>
     <message>
         <location filename="Tweet.py" line="79"/>
@@ -287,37 +295,37 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>WeCaseWindow</name>
     <message>
-        <location filename="wecase.py" line="408"/>
+        <location filename="wecase.py" line="432"/>
         <source>Weibo(%d)</source>
         <translation>微博(%d)</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="413"/>
+        <location filename="wecase.py" line="437"/>
         <source>@Me(%d)</source>
         <translation>@我(%d)</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="419"/>
+        <location filename="wecase.py" line="443"/>
         <source>Comments(%d)</source>
         <translation>评论(%d)</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="424"/>
+        <location filename="wecase.py" line="448"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="353"/>
+        <location filename="wecase.py" line="377"/>
         <source>Weibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="371"/>
+        <location filename="wecase.py" line="395"/>
         <source>@ME</source>
         <translation>@我</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="380"/>
+        <location filename="wecase.py" line="404"/>
         <source>Comments</source>
         <translation>评论</translation>
     </message>
@@ -325,12 +333,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>WeSettingsWindow</name>
     <message>
-        <location filename="wecase.py" line="551"/>
+        <location filename="wecase.py" line="577"/>
         <source>%i min %i sec</source>
         <translation>%i 分 %i 秒</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="555"/>
+        <location filename="wecase.py" line="581"/>
         <source>%i sec</source>
         <translation>%i 秒</translation>
     </message>
