@@ -63,7 +63,12 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.loadConfig()
         self.setupUi(self)
         self.setupMyUi()
+        self.setupSignals()
+
+    def setupSignals(self):
+        # Other singals defined in Desinger.
         self.loginReturn.connect(self.checkLogin)
+        self.chk_Remember.clicked.connect(self.uncheckAutoLogin)
 
     def accept(self, client):
         if self.chk_Remember.isChecked():
@@ -181,6 +186,11 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def setPassword(self, username):
         if username:
             self.txt_Password.setText(self.passwd[str(username)])
+
+    @QtCore.pyqtSlot(bool)
+    def uncheckAutoLogin(self, checked):
+        if not checked:
+            self.chk_AutoLogin.setChecked(False)
 
     def openRegisterPage(self):
         webbrowser.open("http://weibo.com/signup/signup.php")
