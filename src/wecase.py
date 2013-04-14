@@ -69,6 +69,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         if self.chk_Remember.isChecked():
             self.passwd[str(self.username)] = str(self.password)
             self.last_login = str(self.username)
+            # Because this is a model dislog,
+            # closeEvent won't emit when we accept() the window, but will 
+            # emit when we reject() the window.
             self.saveConfig()
         wecase_main = WeCaseWindow()
         wecase_main.init_account(client)
@@ -121,6 +124,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.login_config['passwd'] = str(self.passwd)
         self.login_config['last_login'] = self.last_login
         self.login_config['auto_login'] = str(self.chk_AutoLogin.isChecked())
+
+        with open(config_path, "w+") as config_file:
+            self.config.write(config_file)
 
     def login(self):
         self.pushButton_log.setText(self.tr("Login, waiting..."))
@@ -180,8 +186,12 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         webbrowser.open("http://weibo.com/signup/signup.php")
 
     def closeEvent(self, event):
-        with open(config_path, "w+") as config_file:
-            self.config.write(config_file)
+        # HACK: When a user want to close this window, closeEvent will emit.
+        # But if we don't have closeEvent, Qt will call reject(). We use
+        # reject() to show the error message, so users will see the error and
+        # they can not close this window. So just do nothing there to allow
+        # users to close the window.
+        pass
 
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
