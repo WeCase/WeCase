@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
+# Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Sat Apr 13 20:36:28 2013
+# Created: Sun Apr 14 21:55:20 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,12 +26,10 @@ except AttributeError:
 class Ui_NewPostWindow(object):
     def setupUi(self, NewPostWindow):
         NewPostWindow.setObjectName(_fromUtf8("NewPostWindow"))
-        NewPostWindow.resize(562, 292)
+        NewPostWindow.resize(562, 306)
         NewPostWindow.setAutoFillBackground(False)
         NewPostWindow.setProperty("unifiedTitleAndToolBarOnMac", False)
-        self.gridLayout_3 = QtGui.QGridLayout(NewPostWindow)
-        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
-        self.verticalLayout = QtGui.QVBoxLayout()
+        self.verticalLayout = QtGui.QVBoxLayout(NewPostWindow)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.widget = QtGui.QWidget(NewPostWindow)
         self.widget.setMinimumSize(QtCore.QSize(0, 200))
@@ -55,8 +53,25 @@ class Ui_NewPostWindow(object):
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.gridLayout.addWidget(self.textEdit, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.widget)
-        spacerItem = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
-        self.verticalLayout.addItem(spacerItem)
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
+        self.horizontalLayout.setContentsMargins(-1, -1, 0, -1)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.label_2 = QtGui.QLabel(NewPostWindow)
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.horizontalLayout.addWidget(self.label_2)
+        self.chk_comment = QtGui.QCheckBox(NewPostWindow)
+        self.chk_comment.setObjectName(_fromUtf8("chk_comment"))
+        self.horizontalLayout.addWidget(self.chk_comment)
+        self.chk_repost = QtGui.QCheckBox(NewPostWindow)
+        self.chk_repost.setObjectName(_fromUtf8("chk_repost"))
+        self.horizontalLayout.addWidget(self.chk_repost)
+        self.chk_comment_original = QtGui.QCheckBox(NewPostWindow)
+        self.chk_comment_original.setObjectName(_fromUtf8("chk_comment_original"))
+        self.horizontalLayout.addWidget(self.chk_comment_original)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         self.widget_2 = QtGui.QWidget(NewPostWindow)
         self.widget_2.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
@@ -78,7 +93,7 @@ class Ui_NewPostWindow(object):
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.gridLayout_2.addWidget(self.pushButton, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.widget_2)
-        self.gridLayout_3.addLayout(self.verticalLayout, 0, 0, 1, 1)
+        self.verticalLayout.setStretch(0, 4)
 
         self.retranslateUi(NewPostWindow)
         QtCore.QObject.connect(self.pushButton_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.close)
@@ -93,6 +108,10 @@ class Ui_NewPostWindow(object):
     def retranslateUi(self, NewPostWindow):
         NewPostWindow.setWindowTitle(_translate("NewPostWindow", "New Message", None))
         self.label.setText(_translate("NewPostWindow", "140", None))
+        self.label_2.setText(_translate("NewPostWindow", "Also:", None))
+        self.chk_comment.setText(_translate("NewPostWindow", "Comment", None))
+        self.chk_repost.setText(_translate("NewPostWindow", "Repost", None))
+        self.chk_comment_original.setText(_translate("NewPostWindow", "Commmet to Original", None))
         self.pushButton_picture.setText(_translate("NewPostWindow", "&Picture", None))
         self.pushButton_cancel.setText(_translate("NewPostWindow", "&Cancel", None))
         self.pushButton_send.setText(_translate("NewPostWindow", "&Send", None))

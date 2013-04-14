@@ -644,6 +644,14 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def setupMyUi(self):
         if self.action == "new":
             self.pushButton_send.clicked.connect(self.send_tweet)
+        elif self.action == "retweet":
+            self.chk_repost.setEnabled(False)
+        elif self.action == "comment":
+            pass
+        elif self.action == "reply":
+            self.chk_repost.setEnabled(False)
+            self.chk_comment.setEnabled(False)
+            self.chk_comment_original.setEnabled(False)
 
     def mentions_suggest(self, text):
         ret_users = []
@@ -673,7 +681,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def retweet(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.statuses.repost.post(id=int(self.id), status=text)
+            self.client.statuses.repost.post(id=int(self.id), status=text, 
+                                             is_comment=self.chk_comment.isChecked()+self.chk_comment_original.isChecked())
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Retweet Success!"))
             self.sendSuccessful.emit()
@@ -684,7 +693,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def comment(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.comments.create.post(id=int(self.id), comment=text)
+            self.client.comments.create.post(id=int(self.id), comment=text, 
+                                             comment_ori=self.chk_comment_original.isChecked())
+            if self.chk_repost.isChecked():
+                self.client.statuses.repost.post(id=int(self.id), status=text)
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Comment Success!"))
             self.sendSuccessful.emit()

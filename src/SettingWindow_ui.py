@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/SettingWindow.ui'
 #
-# Created: Mon Apr  8 16:40:03 2013
+# Created: Sun Apr 14 21:55:20 2013
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
