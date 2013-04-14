@@ -81,6 +81,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         wecase_main = WeCaseWindow()
         wecase_main.init_account(client)
         wecase_main.show()
+        # Maybe users will logout, so reset the status
+        self.pushButton_log.setText(self.tr("GO!"))
+        self.pushButton_log.setEnabled(True)
         self.done(True)
 
     def reject(self):
@@ -464,8 +467,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_about.exec_()
 
     def logout(self):
-        wecase_login.exec_()
         self.close()
+        # This is a model dialog, if we exec it before we close MainWindow
+        # MainWindow won't close
+        wecase_login.exec_()
 
     def postTweet(self):
         wecase_new = NewpostWindow()
