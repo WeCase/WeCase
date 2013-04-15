@@ -75,7 +75,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.passwd[str(self.username)] = str(self.password)
             self.last_login = str(self.username)
             # Because this is a model dislog,
-            # closeEvent won't emit when we accept() the window, but will 
+            # closeEvent won't emit when we accept() the window, but will
             # emit when we reject() the window.
             self.saveConfig()
         wecase_main = WeCaseWindow()
@@ -430,18 +430,18 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
             self.tabTextChanged.emit(0, self.tr("Weibo(%d)")
-                                        % reminds['status'])
+                                     % reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
             msg += "%d unread @ME\n" % reminds['mention_status']
             self.tabTextChanged.emit(1, self.tr("@Me(%d)")
-                                        % reminds['mention_status'])
+                                     % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] and self.remindComments:
             msg += "%d unread comment(s)\n" % reminds['cmt']
-            self.tabTextChanged.emit(2, self.tr("Comments(%d)" )
-                                        % reminds['cmt'])
+            self.tabTextChanged.emit(2, self.tr("Comments(%d)")
+                                     % reminds['cmt'])
             num_msg += 1
 
         if num_msg != 0:
@@ -635,6 +635,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.id = id
         self.cid = cid
         self.setupUi(self)
+        self.setupMyUi()
         self.textEdit.setText(text)
         self.textEdit.callback = self.mentions_suggest
         self.textEdit.mention_flag = "@"
@@ -643,20 +644,20 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def setupMyUi(self):
         if self.action == "new":
-            self.pushButton_send.clicked.connect(self.send_tweet)
-        elif self.action == "retweet":
-            self.chk_repost.setEnabled(False)
-        elif self.action == "comment":
-            pass
-        elif self.action == "reply":
             self.chk_repost.setEnabled(False)
             self.chk_comment.setEnabled(False)
             self.chk_comment_original.setEnabled(False)
+        elif self.action == "retweet":
+            self.chk_repost.setEnabled(False)
+        elif self.action == "comment":
+            self.chk_comment.setEnabled(False)
+        elif self.action == "reply":
+            self.chk_repost.setEnabled(False)
+            self.chk_comment.setEnabled(False)
 
     def mentions_suggest(self, text):
         ret_users = []
         try:
-            print(text)
             word = re.findall(r'@[-a-zA-Z0-9_\u4e00-\u9fa5]+', text)[-1].replace('@', '')
         except IndexError:
             return []
@@ -681,8 +682,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def retweet(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.statuses.repost.post(id=int(self.id), status=text, 
-                                             is_comment=self.chk_comment.isChecked()+self.chk_comment_original.isChecked())
+            self.client.statuses.repost.post(id=int(self.id), status=text,
+                                             is_comment=int((self.chk_comment.isChecked() +
+                                             self.chk_comment_original.isChecked() * 2)))
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Retweet Success!"))
             self.sendSuccessful.emit()
@@ -693,8 +695,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def comment(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.comments.create.post(id=int(self.id), comment=text, 
-                                             comment_ori=self.chk_comment_original.isChecked())
+            self.client.comments.create.post(id=int(self.id), comment=text,
+                                             comment_ori=int(self.chk_comment_original.isChecked()))
             if self.chk_repost.isChecked():
                 self.client.statuses.repost.post(id=int(self.id), status=text)
             self.notify.showMessage(self.tr("WeCase"),
@@ -708,7 +710,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         text = str(self.textEdit.toPlainText())
         try:
             self.client.comments.reply.post(id=int(self.id), cid=int(self.cid),
-                                            comment=text)
+                                            comment=text,
+                                            comment_ori=int(self.chk_comment_original.isChecked()))
+            if self.chk_repost.isChecked():
+                self.client.statuses.repost.post(id=int(self.id), status=text)
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Reply Success!"))
             self.sendSuccessful.emit()
@@ -742,8 +747,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.pushButton_picture.setText(self.tr("Picture"))
         else:
             self.image = QtGui.QFileDialog.getOpenFileName(self,
-                                                           self.tr("Choose a "
-                                                              "image"),
+                                                           self.tr("Choose a"
+                                                           " image"),
                                                            filter=ACCEPT_TYPE)
             self.pushButton_picture.setText(self.tr("Remove the picture"))
 
@@ -815,12 +820,12 @@ class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
     def setupModels(self):
         self.smileyModel = SmileyModel(self)
         self.smileyModel.init_smileies(myself_path + "./ui/img/smiley",
-                self.smileyModel, SmileyItem)
+                                       self.smileyModel, SmileyItem)
         self.smileyView.rootContext().setContextProperty("SmileyModel",
-                                                       self.smileyModel)
+                                                         self.smileyModel)
         self.smileyView.rootContext().setContextProperty("parentWindow", self)
-        self.smileyView.setSource(
-                QtCore.QUrl.fromLocalFile(myself_path + "/ui/SmileyView.qml"))
+        self.smileyView.setSource(QtCore.QUrl.fromLocalFile(
+                                  myself_path + "/ui/SmileyView.qml"))
 
     @QtCore.pyqtSlot(str)
     def returnSmileyName(self, smileyName):
