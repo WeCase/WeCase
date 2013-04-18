@@ -12,7 +12,7 @@ from WTimeParser import WTimeParser as time_parser
 class TweetModel(QtCore.QAbstractListModel):
     def __init__(self, prototype, parent=None):
         QtCore.QAbstractListModel.__init__(self, parent)
-        self.setRoleNames(prototype.roleNames())
+        self.setRoleNames(prototype.roles)
         self.tweets = []
 
     def appendRow(self, item):
@@ -35,17 +35,19 @@ class TweetModel(QtCore.QAbstractListModel):
 
 
 class TweetItem(QtCore.QAbstractItemModel):
-    typeRole = QtCore.Qt.UserRole + 1
-    idRole = QtCore.Qt.UserRole + 2
-    authorRole = QtCore.Qt.UserRole + 3
-    avatarRole = QtCore.Qt.UserRole + 4
-    contentRole = QtCore.Qt.UserRole + 5
-    timeRole = QtCore.Qt.UserRole + 6
-    originalIdRole = QtCore.Qt.UserRole + 7
-    originalContentRole = QtCore.Qt.UserRole + 8
-    originalAuthorRole = QtCore.Qt.UserRole + 9
-    originalTimeRole = QtCore.Qt.UserRole + 10
-    thumbnailPicRole = QtCore.Qt.UserRole + 11
+    roles = {
+        QtCore.Qt.UserRole + 1: "type",
+        QtCore.Qt.UserRole + 2: "id",
+        QtCore.Qt.UserRole + 3: "author",
+        QtCore.Qt.UserRole + 4: "avatar",
+        QtCore.Qt.UserRole + 5: "content",
+        QtCore.Qt.UserRole + 6: "time",
+        QtCore.Qt.UserRole + 7: "original_id",
+        QtCore.Qt.UserRole + 8: "original_content",
+        QtCore.Qt.UserRole + 9: "original_author",
+        QtCore.Qt.UserRole + 10: "original_time",
+        QtCore.Qt.UserRole + 11: "thumbnail_pic"
+    }
 
     def __init__(self, type="", id="", author="", avatar="", content="",
                  time="", original_id="", original_content="",
@@ -53,19 +55,24 @@ class TweetItem(QtCore.QAbstractItemModel):
                  parent=None):
         QtCore.QAbstractItemModel.__init__(self, parent)
 
-        self.type = type
-        self.id = id
-        self.author = author
-        self.avatar = avatar
-        self.content = content
-        self.time = time
-        self.original_id = original_id
-        self.original_content = original_content
-        self.original_author = original_author
-        self.original_time = original_time
-        self.thumbnail_pic = thumbnail_pic
+        self._data = {
+            "type": type,
+            "id": id,
+            "author": author,
+            "avatar": avatar,
+            "content": content,
+            "time": self.sinceTimeString(time),
+            "original_id": original_id,
+            "original_content": original_content,
+            "original_author": original_author,
+            "original_time": original_time,
+            "thumbnail_pic": thumbnail_pic
+        }
 
     def sinceTimeString(self, createTime):
+        if not createTime:
+            return
+
         create = time_parser().parse(createTime)
         create_utc = (create - create.utcoffset()).replace(tzinfo=None)
         now_utc = datetime.utcnow()
@@ -86,43 +93,5 @@ class TweetItem(QtCore.QAbstractItemModel):
 
         return self.tr("%.0f days ago") % (passedSeconds / 86400)
 
-    def roleNames(self):
-        names = {}
-        names[self.typeRole] = "type"
-        names[self.idRole] = "id"
-        names[self.authorRole] = "author"
-        names[self.avatarRole] = "avatar"
-        names[self.contentRole] = "content"
-        names[self.timeRole] = "time"
-        names[self.originalIdRole] = "original_id"
-        names[self.originalContentRole] = "original_content"
-        names[self.originalAuthorRole] = "original_author"
-        names[self.originalTimeRole] = "original_time"
-        names[self.thumbnailPicRole] = "thumbnail_pic"
-        return names
-
     def data(self, role):
-        if role == self.typeRole:
-            return self.type
-        elif role == self.idRole:
-            return self.id
-        elif role == self.authorRole:
-            return self.author
-        elif role == self.avatarRole:
-            return self.avatar
-        elif role == self.contentRole:
-            return self.content
-        elif role == self.timeRole:
-            return self.sinceTimeString(self.time)
-        elif role == self.originalIdRole:
-            return self.original_id
-        elif role == self.originalContentRole:
-            return self.original_content
-        elif role == self.originalAuthorRole:
-            return self.original_author
-        elif role == self.originalTimeRole:
-            return self.original_time
-        elif role == self.thumbnailPicRole:
-            return self.thumbnail_pic
-        else:
-            return None
+        return self._data[self.roles[role]]
