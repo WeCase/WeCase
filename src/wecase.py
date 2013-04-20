@@ -582,11 +582,14 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.chk_comment_original.setEnabled(False)
         elif self.action == "retweet":
             self.chk_repost.setEnabled(False)
+            self.pushButton_picture.setEnabled(False)
         elif self.action == "comment":
             self.chk_comment.setEnabled(False)
+            self.pushButton_picture.setEnabled(False)
         elif self.action == "reply":
             self.chk_repost.setEnabled(False)
             self.chk_comment.setEnabled(False)
+            self.pushButton_picture.setEnabled(False)
 
     def mentions_suggest(self, text):
         ret_users = []
