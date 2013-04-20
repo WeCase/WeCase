@@ -683,7 +683,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                                            self.tr("Choose a"
                                                            " image"),
                                                            filter=ACCEPT_TYPE)
-            self.pushButton_picture.setText(self.tr("Remove the picture"))
+            # user may cancel the dialog, so check again
+            if self.image:
+                self.pushButton_picture.setText(self.tr("Remove the picture"))
 
     def showError(self, e):
         if "Text too long" in e:
