@@ -72,6 +72,21 @@ Item  {
         }
     }
 
+    function get_thumbnail_pic() {
+        if (thumbnail_pic) {
+            console.log(thumbnail_pic)
+            return thumbnail_pic
+        }
+        if (original && original.thumbnail_pic) {
+            console.log(original.thumbnail_pic)
+            return original.thumbnail_pic
+        }
+        else {
+            return ""
+        }
+    }
+
+
     Rectangle {
         id: avatarBackground
         width: 60
@@ -204,18 +219,18 @@ Item  {
 
     Image {
         id: tweetImage
-        visible: thumbnail_pic
+        visible: get_thumbnail_pic()
         anchors.top: statusText.bottom
-        anchors.topMargin: thumbnail_pic ? 10 : 0;
+        anchors.topMargin: get_thumbnail_pic() ? 10 : 0;
         anchors.horizontalCenter: parent.horizontalCenter
-        source: thumbnail_pic
+        source: get_thumbnail_pic()
 
         MouseArea { 
             anchors.fill: parent
 
             onClicked: {
                 busy.on = true;
-                mainWindow.look_orignal_pic(thumbnail_pic, tweetid);
+                mainWindow.look_orignal_pic(get_thumbnail_pic(), tweetid);
             }
         }
 
