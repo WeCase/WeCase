@@ -74,11 +74,9 @@ Item  {
 
     function get_thumbnail_pic() {
         if (thumbnail_pic) {
-            console.log(thumbnail_pic)
             return thumbnail_pic
         }
         if (original && original.thumbnail_pic) {
-            console.log(original.thumbnail_pic)
             return original.thumbnail_pic
         }
         else {
