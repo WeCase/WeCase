@@ -104,7 +104,7 @@ Item  {
 
     ButtonImage {
         id: comment
-        visible: tweetType != "comment";
+        visible: tweetType != 2;
 
         buttonImageUrl: "img/small_comment_button.png"
         pressedButtonImageUrl: "img/small_comment_button_pressed.png"
@@ -118,7 +118,7 @@ Item  {
 
     ButtonImage {
         id: retweet
-        visible: tweetType != "comment";
+        visible: tweetType != 2;
 
         buttonImageUrl: "img/small_retweet_button.png"
         pressedButtonImageUrl: "img/small_retweet_button_pressed.png"
@@ -134,7 +134,7 @@ Item  {
 
     ButtonImage {
         id: reply
-        visible: tweetType == "comment";
+        visible: tweetType == 2;
 
         buttonImageUrl: "img/small_reply_button.png"
         pressedButtonImageUrl: "img/small_reply_button_pressed.png"
@@ -148,7 +148,7 @@ Item  {
 
     ButtonImage {
         id: favorite
-        visible: tweetType != "comment";
+        visible: tweetType != 2;
 
         buttonImageUrl: {
             if (isFavorite) {
@@ -181,10 +181,10 @@ Item  {
         id: statusText
         color: "#333333"
         text: {
-            if (tweetType == "tweet" || tweetType == "comment") {
+            if (tweetType == 0 || tweetType == 2) {
                 return '<b>' + tweetScreenName + ':<\/b><br \/> ' + addTags(tweetText)
             }
-            else if (tweetType == "retweet") {
+            else if (tweetType == 1) {
                 return '<b>' + tweetScreenName + ':<\/b><br \/> ' + addTags(tweetText) +
                 '<br \/> <b>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + tweetOriginalName + '<\/b>: '
                 + addTags(tweetOriginalText)

@@ -34,7 +34,7 @@ Rectangle {
         delegate: TweetDelegate {
 
             function retweet_string() {
-                if (tweetType == "retweet") {
+                if (tweetType == 1) {
                     return "//@" + tweetScreenName + ":" + tweetText;
                 }
                 else {
@@ -56,12 +56,14 @@ Rectangle {
             }
 
             tweetType: type
-            tweetScreenName: author
-            tweetOriginalId: original_id
-            tweetOriginalName: original_author
-            tweetOriginalText: original_content
-            tweetText: content
-            tweetAvatar: avatar
+            tweetScreenName: author.name
+            tweetOriginalId: type != 0 && original.id
+
+            // 不是单条微博，有作者信息（原微博不被删），返回作者姓名；否则返回空字符串
+            tweetOriginalName: (type != 0 && original.author && original.author.name) || ""
+            tweetOriginalText: type != 0 && original.text
+            tweetText: text
+            tweetAvatar: author.avatar
             tweetid:  id
             isOwnTweet: true
             isNewTweet: true
@@ -71,7 +73,7 @@ Rectangle {
             onFavoriteButtonClicked: favorite()
             onRetweetButtonClicked: mainWindow.repost(tweetid, retweet_string())
             onCommentButtonClicked: mainWindow.comment(tweetid)
-            onReplyButtonClicked: mainWindow.reply(original_id, tweetid)
+            onReplyButtonClicked: mainWindow.reply(original.id, tweetid)
 
             // not implemented
             onMoreButtonClicked: console.log("Clicked a user: " + tweetScreenName)

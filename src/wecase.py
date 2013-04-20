@@ -296,75 +296,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                                                      self.my_timeline)
 
     def get_timeline(self, timeline, model, more=False):
-        for count, item in enumerate(timeline):
-            # tweet (default), comment or retweet?
-            item_type = "tweet"
-
-            # simple tweet or comment
-            item_id = item['idstr']
-            item_author = item['user']['name']
-            item_author_avatar = item['user']['profile_image_url']
-            item_content = item['text']
-            item_content_time = item['created_at']
-
-            # comment only
-            try:
-                item_comment_to_original_id = item['status']['idstr']
-                item_type = "comment"
-            except KeyError:
-                # not a comment
-                pass
-
-            # original tweet (if retweeted)
-            try:
-                item_original_id = item['retweeted_status']['idstr']
-                item_original_content = item['retweeted_status']['text']
-                item_original_author = item['retweeted_status']['user']['name']
-                item_original_time = item['retweeted_status']['created_at']
-                item_type = "retweet"
-            except KeyError:
-                # not retweeted
-                pass
-
-            # thumb pic
-            try:
-                item_thumb_pic = None
-                item_thumb_pic = item['thumbnail_pic']
-            except KeyError:
-                try:
-                    item_thumb_pic = item['retweeted_status']['thumbnail_pic']
-                except KeyError:
-                    pass
-
-            # tweet
-            tweet = TweetItem(type=item_type, id=item_id, author=item_author,
-                              avatar=item_author_avatar, content=item_content,
-                              time=item_content_time)
-
-            if item_type == "comment":
-                # comment
-                tweet = TweetItem(type=item_type, id=item_id,
-                                  author=item_author,
-                                  avatar=item_author_avatar,
-                                  content=item_content, time=item_content_time,
-                                  original_id=item_comment_to_original_id)
-
-            if item_type == "retweet":
-                # retweet
-                tweet = TweetItem(type=item_type, id=item_id,
-                                  author=item_author,
-                                  avatar=item_author_avatar,
-                                  content=item_content, time=item_content_time,
-                                  original_id=item_original_id,
-                                  original_content=item_original_content,
-                                  original_author=item_original_author,
-                                  original_time=item_original_time)
-
-            if not item_thumb_pic is None:
-                # thumb pic
-                tweet.thumbnail_pic = item_thumb_pic
-
-            model.appendRow(tweet)
+        for item in timeline:
+            model.appendRow(TweetItem(item))
         self.timelineLoaded.emit(more)
 
     def get_all_timeline(self, page=1, reset_remind=False, more=False):
