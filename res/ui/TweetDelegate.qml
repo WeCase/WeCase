@@ -244,12 +244,21 @@ Item  {
 
     Text {
         id: sinceText
-        text: tweetSinceTime
+        text: {
+            if (tweetType != 2) {
+                return "<a href='" + url + "'>" + tweetSinceTime + "</a>"
+            }
+            else {
+                return tweetSinceTime
+            }
+        }
         anchors.top: avatarBackground.bottom
         anchors.leftMargin: 11
         anchors.topMargin: 5
         anchors.left: parent.left
         font.family: "Segoe UI"
         font.pointSize: 7
+
+        onLinkActivated: container.handleLink(link);
     }
 }

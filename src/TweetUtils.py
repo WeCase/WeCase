@@ -2,13 +2,13 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This model implemented a bug-for-bug compatible
-#           strings' length counter with Sina's 
+#           strings' length counter with Sina's
 # Copyright (C) 2013 Tom Li
 # License: GPL v3 or later.
 
 
 import re
-from math import ceil
+from math import ceil, floor
 
 
 def tweetLength(text):
@@ -51,3 +51,27 @@ def tweetLength(text):
                           (byteLen - TWEET_MAX + TWEET_URL_LEN))
             n = n.replace(url, "")
     return ceil((total + len(n) + len(re.findall(r"[^\x00-\x80]", n))) / 2)
+
+
+def get_mid(mid):
+    """Convert a id of a tweet to a mid."""
+
+    def baseN(num, base):
+        """Convert the base of a decimal."""
+        CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return ((num == 0) and "0") or (baseN(num // base, base).lstrip("0") +
+                CHAR[num % base])
+
+    url = ""
+
+    i = len(mid) - 7
+    while i > -7:
+        offset_1 = 0 if i < 0 else i
+        offset_2 = i + 7
+        num = mid[offset_1:offset_2]
+
+        num = baseN(int(num), 62)
+        url = num + url
+
+        i -= 7
+    return url

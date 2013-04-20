@@ -6,6 +6,7 @@
 
 from PyQt4 import QtCore
 from datetime import datetime
+from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 
 
@@ -58,12 +59,14 @@ class TweetItem(QtCore.QObject):
     roles = {
         QtCore.Qt.UserRole + 1: "type",
         QtCore.Qt.UserRole + 2: "id",
-        QtCore.Qt.UserRole + 3: "author",
-        QtCore.Qt.UserRole + 4: "time",
-        QtCore.Qt.UserRole + 5: "text",
-        QtCore.Qt.UserRole + 6: "original",
-        QtCore.Qt.UserRole + 7: "thumbnail_pic",
-        QtCore.Qt.UserRole + 8: "original_pic"
+        QtCore.Qt.UserRole + 3: "mid",
+        QtCore.Qt.UserRole + 4: "url",
+        QtCore.Qt.UserRole + 5: "author",
+        QtCore.Qt.UserRole + 6: "time",
+        QtCore.Qt.UserRole + 7: "text",
+        QtCore.Qt.UserRole + 8: "original",
+        QtCore.Qt.UserRole + 9: "thumbnail_pic",
+        QtCore.Qt.UserRole + 10: "original_pic"
     }
 
     def __init__(self, item={}, parent=None):
@@ -76,12 +79,14 @@ class TweetItem(QtCore.QObject):
         self._roleData = {
             "type": self.type,
             "id": self.id,
+            "mid": self.mid,
+            "url": self.url,
             "author": self.author,
             "time": self.time,
             "text": self.text,
             "original": self.original,
             "thumbnail_pic": self.thumbnail_pic,
-            "original_pic": self.original_pic
+            "original_pic": self.original_pic,
         }
 
     def data(self, key):
@@ -99,6 +104,23 @@ class TweetItem(QtCore.QObject):
     @QtCore.pyqtProperty(str, constant=True)
     def id(self):
         return self._data.get('idstr')
+
+    @QtCore.pyqtProperty(str, constant=True)
+    def mid(self):
+        decimal_mid = str(self._data.get('mid'))
+        encode_mid = get_mid(decimal_mid)
+        return encode_mid
+
+    @QtCore.pyqtProperty(str, constant=True)
+    def url(self):
+        try:
+            uid = self._data['user']['id']
+            mid = get_mid(self._data['mid'])
+        except KeyError:
+            # Sometimes Sina's API doesn't return user
+            # when our tweet is deeply nested. Just forgot it.
+            return ""
+        return 'http://weibo.com/%s/%s' % (uid, mid)
 
     @QtCore.pyqtProperty(QtCore.QObject, constant=True)
     def author(self):
