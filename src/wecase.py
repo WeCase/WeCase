@@ -572,10 +572,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.setText(text)
         self.textEdit.callback = self.mentions_suggest
         self.textEdit.mention_flag = "@"
-        self.checkChars()
         self.notify = Notify(timeout=1)
 
     def setupMyUi(self):
+        self.checkChars()
         if self.action == "new":
             self.chk_repost.setEnabled(False)
             self.chk_comment.setEnabled(False)
@@ -705,8 +705,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
         text = self.textEdit.toPlainText()
         numLens = 140 - tweetLength(text)
-        if numLens == 140:
-            # you can not send empty tweet
+        if numLens == 140 and (not self.action == "retweet"):
+            # you can not send empty tweet, except retweet
             self.pushButton_send.setEnabled(False)
         elif numLens >= 0:
             # length is okay
