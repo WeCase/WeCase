@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 
 Item  {
     id: container
@@ -190,7 +190,7 @@ Item  {
         onClicked: favoriteButtonClicked();
     }
 
-    Text {
+    TextEdit {
         id: statusText
         color: "#333333"
         text: {
@@ -211,6 +211,8 @@ Item  {
         wrapMode: "Wrap"
         font.family: "Segoe UI"
         font.pointSize: 9
+        selectByMouse: true
+        readOnly: true
 
         onLinkActivated: container.handleLink(link);
     }
