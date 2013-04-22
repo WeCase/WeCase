@@ -45,6 +45,7 @@ Item  {
         if (link.slice(0, 3) == 'tag') {
             hashtagLinkClicked(link.slice(6))
         } else if (link.slice(0, 4) == 'http') {
+            console.log(link)
             Qt.openUrlExternally(link);
         } else if (link.slice(0, 7) == 'mention') {
             mentionLinkClicked(link.slice(10));
@@ -198,10 +199,10 @@ Item  {
         id: statusText
         color: "#333333"
         text: {
-            if (tweetType == 0 || tweetType == 2) {
+            if (tweetType == 0) {
                 return '<b>' + tweetScreenName + ':<\/b><br \/> ' + addTags(tweetText)
             }
-            else if (tweetType == 1) {
+            else if (tweetType == 1 || tweetType == 2) {
                 return '<b>' + tweetScreenName + ':<\/b><br \/> ' + addTags(tweetText) +
                 '<br \/> <b>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + tweetOriginalName + '<\/b>: '
                 + addTags(tweetOriginalText)
@@ -251,6 +252,9 @@ Item  {
         text: {
             if (tweetType != 2) {
                 return "<a href='" + url + "'>" + tweetSinceTime + "</a>"
+            }
+            else if (tweetType == 2) {
+                return "<a href='" + original.url + "'>" + tweetSinceTime + "</a>"
             }
             else {
                 return tweetSinceTime
