@@ -45,7 +45,6 @@ Item  {
         if (link.slice(0, 3) == 'tag') {
             hashtagLinkClicked(link.slice(6))
         } else if (link.slice(0, 4) == 'http') {
-            console.log(link)
             Qt.openUrlExternally(link);
         } else if (link.slice(0, 7) == 'mention') {
             mentionLinkClicked(link.slice(10));
