@@ -27,7 +27,11 @@ Item  {
     signal mentionLinkClicked(string screenname)
 
     width: ListView.view.width;
-    height: {
+    height: getHeight();
+
+    /*Component.onCompleted: height = getHeight()*/
+    
+    function getHeight() {
         var tweetImageHeight = tweetImage.paintedHeight
         if (statusText.paintedHeight < 80) {
             return 90 + tweetImageHeight;
@@ -203,8 +207,8 @@ Item  {
                 + addTags(tweetOriginalText)
             }
         }
-        anchors.topMargin: 4
-        anchors.top: parent.top;
+        y: 4; // anchors.topMargin: 4; anchors.top: parent.top;
+              // Binding loop detected for property "height", do not use it
         anchors.right: retweet.left; anchors.rightMargin: 0
         anchors.left: avatarBackground.right; anchors.leftMargin: 10
         textFormat: Text.RichText

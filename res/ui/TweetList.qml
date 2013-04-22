@@ -30,7 +30,7 @@ Rectangle {
         id: tweetListView
         anchors.fill: parent;
         clip: true
-        cacheBuffer: 5000 // XXX: Free Memory Killer
+        cacheBuffer: 500
         model: mymodel
         delegate: TweetDelegate {
 
