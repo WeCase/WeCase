@@ -8,7 +8,7 @@
 
 
 import re
-from math import ceil, floor
+from math import ceil
 
 
 def tweetLength(text):
@@ -69,8 +69,13 @@ def get_mid(mid):
         offset_1 = 0 if i < 0 else i
         offset_2 = i + 7
         num = mid[offset_1:offset_2]
-
         num = baseN(int(num), 62)
+
+        if not len(num) == 1:
+            # if it isn't the first char of the mid, and it's length less than
+            # four chars, add zero at left for spacing
+            num = num.rjust(4, "0")
+
         url = num + url
 
         i -= 7
