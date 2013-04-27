@@ -371,13 +371,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                                      % reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
-            msg += self.tr("%d unread @ME" % reminds['mention_status']) + "\n"
+            msg += self.tr("%d unread @ME") % reminds['mention_status'] + "\n"
             self.tabTextChanged.emit(1, self.tr("@Me(%d)")
                                      % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] and self.remindComments:
-            msg += self.tr("%d unread comment(s)" % reminds['cmt']) + "\n"
+            msg += self.tr("%d unread comment(s)") % reminds['cmt'] + "\n"
             self.tabTextChanged.emit(2, self.tr("Comments(%d)")
                                      % reminds['cmt'])
             num_msg += 1
