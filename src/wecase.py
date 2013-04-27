@@ -88,8 +88,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     def reject(self):
         QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
-                                   self.tr("Check your account and "
-                                           "password!"))
+                                   self.tr("Check your account, "
+                                           "password and Internet Connection!"))
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
 
@@ -165,9 +165,14 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         postdata = urllib.parse.urlencode(oauth2)
 
         conn = http.client.HTTPSConnection('api.weibo.com')
-        conn.request('POST', '/oauth2/authorize', postdata,
-                     {'Referer': authorize_url,
-                      'Content-Type': 'application/x-www-form-urlencoded'})
+        try: 
+            conn.request('POST', '/oauth2/authorize', postdata,
+                         {'Referer': authorize_url,
+                          'Content-Type': 'application/x-www-form-urlencoded'})
+        except OSError: 
+            self.loginReturn.emit(None)
+            return
+
 
         res = conn.getresponse()
 
