@@ -354,6 +354,21 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <source>Comments</source>
         <translation>评论</translation>
     </message>
+    <message>
+        <location filename="wecase.py" line="365"/>
+        <source>You have:</source>
+        <translation>您有：</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="374"/>
+        <source>%d unread @ME</source>
+        <translation>%d 条未读 @提醒</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="380"/>
+        <source>%d unread comment(s)</source>
+        <translation>%d 条未读评论 </translation>
+    </message>
 </context>
 <context>
     <name>WeSettingsWindow</name>

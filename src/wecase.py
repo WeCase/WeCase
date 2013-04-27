@@ -362,7 +362,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # to display unread count
 
         reminds = self.get_remind(self.uid)
-        msg = "You have:\n"
+        msg = self.tr("You have:") + "\n"
         num_msg = 0
 
         if reminds['status'] != 0:
@@ -371,18 +371,18 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                                      % reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
-            msg += "%d unread @ME\n" % reminds['mention_status']
+            msg += self.tr("%d unread @ME") + "\n" % reminds['mention_status']
             self.tabTextChanged.emit(1, self.tr("@Me(%d)")
                                      % reminds['mention_status'])
             num_msg += 1
 
         if reminds['cmt'] and self.remindComments:
-            msg += "%d unread comment(s)\n" % reminds['cmt']
+            msg += self.tr("%d unread comment(s)") + "\n" % reminds['cmt']
             self.tabTextChanged.emit(2, self.tr("Comments(%d)")
                                      % reminds['cmt'])
             num_msg += 1
 
-        if num_msg != 0:
+        if num_msg:
             self.notify.showMessage(self.tr("WeCase"), msg)
 
     def setTabText(self, index, string):
