@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'ui/MainWindow.ui'
 #
-# Created: Sun Apr 14 21:55:20 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Sat Apr 27 15:00:44 2013
+#      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -41,6 +41,8 @@ class Ui_frm_MainWindow(object):
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.tab)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.homeView = QtDeclarative.QDeclarativeView(self.tab)
+        self.homeView.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.homeView.setFrameShadow(QtGui.QFrame.Sunken)
         self.homeView.setObjectName(_fromUtf8("homeView"))
         self.verticalLayout_2.addWidget(self.homeView)
         self.tabWidget.addTab(self.tab, _fromUtf8(""))
@@ -49,6 +51,8 @@ class Ui_frm_MainWindow(object):
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.tab_2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.mentionsView = QtDeclarative.QDeclarativeView(self.tab_2)
+        self.mentionsView.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.mentionsView.setFrameShadow(QtGui.QFrame.Sunken)
         self.mentionsView.setObjectName(_fromUtf8("mentionsView"))
         self.verticalLayout_3.addWidget(self.mentionsView)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
@@ -57,6 +61,8 @@ class Ui_frm_MainWindow(object):
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.tab_3)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.commentsView = QtDeclarative.QDeclarativeView(self.tab_3)
+        self.commentsView.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.commentsView.setFrameShadow(QtGui.QFrame.Sunken)
         self.commentsView.setObjectName(_fromUtf8("commentsView"))
         self.verticalLayout_4.addWidget(self.commentsView)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
@@ -65,6 +71,8 @@ class Ui_frm_MainWindow(object):
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.tab_4)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
         self.myView = QtDeclarative.QDeclarativeView(self.tab_4)
+        self.myView.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.myView.setFrameShadow(QtGui.QFrame.Sunken)
         self.myView.setObjectName(_fromUtf8("myView"))
         self.verticalLayout_5.addWidget(self.myView)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))

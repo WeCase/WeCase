@@ -94,7 +94,7 @@ Rectangle {
         id: scrollbar
         anchors.right: tweetListView.right
         y: tweetListView.visibleArea.yPosition * tweetListView.height
-        width: 2
+        width: 8
         height: tweetListView.visibleArea.heightRatio * tweetListView.height
         color: "black"
     }

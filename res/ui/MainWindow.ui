@@ -30,7 +30,14 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QDeclarativeView" name="homeView"/>
+         <widget class="QDeclarativeView" name="homeView">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -40,7 +47,14 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QDeclarativeView" name="mentionsView"/>
+         <widget class="QDeclarativeView" name="mentionsView">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -50,7 +64,14 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QDeclarativeView" name="commentsView"/>
+         <widget class="QDeclarativeView" name="commentsView">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -60,7 +81,14 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QDeclarativeView" name="myView"/>
+         <widget class="QDeclarativeView" name="myView">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
