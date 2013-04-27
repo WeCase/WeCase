@@ -7,7 +7,6 @@
 # License: GPL v3 or later.
 
 
-import time
 import threading
 
 
