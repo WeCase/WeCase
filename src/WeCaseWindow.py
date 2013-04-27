@@ -43,6 +43,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.IMG_THUMB = -1
         self.notify = Notify(timeout=self.notify_timeout)
         self.applyConfig()
+        self.download_lock = []
 
     def init_account(self):
         self.get_uid()
@@ -241,16 +242,17 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
            Pictures will stored in cache directory. If we already have a same
            name in cache directory, just open it. If we don't, then download it
            first."""
-        # XXX: This function is NOT thread-safe!
-        # Click a single picture for many time will download a image for many
-        # times, and the picture may be overwrite, we will get a broken image.
 
+        if tweetid in self.download_lock:
+            return
+        self.download_lock.append(tweetid)
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
         localfile = const.cache_path + original_pic.split("/")[-1]
         if not os.path.exists(localfile):
             urllib.request.urlretrieve(original_pic, localfile)
 
+        self.download_lock.remove(tweetid)
         os.popen("xdg-open " + localfile)  # xdg-open is common?
         self.imageLoaded.emit(tweetid)
 
