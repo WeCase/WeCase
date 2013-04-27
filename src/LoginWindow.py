@@ -43,8 +43,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             # closeEvent won't emit when we accept() the window, but will
             # emit when we reject() the window.
             self.saveConfig()
-        wecase_main = WeCaseWindow()
-        wecase_main.init_account(client)
+        wecase_main = WeCaseWindow(client)
         wecase_main.show()
         # Maybe users will logout, so reset the status
         self.pushButton_log.setText(self.tr("GO!"))

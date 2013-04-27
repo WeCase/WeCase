@@ -4,20 +4,25 @@
 # WeCase -- This model implemented Model and Item for tweets
 # Copyright: GPL v3 or later.
 
+import threading
 from PyQt4 import QtCore
 from datetime import datetime
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 
 
-class TweetModel(QtCore.QAbstractListModel):
+class TweetAbstractModel(QtCore.QAbstractListModel):
     def __init__(self, prototype, parent=None):
-        super(TweetModel, self).__init__()
+        super(TweetAbstractModel, self).__init__()
         self.setRoleNames(prototype.roles)
         self._tweets = []
 
     def appendRow(self, item):
         self.insertRow(self.rowCount(), item)
+
+    def appendRows(self, items):
+        for item in items:
+            self.appendRow(TweetItem(item))
 
     def clear(self):
         self._tweets = []
@@ -30,8 +35,127 @@ class TweetModel(QtCore.QAbstractListModel):
         self._tweets.insert(row, item)
         self.endInsertRows()
 
+    def insertRows(self, row, items):
+        for item in items:
+            self.insertRow(row, TweetItem(item))
+
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
+
+
+class TweetCommonModel(TweetAbstractModel):
+    timelineLoaded = QtCore.pyqtSignal()
+
+    def __init__(self, prototype, timeline=None, parent=None):
+        super(TweetCommonModel, self).__init__(prototype, parent)
+        self.timeline = timeline
+        self.lock = False
+
+    def _get_thread(self, page):
+        if self.lock:
+            return
+        self.lock = True
+        timeline = self.timeline.get(page=page).statuses
+        self.appendRows(timeline)
+
+        self.since = int(self._tweets[0].id)
+        self.max = int(self._tweets[-1].id)
+        self.lock = False
+
+    def _get(self, page):
+        threading.Thread(group=None, target=self._get_thread,
+                         args=(page,)).start()
+
+    def _new_thread(self, since):
+        if self.lock:
+            return
+        self.lock = True
+        timeline = self.timeline.get(since_id=since).statuses
+        self.insertRows(0, timeline)
+
+        self.since = int(self._tweets[0].id)
+        self.lock = False
+        self.timelineLoaded.emit()
+
+    def _new(self, since):
+        threading.Thread(group=None, target=self._new_thread,
+                         args=(since,)).start()
+
+    def _old_thread(self, max):
+        if self.lock:
+            return
+        self.lock = True
+        timeline = self.timeline.get(max_id=max).statuses
+
+         # Remove the first same tweet
+        self.appendRows(timeline[1::])
+        self.max = int(self._tweets[-1].id)
+        self.lock = False
+
+    def _old(self, max):
+        threading.Thread(group=None, target=self._old_thread,
+                args=(max,)).start()
+
+
+    # Public
+    def load(self):
+        self._get(1)
+        self.page = 1
+
+    def next(self):
+        self._old(self.max)
+
+    def new(self):
+        self.page = 1
+        self._new(self.since)
+
+
+class TweetCommentModel(TweetCommonModel):
+    def __init__(self, prototype, timeline=None, parent=None):
+        super(TweetCommentModel, self).__init__(prototype, timeline, parent)
+
+    def _get_thread(self, page):
+        if self.lock:
+            return
+        self.lock = True
+        timeline = self.timeline.get(page=page).comments
+        self.appendRows(timeline)
+
+        self.since = int(self._tweets[0].id)
+        self.max = int(self._tweets[-1].id)
+        self.lock = False
+
+    def _get(self, page):
+        threading.Thread(group=None, target=self._get_thread,
+                         args=(page,)).start()
+
+    def _new_thread(self, since):
+        if self.lock:
+            return
+        timeline = self.timeline.get(since_id=since).comments
+        self.insertRows(0, timeline)
+        self.since = int(self._tweets[0].id)
+        self.lock = False
+        self.timelineLoaded.emit()
+
+    def _new(self, since):
+        threading.Thread(group=None, target=self._new_thread,
+                         args=(since,)).start()
+
+    def _old_thread(self, max):
+        if self.lock:
+            return
+        self.lock = True
+        timeline = self.timeline.get(max_id=max).statuses
+
+         # Remove the first same tweet
+        self.appendRows(timeline[1::])
+        self.max = int(self._tweets[-1].id)
+        self.lock = False
+
+    def _old(self, max):
+        threading.Thread(group=None, target=self._old_thread,
+                args=(max,)).start()
 
 
 class UserItem(QtCore.QObject):

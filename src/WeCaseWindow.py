@@ -14,7 +14,7 @@ from configparser import ConfigParser
 import threading
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
-from Tweet import TweetModel, TweetItem
+from Tweet import TweetCommonModel, TweetCommentModel, TweetItem
 from MainWindow_ui import Ui_frm_MainWindow
 from Notify import Notify
 from NewpostWindow import NewpostWindow
@@ -26,16 +26,17 @@ import const
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     client = None
     uid = None
-    timelineLoaded = QtCore.pyqtSignal(int)
     imageLoaded = QtCore.pyqtSignal(str)
     tabTextChanged = QtCore.pyqtSignal(int, str)
 
-    def __init__(self, parent=None):
+    def __init__(self, client, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.tweetViews = [self.homeView, self.mentionsView, self.commentsView,
                            self.myView]
+        self.client = client
         self.setupModels()
+        self.init_account()
         self.setupMyUi()
         self.loadConfig()
         self.IMG_AVATAR = -2
@@ -43,13 +44,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.notify = Notify(timeout=self.notify_timeout)
         self.applyConfig()
 
-    def init_account(self, client):
-        self.client = client
+    def init_account(self):
         self.get_uid()
-        self.get_all_timeline()
-        self.get_my_timeline()
-        self.get_mentions_timeline()
-        self.get_comment_to_me()
 
     def loadConfig(self):
         self.config = ConfigParser()
@@ -84,71 +80,42 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     @QtCore.pyqtSlot()
     def load_more(self):
-        if self.tabWidget.currentIndex() == 0:
-            self.all_timeline_page += 1
-            self.get_all_timeline(self.all_timeline_page)
-        elif self.tabWidget.currentIndex() == 1:
-            self.mentions_page += 1
-            self.get_mentions_timeline(self.mentions_page)
-        elif self.tabWidget.currentIndex() == 2:
-            self.comment_to_me_page += 1
-            self.get_comment_to_me(self.comment_to_me_page)
-        elif self.tabWidget.currentIndex() == 3:
-            self.my_timeline_page += 1
-            self.get_my_timeline(self.my_timeline_page)
+        model = self.get_current_model()
+        model.next()
 
     def setupModels(self):
-        self.all_timeline = TweetModel(TweetItem(), self)
+        self.all_timeline = TweetCommonModel(TweetItem(), 
+                                             self.client.statuses.home_timeline,
+                                             self)
+        self.all_timeline.load()
         self.homeView.rootContext().setContextProperty("mymodel",
                                                        self.all_timeline)
-        self.mentions = TweetModel(TweetItem(), self)
+        self.mentions = TweetCommonModel(TweetItem(),
+                                         self.client.statuses.mentions,
+                                         self)
+        self.mentions.load()
         self.mentionsView.rootContext().setContextProperty("mymodel",
                                                            self.mentions)
-        self.comment_to_me = TweetModel(TweetItem(), self)
+        self.comment_to_me = TweetCommentModel(TweetItem(), 
+                                               self.client.comments.to_me,
+                                               self)
+        self.comment_to_me.load()
         self.commentsView.rootContext().setContextProperty("mymodel",
                                                            self.comment_to_me)
-        self.my_timeline = TweetModel(TweetItem(), self)
+        self.my_timeline = TweetCommonModel(TweetItem(),
+                                            self.client.statuses.user_timeline,
+                                            self)
+        self.my_timeline.load()
         self.myView.rootContext().setContextProperty("mymodel",
                                                      self.my_timeline)
 
-    def get_timeline(self, timeline, model, more=False):
-        for item in timeline:
-            model.appendRow(TweetItem(item))
-        self.timelineLoaded.emit(more)
-
-    def get_all_timeline(self, page=1, reset_remind=False, more=False):
-        all_timelines = self.client.statuses.home_timeline.get(
-            page=page).statuses
-        threading.Thread(group=None, target=self.get_timeline,
-                         args=(all_timelines, self.all_timeline, more)).start()
-        self.all_timeline_page = page
-        if reset_remind:
+    def reset_remind(self):
+        if self.tabWidget.currentIndex() == 0:
             self.tabWidget.setTabText(0, self.tr("Weibo"))
-
-    def get_my_timeline(self, page=1, reset_remind=False, more=False):
-        my_timelines = self.client.statuses.user_timeline.get(
-            page=page).statuses
-        threading.Thread(group=None, target=self.get_timeline,
-                         args=(my_timelines, self.my_timeline, more)).start()
-        self.my_timeline_page = page
-
-    def get_mentions_timeline(self, page=1, reset_remind=False, more=False):
-        mentions_timelines = self.client.statuses.mentions.get(
-            page=page).statuses
-        threading.Thread(group=None, target=self.get_timeline,
-                         args=(
-                             mentions_timelines, self.mentions, more)).start()
-        self.mentions_page = page
-        if reset_remind:
+        elif self.tabWidget.currentIndex() == 1:
             self.client.remind.set_count.post(type="mention_status")
-            self.tabWidget.setTabText(1, self.tr("@ME"))
-
-    def get_comment_to_me(self, page=1, reset_remind=False, more=False):
-        comments_to_me = self.client.comments.to_me.get(page=page).comments
-        threading.Thread(group=None, target=self.get_timeline, args=(
-            comments_to_me, self.comment_to_me, more)).start()
-        self.comment_to_me_page = page
-        if reset_remind:
+            self.tabWidget.setTabText(1, self.tr("@Me"))
+        elif self.tabWidget.currentIndex() == 2:
             self.client.remind.set_count.post(type="cmt")
             self.tabWidget.setTabText(2, self.tr("Comments"))
 
@@ -194,14 +161,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             num_msg += 1
 
         if num_msg:
+            return
             self.notify.showMessage(self.tr("WeCase"), msg)
 
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
 
-    def moveToTop(self, more):
-        if more:
-            self.get_current_tweetView().rootObject().positionViewAtBeginning()
+    def moveToTop(self):
+        self.get_current_tweetView().rootObject().positionViewAtBeginning()
 
     def setLoaded(self, tweetid):
         self.get_current_tweetView().rootObject().imageLoaded(tweetid)
@@ -289,11 +256,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def refresh(self):
         model = self.get_current_model()
-        get_timeline = self.get_current_function()
-
-        model.clear()
-        threading.Thread(group=None, target=get_timeline,
-                         args=(1, True, True)).start()
+        model.timelineLoaded.connect(self.moveToTop)
+        #model.clear()
+        #model.load()
+        model.new()
+        self.reset_remind()
 
     def get_current_tweetView(self):
         tweetViews = {0: self.homeView, 1: self.mentionsView,
