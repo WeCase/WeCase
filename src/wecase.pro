@@ -1,6 +1,9 @@
 SOURCES = wecase.py\
           Smiley.py\
-          Tweet.py
+          Tweet.py\
+          NewpostWindow.py\
+          WeCaseWindow.py\
+          LoginWindow.py
 
 FORMS = ui/AboutWindow.ui\
         ui/LoginWindow.ui\
