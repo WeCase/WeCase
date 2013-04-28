@@ -36,8 +36,10 @@ class TweetAbstractModel(QtCore.QAbstractListModel):
         self.endInsertRows()
 
     def insertRows(self, row, items):
+        self.beginInsertRows(QtCore.QModelIndex(), row, row + len(items) - 1)
         for item in items:
-            self.insertRow(row, TweetItem(item))
+            self._tweets.insert(row, TweetItem(item))
+        self.endInsertRows()
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
@@ -70,7 +72,7 @@ class TweetCommonModel(TweetAbstractModel):
         if self.lock:
             return
         self.lock = True
-        timeline = self.timeline.get(since_id=since).statuses
+        timeline = self.timeline.get(since_id=since).statuses[::-1]
         self.insertRows(0, timeline)
 
         self.since = int(self._tweets[0].id)
@@ -132,7 +134,7 @@ class TweetCommentModel(TweetCommonModel):
     def _new_thread(self, since):
         if self.lock:
             return
-        timeline = self.timeline.get(since_id=since).comments
+        timeline = self.timeline.get(since_id=since).comments[::-1]
         self.insertRows(0, timeline)
         self.since = int(self._tweets[0].id)
         self.lock = False
