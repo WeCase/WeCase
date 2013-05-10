@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 
 Item  {
     id: container
@@ -27,7 +27,11 @@ Item  {
     signal mentionLinkClicked(string screenname)
 
     width: ListView.view.width;
-    height: {
+    height: getHeight();
+
+    /*Component.onCompleted: height = getHeight()*/
+    
+    function getHeight() {
         var tweetImageHeight = tweetImage.paintedHeight
         if (statusText.paintedHeight < 80) {
             return 90 + tweetImageHeight;
@@ -72,6 +76,19 @@ Item  {
         }
     }
 
+    function get_thumbnail_pic() {
+        if (thumbnail_pic) {
+            return thumbnail_pic
+        }
+        if (original && original.thumbnail_pic) {
+            return original.thumbnail_pic
+        }
+        else {
+            return ""
+        }
+    }
+
+
     Rectangle {
         id: avatarBackground
         width: 60
@@ -104,7 +121,7 @@ Item  {
 
     ButtonImage {
         id: comment
-        visible: tweetType != "comment";
+        visible: tweetType != 2;
 
         buttonImageUrl: "img/small_comment_button.png"
         pressedButtonImageUrl: "img/small_comment_button_pressed.png"
@@ -118,7 +135,7 @@ Item  {
 
     ButtonImage {
         id: retweet
-        visible: tweetType != "comment";
+        visible: tweetType != 2;
 
         buttonImageUrl: "img/small_retweet_button.png"
         pressedButtonImageUrl: "img/small_retweet_button_pressed.png"
@@ -134,7 +151,7 @@ Item  {
 
     ButtonImage {
         id: reply
-        visible: tweetType == "comment";
+        visible: tweetType == 2;
 
         buttonImageUrl: "img/small_reply_button.png"
         pressedButtonImageUrl: "img/small_reply_button_pressed.png"
@@ -148,7 +165,7 @@ Item  {
 
     ButtonImage {
         id: favorite
-        visible: tweetType != "comment";
+        visible: tweetType != 2;
 
         buttonImageUrl: {
             if (isFavorite) {
@@ -178,44 +195,47 @@ Item  {
     }
 
     Text {
+    //TextEdit {
         id: statusText
         color: "#333333"
         text: {
-            if (tweetType == "tweet" || tweetType == "comment") {
+            if (tweetType == 0) {
                 return '<b>' + tweetScreenName + ':<\/b><br \/> ' + addTags(tweetText)
             }
-            else if (tweetType == "retweet") {
+            else if (tweetType == 1 || tweetType == 2) {
                 return '<b>' + tweetScreenName + ':<\/b><br \/> ' + addTags(tweetText) +
                 '<br \/> <b>' + '&nbsp;&nbsp;&nbsp;&nbsp;' + tweetOriginalName + '<\/b>: '
                 + addTags(tweetOriginalText)
             }
         }
-        anchors.topMargin: 4
-        anchors.top: parent.top;
+        y: 4; // anchors.topMargin: 4; anchors.top: parent.top;
+              // Binding loop detected for property "height", do not use it
         anchors.right: retweet.left; anchors.rightMargin: 0
         anchors.left: avatarBackground.right; anchors.leftMargin: 10
         textFormat: Text.RichText
         wrapMode: "Wrap"
         font.family: "Segoe UI"
         font.pointSize: 9
+        //selectByMouse: true
+        //readOnly: true
 
         onLinkActivated: container.handleLink(link);
     }
 
     Image {
         id: tweetImage
-        visible: thumbnail_pic
+        visible: get_thumbnail_pic()
         anchors.top: statusText.bottom
-        anchors.topMargin: thumbnail_pic ? 10 : 0;
+        anchors.topMargin: get_thumbnail_pic() ? 10 : 0;
         anchors.horizontalCenter: parent.horizontalCenter
-        source: thumbnail_pic
+        source: get_thumbnail_pic()
 
         MouseArea { 
             anchors.fill: parent
 
             onClicked: {
                 busy.on = true;
-                mainWindow.look_orignal_pic(thumbnail_pic, tweetid);
+                mainWindow.look_orignal_pic(get_thumbnail_pic(), tweetid);
             }
         }
 
@@ -229,12 +249,24 @@ Item  {
 
     Text {
         id: sinceText
-        text: tweetSinceTime
+        text: {
+            if (tweetType != 2) {
+                return "<a href='" + url + "'>" + tweetSinceTime + "</a>"
+            }
+            else if (tweetType == 2) {
+                return "<a href='" + original.url + "'>" + tweetSinceTime + "</a>"
+            }
+            else {
+                return tweetSinceTime
+            }
+        }
         anchors.top: avatarBackground.bottom
         anchors.leftMargin: 11
         anchors.topMargin: 5
         anchors.left: parent.left
         font.family: "Segoe UI"
         font.pointSize: 7
+
+        onLinkActivated: container.handleLink(link);
     }
 }

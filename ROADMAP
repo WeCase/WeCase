@@ -1,1 +1,3 @@
-复制粘贴支持
+词语过滤支持，使用一个代理 Model 实现
+Context Menu 支持
+仅仅在双击后进入 TextEdit 状态，平时处于 Text，提高性能
