@@ -194,7 +194,8 @@ Item  {
         onClicked: favoriteButtonClicked();
     }
 
-    TextEdit {
+    Text {
+    //TextEdit {
         id: statusText
         color: "#333333"
         text: {
@@ -215,8 +216,8 @@ Item  {
         wrapMode: "Wrap"
         font.family: "Segoe UI"
         font.pointSize: 9
-        selectByMouse: true
-        readOnly: true
+        //selectByMouse: true
+        //readOnly: true
 
         onLinkActivated: container.handleLink(link);
     }
