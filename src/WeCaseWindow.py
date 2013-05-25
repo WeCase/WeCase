@@ -34,6 +34,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupUi(self)
         self.tweetViews = [self.homeView, self.mentionsView, self.commentsView,
                            self.myView]
+        self.scrollAreas = [self.scrollArea, self.scrollArea_2, self.scrollArea_3,
+                            self.scrollArea_4]
         self.client = client
         self.setupModels()
         self.init_account()
@@ -72,43 +74,49 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.notify.timeout = self.notify_timeout
 
     def setupMyUi(self):
+        return
         for tweetView in self.tweetViews:
             tweetView.setResizeMode(tweetView.SizeRootObjectToView)
             tweetView.setSource(
-                QtCore.QUrl.fromLocalFile(const.myself_path + 
+                QtCore.QUrl.fromLocalFile(const.myself_path +
                                           "/ui/TweetList.qml"))
             tweetView.rootContext().setContextProperty("mainWindow", self)
 
-    @QtCore.pyqtSlot()
-    def load_more(self):
-        model = self.get_current_model()
-        model.next()
+    def load_more(self, value):
+        if value == self.get_current_scrollArea().verticalScrollBar().maximum():
+            model = self.get_current_model()
+            model.next()
 
     def setupModels(self):
-        self.all_timeline = TweetCommonModel(TweetItem(), 
+        for view in self.tweetViews:
+            view.client = self.client
+
+        for scrollArea in self.scrollAreas:
+            scrollArea.verticalScrollBar().valueChanged.connect(self.load_more)
+
+        self.all_timeline = TweetCommonModel(TweetItem(),
                                              self.client.statuses.home_timeline,
                                              self)
         self.all_timeline.load()
-        self.homeView.rootContext().setContextProperty("mymodel",
-                                                       self.all_timeline)
+        self.homeView.setModel(self.all_timeline)
+
         self.mentions = TweetCommonModel(TweetItem(),
                                          self.client.statuses.mentions,
                                          self)
         self.mentions.load()
-        self.mentionsView.rootContext().setContextProperty("mymodel",
-                                                           self.mentions)
-        self.comment_to_me = TweetCommentModel(TweetItem(), 
+        self.mentionsView.setModel(self.mentions)
+
+        self.comment_to_me = TweetCommentModel(TweetItem(),
                                                self.client.comments.to_me,
                                                self)
         self.comment_to_me.load()
-        self.commentsView.rootContext().setContextProperty("mymodel",
-                                                           self.comment_to_me)
+        self.commentsView.setModel(self.comment_to_me)
+
         self.my_timeline = TweetCommonModel(TweetItem(),
                                             self.client.statuses.user_timeline,
                                             self)
         self.my_timeline.load()
-        self.myView.rootContext().setContextProperty("mymodel",
-                                                     self.my_timeline)
+        self.myView.setModel(self.my_timeline)
 
     def reset_remind(self):
         if self.tabWidget.currentIndex() == 0:
@@ -169,10 +177,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.tabWidget.setTabText(index, string)
 
     def moveToTop(self):
-        self.get_current_tweetView().rootObject().positionViewAtBeginning()
+        self.get_current_scrollArea().verticalScrollBar().setSliderPosition(0)
 
     def setLoaded(self, tweetid):
-        self.get_current_tweetView().rootObject().imageLoaded(tweetid)
+        pass
+        #self.get_current_tweetView().rootObject().imageLoaded(tweetid)
 
     def showSettings(self):
         wecase_settings = WeSettingsWindow()
@@ -267,6 +276,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def get_current_tweetView(self):
         tweetViews = {0: self.homeView, 1: self.mentionsView,
                       2: self.commentsView, 3: self.myView}
+        return tweetViews[self.tabWidget.currentIndex()]
+
+    def get_current_scrollArea(self):
+        tweetViews = {0: self.scrollArea, 1: self.scrollArea_2,
+                      2: self.scrollArea_3, 3: self.scrollArea_4}
         return tweetViews[self.tabWidget.currentIndex()]
 
     def get_current_model(self):

@@ -12,6 +12,8 @@ from WTimeParser import WTimeParser as time_parser
 
 
 class TweetAbstractModel(QtCore.QAbstractListModel):
+    rowInserted = QtCore.pyqtSignal(int)
+
     def __init__(self, prototype, parent=None):
         super(TweetAbstractModel, self).__init__()
         self.setRoleNames(prototype.roles)
@@ -30,15 +32,20 @@ class TweetAbstractModel(QtCore.QAbstractListModel):
     def data(self, index, role):
         return self._tweets[index.row()].data(role)
 
+    def get_item(self, row):
+        return self._tweets[row]
+
     def insertRow(self, row, item):
         self.beginInsertRows(QtCore.QModelIndex(), row, row)
         self._tweets.insert(row, item)
+        self.rowInserted.emit(row)
         self.endInsertRows()
 
     def insertRows(self, row, items):
         self.beginInsertRows(QtCore.QModelIndex(), row, row + len(items) - 1)
         for item in items:
             self._tweets.insert(row, TweetItem(item))
+            self.rowInserted.emit(row)
         self.endInsertRows()
 
     def rowCount(self, parent=QtCore.QModelIndex()):
@@ -192,7 +199,9 @@ class TweetItem(QtCore.QObject):
         QtCore.Qt.UserRole + 7: "text",
         QtCore.Qt.UserRole + 8: "original",
         QtCore.Qt.UserRole + 9: "thumbnail_pic",
-        QtCore.Qt.UserRole + 10: "original_pic"
+        QtCore.Qt.UserRole + 10: "original_pic",
+        #QtCore.Qt.UserRole + 11: "repost_count",
+        #QtCore.Qt.UserRole + 12: "comment_count"
     }
 
     def __init__(self, item={}, parent=None):
@@ -213,6 +222,8 @@ class TweetItem(QtCore.QObject):
             "original": self.original,
             "thumbnail_pic": self.thumbnail_pic,
             "original_pic": self.original_pic,
+            #"repost_count": self.repost_count,
+            #"comment_count": self.comment_count
         }
 
     def data(self, key):
@@ -283,6 +294,14 @@ class TweetItem(QtCore.QObject):
     def original_pic(self):
         return self._data.get('original_pic')
 
+    @QtCore.pyqtProperty(int, constant=True)
+    def retweets_count(self):
+        return str(self._data.get('reposts_count', 0))
+
+    @QtCore.pyqtProperty(int, constant=True)
+    def comments_count(self):
+        return str(self._data.get('comments_count', 0))
+
     def _sinceTimeString(self, createTime):
         if not createTime:
             return
@@ -297,12 +316,12 @@ class TweetItem(QtCore.QObject):
 
         # datetime do not support nagetive numbers
         if now_utc < create_utc:
-            return self.tr("Time travel!")
+            return self.tr("Time\ntravel!")
         if passedSeconds < 60:
-            return self.tr("%.0f seconds ago") % (passedSeconds)
+            return self.tr("%.0fs ago") % (passedSeconds)
         if passedSeconds < 3600:
-            return self.tr("%.0f minutes ago") % (passedSeconds / 60)
+            return self.tr("%.0fm ago") % (passedSeconds / 60)
         if passedSeconds < 86400:
-            return self.tr("%.0f hours ago") % (passedSeconds / 3600)
+            return self.tr("%.0fh ago") % (passedSeconds / 3600)
 
-        return self.tr("%.0f days ago") % (passedSeconds / 86400)
+        return self.tr("%.0fd ago") % (passedSeconds / 86400)
