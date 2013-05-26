@@ -1,6 +1,7 @@
 import os
 import re
 import urllib.request
+from time import sleep
 from threading import Thread
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
@@ -8,6 +9,7 @@ from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
 from NewpostWindow import NewpostWindow
+from WTimer import WTimer
 from const import cache_path
 
 
@@ -29,7 +31,6 @@ class TweetListWidget(QtGui.QWidget):
 
     def setModel(self, model):
         self.model = model
-        print("Set %s as the model" % (model))
         self.model.rowsInserted.connect(self._rowsInserted)
 
     def _rowsInserted(self, parent, start, end):
@@ -45,11 +46,11 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def __init__(self, client=None, tweet=None, parent=None):
         super(SingleTweetWidget, self).__init__(parent)
+        self.commonSignal.connect(self.commonProcessor)
         self.tweet = tweet
         self.client = client
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
-        self.commonSignal.connect(self.commonProcessor)
         self.download_lock = False
 
     def setupUi(self):
@@ -159,11 +160,17 @@ class SingleTweetWidget(QtGui.QFrame):
         """)
 
         self.username.setText(" " + self.tweet.author.name)
+        self.tweetText.setText(self._create_html_url(self.tweet.text))
+        self._update_time()
+        self.timer = QtCore.QTimer(self)
+        self.timer.timeout.connect(self._update_time)
+        self.timer.start(2000)
+    
+    def _update_time(self):
         if self.tweet.type != TweetItem.COMMENT:
             self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
         else:
             self.time.setText(self.tweet.time)
-        self.tweetText.setText(self._create_html_url(self.tweet.text))
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
