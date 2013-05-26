@@ -41,7 +41,7 @@ class TweetListWidget(QtGui.QWidget):
 class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
-    commonSignal = QtCore.pyqtSignal(object, tuple)
+    commonSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, client=None, tweet=None, parent=None):
         super(SingleTweetWidget, self).__init__(parent)
@@ -276,14 +276,14 @@ class SingleTweetWidget(QtGui.QFrame):
         Thread(group=None, target=self.fetch_open_original_pic,
                          args=(thumbnail_pic,)).start()
 
-    def commonProcessor(self, object, *args):
-        object(*args)
+    def commonProcessor(self, object):
+        object()
 
     @async
     def _favorite(self):
         try:
             self.client.favorites.create.post(id=int(self.tweet.id))
-            self.commonSignal.emit(self.favorite.setIcon, ("./icon/favorites.png",))
+            self.commonSignal.emit(lambda: self.favorite.setIcon("./icon/favorites.png"))
         except:
             pass
 
