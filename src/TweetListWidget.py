@@ -11,6 +11,12 @@ from NewpostWindow import NewpostWindow
 from const import cache_path
 
 
+def async(func):
+    def exec_thread(*args):
+        return Thread(group=None, target=func, args=args).start()
+    return exec_thread
+
+
 class TweetListWidget(QtGui.QWidget):
 
     def __init__(self, client=None, parent=None):
@@ -35,6 +41,7 @@ class TweetListWidget(QtGui.QWidget):
 class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
+    commonSignal = QtCore.pyqtSignal(object, tuple)
 
     def __init__(self, client=None, tweet=None, parent=None):
         super(SingleTweetWidget, self).__init__(parent)
@@ -42,6 +49,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.client = client
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
+        self.commonSignal.connect(self.commonProcessor)
         self.download_lock = False
 
     def setupUi(self):
@@ -268,10 +276,14 @@ class SingleTweetWidget(QtGui.QFrame):
         Thread(group=None, target=self.fetch_open_original_pic,
                          args=(thumbnail_pic,)).start()
 
+    def commonProcessor(self, object, *args):
+        object(*args)
+
+    @async
     def _favorite(self):
         try:
             self.client.favorites.create.post(id=int(self.tweet.id))
-            self.favorite.setIcon("./icon/favorites.png")
+            self.commonSignal.emit(self.favorite.setIcon, ("./icon/favorites.png",))
         except:
             pass
 
