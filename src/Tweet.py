@@ -316,7 +316,7 @@ class TweetItem(QtCore.QObject):
 
         # datetime do not support nagetive numbers
         if now_utc < create_utc:
-            return self.tr("Time\ntravel!")
+            return self.tr("Future!")
         if passedSeconds < 60:
             return self.tr("%.0fs ago") % (passedSeconds)
         if passedSeconds < 3600:

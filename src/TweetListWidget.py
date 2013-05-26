@@ -69,6 +69,7 @@ class SingleTweetWidget(QtGui.QFrame):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.time.sizePolicy().hasHeightForWidth())
         self.time.setSizePolicy(sizePolicy)
+        self.time.setOpenExternalLinks(True)
         self.verticalLayout_2.addWidget(self.time)
         self.verticalLayout_2.setAlignment(QtCore.Qt.AlignTop)
 
@@ -149,7 +150,10 @@ class SingleTweetWidget(QtGui.QFrame):
         """)
 
         self.username.setText(" " + self.tweet.author.name)
-        self.time.setText(self.tweet.time)
+        if self.tweet.type != TweetItem.COMMENT:
+            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
+        else:
+            self.time.setText(self.tweet.time)
         self.tweetText.setText(self.tweet.text)
 
     def _createOriginalLabel(self):
