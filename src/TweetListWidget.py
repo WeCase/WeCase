@@ -1,4 +1,5 @@
 import os
+import re
 import urllib.request
 from threading import Thread
 from PyQt4 import QtCore, QtGui
@@ -154,7 +155,7 @@ class SingleTweetWidget(QtGui.QFrame):
             self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
         else:
             self.time.setText(self.tweet.time)
-        self.tweetText.setText(self.tweet.text)
+        self.tweetText.setText(self._create_html_url(self.tweet.text))
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
@@ -173,10 +174,10 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel.setAlignment(QtCore.Qt.AlignCenter)
         originalItem = self.tweet.original
         try:
-            textLabel.setText("@%s: " % originalItem.author.name + originalItem.text)
+            textLabel.setText("@%s: " % originalItem.author.name + self._create_html_url(originalItem.text))
         except:
             #originalItem.text == This tweet deleted by author
-            textLabel.setText(originalItem.text)
+            textLabel.setText(self._create_html_url(originalItem.text))
         #textLabel.setWordWrap(True)
         #textLabel.setIndent(0)
         layout.addWidget(textLabel)
@@ -313,3 +314,8 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _original_comment(self):
         self._comment(self.tweet.original)
+
+    def _create_html_url(self, text):
+        url = re.compile(r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))""")
+        new_text = url.sub( r"""<a href='\1'>\1</a>""", text)
+        return new_text
