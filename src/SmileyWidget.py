@@ -12,7 +12,6 @@ class WSmileyListWidget(QtGui.QWidget):
 
     def __init__(self, parent=None):
         super(WSmileyListWidget, self).__init__(parent)
-        self.show()
 
     def setModel(self, model):
         self._model = model
@@ -52,8 +51,3 @@ class WSmileyWidget(QtGui.QWidget):
 
     def _smileyClicked(self):
         self.smileyClicked.emit(self._smiley.name)
-
-if __name__ == "__main__":
-    App = QtGui.QApplication([])
-    main = WSmileyListWidget()
-    retcode = App.exec_()
