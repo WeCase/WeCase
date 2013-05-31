@@ -161,16 +161,28 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.username.setText(" " + self.tweet.author.name)
         self.tweetText.setText(self._create_html_url(self.tweet.text))
-        self._update_time()
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._update_time)
-        self.timer.start(2000)
+        self._update_time()
+
+    def _setup_timer(self):
+        self.timer.stop()
+        time_level = self.tweet.time.split(' ')[0][-1]
+        if time_level == "s":
+            self.timer.start(1 * 1000)
+        elif time_level == "m":
+            self.timer.start(60 * 1000)
+        elif time_level == "h":
+            self.timer.start(60 * 60 * 1000)
+        elif time_level == "d":
+            self.timer.start(60 * 60 * 24 * 1000)
     
     def _update_time(self):
         if self.tweet.type != TweetItem.COMMENT:
             self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
         else:
             self.time.setText(self.tweet.time)
+        self._setup_timer()
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
