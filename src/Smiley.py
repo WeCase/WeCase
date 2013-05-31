@@ -51,6 +51,9 @@ class SmileyModel(QtCore.QAbstractListModel):
         else:
             return None
 
+    def items(self):
+        return self.smileies
+
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.smileies)
 
@@ -78,5 +81,5 @@ class SmileyModel(QtCore.QAbstractListModel):
             if is_smiley(filename):
                 smiley_name = os.path.splitext(filepath)[0]
                 file_content = open(smiley_name).read().replace('\n', '')
-                smiley_model.appendRow(smiley_item(file_content, 
+                smiley_model.appendRow(smiley_item(file_content,
                     filepath.replace(myself_path + "/ui", "")))

@@ -16,24 +16,16 @@ class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
-        self.setupMyUi()
         self.setupModels()
         self.smileyName = ""
-
-    def setupMyUi(self):
-        self.smileyView.setResizeMode(self.smileyView.SizeRootObjectToView)
 
     def setupModels(self):
         self.smileyModel = SmileyModel(self)
         self.smileyModel.init_smileies(const.myself_path + "./ui/img/smiley",
                                        self.smileyModel, SmileyItem)
-        self.smileyView.rootContext().setContextProperty("SmileyModel",
-                                                         self.smileyModel)
-        self.smileyView.rootContext().setContextProperty("parentWindow", self)
-        self.smileyView.setSource(QtCore.QUrl.fromLocalFile(
-                                  const.myself_path + "/ui/SmileyView.qml"))
+        self.smileyView.setModel(self.smileyModel)
+        self.smileyView.smileyClicked.connect(self.returnSmileyName)
 
-    @QtCore.pyqtSlot(str)
     def returnSmileyName(self, smileyName):
-        self.smileyName = smileyName
+        self.smileyName = "[%s]" % smileyName
         self.done(True)
