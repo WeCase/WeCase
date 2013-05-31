@@ -7,6 +7,16 @@
         <source>WeCase</source>
         <translation type="obsolete">微盒</translation>
     </message>
+    <message>
+        <location filename="wecase.py" line="56"/>
+        <source>Missing Modules!</source>
+        <translation>缺少模块！</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="56"/>
+        <source>Please install the requested module.</source>
+        <translation>请安装所需的模块。</translation>
+    </message>
 </context>
 <context>
     <name>About_Dialog</name>
@@ -87,7 +97,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>LoginWindow</name>
     <message>
-        <location filename="LoginWindow.py" line="54"/>
+        <location filename="LoginWindow.py" line="56"/>
         <source>Authorize Failed!</source>
         <translation>认证失败！</translation>
     </message>
@@ -97,17 +107,17 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">检查您的账号和密码！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="58"/>
+        <location filename="LoginWindow.py" line="60"/>
         <source>GO!</source>
         <translation>走起！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="106"/>
+        <location filename="LoginWindow.py" line="108"/>
         <source>Login, waiting...</source>
         <translation>登录中，请稍候……</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="54"/>
+        <location filename="LoginWindow.py" line="56"/>
         <source>Check your account, password and Internet Connection!</source>
         <translation>检查您的账号，密码和网络连接！</translation>
     </message>

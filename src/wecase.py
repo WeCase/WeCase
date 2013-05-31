@@ -25,6 +25,14 @@ def mkconfig():
         pass
 
 
+def test_import():
+    try:
+        import notify2
+        return True
+    except ImportError as e:
+        return e
+
+
 if __name__ == "__main__":
     mkconfig()
 
@@ -43,10 +51,14 @@ if __name__ == "__main__":
                        const.myself_path + "locale")
     app.installTranslator(my_translator)
 
-    wecase_login = LoginWindow()
-
-    exit_status = app.exec_()
-
-    # Cleanup code here.
-
-    sys.exit(exit_status)
+    if test_import() != True:
+        error = test_import()
+        QtGui.QMessageBox.critical(None,
+                                   QtCore.QObject().tr("Missing Modules!"),
+                                   str(error) + "\n" + \
+                                   QtCore.QObject().tr("Please install the requested module."))
+    else:
+        wecase_login = LoginWindow()
+        exit_status = app.exec_()
+        # Cleanup code here.
+        sys.exit(exit_status)
