@@ -44,18 +44,18 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.verticalLayout.insertWidget(0, self.tweetWidget)
             self.verticalLayout.setStretch(0, 1)
 
-            self.commentsModel = TweetCommentModel(self.client.comments.show,
-                                                   self)
-            self.commentsModel.load(self.tweet.id)
+            if int(self.tweet.comments_count):
+                self.commentsModel = TweetCommentModel(self.client.comments.show, self)
+                self.commentsModel.load(self.tweet.id)
 
-            self.scrollArea = QtGui.QScrollArea()
-            self.scrollArea.setWidgetResizable(True)
-            self.commentsWidget = TweetListWidget(self.client, ["image", "original"])
-            self.commentsWidget.setModel(self.commentsModel)
-            self.scrollArea.setWidget(self.commentsWidget)
-            self.scrollArea.setMinimumSize(20, 200)
-            self.verticalLayout.insertWidget(1, self.scrollArea)
-            self.verticalLayout.setStretch(1, 10)
+                self.scrollArea = QtGui.QScrollArea()
+                self.scrollArea.setWidgetResizable(True)
+                self.commentsWidget = TweetListWidget(self.client, ["image", "original"])
+                self.commentsWidget.setModel(self.commentsModel)
+                self.scrollArea.setWidget(self.commentsWidget)
+                self.scrollArea.setMinimumSize(20, 200)
+                self.verticalLayout.insertWidget(1, self.scrollArea)
+                self.verticalLayout.setStretch(1, 10)
 
 
         self.checkChars()
