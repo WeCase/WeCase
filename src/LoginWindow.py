@@ -131,11 +131,11 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         oauth2['passwd'] = password
         postdata = urllib.parse.urlencode(oauth2)
 
-        conn = http.client.HTTPSConnection('api.weibo.com')
-        sock = socket.create_connection((conn.host, conn.port), conn.timeout, conn.source_address)
-        conn.sock = ssl.wrap_socket(sock, conn.key_file, conn.cert_file, ssl_version=ssl.PROTOCOL_TLSv1)
-
         try:
+            conn = http.client.HTTPSConnection('api.weibo.com')
+            sock = socket.create_connection((conn.host, conn.port), conn.timeout, conn.source_address)
+            conn.sock = ssl.wrap_socket(sock, conn.key_file, conn.cert_file, ssl_version=ssl.PROTOCOL_TLSv1)
+
             conn.request('POST', '/oauth2/authorize', postdata,
                          {'Referer': authorize_url,
                           'Content-Type': 'application/x-www-form-urlencoded'})
