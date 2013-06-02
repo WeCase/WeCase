@@ -2,27 +2,23 @@ import os
 import re
 import urllib.request
 from time import sleep
-from threading import Thread
+from WeHack import async
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
-from NewpostWindow import NewpostWindow
 from WTimer import WTimer
 from const import cache_path
 
 
-def async(func):
-    def exec_thread(*args):
-        return Thread(group=None, target=func, args=args).start()
-    return exec_thread
-
-
 class TweetListWidget(QtGui.QWidget):
+
+    clicked = QtCore.pyqtSignal()
 
     def __init__(self, client=None, parent=None):
         super(TweetListWidget, self).__init__(parent)
+        self.client = client
         self.setupUi()
 
     def setupUi(self):
@@ -36,13 +32,16 @@ class TweetListWidget(QtGui.QWidget):
     def _rowsInserted(self, parent, start, end):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
-            self.layout.insertWidget(index, SingleTweetWidget(self.client, item))
+            widget = SingleTweetWidget(self.client, item)
+            widget.clicked.connect(self.clicked)
+            self.layout.insertWidget(index, widget)
 
 
 class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
     commonSignal = QtCore.pyqtSignal(object)
+    clicked = QtCore.pyqtSignal()
 
     def __init__(self, client=None, tweet=None, parent=None):
         super(SingleTweetWidget, self).__init__(parent)
@@ -58,7 +57,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout_2 = QtGui.QVBoxLayout()
-        self.verticalLayout_2.setSizeConstraint(QtGui.QLayout.SetFixedSize)
+        #self.verticalLayout_2.setSizeConstraint(QtGui.QLayout.SetFixedSize)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
 
         self.avatar = WAsyncLabel(self)
@@ -176,7 +175,7 @@ class SingleTweetWidget(QtGui.QFrame):
             self.timer.start(60 * 60 * 1000)
         elif time_level == "d":
             self.timer.start(60 * 60 * 24 * 1000)
-    
+
     def _update_time(self):
         if self.tweet.type != TweetItem.COMMENT:
             self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
@@ -190,15 +189,16 @@ class SingleTweetWidget(QtGui.QFrame):
         widgetLayout = QtGui.QVBoxLayout(widget)
         widgetLayout.setSpacing(0)
         widgetLayout.setMargin(0)
-        widgetLayout.setAlignment(QtCore.Qt.AlignCenter)
+        widgetLayout.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
 
         frame = QtGui.QFrame()
         frame.setObjectName("originalFrame")
         widgetLayout.addWidget(frame)
         layout = QtGui.QVBoxLayout(frame)
         layout.setObjectName("originalLayout")
+        layout.setAlignment(QtCore.Qt.AlignTop)
         textLabel = WTweetLabel(frame)
-        textLabel.setAlignment(QtCore.Qt.AlignCenter)
+        textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         originalItem = self.tweet.original
         try:
             textLabel.setText("@%s: " % originalItem.author.name + self._create_html_url(originalItem.text))
@@ -270,6 +270,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
         return widget
 
+    @async
     def fetch_open_original_pic(self, thumbnail_pic):
         """Fetch and open original pic from thumbnail pic url.
            Pictures will stored in cache directory. If we already have a same
@@ -290,10 +291,11 @@ class SingleTweetWidget(QtGui.QFrame):
         os.popen("xdg-open " + localfile)  # xdg-open is common?
         self.imageLoaded.emit()
 
+    def mouseReleaseEvent(self, e):
+        self.clicked.emit()
+
     def _showFullImage(self):
         thumbnail_pic = self.imageLabel.url
-        Thread(group=None, target=self.fetch_open_original_pic,
-                         args=(thumbnail_pic,)).start()
 
     def commonProcessor(self, object):
         object()
@@ -307,37 +309,32 @@ class SingleTweetWidget(QtGui.QFrame):
             pass
 
     def _retweet(self, tweet=None):
+        from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
         if tweet.type == TweetItem.RETWEET:
             text = "//@" + tweet.author.name + ":" + tweet.text
         else:
             text = ""
-        wecase_new = NewpostWindow(action="retweet",
-                                   id=int(tweet.id),
-                                   text=text)
-        wecase_new.client = self.client
+        wecase_new = NewpostWindow(self.client, "retweet", tweet)
         wecase_new.exec_()
 
     def _comment(self, tweet=None):
+        from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
         if tweet.type == TweetItem.COMMENT:
             self._reply(tweet)
             return
 
-        wecase_new = NewpostWindow(action="comment",
-                                   id=int(tweet.id))
-        wecase_new.client = self.client
+        wecase_new = NewpostWindow(self.client, "comment", tweet)
         wecase_new.exec_()
 
     def _reply(self, tweet=None):
+        from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
-        wecase_new = NewpostWindow(action="reply",
-                                   id=int(tweet.original.id),
-                                   cid=int(tweet.id))
-        wecase_new.client = self.client
+        wecase_new = NewpostWindow(self.client, "reply", tweet)
         wecase_new.exec_()
 
     def _original_retweet(self):

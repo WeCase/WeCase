@@ -9,14 +9,14 @@ from PyQt4 import QtCore
 from datetime import datetime
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
+from WeHack import async
 
 
 class TweetAbstractModel(QtCore.QAbstractListModel):
     rowInserted = QtCore.pyqtSignal(int)
 
-    def __init__(self, prototype, parent=None):
+    def __init__(self, parent=None):
         super(TweetAbstractModel, self).__init__()
-        self.setRoleNames(prototype.roles)
         self._tweets = []
 
     def appendRow(self, item):
@@ -55,12 +55,13 @@ class TweetAbstractModel(QtCore.QAbstractListModel):
 class TweetCommonModel(TweetAbstractModel):
     timelineLoaded = QtCore.pyqtSignal()
 
-    def __init__(self, prototype, timeline=None, parent=None):
-        super(TweetCommonModel, self).__init__(prototype, parent)
+    def __init__(self, timeline=None, parent=None):
+        super(TweetCommonModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
 
-    def _get_thread(self, page):
+    @async
+    def _get(self, page, id):
         if self.lock:
             return
         self.lock = True
@@ -71,11 +72,8 @@ class TweetCommonModel(TweetAbstractModel):
         self.max = int(self._tweets[-1].id)
         self.lock = False
 
-    def _get(self, page):
-        threading.Thread(group=None, target=self._get_thread,
-                         args=(page,)).start()
-
-    def _new_thread(self, since):
+    @async
+    def _new(self, since):
         if self.lock:
             return
         self.lock = True
@@ -86,11 +84,8 @@ class TweetCommonModel(TweetAbstractModel):
         self.lock = False
         self.timelineLoaded.emit()
 
-    def _new(self, since):
-        threading.Thread(group=None, target=self._new_thread,
-                         args=(since,)).start()
-
-    def _old_thread(self, max):
+    @async
+    def _old(self, max):
         if self.lock:
             return
         self.lock = True
@@ -101,14 +96,9 @@ class TweetCommonModel(TweetAbstractModel):
         self.max = int(self._tweets[-1].id)
         self.lock = False
 
-    def _old(self, max):
-        threading.Thread(group=None, target=self._old_thread,
-                args=(max,)).start()
-
-
     # Public
-    def load(self):
-        self._get(1)
+    def load(self, id=None):
+        self._get(1, id)
         self.page = 1
 
     def next(self):
@@ -120,25 +110,27 @@ class TweetCommonModel(TweetAbstractModel):
 
 
 class TweetCommentModel(TweetCommonModel):
-    def __init__(self, prototype, timeline=None, parent=None):
-        super(TweetCommentModel, self).__init__(prototype, timeline, parent)
+    def __init__(self, timeline=None, parent=None):
+        super(TweetCommentModel, self).__init__(timeline, parent)
 
-    def _get_thread(self, page):
+    @async
+    def _get(self, page, id=None):
         if self.lock:
             return
         self.lock = True
-        timeline = self.timeline.get(page=page).comments
+        if id:
+            timeline = self.timeline.get(id=id).comments
+        else:
+            timeline = self.timeline.get(page=page).comments
         self.appendRows(timeline)
 
-        self.since = int(self._tweets[0].id)
-        self.max = int(self._tweets[-1].id)
+        if timeline:
+            self.since = int(self._tweets[0].id)
+            self.max = int(self._tweets[-1].id)
         self.lock = False
 
-    def _get(self, page):
-        threading.Thread(group=None, target=self._get_thread,
-                         args=(page,)).start()
-
-    def _new_thread(self, since):
+    @async
+    def _new(self, since):
         if self.lock:
             return
         timeline = self.timeline.get(since_id=since).comments[::-1]
@@ -147,11 +139,8 @@ class TweetCommentModel(TweetCommonModel):
         self.lock = False
         self.timelineLoaded.emit()
 
-    def _new(self, since):
-        threading.Thread(group=None, target=self._new_thread,
-                         args=(since,)).start()
-
-    def _old_thread(self, max):
+    @async
+    def _old(self, max):
         if self.lock:
             return
         self.lock = True
@@ -161,10 +150,6 @@ class TweetCommentModel(TweetCommonModel):
         self.appendRows(timeline[1::])
         self.max = int(self._tweets[-1].id)
         self.lock = False
-
-    def _old(self, max):
-        threading.Thread(group=None, target=self._old_thread,
-                args=(max,)).start()
 
 
 class UserItem(QtCore.QObject):
@@ -189,20 +174,6 @@ class TweetItem(QtCore.QObject):
     TWEET = 0
     RETWEET = 1
     COMMENT = 2
-    roles = {
-        QtCore.Qt.UserRole + 1: "type",
-        QtCore.Qt.UserRole + 2: "id",
-        QtCore.Qt.UserRole + 3: "mid",
-        QtCore.Qt.UserRole + 4: "url",
-        QtCore.Qt.UserRole + 5: "author",
-        QtCore.Qt.UserRole + 6: "time",
-        QtCore.Qt.UserRole + 7: "text",
-        QtCore.Qt.UserRole + 8: "original",
-        QtCore.Qt.UserRole + 9: "thumbnail_pic",
-        QtCore.Qt.UserRole + 10: "original_pic",
-        #QtCore.Qt.UserRole + 11: "repost_count",
-        #QtCore.Qt.UserRole + 12: "comment_count"
-    }
 
     def __init__(self, item={}, parent=None):
         super(TweetItem, self).__init__()
@@ -210,24 +181,6 @@ class TweetItem(QtCore.QObject):
 
         if not item:
             return
-
-        self._roleData = {
-            "type": self.type,
-            "id": self.id,
-            "mid": self.mid,
-            "url": self.url,
-            "author": self.author,
-            "time": self.time,
-            "text": self.text,
-            "original": self.original,
-            "thumbnail_pic": self.thumbnail_pic,
-            "original_pic": self.original_pic,
-            #"repost_count": self.repost_count,
-            #"comment_count": self.comment_count
-        }
-
-    def data(self, key):
-        return self._roleData[self.roles[key]]
 
     @QtCore.pyqtProperty(int, constant=True)
     def type(self):

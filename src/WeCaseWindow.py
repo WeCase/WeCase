@@ -75,12 +75,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def setupMyUi(self):
         return
-        for tweetView in self.tweetViews:
-            tweetView.setResizeMode(tweetView.SizeRootObjectToView)
-            tweetView.setSource(
-                QtCore.QUrl.fromLocalFile(const.myself_path +
-                                          "/ui/TweetList.qml"))
-            tweetView.rootContext().setContextProperty("mainWindow", self)
 
     def load_more(self, value):
         if value == self.get_current_scrollArea().verticalScrollBar().maximum():
@@ -94,29 +88,33 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         for scrollArea in self.scrollAreas:
             scrollArea.verticalScrollBar().valueChanged.connect(self.load_more)
 
-        self.all_timeline = TweetCommonModel(TweetItem(),
+        self.all_timeline = TweetCommonModel(
                                              self.client.statuses.home_timeline,
                                              self)
         self.all_timeline.load()
         self.homeView.setModel(self.all_timeline)
+        self.homeView.clicked.connect(self.test)
 
-        self.mentions = TweetCommonModel(TweetItem(),
+        self.mentions = TweetCommonModel(
                                          self.client.statuses.mentions,
                                          self)
         self.mentions.load()
         self.mentionsView.setModel(self.mentions)
 
-        self.comment_to_me = TweetCommentModel(TweetItem(),
+        self.comment_to_me = TweetCommentModel(
                                                self.client.comments.to_me,
                                                self)
         self.comment_to_me.load()
         self.commentsView.setModel(self.comment_to_me)
 
-        self.my_timeline = TweetCommonModel(TweetItem(),
+        self.my_timeline = TweetCommonModel(
                                             self.client.statuses.user_timeline,
                                             self)
         self.my_timeline.load()
         self.myView.setModel(self.my_timeline)
+
+    def test(self):
+        print("Test")
 
     def reset_remind(self):
         if self.tabWidget.currentIndex() == 0:
@@ -202,68 +200,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_login.exec_()
 
     def postTweet(self):
-        wecase_new = NewpostWindow()
-        wecase_new.client = self.client
+        wecase_new = NewpostWindow(self.client)
         wecase_new.exec_()
-
-    @QtCore.pyqtSlot(str)
-    def comment(self, idstr):
-        wecase_new = NewpostWindow(action="comment", id=int(idstr))
-        wecase_new.client = self.client
-        wecase_new.exec_()
-
-    @QtCore.pyqtSlot(str, str)
-    def repost(self, idstr, text):
-        wecase_new = NewpostWindow(action="retweet", id=int(idstr), text=text)
-        wecase_new.client = self.client
-        wecase_new.exec_()
-
-    @QtCore.pyqtSlot(str, result=int)
-    def favorite(self, idstr):
-        try:
-            self.client.favorites.create.post(id=int(idstr))
-            return True
-        except:
-            return False
-
-    @QtCore.pyqtSlot(str, result=bool)
-    def un_favorite(self, idstr):
-        try:
-            self.client.favorites.destroy.post(id=int(idstr))
-            return True
-        except:
-            return False
-
-    @QtCore.pyqtSlot(str, str)
-    def reply(self, idstr, cidstr):
-        wecase_new = NewpostWindow(action="reply", id=int(idstr),
-                                   cid=int(cidstr))
-        wecase_new.client = self.client
-        wecase_new.exec_()
-
-    @QtCore.pyqtSlot(str, str)
-    def look_orignal_pic(self, thumbnail_pic, tweetid):
-        threading.Thread(group=None, target=self.fetch_open_original_pic,
-                         args=(thumbnail_pic, tweetid)).start()
-
-    def fetch_open_original_pic(self, thumbnail_pic, tweetid):
-        """Fetch and open original pic from thumbnail pic url.
-           Pictures will stored in cache directory. If we already have a same
-           name in cache directory, just open it. If we don't, then download it
-           first."""
-
-        if tweetid in self.download_lock:
-            return
-        self.download_lock.append(tweetid)
-        original_pic = thumbnail_pic.replace("thumbnail",
-                                             "large")  # A simple trick ... ^_^
-        localfile = const.cache_path + original_pic.split("/")[-1]
-        if not os.path.exists(localfile):
-            urllib.request.urlretrieve(original_pic, localfile)
-
-        self.download_lock.remove(tweetid)
-        os.popen("xdg-open " + localfile)  # xdg-open is common?
-        self.imageLoaded.emit(tweetid)
 
     def refresh(self):
         model = self.get_current_model()
