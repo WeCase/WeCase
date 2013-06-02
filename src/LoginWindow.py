@@ -154,7 +154,11 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         conn.close()
 
         # Step 3: Put the authorize information into SDK
-        r = client.request_access_token(authorize_code)
+        try:
+            r = client.request_access_token(authorize_code)
+        except:
+            self.loginReturn.emit(None)
+
         access_token = r.access_token
         expires_in = r.expires_in
 
