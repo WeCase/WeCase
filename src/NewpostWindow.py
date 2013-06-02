@@ -38,14 +38,24 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
 
-        if self.action != "new":
-            self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
+        if self.action not in ["new", "reply"]:
+            if self.action == "comment":
+                self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
+            elif self.action == "retweet":
+                try:
+                    self.tweetWidget = SingleTweetWidget(self.client, self.tweet.original, ["image", "original"])
+                except:
+                    self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
             self.tweetWidget.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
             self.verticalLayout.insertWidget(0, self.tweetWidget)
             self.verticalLayout.setStretch(0, 1)
 
-            if int(self.tweet.comments_count):
-                self.commentsModel = TweetCommentModel(self.client.comments.show, self)
+            if self.action == "comment" and int(self.tweet.comments_count) or \
+               self.action == "retweet" and int(self.tweet.retweets_count):
+                if self.action == "comment":
+                    self.commentsModel = TweetCommentModel(self.client.comments.show, self)
+                elif self.action == "retweet":
+                    self.commentsModel = TweetCommentModel(self.client.statuses.repost_timeline, self)
                 self.commentsModel.load(self.tweet.id)
 
                 self.scrollArea = QtGui.QScrollArea()
@@ -66,6 +76,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         elif self.action == "retweet":
             self.chk_repost.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
+            if self.tweet.type == TweetItem.RETWEET:
+                self.textEdit.setText("//@%s:%s" % (self.tweet.author.name, self.tweet.text))
         elif self.action == "comment":
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)

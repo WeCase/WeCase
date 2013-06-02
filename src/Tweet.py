@@ -4,6 +4,8 @@
 # WeCase -- This model implemented Model and Item for tweets
 # Copyright: GPL v3 or later.
 
+# TODO: Refactoring Needed! But I don't have time... I think I'll do it soon.
+
 import threading
 from PyQt4 import QtCore
 from datetime import datetime
@@ -119,7 +121,11 @@ class TweetCommentModel(TweetCommonModel):
             return
         self.lock = True
         if id:
-            timeline = self.timeline.get(id=id).comments
+            try:
+                timeline = self.timeline.get(id=id).comments
+            except AttributeError:
+                # FIXME: Refactoring should fix that
+                timeline = self.timeline.get(id=id).reposts
         else:
             timeline = self.timeline.get(page=page).comments
         self.appendRows(timeline)
