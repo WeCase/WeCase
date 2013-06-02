@@ -16,9 +16,10 @@ class TweetListWidget(QtGui.QWidget):
 
     clicked = QtCore.pyqtSignal()
 
-    def __init__(self, client=None, parent=None):
+    def __init__(self, client=None, without=[], parent=None):
         super(TweetListWidget, self).__init__(parent)
         self.client = client
+        self.without = without
         self.setupUi()
 
     def setupUi(self):
@@ -32,7 +33,7 @@ class TweetListWidget(QtGui.QWidget):
     def _rowsInserted(self, parent, start, end):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
-            widget = SingleTweetWidget(self.client, item)
+            widget = SingleTweetWidget(self.client, item, self.without)
             widget.clicked.connect(self.clicked)
             self.layout.insertWidget(index, widget)
 
@@ -43,11 +44,12 @@ class SingleTweetWidget(QtGui.QFrame):
     commonSignal = QtCore.pyqtSignal(object)
     clicked = QtCore.pyqtSignal()
 
-    def __init__(self, client=None, tweet=None, parent=None):
+    def __init__(self, client=None, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.commonSignal.connect(self.commonProcessor)
         self.tweet = tweet
         self.client = client
+        self.without = without
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
         self.download_lock = False
@@ -97,11 +99,11 @@ class SingleTweetWidget(QtGui.QFrame):
         self.tweetText.setAlignment(QtCore.Qt.AlignTop)
         self.verticalLayout.addWidget(self.tweetText)
 
-        if self.tweet.thumbnail_pic:
+        if self.tweet.thumbnail_pic and (not "image" in self.without):
             self.imageWidget = self._createImageLabel(self.tweet.thumbnail_pic)
             self.verticalLayout.addWidget(self.imageWidget)
 
-        if self.tweet.original:
+        if self.tweet.original and (not "original" in self.without):
             self.originalLabel = self._createOriginalLabel()
             self.verticalLayout.addWidget(self.originalLabel)
 
