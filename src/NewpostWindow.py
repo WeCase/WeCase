@@ -82,9 +82,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
         elif self.action == "reply":
-            self.chk_repost.setEnabled(False)
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
+            if self.tweet.original.original:
+                self.textEdit.setText("//@%s:%s//@%s:%s" % 
+                        (self.tweet.author.name, self.tweet.text, self.tweet.original.author.name, self.tweet.original.text))
+            else:
+                self.textEdit.setText("//@%s:%s" % (self.tweet.author.name, self.tweet.text))
 
     def mentions_suggest(self, text):
         ret_users = []
