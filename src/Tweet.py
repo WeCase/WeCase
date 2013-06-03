@@ -14,11 +14,11 @@ from WTimeParser import WTimeParser as time_parser
 from WeHack import async
 
 
-class TweetAbstractModel(QtCore.QAbstractListModel):
+class TweetSimpleModel(QtCore.QAbstractListModel):
     rowInserted = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
-        super(TweetAbstractModel, self).__init__()
+        super(TweetSimpleModel, self).__init__()
         self._tweets = []
 
     def appendRow(self, item):
@@ -54,108 +54,131 @@ class TweetAbstractModel(QtCore.QAbstractListModel):
         return len(self._tweets)
 
 
-class TweetCommonModel(TweetAbstractModel):
+class TweetTimelineBaseModel(TweetSimpleModel):
+
     timelineLoaded = QtCore.pyqtSignal()
 
     def __init__(self, timeline=None, parent=None):
-        super(TweetCommonModel, self).__init__(parent)
+        super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
 
+    def timeline_get(self):
+        raise NotImplementedError
+
+    def timeline_new(self):
+        raise NotImplementedError
+
+    def timeline_old(self):
+        raise NotImplementedError
+
+    def first_id(self):
+        return int(self._tweets[0].id)
+
+    def last_id(self):
+        return int(self._tweets[-1].id)
+
     @async
-    def _get(self, page, id):
+    def _common_get(self, timeline, pos):
         if self.lock:
             return
         self.lock = True
-        timeline = self.timeline.get(page=page).statuses
-        self.appendRows(timeline)
-
-        self.since = int(self._tweets[0].id)
-        self.max = int(self._tweets[-1].id)
+        if pos == -1:
+            self.appendRows(timeline)
+        else:
+            self.insertRows(pos, timeline)
         self.lock = False
 
-    @async
-    def _new(self, since):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(since_id=since).statuses[::-1]
-        self.insertRows(0, timeline)
-
-        self.since = int(self._tweets[0].id)
-        self.lock = False
-        self.timelineLoaded.emit()
-
-    @async
-    def _old(self, max):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(max_id=max).statuses
-
-         # Remove the first same tweet
-        self.appendRows(timeline[1::])
-        self.max = int(self._tweets[-1].id)
-        self.lock = False
-
-    # Public
-    def load(self, id=None):
-        self._get(1, id)
-        self.page = 1
-
-    def next(self):
-        self._old(self.max)
+    def load(self):
+        timeline = self.timeline_get()
+        self._common_get(timeline, -1)
 
     def new(self):
-        self.page = 1
-        self._new(self.since)
-
-
-class TweetCommentModel(TweetCommonModel):
-    def __init__(self, timeline=None, parent=None):
-        super(TweetCommentModel, self).__init__(timeline, parent)
-
-    @async
-    def _get(self, page, id=None):
-        if self.lock:
-            return
-        self.lock = True
-        if id:
-            try:
-                timeline = self.timeline.get(id=id).comments
-            except AttributeError:
-                # FIXME: Refactoring should fix that
-                timeline = self.timeline.get(id=id).reposts
-        else:
-            timeline = self.timeline.get(page=page).comments
-        self.appendRows(timeline)
-
-        if timeline:
-            self.since = int(self._tweets[0].id)
-            self.max = int(self._tweets[-1].id)
-        self.lock = False
-
-    @async
-    def _new(self, since):
-        if self.lock:
-            return
-        timeline = self.timeline.get(since_id=since).comments[::-1]
-        self.insertRows(0, timeline)
-        self.since = int(self._tweets[0].id)
-        self.lock = False
+        timeline = self.timeline_new()
+        self._common_get(timeline, 0)
         self.timelineLoaded.emit()
 
-    @async
-    def _old(self, max):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(max_id=max).statuses
+    def next(self):
+        timeline = self.timeline_old()
+        self._common_get(timeline, -1)
 
-         # Remove the first same tweet
-        self.appendRows(timeline[1::])
-        self.max = int(self._tweets[-1].id)
-        self.lock = False
+
+class TweetCommonModel(TweetTimelineBaseModel):
+
+    def __init__(self, timeline=None, parent=None):
+        super(TweetCommonModel, self).__init__(timeline, parent)
+
+    def timeline_get(self):
+        timeline = self.timeline.get(page=1).statuses
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(since_id=self.first_id()).statuses[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(max_id=self.last_id()).statuses
+        timeline = timeline[1::]
+        return timeline
+
+
+class TweetCommentModel(TweetTimelineBaseModel):
+    def __init__(self, timeline=None, parent=None):
+        super(TweetCommentModel, self).__init__(timeline, parent)
+        self.page = 0
+
+    def timeline_get(self):
+        self.page += 1
+        timeline = self.timeline.get(page=self.page).comments
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(since_id=self.first_id()).comments[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(max_id=self.last_id()).statuses
+        return timeline
+
+
+class TweetUnderCommentModel(TweetTimelineBaseModel):
+    def __init__(self, timeline=None, id=0, parent=None):
+        super(TweetUnderCommentModel, self).__init__(timeline, parent)
+        self.id = id
+        self.page = 0
+
+    def timeline_get(self):
+        self.page += 1
+        timeline = self.timeline.get(id=self.id, page=self.page).comments
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(id=id, since_id=self.first_id()).comments[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(id=id, max_id=self.last_id()).comments
+        return timeline
+
+
+class TweetRetweetModel(TweetTimelineBaseModel):
+    def __init__(self, timeline=None, id=0, parent=None):
+        super(TweetRetweetModel, self).__init__(timeline, parent)
+        self.id = id
+        self.page = 0
+
+    def timeline_get(self):
+        self.page += 1
+        timeline = self.timeline.get(id=self.id, page=self.page).reposts
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(id=self.id, since_id=self.first_id).reposts[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(id=self.id, max_id=self.last_id).reposts
+        return timeline
 
 
 class UserItem(QtCore.QObject):

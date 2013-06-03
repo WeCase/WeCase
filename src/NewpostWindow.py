@@ -11,7 +11,7 @@ from copy import deepcopy
 from WeHack import async
 from PyQt4 import QtCore, QtGui
 from weibo import APIError
-from Tweet import TweetItem, TweetCommentModel
+from Tweet import TweetItem, TweetCommentModel, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
@@ -53,10 +53,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             if self.action == "comment" and int(self.tweet.comments_count) or \
                self.action == "retweet" and int(self.tweet.retweets_count):
                 if self.action == "comment":
-                    self.commentsModel = TweetCommentModel(self.client.comments.show, self)
+                    self.commentsModel = TweetUnderCommentModel(self.client.comments.show, int(self.tweet.id), self)
                 elif self.action == "retweet":
-                    self.commentsModel = TweetCommentModel(self.client.statuses.repost_timeline, self)
-                self.commentsModel.load(self.tweet.id)
+                    self.commentsModel = TweetRetweetModel(self.client.statuses.repost_timeline, int(self.tweet.id), self)
+                self.commentsModel.load()
 
                 self.scrollArea = QtGui.QScrollArea()
                 self.scrollArea.setWidgetResizable(True)
