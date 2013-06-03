@@ -83,6 +83,9 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         if self.lock:
             return
         self.lock = True
+        # timeline is just a pointer to the method.
+        # We are in another thread now, call it. UI won't freeze.
+        timeline = timeline()
         if pos == -1:
             self.appendRows(timeline)
         else:
@@ -90,16 +93,16 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         self.lock = False
 
     def load(self):
-        timeline = self.timeline_get()
+        timeline = self.timeline_get
         self._common_get(timeline, -1)
 
     def new(self):
-        timeline = self.timeline_new()
+        timeline = self.timeline_new
         self._common_get(timeline, 0)
         self.timelineLoaded.emit()
 
     def next(self):
-        timeline = self.timeline_old()
+        timeline = self.timeline_old
         self._common_get(timeline, -1)
 
 
