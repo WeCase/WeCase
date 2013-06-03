@@ -84,11 +84,6 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         elif self.action == "reply":
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
-            if self.tweet.original.original:
-                self.textEdit.setText("//@%s:%s//@%s:%s" % 
-                        (self.tweet.author.name, self.tweet.text, self.tweet.original.author.name, self.tweet.original.text))
-            else:
-                self.textEdit.setText("//@%s:%s" % (self.tweet.author.name, self.tweet.text))
 
     def mentions_suggest(self, text):
         ret_users = []
@@ -152,7 +147,20 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                             comment=text,
                                             comment_ori=int(self.chk_comment_original.isChecked()))
             if self.chk_repost.isChecked():
-                self.client.statuses.repost.post(id=int(self.tweet.id), status=text)
+                if self.tweet.original.original:
+                    text += "//@%s:%s//@%s:%s" % (
+                            self.tweet.author.name, self.tweet.text,
+                            self.tweet.original.author.name, self.tweet.original.text)
+                else:
+                    text += "//@%s:%s" % (self.tweet.author.name, self.tweet.text)
+                final_text = ""
+                for char in text:
+                    if tweetLength(final_text) >= 140:
+                        break
+                    else:
+                        final_text += char
+
+                self.client.statuses.repost.post(id=int(self.tweet.original.id), status=final_text)
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Reply Success!"))
             self.sendSuccessful.emit()
