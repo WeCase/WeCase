@@ -186,7 +186,7 @@ class TweetRetweetModel(TweetTimelineBaseModel):
 
 class UserItem(QtCore.QObject):
     def __init__(self, item, parent=None):
-        super(UserItem, self).__init__()
+        super(UserItem, self).__init__(parent)
         self._data = item
 
     @QtCore.pyqtProperty(int, constant=True)
