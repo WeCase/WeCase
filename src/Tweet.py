@@ -208,7 +208,7 @@ class TweetItem(QtCore.QObject):
     COMMENT = 2
 
     def __init__(self, item={}, parent=None):
-        super(TweetItem, self).__init__()
+        super(TweetItem, self).__init__(parent)
         self._data = item
 
         if not item:
@@ -281,11 +281,11 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(int, constant=True)
     def retweets_count(self):
-        return str(self._data.get('reposts_count', 0))
+        return self._data.get('reposts_count', 0)
 
     @QtCore.pyqtProperty(int, constant=True)
     def comments_count(self):
-        return str(self._data.get('comments_count', 0))
+        return self._data.get('comments_count', 0)
 
     def _sinceTimeString(self, createTime):
         if not createTime:

@@ -65,15 +65,19 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         elif self.action == "retweet" and self.tweet:
             self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
 
+        if self.action == "comment" and self.tweet.comments_count:
+            self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
+        elif self.action == "retweet" and self.tweet.retweets_count:
+            self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
+        else:
+            # FIXME: The read count is not a real-time value.
+            # There may be new replys later, but users can't see it.
+            return
+        self.replyModel.load()
+
         self.tweetWidget.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.insertWidget(0, self.tweetWidget)
         self.verticalLayout.setStretch(0, 1)
-
-        if self.action == "comment" and self.tweet.comments_count:
-            self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
-        if self.action == "retweet" and self.tweet.retweets_count:
-            self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
-        self.replyModel.load()
 
         self.scrollArea = QtGui.QScrollArea()
         self.scrollArea.setWidgetResizable(True)
