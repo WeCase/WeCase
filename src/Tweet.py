@@ -207,12 +207,9 @@ class TweetItem(QtCore.QObject):
     RETWEET = 1
     COMMENT = 2
 
-    def __init__(self, item={}, parent=None):
+    def __init__(self, data={}, parent=None):
         super(TweetItem, self).__init__(parent)
-        self._data = item
-
-        if not item:
-            return
+        self._data = data
 
     @QtCore.pyqtProperty(int, constant=True)
     def type(self):
