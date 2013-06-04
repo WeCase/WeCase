@@ -53,9 +53,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             if self.action == "comment" and int(self.tweet.comments_count) or \
                self.action == "retweet" and int(self.tweet.retweets_count):
                 if self.action == "comment":
-                    self.commentsModel = TweetUnderCommentModel(self.client.comments.show, int(self.tweet.id), self)
+                    self.commentsModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
                 elif self.action == "retweet":
-                    self.commentsModel = TweetRetweetModel(self.client.statuses.repost_timeline, int(self.tweet.id), self)
+                    self.commentsModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
                 self.commentsModel.load()
 
                 self.scrollArea = QtGui.QScrollArea()
@@ -114,7 +114,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def retweet(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.statuses.repost.post(id=int(self.tweet.id), status=text,
+            self.client.statuses.repost.post(id=self.tweet.id, status=text,
                                              is_comment=int((self.chk_comment.isChecked() +
                                              self.chk_comment_original.isChecked() * 2)))
             self.notify.showMessage(self.tr("WeCase"),
@@ -128,10 +128,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def comment(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.comments.create.post(id=int(self.tweet.id), comment=text,
+            self.client.comments.create.post(id=self.tweet.id, comment=text,
                                              comment_ori=int(self.chk_comment_original.isChecked()))
             if self.chk_repost.isChecked():
-                self.client.statuses.repost.post(id=int(self.tweet.id), status=text)
+                self.client.statuses.repost.post(id=self.tweet.id, status=text)
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Comment Success!"))
             self.sendSuccessful.emit()
@@ -143,7 +143,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def reply(self):
         text = str(self.textEdit.toPlainText())
         try:
-            self.client.comments.reply.post(id=int(self.tweet.original.id), cid=int(self.tweet.id),
+            self.client.comments.reply.post(id=self.tweet.original.id, cid=self.tweet.id,
                                             comment=text,
                                             comment_ori=int(self.chk_comment_original.isChecked()))
             if self.chk_repost.isChecked():
@@ -160,7 +160,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                     else:
                         final_text += char
 
-                self.client.statuses.repost.post(id=int(self.tweet.original.id), status=final_text)
+                self.client.statuses.repost.post(id=self.tweet.original.id, status=final_text)
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Reply Success!"))
             self.sendSuccessful.emit()

@@ -14,8 +14,6 @@ from const import cache_path
 
 class TweetListWidget(QtGui.QWidget):
 
-    clicked = QtCore.pyqtSignal()
-
     def __init__(self, client=None, without=[], parent=None):
         super(TweetListWidget, self).__init__(parent)
         self.client = client
@@ -34,7 +32,6 @@ class TweetListWidget(QtGui.QWidget):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
             widget = SingleTweetWidget(self.client, item, self.without)
-            widget.clicked.connect(self.clicked)
             self.layout.insertWidget(index, widget)
 
 
@@ -42,7 +39,6 @@ class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
     commonSignal = QtCore.pyqtSignal(object)
-    clicked = QtCore.pyqtSignal()
 
     def __init__(self, client=None, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
@@ -293,9 +289,6 @@ class SingleTweetWidget(QtGui.QFrame):
         os.popen("xdg-open " + localfile)  # xdg-open is common?
         self.imageLoaded.emit()
 
-    def mouseReleaseEvent(self, e):
-        self.clicked.emit()
-
     def _showFullImage(self):
         thumbnail_pic = self.imageLabel.url
 
@@ -305,7 +298,7 @@ class SingleTweetWidget(QtGui.QFrame):
     @async
     def _favorite(self):
         try:
-            self.client.favorites.create.post(id=int(self.tweet.id))
+            self.client.favorites.create.post(id=self.tweet.id)
             self.commonSignal.emit(lambda: self.favorite.setIcon("./icon/favorites.png"))
         except:
             pass

@@ -14,7 +14,7 @@ import http.client
 import ssl
 import socket
 from configparser import ConfigParser
-import threading
+from WeHack import async
 from weibo import APIClient
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
@@ -112,9 +112,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def ui_authorize(self):
         self.username = self.cmb_Users.currentText()
         self.password = self.txt_Password.text()
-        threading.Thread(group=None, target=self.authorize,
-                         args=(self.username, self.password)).start()
+        self.authorize(self.username, self.password)
 
+    @async
     def authorize(self, username, password):
         # TODO: This method is very messy, maybe do some cleanup?
 

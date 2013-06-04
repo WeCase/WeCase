@@ -189,9 +189,9 @@ class UserItem(QtCore.QObject):
         super(UserItem, self).__init__()
         self._data = item
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @QtCore.pyqtProperty(int, constant=True)
     def id(self):
-        return self._data.get('idstr')
+        return self._data.get('id')
 
     @QtCore.pyqtProperty(str, constant=True)
     def name(self):
@@ -223,9 +223,9 @@ class TweetItem(QtCore.QObject):
         else:
             return self.TWEET
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @QtCore.pyqtProperty(int, constant=True)
     def id(self):
-        return self._data.get('idstr')
+        return self._data.get('id')
 
     @QtCore.pyqtProperty(str, constant=True)
     def mid(self):

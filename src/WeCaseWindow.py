@@ -88,29 +88,21 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         for scrollArea in self.scrollAreas:
             scrollArea.verticalScrollBar().valueChanged.connect(self.load_more)
 
-        self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline,
-                                             self)
+        self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
         self.all_timeline.load()
         self.homeView.setModel(self.all_timeline)
-        self.homeView.clicked.connect(self.test)
 
-        self.mentions = TweetCommonModel(self.client.statuses.mentions,
-                                         self)
+        self.mentions = TweetCommonModel(self.client.statuses.mentions, self)
         self.mentions.load()
         self.mentionsView.setModel(self.mentions)
 
-        self.comment_to_me = TweetCommentModel(self.client.comments.to_me,
-                                               self)
+        self.comment_to_me = TweetCommentModel(self.client.comments.to_me, self)
         self.comment_to_me.load()
         self.commentsView.setModel(self.comment_to_me)
 
-        self.my_timeline = TweetCommonModel(self.client.statuses.user_timeline,
-                                            self)
+        self.my_timeline = TweetCommonModel(self.client.statuses.user_timeline, self)
         self.my_timeline.load()
         self.myView.setModel(self.my_timeline)
-
-    def test(self):
-        print("Test")
 
     def reset_remind(self):
         if self.tabWidget.currentIndex() == 0:
@@ -173,9 +165,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def moveToTop(self):
         self.get_current_scrollArea().verticalScrollBar().setSliderPosition(0)
 
-    def setLoaded(self, tweetid):
+    def setLoaded(self):
         pass
-        #self.get_current_tweetView().rootObject().imageLoaded(tweetid)
 
     def showSettings(self):
         wecase_settings = WeSettingsWindow()
