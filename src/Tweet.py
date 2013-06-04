@@ -186,7 +186,9 @@ class TweetRetweetModel(TweetTimelineBaseModel):
 
 class UserItem(QtCore.QObject):
     def __init__(self, item, parent=None):
-        super(UserItem, self).__init__(parent)
+        # HACK: Ignore parent, can't create a child with different thread.
+        # Where is the thread? I don't know...
+        super(UserItem, self).__init__()
         self._data = item
 
     @QtCore.pyqtProperty(int, constant=True)
