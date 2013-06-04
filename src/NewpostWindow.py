@@ -37,36 +37,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
-
         if self.action not in ["new", "reply"]:
-            if self.action == "comment":
-                self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
-            elif self.action == "retweet":
-                try:
-                    self.tweetWidget = SingleTweetWidget(self.client, self.tweet.original, ["image", "original"])
-                except:
-                    self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
-            self.tweetWidget.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-            self.verticalLayout.insertWidget(0, self.tweetWidget)
-            self.verticalLayout.setStretch(0, 1)
-
-            if self.action == "comment" and int(self.tweet.comments_count) or \
-               self.action == "retweet" and int(self.tweet.retweets_count):
-                if self.action == "comment":
-                    self.commentsModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
-                elif self.action == "retweet":
-                    self.commentsModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
-                self.commentsModel.load()
-
-                self.scrollArea = QtGui.QScrollArea()
-                self.scrollArea.setWidgetResizable(True)
-                self.commentsWidget = TweetListWidget(self.client, ["image", "original"])
-                self.commentsWidget.setModel(self.commentsModel)
-                self.scrollArea.setWidget(self.commentsWidget)
-                self.scrollArea.setMinimumSize(20, 200)
-                self.verticalLayout.insertWidget(1, self.scrollArea)
-                self.verticalLayout.setStretch(1, 10)
-
+            self._create_tweetWidget()
 
         self.checkChars()
         if self.action == "new":
@@ -84,6 +56,33 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         elif self.action == "reply":
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
+
+    def _create_tweetWidget(self):
+        if self.action == "comment":
+            self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
+        elif self.action == "retweet" and self.tweet.original:
+            self.tweetWidget = SingleTweetWidget(self.client, self.tweet.original, ["image", "original"])
+        elif self.action == "retweet" and self.tweet:
+            self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
+
+        self.tweetWidget.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout.insertWidget(0, self.tweetWidget)
+        self.verticalLayout.setStretch(0, 1)
+
+        if self.action == "comment" and self.tweet.comments_count:
+            self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
+        if self.action == "retweet" and self.tweet.retweets_count:
+            self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
+        self.replyModel.load()
+
+        self.scrollArea = QtGui.QScrollArea()
+        self.scrollArea.setWidgetResizable(True)
+        self.commentsWidget = TweetListWidget(self.client, ["image", "original"])
+        self.commentsWidget.setModel(self.replyModel)
+        self.scrollArea.setWidget(self.commentsWidget)
+        self.scrollArea.setMinimumSize(20, 200)
+        self.verticalLayout.insertWidget(1, self.scrollArea)
+        self.verticalLayout.setStretch(1, 10)
 
     def mentions_suggest(self, text):
         ret_users = []
