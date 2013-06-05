@@ -1,10 +1,10 @@
 import os
 from time import sleep
-from threading import Thread
 import urllib.request
 import http.client
 from PyQt4 import QtCore, QtGui
 from const import cache_path as down_path
+from WeHack import async
 
 
 class WAsyncLabel(QtGui.QLabel):
@@ -33,9 +33,9 @@ class WAsyncLabel(QtGui.QLabel):
     def _fetch_meta(self):
         filename = "%s_%s" % (self.url.split('/')[-2],
                               self.url.split('/')[-1])
-        Thread(group=None, target=self._fetch,
-               args=(self.url, filename)).start()
+        self._fetch(self.url, filename)
 
+    @async
     def _fetch(self, url, filename):
         while os.path.exists(down_path + filename + ".down"):
             sleep(0.5)
