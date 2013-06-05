@@ -41,25 +41,33 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self._create_tweetWidget()
 
         self.checkChars()
+        self.setupButtons()
+
+
+    def setupButtons(self):
+        # Disabled is the default state of buttons
+        self.chk_repost.setEnabled(False)
+        self.chk_comment.setEnabled(False)
+        self.chk_comment_original.setEnabled(False)
+
         if self.action == "new":
-            self.chk_repost.setEnabled(False)
-            self.chk_comment.setEnabled(False)
-            self.chk_comment_original.setEnabled(False)
+            # there is no tweet but we are sending a new one,
+            # disable all button
+            assert (not self.tweet)
         elif self.action == "retweet":
-            self.chk_repost.setEnabled(False)
-            self.pushButton_picture.setEnabled(False)
+            self.chk_comment.setEnabled(True)
             if self.tweet.type == TweetItem.RETWEET:
                 self.textEdit.setText(self.tweet.append_existing_replies())
+                self.chk_comment_original.setEnabled(True)
         elif self.action == "comment":
-            self.chk_comment.setEnabled(False)
-            self.pushButton_picture.setEnabled(False)
+            self.chk_repost.setEnabled(True)
+            if self.tweet.type == TweetItem.RETWEET:
+                self.chk_comment_original.setEnabled(True)
         elif self.action == "reply":
-            self.chk_comment.setEnabled(False)
-            self.pushButton_picture.setEnabled(False)
-        if self.tweet.original:
-            self.chk_comment_original.setEnabled(True)
-        else:
-            self.chk_comment_original.setEnabled(False)
+            self.chk_repost.setEnabled(True)
+            if self.tweet.original.type == TweetItem.RETWEET:
+                self.chk_comment_original.setEnabled(True)
+
 
     def _create_tweetWidget(self):
         if self.action == "comment":
