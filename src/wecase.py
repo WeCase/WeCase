@@ -11,6 +11,7 @@ import os
 from PyQt4 import QtCore, QtGui
 from LoginWindow import LoginWindow
 import const
+import traceback
 
 
 def mkconfig():
@@ -25,10 +26,27 @@ def mkconfig():
         pass
 
 
+def my_excepthook(type, value, tback):
+    # TODO: Make it works.
+    #if type == type(KeyboardInterrupt):
+    #    QtGui.QApplication.quit()
+
+    # Let Qt complains about it.
+    exception = "".join(traceback.format_exception(type, value, tback))
+    QtGui.QMessageBox.critical(None,
+                               "Unknown Error",
+                               "Oops, there is an unexcepted error: \n" +
+                               exception)
+
+    # Then call the default handler
+    sys.__excepthook__(type, value, tback)
+
+
 if __name__ == "__main__":
     mkconfig()
 
     app = QtGui.QApplication(sys.argv)
+    sys.excepthook = my_excepthook
 
     # Qt's built-in string translator
     qt_translator = QtCore.QTranslator(app)
