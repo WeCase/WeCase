@@ -9,14 +9,15 @@ from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
 from WTimer import WTimer
+import const
 from const import cache_path
 
 
 class TweetListWidget(QtGui.QWidget):
 
-    def __init__(self, client=None, without=[], parent=None):
+    def __init__(self, parent=None, without=[]):
         super(TweetListWidget, self).__init__(parent)
-        self.client = client
+        self.client = const.client
         self.without = without
         self.setupUi()
 
@@ -31,7 +32,7 @@ class TweetListWidget(QtGui.QWidget):
     def _rowsInserted(self, parent, start, end):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
-            widget = SingleTweetWidget(self.client, item, self.without)
+            widget = SingleTweetWidget(item, self.without)
             self.layout.insertWidget(index, widget)
 
 
@@ -40,11 +41,11 @@ class SingleTweetWidget(QtGui.QFrame):
     imageLoaded = QtCore.pyqtSignal()
     commonSignal = QtCore.pyqtSignal(object)
 
-    def __init__(self, client=None, tweet=None, without=[], parent=None):
+    def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.commonSignal.connect(self.commonProcessor)
         self.tweet = tweet
-        self.client = client
+        self.client = const.client
         self.without = without
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
@@ -311,7 +312,7 @@ class SingleTweetWidget(QtGui.QFrame):
             text = "//@" + tweet.author.name + ":" + tweet.text
         else:
             text = ""
-        wecase_new = NewpostWindow(self.client, "retweet", tweet)
+        wecase_new = NewpostWindow("retweet", tweet)
         wecase_new.exec_()
 
     def _comment(self, tweet=None):
@@ -322,14 +323,14 @@ class SingleTweetWidget(QtGui.QFrame):
             self._reply(tweet)
             return
 
-        wecase_new = NewpostWindow(self.client, "comment", tweet)
+        wecase_new = NewpostWindow("comment", tweet)
         wecase_new.exec_()
 
     def _reply(self, tweet=None):
         from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
-        wecase_new = NewpostWindow(self.client, "reply", tweet)
+        wecase_new = NewpostWindow("reply", tweet)
         wecase_new.exec_()
 
     def _original_retweet(self):

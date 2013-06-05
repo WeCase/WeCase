@@ -45,7 +45,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             # closeEvent won't emit when we accept() the window, but will
             # emit when we reject() the window.
             self.saveConfig()
-        wecase_main = WeCaseWindow(client)
+        wecase_main = WeCaseWindow()
         wecase_main.show()
         # Maybe users will logout, so reset the status
         self.pushButton_log.setText(self.tr("GO!"))
@@ -163,6 +163,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         expires_in = r.expires_in
 
         client.set_access_token(access_token, expires_in)
+        const.client = client
         self.loginReturn.emit(client)
 
     def setPassword(self, username):

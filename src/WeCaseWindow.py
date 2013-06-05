@@ -29,14 +29,14 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     imageLoaded = QtCore.pyqtSignal(str)
     tabTextChanged = QtCore.pyqtSignal(int, str)
 
-    def __init__(self, client, parent=None):
+    def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.tweetViews = [self.homeView, self.mentionsView, self.commentsView,
                            self.myView]
         self.scrollAreas = [self.scrollArea, self.scrollArea_2, self.scrollArea_3,
                             self.scrollArea_4]
-        self.client = client
+        self.client = const.client
         self.setupModels()
         self.init_account()
         self.setupMyUi()
@@ -82,9 +82,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             model.next()
 
     def setupModels(self):
-        for view in self.tweetViews:
-            view.client = self.client
-
         for scrollArea in self.scrollAreas:
             scrollArea.verticalScrollBar().valueChanged.connect(self.load_more)
 
@@ -187,7 +184,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_login.exec_()
 
     def postTweet(self):
-        wecase_new = NewpostWindow(self.client)
+        wecase_new = NewpostWindow()
         wecase_new.exec_()
 
     def refresh(self):

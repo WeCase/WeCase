@@ -17,17 +17,17 @@ from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
 from SmileyWindow import SmileyWindow
 from TweetListWidget import TweetListWidget, SingleTweetWidget
+import const
 
 
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
-    client = None
     image = None
     apiError = QtCore.pyqtSignal(str)
     sendSuccessful = QtCore.pyqtSignal()
 
-    def __init__(self, client, action="new", tweet=None, parent=None):
+    def __init__(self, action="new", tweet=None, parent=None):
         super(NewpostWindow, self).__init__(parent)
-        self.client = client
+        self.client = const.client
         self.tweet = tweet
         self.action = action
         self.setupUi(self)
@@ -59,11 +59,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def _create_tweetWidget(self):
         if self.action == "comment":
-            self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
         elif self.action == "retweet" and self.tweet.original:
-            self.tweetWidget = SingleTweetWidget(self.client, self.tweet.original, ["image", "original"])
+            self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"])
         elif self.action == "retweet" and self.tweet:
-            self.tweetWidget = SingleTweetWidget(self.client, self.tweet, ["image", "original"])
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
 
         if self.action == "comment" and self.tweet.comments_count:
             self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
@@ -81,7 +81,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
         self.scrollArea = QtGui.QScrollArea()
         self.scrollArea.setWidgetResizable(True)
-        self.commentsWidget = TweetListWidget(self.client, ["image", "original"])
+        self.commentsWidget = TweetListWidget(self, ["image", "original"])
         self.commentsWidget.setModel(self.replyModel)
         self.scrollArea.setWidget(self.commentsWidget)
         self.scrollArea.setMinimumSize(20, 200)
@@ -112,6 +112,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.comment()
         elif self.action == "reply":
             self.reply()
+        else:
+            # If action is in other types, it must be a mistake.
+            assert(False)
 
     @async
     def retweet(self):
