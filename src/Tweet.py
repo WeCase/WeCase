@@ -12,6 +12,8 @@ from datetime import datetime
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async
+from TweetUtils import tweetLength
+import const
 
 
 class TweetSimpleModel(QtCore.QAbstractListModel):
@@ -212,6 +214,7 @@ class TweetItem(QtCore.QObject):
     def __init__(self, data={}, parent=None):
         super(TweetItem, self).__init__(parent)
         self._data = data
+        self.client = const.client
 
     @QtCore.pyqtProperty(int, constant=True)
     def type(self):
@@ -309,3 +312,39 @@ class TweetItem(QtCore.QObject):
             return self.tr("%.0fh ago") % (passedSeconds / 3600)
 
         return self.tr("%.0fd ago") % (passedSeconds / 86400)
+
+    def _cut_off(self, text):
+        cut_text = ""
+        for char in text:
+            if tweetLength(cut_text) >= 140:
+                break
+            else:
+                cut_text += char
+        return cut_text
+
+    def append_existing_replies(self, text=""):
+        if self.original.original:
+            text += "//@%s:%s//@%s:%s" % (
+                    self.author.name, self.text,
+                    self.original.author.name, self.original.text)
+        else:
+            text += "//@%s:%s" % (self.author.name, self.text)
+        return text
+
+    def reply(self, text, comment_ori=False, retweet=False):
+        self.client.comments.reply.post(id=self.original.id, cid=self.id,
+                                        comment=text, comment_ori=int(comment_ori))
+        if retweet:
+            text = self.append_existing_replies(text)
+            text = self._cut_off(text)
+            self.original.retweet(text)
+
+    def retweet(self, text, comment=False, comment_ori=False):
+        self.client.statuses.repost.post(id=self.id, status=text,
+                                         is_comment=int(comment + comment_ori * 2))
+
+    def comment(self, text, comment_ori=False, retweet=False):
+        self.client.comments.create.post(id=self.id, comment=text,
+                                         comment_ori=int(comment_ori))
+        if retweet:
+            self.retweet(text)

@@ -49,13 +49,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.chk_repost.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
             if self.tweet.type == TweetItem.RETWEET:
-                self.textEdit.setText("//@%s:%s" % (self.tweet.author.name, self.tweet.text))
+                self.textEdit.setText(self.tweet.append_existing_replies())
         elif self.action == "comment":
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
         elif self.action == "reply":
             self.chk_comment.setEnabled(False)
             self.pushButton_picture.setEnabled(False)
+        if self.tweet.original:
+            self.chk_comment_original.setEnabled(True)
+        else:
+            self.chk_comment_original.setEnabled(False)
 
     def _create_tweetWidget(self):
         if self.action == "comment":
@@ -119,60 +123,41 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     @async
     def retweet(self):
         text = str(self.textEdit.toPlainText())
+        comment = int(self.chk_comment.isChecked())
+        comment_ori = int(self.chk_comment_original.isChecked())
         try:
-            self.client.statuses.repost.post(id=self.tweet.id, status=text,
-                                             is_comment=int((self.chk_comment.isChecked() +
-                                             self.chk_comment_original.isChecked() * 2)))
-            self.notify.showMessage(self.tr("WeCase"),
-                                    self.tr("Retweet Success!"))
-            self.sendSuccessful.emit()
+            self.tweet.retweet(text, comment, comment_ori)
         except APIError as e:
             self.apiError.emit(str(e))
             return
+        self.notify.showMessage(self.tr("WeCase"), self.tr("Retweet Success!"))
+        self.sendSuccessful.emit()
 
     @async
     def comment(self):
         text = str(self.textEdit.toPlainText())
+        retweet = int(self.chk_repost.isChecked())
+        comment_ori = int(self.chk_comment_original.isChecked())
         try:
-            self.client.comments.create.post(id=self.tweet.id, comment=text,
-                                             comment_ori=int(self.chk_comment_original.isChecked()))
-            if self.chk_repost.isChecked():
-                self.client.statuses.repost.post(id=self.tweet.id, status=text)
-            self.notify.showMessage(self.tr("WeCase"),
-                                    self.tr("Comment Success!"))
-            self.sendSuccessful.emit()
+            self.tweet.comment(text, comment_ori, retweet)
         except APIError as e:
             self.apiError.emit(str(e))
             return
+        self.notify.showMessage(self.tr("WeCase"), self.tr("Comment Success!"))
+        self.sendSuccessful.emit()
 
     @async
     def reply(self):
         text = str(self.textEdit.toPlainText())
+        comment_ori = int(self.chk_comment_original.isChecked())
+        retweet = int(self.chk_repost.isChecked())
         try:
-            self.client.comments.reply.post(id=self.tweet.original.id, cid=self.tweet.id,
-                                            comment=text,
-                                            comment_ori=int(self.chk_comment_original.isChecked()))
-            if self.chk_repost.isChecked():
-                if self.tweet.original.original:
-                    text += "//@%s:%s//@%s:%s" % (
-                            self.tweet.author.name, self.tweet.text,
-                            self.tweet.original.author.name, self.tweet.original.text)
-                else:
-                    text += "//@%s:%s" % (self.tweet.author.name, self.tweet.text)
-                final_text = ""
-                for char in text:
-                    if tweetLength(final_text) >= 140:
-                        break
-                    else:
-                        final_text += char
-
-                self.client.statuses.repost.post(id=self.tweet.original.id, status=final_text)
-            self.notify.showMessage(self.tr("WeCase"),
-                                    self.tr("Reply Success!"))
-            self.sendSuccessful.emit()
+            self.tweet.reply(text, comment_ori, retweet)
         except APIError as e:
             self.apiError.emit(str(e))
             return
+        self.notify.showMessage(self.tr("WeCase"), self.tr("Reply Success!"))
+        self.sendSuccessful.emit()
 
     @async
     def new(self):
