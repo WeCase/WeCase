@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-# WeCase -- This model implemented a general QTextEdit 
+# WeCase -- This model implemented a general QTextEdit
 #           with flexible auto-complete
 # Copyright (C) 2013 Tom Li
 # License: GPL v3 or later.
@@ -9,6 +9,7 @@
 
 import threading
 from PyQt4 import QtGui, QtCore
+from WeHack import async
 
 
 class WAbstractCompleteLineEdit(QtGui.QTextEdit):
@@ -92,6 +93,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
                     text = self.getNewText(self.cursor.selectedText(),
                             self.listView.currentIndex().data())
                     self.cursor.insertText(text)
+                self.textChanged.emit()
                 self.listView.hide()
 
             else:
@@ -116,7 +118,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
         if (len(text) > 1) and (not self.listView.isHidden()):
             return
 
-        threading.Thread(group=None, target=self.getCompleteList).start()
+        self.getCompleteList()
         self.showCompleter(["Loading..."])
 
     def showCompleter(self, lst):
@@ -140,6 +142,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
     def mouseCompleteText(self, index):
         text = self.getNewText(self.selectedText(), index.data())
         self.cursor.insertText(text)
+        self.textChanged.emit()
         self.listView.hide()
 
 
@@ -153,6 +156,7 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
         self.callback = None
         self.setAcceptRichText(False)  # 禁用富文本，微博很穷的
 
+    @async
     def getCompleteList(self):
         result = self.callback(self.cursor.selectedText())
         self.fetchListFinished.emit(result)
