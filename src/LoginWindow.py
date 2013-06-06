@@ -7,12 +7,6 @@
 
 
 import webbrowser
-import urllib.request
-import urllib.parse
-import urllib.error
-import http.client
-import ssl
-import socket
 from configparser import ConfigParser
 from WeHack import async
 from weibo import APIClient
@@ -20,10 +14,15 @@ from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
 import const
+from TweetUtils import authorize
+from time import sleep
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
-    loginReturn = QtCore.pyqtSignal(object)
+    SUCCESS = 0
+    PASSWORD_ERROR = 1
+    NETWORK_ERROR = 2
+    loginReturn = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
@@ -31,13 +30,14 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.setupUi(self)
         self.setupMyUi()
         self.setupSignals()
+        self.net_err_count = 0
 
     def setupSignals(self):
         # Other singals defined in Desinger.
         self.loginReturn.connect(self.checkLogin)
         self.chk_Remember.clicked.connect(self.uncheckAutoLogin)
 
-    def accept(self, client):
+    def accept(self):
         if self.chk_Remember.isChecked():
             self.passwd[str(self.username)] = str(self.password)
             self.last_login = str(self.username)
@@ -52,19 +52,27 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.pushButton_log.setEnabled(True)
         self.done(True)
 
-    def reject(self):
-        QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
-                                   self.tr("Check your account, "
-                                           "password and Internet Connection!")
-                                  )
+    def reject(self, status):
+        if status == self.PASSWORD_ERROR:
+            QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
+                                       self.tr("Check your account and password"))
+        elif status == self.NETWORK_ERROR and self.net_err_count < 3:
+            self.net_err_count += 1
+            sleep(0.5)
+            self.ui_authorize()
+        elif status == self.NETWORK_ERROR and self.net_err_count == 3:
+            QtGui.QMessageBox.critical(None, self.tr("Network Error"),
+                                       self.tr("Something wrong with the network, please try again."))
+            self.net_err_count = 0
+
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
 
-    def checkLogin(self, client):
-        if client:
-            self.accept(client)
+    def checkLogin(self, status):
+        if status == self.SUCCESS:
+            self.accept()
         else:
-            self.reject()
+            self.reject(status)
 
     def setupMyUi(self):
         self.show()
@@ -116,55 +124,27 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     @async
     def authorize(self, username, password):
-        # TODO: This method is very messy, maybe do some cleanup?
-
-        client = APIClient(app_key=const.APP_KEY, app_secret=const.APP_SECRET,
-                           redirect_uri=const.CALLBACK_URL)
-
-        # Step 1: Get the authorize url from Sina
-        authorize_url = client.get_authorize_url()
-
-        # Step 2: Send the authorize info to Sina and get the authorize_code
-        # TODO: Rewrite them with urllib/urllib2
-        oauth2 = const.OAUTH2_PARAMETER
-        oauth2['userId'] = username
-        oauth2['passwd'] = password
-        postdata = urllib.parse.urlencode(oauth2)
-
         try:
-            conn = http.client.HTTPSConnection('api.weibo.com')
-            sock = socket.create_connection((conn.host, conn.port), conn.timeout, conn.source_address)
-            conn.sock = ssl.wrap_socket(sock, conn.key_file, conn.cert_file, ssl_version=ssl.PROTOCOL_TLSv1)
+            client = APIClient(app_key=const.APP_KEY, app_secret=const.APP_SECRET,
+                               redirect_uri=const.CALLBACK_URL)
 
-            conn.request('POST', '/oauth2/authorize', postdata,
-                         {'Referer': authorize_url,
-                          'Content-Type': 'application/x-www-form-urlencoded'})
-        except OSError:
-            self.loginReturn.emit(None)
-            return
+            # Step 1: Get the authorize url from Sina
+            authorize_url = client.get_authorize_url()
 
-        res = conn.getresponse()
+            # Step 2: Send the authorize info to Sina and get the authorize_code
+            authorize_code = authorize(authorize_url, username, password)
+            if not authorize_code:
+                self.loginReturn.emit(self.PASSWORD_ERROR)
 
-        location = res.getheader('location')
-
-        if not location:
-            return self.loginReturn.emit(None)
-
-        authorize_code = location.split('=')[1]
-        conn.close()
-
-        # Step 3: Put the authorize information into SDK
-        try:
+            # Step 3: Get the access token by authorize_code
             r = client.request_access_token(authorize_code)
+
+            # Step 4: Setup the access token of SDK
+            client.set_access_token(r.access_token, r.expires_in)
+            const.client = client
+            self.loginReturn.emit(self.SUCCESS)
         except:
-            self.loginReturn.emit(None)
-
-        access_token = r.access_token
-        expires_in = r.expires_in
-
-        client.set_access_token(access_token, expires_in)
-        const.client = client
-        self.loginReturn.emit(client)
+            self.loginReturn.emit(self.NETWORK_ERROR)
 
     def setPassword(self, username):
         if username:
