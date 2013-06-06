@@ -317,11 +317,11 @@ class SingleTweetWidget(QtGui.QFrame):
             urllib.request.urlretrieve(original_pic, localfile)
 
         self.download_lock = False
-        os.popen("xdg-open " + localfile)  # xdg-open is common?
+        os.system("xdg-open %s > /dev/null" % localfile)
         self.imageLoaded.emit()
 
     def _showFullImage(self):
-        thumbnail_pic = self.imageLabel.url
+        self.fetch_open_original_pic(self.imageLabel.url)
 
     def commonProcessor(self, object):
         object()
