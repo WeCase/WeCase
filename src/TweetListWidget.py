@@ -17,6 +17,36 @@ class TweetListWidget(QtGui.QWidget):
 
     def __init__(self, parent=None, without=[]):
         super(TweetListWidget, self).__init__(parent)
+        self.tweetListWidget = SimpleTweetListWidget(None, without)
+        self.setupUi()
+
+    def setupUi(self):
+        self.layout = QtGui.QVBoxLayout()
+        self.scrollArea = QtGui.QScrollArea()
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setWidget(self.tweetListWidget)
+        self.layout.addWidget(self.scrollArea)
+        self.layout.setMargin(0)
+        self.layout.setSpacing(0)
+        self.setLayout(self.layout)
+        self.scrollArea.verticalScrollBar().valueChanged.connect(self.loadMore)
+
+    def setModel(self, model):
+        self.tweetListWidget.setModel(model)
+
+    def loadMore(self, value):
+       if value == self.scrollArea.verticalScrollBar().maximum():
+            model = self.tweetListWidget.model
+            model.next()
+
+    def moveToTop(self):
+        self.scrollArea.verticalScrollBar().setSliderPosition(0)
+
+
+class SimpleTweetListWidget(QtGui.QWidget):
+
+    def __init__(self, parent=None, without=[]):
+        super(SimpleTweetListWidget, self).__init__(parent)
         self.client = const.client
         self.without = without
         self.setupUi()

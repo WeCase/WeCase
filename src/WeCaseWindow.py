@@ -32,14 +32,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.tweetViews = [self.homeView, self.mentionsView, self.commentsView,
-                           self.myView]
-        self.scrollAreas = [self.scrollArea, self.scrollArea_2, self.scrollArea_3,
-                            self.scrollArea_4]
+        self.tweetViews = [self.homeView, self.mentionsView,
+                           self.commentsView, self.myView]
         self.client = const.client
         self.setupModels()
         self.init_account()
-        self.setupMyUi()
         self.loadConfig()
         self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
@@ -73,18 +70,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.timer.start()
         self.notify.timeout = self.notify_timeout
 
-    def setupMyUi(self):
-        return
-
-    def load_more(self, value):
-        if value == self.get_current_scrollArea().verticalScrollBar().maximum():
-            model = self.get_current_model()
-            model.next()
 
     def setupModels(self):
-        for scrollArea in self.scrollAreas:
-            scrollArea.verticalScrollBar().valueChanged.connect(self.load_more)
-
         self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
         self.all_timeline.load()
         self.homeView.setModel(self.all_timeline)
@@ -160,7 +147,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.tabWidget.setTabText(index, string)
 
     def moveToTop(self):
-        self.get_current_scrollArea().verticalScrollBar().setSliderPosition(0)
+        self.get_current_tweetView().moveToTop()
 
     def setLoaded(self):
         pass
@@ -198,11 +185,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def get_current_tweetView(self):
         tweetViews = {0: self.homeView, 1: self.mentionsView,
                       2: self.commentsView, 3: self.myView}
-        return tweetViews[self.tabWidget.currentIndex()]
-
-    def get_current_scrollArea(self):
-        tweetViews = {0: self.scrollArea, 1: self.scrollArea_2,
-                      2: self.scrollArea_3, 3: self.scrollArea_4}
         return tweetViews[self.tabWidget.currentIndex()]
 
     def get_current_model(self):

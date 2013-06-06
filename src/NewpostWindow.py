@@ -91,13 +91,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.verticalLayout.insertWidget(0, self.tweetWidget)
         self.verticalLayout.setStretch(0, 1)
 
-        self.scrollArea = QtGui.QScrollArea()
-        self.scrollArea.setWidgetResizable(True)
         self.commentsWidget = TweetListWidget(self, ["image", "original"])
         self.commentsWidget.setModel(self.replyModel)
-        self.scrollArea.setWidget(self.commentsWidget)
-        self.scrollArea.setMinimumSize(20, 200)
-        self.verticalLayout.insertWidget(1, self.scrollArea)
+        self.commentsWidget.scrollArea.setMinimumSize(20, 200)
+        self.verticalLayout.insertWidget(1, self.commentsWidget)
         self.verticalLayout.setStretch(1, 10)
 
     def mentions_suggest(self, text):
