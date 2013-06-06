@@ -77,13 +77,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         elif self.action == "retweet" and self.tweet:
             self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
 
+        # The read count is not a real-time value. So refresh it now.
+        self.tweet.refresh()
         if self.action == "comment" and self.tweet.comments_count:
             self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
         elif self.action == "retweet" and self.tweet.retweets_count:
             self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
         else:
-            # FIXME: The read count is not a real-time value.
-            # There may be new replys later, but users can't see it.
             return
         self.replyModel.load()
 

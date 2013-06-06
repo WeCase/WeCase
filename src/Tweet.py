@@ -350,3 +350,7 @@ class TweetItem(QtCore.QObject):
                                          comment_ori=int(comment_ori))
         if retweet:
             self.retweet(text)
+
+    def refresh(self):
+        if self.type == self.TWEET or self.type == self.RETWEET:
+            self._data = self.client.statuses.show.get(id=self.id)
