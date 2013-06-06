@@ -60,6 +60,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.net_err_count += 1
             sleep(0.5)
             self.ui_authorize()
+            return
         elif status == self.NETWORK_ERROR and self.net_err_count == 3:
             QtGui.QMessageBox.critical(None, self.tr("Network Error"),
                                        self.tr("Something wrong with the network, please try again."))
