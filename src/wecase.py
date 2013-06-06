@@ -12,6 +12,7 @@ from PyQt4 import QtCore, QtGui
 from LoginWindow import LoginWindow
 import const
 import traceback
+import signal
 
 
 def mkconfig():
@@ -27,10 +28,6 @@ def mkconfig():
 
 
 def my_excepthook(type, value, tback):
-    # TODO: Make it works.
-    #if type == type(KeyboardInterrupt):
-    #    QtGui.QApplication.quit()
-
     # Let Qt complains about it.
     exception = "".join(traceback.format_exception(type, value, tback))
     error_info = "Oops, there is an unexcepted error: \n\n" + \
@@ -47,6 +44,7 @@ if __name__ == "__main__":
 
     app = QtGui.QApplication(sys.argv)
     sys.excepthook = my_excepthook
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     # Qt's built-in string translator
     qt_translator = QtCore.QTranslator(app)
