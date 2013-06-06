@@ -179,11 +179,11 @@ class TweetRetweetModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(id=self.id, since_id=self.first_id).reposts[::-1]
+        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).reposts[::-1]
         return timeline
 
     def timeline_old(self):
-        timeline = self.timeline.get(id=self.id, max_id=self.last_id).reposts
+        timeline = self.timeline.get(id=self.id, max_id=self.last_id()).reposts
         timeline = timeline[1::]
         return timeline
 
