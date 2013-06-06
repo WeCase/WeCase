@@ -30,7 +30,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     tabTextChanged = QtCore.pyqtSignal(int, str)
 
     def __init__(self, parent=None):
-        QtGui.QMainWindow.__init__(self, parent)
+        super(WeCaseWindow, self).__init__(parent)
         self.setupUi(self)
         self.tweetViews = [self.homeView, self.mentionsView,
                            self.commentsView, self.myView]

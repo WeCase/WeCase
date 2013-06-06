@@ -12,7 +12,7 @@ import threading
 
 class WTimer(threading.Thread):
     def __init__(self, sleep_time, run_function):
-        threading.Thread.__init__(self)
+        super(WTimer, self).__init__()
         self.sleep_time = sleep_time
         self.run_function = run_function
         # 外部需要停止该线程时触发事件

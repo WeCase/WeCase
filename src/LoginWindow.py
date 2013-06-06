@@ -25,7 +25,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     loginReturn = QtCore.pyqtSignal(int)
 
     def __init__(self, allow_auto_login=True, parent=None):
-        QtGui.QDialog.__init__(self, parent)
+        super(LoginWindow, self).__init__(parent)
         self.allow_auto_login = allow_auto_login
         self.loadConfig()
         self.setupUi(self)

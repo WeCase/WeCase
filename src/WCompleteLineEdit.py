@@ -16,7 +16,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
     fetchListFinished = QtCore.pyqtSignal(list)
 
     def __init__(self, parent=None):
-        QtGui.QTextEdit.__init__(self)
+        super(WAbstractCompleteLineEdit, self).__init__(parent)
         self.cursor = self.textCursor()
 
         self.setupUi()
@@ -151,7 +151,7 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
     separator = " "
 
     def __init__(self, parent):
-        super(WCompleteLineEdit, self).__init__(self)
+        super(WCompleteLineEdit, self).__init__(parent)
         self._needComplete = False
         self.callback = None
         self.setAcceptRichText(False)  # 禁用富文本，微博很穷的

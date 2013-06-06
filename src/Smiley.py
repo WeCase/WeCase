@@ -15,7 +15,7 @@ myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 class SmileyItem(QtCore.QAbstractItemModel):
     def __init__(self, name, path, parent=None):
-        QtCore.QAbstractItemModel.__init__(self, parent)
+        super(SmileyItem, self).__init__(parent)
         self.name = name
         self.path = path
 
@@ -25,7 +25,7 @@ class SmileyModel(QtCore.QAbstractListModel):
     pathRole = QtCore.Qt.UserRole + 2
 
     def __init__(self, parent=None):
-        QtCore.QAbstractListModel.__init__(self, parent)
+        super(SmileyModel, self).__init__(parent)
         self.setRoleNames(self.roleNames())
         self.smileies = []
 

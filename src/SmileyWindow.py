@@ -14,7 +14,7 @@ import const
 
 class SmileyWindow(QtGui.QDialog, Ui_SmileyWindow):
     def __init__(self, parent=None):
-        QtGui.QDialog.__init__(self, parent)
+        super(SmileyWindow, self).__init__(parent)
         self.setupUi(self)
         self.setupModels()
         self.smileyName = ""

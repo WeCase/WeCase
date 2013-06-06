@@ -14,7 +14,7 @@ import const
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
     def __init__(self, parent=None):
-        QtGui.QDialog.__init__(self, parent)
+        super(WeSettingsWindow, self).__init__(parent)
         self.setupUi(self)
         self.loadConfig()
 
