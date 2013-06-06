@@ -100,8 +100,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def mentions_suggest(self, text):
         ret_users = []
         try:
-            word = re.findall('@[-a-zA-Z0-9_\u4e00-\u9fa5]+', text)[-1]
-            word = word.replace('@', '')
+            word = text.split(' ')[-1]
+            word = word.split('@')[-1]
         except IndexError:
             return []
         if not word.strip():
