@@ -4,7 +4,6 @@
 # WeCase -- This model implemented Model and Item for tweets
 # Copyright: GPL v3 or later.
 
-# TODO: Refactoring Needed! But I don't have time... I think I'll do it soon.
 
 import threading
 from PyQt4 import QtCore
