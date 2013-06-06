@@ -167,7 +167,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # This is a model dialog, if we exec it before we close MainWindow
         # MainWindow won't close
         from LoginWindow import LoginWindow
-        wecase_login = LoginWindow()
+        wecase_login = LoginWindow(allow_auto_login=False)
         wecase_login.exec_()
 
     def postTweet(self):

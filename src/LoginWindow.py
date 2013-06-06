@@ -24,8 +24,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     NETWORK_ERROR = 2
     loginReturn = QtCore.pyqtSignal(int)
 
-    def __init__(self, parent=None):
+    def __init__(self, allow_auto_login=True, parent=None):
         QtGui.QDialog.__init__(self, parent)
+        self.allow_auto_login = allow_auto_login
         self.loadConfig()
         self.setupUi(self)
         self.setupMyUi()
@@ -103,7 +104,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.login_config = self.config['login']
         self.passwd = eval(self.login_config.get('passwd', "{}"))
         self.last_login = str(self.login_config.get('last_login', ""))
-        self.auto_login = self.login_config.getboolean('auto_login', 0)
+        self.auto_login = self.login_config.getboolean('auto_login', 0) and \
+                          self.allow_auto_login
 
     def saveConfig(self):
         self.login_config['passwd'] = str(self.passwd)
