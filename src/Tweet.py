@@ -143,6 +143,7 @@ class TweetCommentModel(TweetTimelineBaseModel):
 
     def timeline_old(self):
         timeline = self.timeline.get(max_id=self.last_id()).statuses
+        timeline = timeline[1::]
         return timeline
 
 
@@ -163,6 +164,7 @@ class TweetUnderCommentModel(TweetTimelineBaseModel):
 
     def timeline_old(self):
         timeline = self.timeline.get(id=self.id, max_id=self.last_id()).comments
+        timeline = timeline[1::]
         return timeline
 
 
@@ -183,6 +185,7 @@ class TweetRetweetModel(TweetTimelineBaseModel):
 
     def timeline_old(self):
         timeline = self.timeline.get(id=self.id, max_id=self.last_id).reposts
+        timeline = timeline[1::]
         return timeline
 
 
