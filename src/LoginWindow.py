@@ -29,7 +29,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.allow_auto_login = allow_auto_login
         self.loadConfig()
         self.setupUi(self)
-        self.setupMyUi()
         self.setupSignals()
         self.net_err_count = 0
 
@@ -76,7 +75,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         else:
             self.reject(status)
 
-    def setupMyUi(self):
+    def setupUi(self, widget):
+        super(LoginWindow, self).setupUi(widget)
         self.show()
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
         self.cmb_Users.addItem(self.last_login)

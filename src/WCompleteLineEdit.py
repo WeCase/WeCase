@@ -19,10 +19,10 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
         QtGui.QTextEdit.__init__(self)
         self.cursor = self.textCursor()
 
-        self.setupMyUi()
+        self.setupUi()
         self.setupSignals()
 
-    def setupMyUi(self):
+    def setupUi(self):
         self.listView = QtGui.QListView(self)
         self.model = QtGui.QStringListModel(self)
         self.listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
