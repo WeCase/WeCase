@@ -196,7 +196,7 @@ class SingleTweetWidget(QtGui.QFrame):
     def _setup_timer(self):
         self.timer.stop()
         time_level = self.tweet.time.split(' ')[0][-1]
-        if time_level == "s":
+        if time_level in ["s", "Future"]:
             self.timer.start(1 * 1000)
         elif time_level == "m":
             self.timer.start(60 * 1000)
