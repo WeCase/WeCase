@@ -26,6 +26,7 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
         self.insertRow(self.rowCount(), item)
 
     def appendRows(self, items):
+        items = self.filter(items)
         for item in items:
             self.appendRow(TweetItem(item))
 
@@ -45,6 +46,7 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
         self.endInsertRows()
 
     def insertRows(self, row, items):
+        items = self.filter(items)
         self.beginInsertRows(QtCore.QModelIndex(), row, row + len(items) - 1)
         for item in items:
             self._tweets.insert(row, TweetItem(item))
@@ -53,6 +55,16 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
+
+    def filter(self, items):
+        return items  # developing mask
+        new_items = []
+        for item in items:
+            if TweetItem(item).withKeyword("Windows"):
+                continue
+            else:
+                new_items.append(item)
+        return new_items
 
 
 class TweetTimelineBaseModel(TweetSimpleModel):
@@ -354,3 +366,10 @@ class TweetItem(QtCore.QObject):
     def refresh(self):
         if self.type == self.TWEET or self.type == self.RETWEET:
             self._data = self.client.statuses.show.get(id=self.id)
+
+    def withKeyword(self, keyword):
+        if keyword in self.text:
+            print("Removed", self.text)
+            return True
+        else:
+            return False
