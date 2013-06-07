@@ -35,9 +35,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.tweetViews = [self.homeView, self.mentionsView,
                            self.commentsView, self.myView]
         self.client = const.client
+        self.loadConfig()
         self.setupModels()
         self.init_account()
-        self.loadConfig()
         self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
         self.notify = Notify(timeout=self.notify_timeout)
@@ -57,6 +57,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.main_config = self.config['main']
         self.timer_interval = int(self.main_config.get('notify_interval', 30))
         self.notify_timeout = int(self.main_config.get('notify_timeout', 5))
+        self.usersBlacklist = eval(self.main_config.get('usersBlacklist', "[]"))
+        self.tweetKeywordsBlacklist = eval(self.main_config.get("tweetKeywordsBlacklist", "[]"))
         self.remindMentions = self.main_config.getboolean('remind_mentions', 1)
         self.remindComments = self.main_config.getboolean('remind_comments', 1)
 
@@ -73,20 +75,29 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def setupModels(self):
         self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
+        self.all_timeline.setUsersBlacklist(self.usersBlacklist)
+        self.all_timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         self.all_timeline.load()
         self.homeView.setModel(self.all_timeline)
 
         self.mentions = TweetCommonModel(self.client.statuses.mentions, self)
+        self.mentions.setUsersBlacklist(self.usersBlacklist)
+        self.mentions.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         self.mentions.load()
         self.mentionsView.setModel(self.mentions)
 
         self.comment_to_me = TweetCommentModel(self.client.comments.to_me, self)
+        self.comment_to_me.setUsersBlacklist(self.usersBlacklist)
+        self.comment_to_me.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         self.comment_to_me.load()
         self.commentsView.setModel(self.comment_to_me)
 
         self.my_timeline = TweetCommonModel(self.client.statuses.user_timeline, self)
+        self.my_timeline.setUsersBlacklist(self.usersBlacklist)
+        self.my_timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         self.my_timeline.load()
         self.myView.setModel(self.my_timeline)
+
 
     def reset_remind(self):
         if self.tabWidget.currentIndex() == 0:
@@ -192,11 +203,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                   2: self.comment_to_me,
                   3: self.my_timeline}
         return models[self.tabWidget.currentIndex()]
-
-    def get_current_function(self):
-        functions = {0: self.get_all_timeline, 1: self.get_mentions_timeline,
-                     2: self.get_comment_to_me, 3: self.get_my_timeline}
-        return functions[self.tabWidget.currentIndex()]
 
     def closeEvent(self, event):
         self.timer.stop_event.set()

@@ -46,6 +46,16 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
             "remind_comments", True))
         self.mentionsChk.setChecked(self.main_config.getboolean(
             "remind_mentions", True))
+        self.usersBlackListWidget.addItems(eval(self.main_config.get(
+            "usersBlacklist", "[]")))
+        self.tweetsKeywordsBlacklistWidget.addItems(eval(self.main_config.get(
+            "tweetKeywordsBlacklist", "[]")))
+
+    def _getListWidgetItemsStringList(self, listWidget):
+        stringList = []
+        for i in range(0, listWidget.count()):
+            stringList.append(listWidget.item(i).text())
+        return stringList
 
     def saveConfig(self):
         self.config = ConfigParser()
@@ -59,12 +69,42 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.main_config['notify_timeout'] = str(self.timeoutSlider.value())
         self.main_config['remind_comments'] = str(self.commentsChk.isChecked())
         self.main_config['remind_mentions'] = str(self.mentionsChk.isChecked())
+        self.main_config['usersBlacklist'] = str(self._getListWidgetItemsStringList(self.usersBlackListWidget))
+        self.main_config['tweetKeywordsBlacklist'] = str(self._getListWidgetItemsStringList(self.tweetsKeywordsBlacklistWidget))
 
         with open(const.config_path, "w+") as config_file:
             self.config.write(config_file)
 
+    def addBlackUser(self):
+        user = QtGui.QInputDialog.getText(
+               self, self.tr("Input A user:"),
+               self.tr("Please input a user"),
+               QtGui.QLineEdit.Normal, self.tr("Username"))[0]
+        if user:
+            self.usersBlackListWidget.addItem(user)
+
+    def removeBlackUser(self):
+        row = self.usersBlackListWidget.currentRow()
+        self.usersBlackListWidget.takeItem(row)
+
+    def addKeyword(self):
+        keyword = QtGui.QInputDialog.getText(
+                  self,
+                  self.tr("Input a keyword:"),
+                  self.tr("Please input a keyword"),
+                  QtGui.QLineEdit.Normal, self.tr("Keyword"))[0]
+        if keyword:
+            self.tweetsKeywordsBlacklistWidget.addItem(keyword)
+
+    def removeKeyword(self):
+        row = self.tweetsKeywordsBlacklistWidget.currentRow()
+        self.tweetsKeywordsBlacklistWidget.takeItem(row)
+
     def accept(self):
         self.saveConfig()
+        QtGui.QMessageBox.information(
+            self, self.tr("Restart"),
+            self.tr("Filter's settings need to restart WeCase to take effect."))
         self.done(True)
 
     def reject(self):

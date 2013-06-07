@@ -19,8 +19,10 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
     rowInserted = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
-        super(TweetSimpleModel, self).__init__()
+        super(TweetSimpleModel, self).__init__(parent)
         self._tweets = []
+        self._tweetKeywordBlacklist = []
+        self._usersBlackList = []
 
     def appendRow(self, item):
         self.insertRow(self.rowCount(), item)
@@ -56,11 +58,29 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
 
+    def setTweetsKeywordsBlacklist(self, blacklist):
+        self._tweetKeywordBlacklist = blacklist
+
+    def setUsersBlacklist(self, blacklist):
+        self._usersBlackList = blacklist
+
+    def _inBlacklist(self, tweet):
+        if not tweet:
+            return False
+        elif self._inBlacklist(tweet.original):
+            return True
+
+        # Put all your statements at here
+        if tweet.withKeywords(self._tweetKeywordBlacklist):
+            return True
+        if tweet.author.name in self._usersBlackList:
+            return True
+        return False
+
     def filter(self, items):
-        return items  # developing mask
         new_items = []
         for item in items:
-            if TweetItem(item).withKeyword("Windows"):
+            if self._inBlacklist(TweetItem(item)):
                 continue
             else:
                 new_items.append(item)
@@ -369,7 +389,12 @@ class TweetItem(QtCore.QObject):
 
     def withKeyword(self, keyword):
         if keyword in self.text:
-            print("Removed", self.text)
             return True
         else:
             return False
+
+    def withKeywords(self, keywords):
+        for keyword in keywords:
+            if self.withKeyword(keyword):
+                return True
+        return False
