@@ -7,7 +7,11 @@
 
 
 from PyQt4 import QtCore
-import notify2 as pynotify
+try:
+    import notify3 as pynotify
+except ImportError:
+    print("Warning: Notify2 is not found! Notification is disabled.")
+    import nullNotify as pynotify
 import const
 
 
