@@ -73,7 +73,7 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
         # Put all your statements at here
         if tweet.withKeywords(self._tweetKeywordBlacklist):
             return True
-        if tweet.author.name in self._usersBlackList:
+        if tweet.author and (tweet.author.name in self._usersBlackList):
             return True
         return False
 
