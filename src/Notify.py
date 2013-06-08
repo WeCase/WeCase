@@ -6,19 +6,21 @@
 # License: GPL v3 or later.
 
 
-from PyQt4 import QtCore
-try:
-    import notify3 as pynotify
-except ImportError:
-    print("Warning: Notify2 is not found! Notification is disabled.")
-    import nullNotify as pynotify
+from PyQt4 import QtCore, QtGui
 import const
 
 
-class Notify():
+class Notify(QtCore.QObject):
     image = const.myself_path + "/ui/img/WeCase 80.png"
 
     def __init__(self, appname=QtCore.QObject().tr("WeCase"), timeout=5):
+        try:
+            import notify3 as pynotify
+        except ImportError:
+            QtGui.QMessageBox.warning(None, self.tr("Notification disabled"),
+                self.tr("notify2 is not found. Notification will disable."))
+            import nullNotify as pynotify
+
         pynotify.init(appname)
         self.timeout = timeout
         self.n = pynotify.Notification(appname)
