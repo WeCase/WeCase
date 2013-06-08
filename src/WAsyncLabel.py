@@ -37,6 +37,7 @@ class WAsyncLabel(QtGui.QLabel):
         painter.end()
         super(WAsyncLabel, self).setPixmap(image)
         self.degress += 8
+        self.degress %= 360
 
     def clearBusyIcon(self):
         self.timer.stop()
