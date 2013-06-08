@@ -54,6 +54,7 @@ class WAsyncLabel(QtGui.QLabel):
         super(WAsyncLabel, self).setPixmap(image)
 
     def setPixmap(self, url):
+        super(WAsyncLabel, self).setPixmap(self.busy_icon)
         if not ("http" in url):
             self._setPixmap(url)
             return
