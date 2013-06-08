@@ -62,7 +62,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def _rowsInserted(self, parent, start, end):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
-            widget = SingleTweetWidget(item, self.without)
+            widget = SingleTweetWidget(item, self.without, self)
             self.layout.insertWidget(index, widget)
 
 
