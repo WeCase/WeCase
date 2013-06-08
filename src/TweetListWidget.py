@@ -195,17 +195,15 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _setup_timer(self):
         self.timer.stop()
-        time_level = self.tweet.time.split(' ')[0][-1]
-        if time_level in ["s", "!"]:
+        passedSeconds = self.tweet.passedSeconds
+        if passedSeconds < 60:
             self.timer.start(1 * 1000)
-        elif time_level == "m":
+        elif passedSeconds < 3600:
             self.timer.start(60 * 1000)
-        elif time_level == "h":
+        elif passedSeconds < 86400:
             self.timer.start(60 * 60 * 1000)
-        elif time_level == "d":
-            self.timer.start(60 * 60 * 24 * 1000)
         else:
-            assert False, "time level '%s' is unknown" % time_level
+            self.timer.start(60 * 60 * 24 * 1000)
 
     def _update_time(self):
         if self.tweet.type != TweetItem.COMMENT:

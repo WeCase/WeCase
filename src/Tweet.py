@@ -290,7 +290,24 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(str, constant=True)
     def time(self):
-        return self._sinceTimeString(self._data.get('created_at'))
+        if not self.timestamp:
+            return
+
+        passedSeconds = self.passedSeconds
+        if passedSeconds < 0:
+            return self.tr("Future!")
+        if passedSeconds < 60:
+            return self.tr("%.0fs ago") % (passedSeconds)
+        if passedSeconds < 3600:
+            return self.tr("%.0fm ago") % (passedSeconds / 60)
+        if passedSeconds < 86400:
+            return self.tr("%.0fh ago") % (passedSeconds / 3600)
+
+        return self.tr("%.0fd ago") % (passedSeconds / 86400)
+
+    @QtCore.pyqtProperty(str, constant=True)
+    def timestamp(self):
+        return self._data.get('created_at')
 
     @QtCore.pyqtProperty(str, constant=True)
     def text(self):
@@ -323,29 +340,20 @@ class TweetItem(QtCore.QObject):
     def comments_count(self):
         return self._data.get('comments_count', 0)
 
-    def _sinceTimeString(self, createTime):
-        if not createTime:
-            return
-
-        create = time_parser().parse(createTime)
+    @QtCore.pyqtProperty(int, constant=True)
+    def passedSeconds(self):
+        create = time_parser().parse(self.timestamp)
         create_utc = (create - create.utcoffset()).replace(tzinfo=None)
         now_utc = datetime.utcnow()
 
         # Always compare UTC time, do NOT compare LOCAL time.
         # See http://coolshell.cn/articles/5075.html for more details.
-        passedSeconds = (now_utc - create_utc).seconds
-
-        # datetime do not support nagetive numbers
         if now_utc < create_utc:
-            return self.tr("Future!")
-        if passedSeconds < 60:
-            return self.tr("%.0fs ago") % (passedSeconds)
-        if passedSeconds < 3600:
-            return self.tr("%.0fm ago") % (passedSeconds / 60)
-        if passedSeconds < 86400:
-            return self.tr("%.0fh ago") % (passedSeconds / 3600)
-
-        return self.tr("%.0fd ago") % (passedSeconds / 86400)
+            # datetime do not support nagetive numbers
+            return -1
+        else:
+            passedSeconds = (now_utc - create_utc).seconds
+            return passedSeconds
 
     def _cut_off(self, text):
         cut_text = ""
