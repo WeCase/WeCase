@@ -15,12 +15,42 @@ class WAsyncLabel(QtGui.QLabel):
     def __init__(self, parent=None):
         super(WAsyncLabel, self).__init__(parent)
         self.url = ""
+        self.timer = QtCore.QTimer(self)
+        self.busy_icon = QtGui.QPixmap("./icon/busy.png")
+
+    def setBusy(self, busy):
+        if busy:
+            self.degress = 0
+            self.timer.timeout.connect(self.drawBusyIcon)
+            self.timer.start(50)
+        else:
+            self.clearBusyIcon()
+
+    def drawBusyIcon(self):
+        image = QtGui.QPixmap(self._image)
+        icon = self.busy_icon.transformed(QtGui.QTransform().rotate(self.degress))
+
+        height = (image.height() - icon.height()) / 2
+        width = (image.width() - icon.width()) / 2
+        painter = QtGui.QPainter(image)
+        painter.drawPixmap(width, height, icon)
+        painter.end()
+        super(WAsyncLabel, self).setPixmap(image)
+        self.degress += 8
+
+    def clearBusyIcon(self):
+        self.timer.stop()
+        super(WAsyncLabel, self).setPixmap(self._image)
 
     def url(self):
         return self.url
 
     def _setPixmap(self, path):
-        super(WAsyncLabel, self).setPixmap(QtGui.QPixmap(path))
+        image = QtGui.QPixmap(path)
+        if image.width() < self.busy_icon.width():
+            image = image.scaledToWidth(self.busy_icon.width())
+        self._image = image
+        super(WAsyncLabel, self).setPixmap(image)
 
     def setPixmap(self, url):
         if not ("http" in url):

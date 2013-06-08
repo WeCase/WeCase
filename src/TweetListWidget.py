@@ -310,6 +310,7 @@ class SingleTweetWidget(QtGui.QFrame):
             return
 
         self.download_lock = True
+        self.commonSignal.emit(lambda: self.imageLabel.setBusy(True))
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
         localfile = cache_path + original_pic.split("/")[-1]
@@ -317,6 +318,7 @@ class SingleTweetWidget(QtGui.QFrame):
             urllib.request.urlretrieve(original_pic, localfile)
 
         self.download_lock = False
+        self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
         os.system("xdg-open %s > /dev/null" % localfile)
         self.imageLoaded.emit()
 
