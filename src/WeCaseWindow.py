@@ -10,6 +10,8 @@ import os
 import urllib.request
 import urllib.parse
 import urllib.error
+import http
+from time import sleep
 from configparser import ConfigParser
 import threading
 from WTimer import WTimer
@@ -113,7 +115,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         '''this function is used to get unread_count
         from Weibo API. uid is necessary.'''
 
-        reminds = self.client.remind.unread_count.get(uid=uid)
+        while 1:
+            try:
+                reminds = self.client.remind.unread_count.get(uid=uid)
+                break
+            except http.client.BadStatusLine:
+                sleep(0.2)
+                continue
         return reminds
 
     def get_uid(self):
