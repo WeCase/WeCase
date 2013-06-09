@@ -106,7 +106,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
             layout.removeItem(item)
 
     def setBusy(self, busy, pos):
-        #return  # Developement mask
+        return  # Developement mask
         if pos == 0:
             self._setTopBusy(busy)
         else:
