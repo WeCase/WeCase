@@ -13,6 +13,7 @@ import const
 from const import cache_path
 
 
+# XXX: Busy Icons are broken.
 class TweetListWidget(QtGui.QWidget):
 
     def __init__(self, parent=None, without=[]):
@@ -74,7 +75,10 @@ class SimpleTweetListWidget(QtGui.QWidget):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
             widget = SingleTweetWidget(item, self.without, self)
-            self.layout.insertWidget(index, widget)
+            if self.top_busy_id:
+                self.layout.insertWidget(index + 1, widget)
+            else:
+                self.layout.insertWidget(index, widget)
 
     def setupBusyIcon(self):
         layout = QtGui.QVBoxLayout()
@@ -102,6 +106,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
             layout.removeItem(item)
 
     def setBusy(self, busy, pos):
+        #return  # Developement mask
         if pos == 0:
             self._setTopBusy(busy)
         else:
