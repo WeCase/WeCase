@@ -90,6 +90,7 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
 class TweetTimelineBaseModel(TweetSimpleModel):
 
     timelineLoaded = QtCore.pyqtSignal()
+    newerLoaded = QtCore.pyqtSignal()
 
     def __init__(self, timeline=None, parent=None):
         super(TweetTimelineBaseModel, self).__init__(parent)
@@ -123,6 +124,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
             self.appendRows(timeline)
         else:
             self.insertRows(pos, timeline)
+        self.newerLoaded.emit()
         self.lock = False
 
     def load(self):
@@ -164,8 +166,7 @@ class TweetCommentModel(TweetTimelineBaseModel):
         self.page = 0
 
     def timeline_get(self):
-        self.page += 1
-        timeline = self.timeline.get(page=self.page).comments
+        timeline = self.timeline.get(page=1).comments
         return timeline
 
     def timeline_new(self):
@@ -182,11 +183,9 @@ class TweetUnderCommentModel(TweetTimelineBaseModel):
     def __init__(self, timeline=None, id=0, parent=None):
         super(TweetUnderCommentModel, self).__init__(timeline, parent)
         self.id = id
-        self.page = 0
 
     def timeline_get(self):
-        self.page += 1
-        timeline = self.timeline.get(id=self.id, page=self.page).comments
+        timeline = self.timeline.get(id=self.id).comments
         return timeline
 
     def timeline_new(self):
@@ -203,11 +202,9 @@ class TweetRetweetModel(TweetTimelineBaseModel):
     def __init__(self, timeline=None, id=0, parent=None):
         super(TweetRetweetModel, self).__init__(timeline, parent)
         self.id = id
-        self.page = 0
 
     def timeline_get(self):
-        self.page += 1
-        timeline = self.timeline.get(id=self.id, page=self.page).reposts
+        timeline = self.timeline.get(id=self.id).reposts
         return timeline
 
     def timeline_new(self):

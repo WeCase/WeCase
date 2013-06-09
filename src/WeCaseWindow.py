@@ -186,6 +186,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.exec_()
 
     def refresh(self):
+        tweetView = self.get_current_tweetView()
+        tweetView.setBusy(True, 0)
         model = self.get_current_model()
         model.timelineLoaded.connect(self.moveToTop)
         #model.clear()
