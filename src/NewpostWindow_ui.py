@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
 #
-# Created: Sun Jun  2 14:13:28 2013
+# Created: Mon Jun 10 18:21:08 2013
 #      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -95,7 +95,6 @@ class Ui_NewPostWindow(object):
         QtCore.QObject.connect(self.pushButton_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.close)
         QtCore.QObject.connect(self.pushButton_picture, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.addImage)
         QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("apiError(QString)")), NewPostWindow.showError)
-        QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("sendSuccessful()")), NewPostWindow.close)
         QtCore.QObject.connect(self.pushButton_send, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.send)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.showSmiley)
         QtCore.QObject.connect(self.textEdit, QtCore.SIGNAL(_fromUtf8("textChanged()")), NewPostWindow.checkChars)

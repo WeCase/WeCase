@@ -228,22 +228,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>NewPostWindow</sender>
-   <signal>sendSuccessful()</signal>
-   <receiver>NewPostWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>280</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>280</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_send</sender>
    <signal>clicked()</signal>
    <receiver>NewPostWindow</receiver>

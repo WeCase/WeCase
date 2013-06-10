@@ -34,6 +34,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.callback = self.mentions_suggest
         self.textEdit.mention_flag = "@"
         self.notify = Notify(timeout=1)
+        self._sent = False
+        self.sendSuccessful.connect(self.sent)
 
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
@@ -110,6 +112,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         for user in users:
             ret_users.append("@" + user['nickname'])
         return ret_users
+
+    def sent(self):
+        self._sent = True
+        self.close()
 
     def send(self):
         self.pushButton_send.setEnabled(False)
@@ -230,3 +236,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.label.setStyleSheet("color:red;")
             self.pushButton_send.setEnabled(False)
         self.label.setText(str(numLens))
+
+    def reject(self):
+        self.close()
+
+    def closeEvent(self, event):
+        # We have unsend text.
+        if (not self._sent) and (self.textEdit.toPlainText()):
+            choice = QtGui.QMessageBox.question(
+                         self, self.tr("Close?"),
+                         self.tr("All unpost text will lost."),
+                         QtGui.QMessageBox.Yes,
+                         QtGui.QMessageBox.No)
+            if choice == QtGui.QMessageBox.No:
+                event.ignore()
