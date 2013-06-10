@@ -28,7 +28,6 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
         self.insertRow(self.rowCount(), item)
 
     def appendRows(self, items):
-        items = self.filter(items)
         for item in items:
             self.appendRow(TweetItem(item))
 
@@ -48,7 +47,6 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
         self.endInsertRows()
 
     def insertRows(self, row, items):
-        items = self.filter(items)
         self.beginInsertRows(QtCore.QModelIndex(), row, row + len(items) - 1)
         for item in items:
             self._tweets.insert(row, TweetItem(item))
@@ -57,34 +55,6 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
-
-    def setTweetsKeywordsBlacklist(self, blacklist):
-        self._tweetKeywordBlacklist = blacklist
-
-    def setUsersBlacklist(self, blacklist):
-        self._usersBlackList = blacklist
-
-    def _inBlacklist(self, tweet):
-        if not tweet:
-            return False
-        elif self._inBlacklist(tweet.original):
-            return True
-
-        # Put all your statements at here
-        if tweet.withKeywords(self._tweetKeywordBlacklist):
-            return True
-        if tweet.author and (tweet.author.name in self._usersBlackList):
-            return True
-        return False
-
-    def filter(self, items):
-        new_items = []
-        for item in items:
-            if self._inBlacklist(TweetItem(item)):
-                continue
-            else:
-                new_items.append(item)
-        return new_items
 
 
 class TweetTimelineBaseModel(TweetSimpleModel):
@@ -117,6 +87,34 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         timeline = lambda: self.timeline_get(page=self.page)
         return timeline
 
+    def setTweetsKeywordsBlacklist(self, blacklist):
+        self._tweetKeywordBlacklist = blacklist
+
+    def setUsersBlacklist(self, blacklist):
+        self._usersBlackList = blacklist
+
+    def _inBlacklist(self, tweet):
+        if not tweet:
+            return False
+        elif self._inBlacklist(tweet.original):
+            return True
+
+        # Put all your statements at here
+        if tweet.withKeywords(self._tweetKeywordBlacklist):
+            return True
+        if tweet.author and (tweet.author.name in self._usersBlackList):
+            return True
+        return False
+
+    def filter(self, items):
+        new_items = []
+        for item in items:
+            if self._inBlacklist(TweetItem(item)):
+                continue
+            else:
+                new_items.append(item)
+        return new_items
+
     @async
     def _common_get(self, timeline, pos):
         if self.lock:
@@ -125,11 +123,14 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         # timeline is just a pointer to the method.
         # We are in another thread now, call it. UI won't freeze.
         timeline = timeline()
-        while not self.filter(timeline):
+
+        # Timeline is not blank, but after filter(), timeline is blank.
+        while timeline and (not self.filter(timeline)):
             # All tweets in this page are removed.
             # Load next page.
             timeline = self._load_next_page()()
 
+        timeline = self.filter(timeline)
         self.newerLoaded.emit()
         if pos == -1:
             self.appendRows(timeline)
