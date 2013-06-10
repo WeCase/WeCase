@@ -112,6 +112,11 @@ class TweetTimelineBaseModel(TweetSimpleModel):
     def last_id(self):
         return int(self._tweets[-1].id)
 
+    def _load_next_page(self):
+        self.page += 1
+        timeline = lambda: self.timeline_get(page=self.page)
+        return timeline
+
     @async
     def _common_get(self, timeline, pos):
         if self.lock:
@@ -120,6 +125,11 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         # timeline is just a pointer to the method.
         # We are in another thread now, call it. UI won't freeze.
         timeline = timeline()
+        while not self.filter(timeline):
+            # All tweets in this page are removed.
+            # Load next page.
+            timeline = self._load_next_page()()
+
         self.newerLoaded.emit()
         if pos == -1:
             self.appendRows(timeline)
@@ -128,6 +138,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         self.lock = False
 
     def load(self):
+        self.page = 1
         timeline = self.timeline_get
         self._common_get(timeline, -1)
 
@@ -146,8 +157,8 @@ class TweetCommonModel(TweetTimelineBaseModel):
     def __init__(self, timeline=None, parent=None):
         super(TweetCommonModel, self).__init__(timeline, parent)
 
-    def timeline_get(self):
-        timeline = self.timeline.get(page=1).statuses
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(page=page).statuses
         return timeline
 
     def timeline_new(self):
@@ -165,8 +176,8 @@ class TweetCommentModel(TweetTimelineBaseModel):
         super(TweetCommentModel, self).__init__(timeline, parent)
         self.page = 0
 
-    def timeline_get(self):
-        timeline = self.timeline.get(page=1).comments
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(page=page).comments
         return timeline
 
     def timeline_new(self):
@@ -184,8 +195,8 @@ class TweetUnderCommentModel(TweetTimelineBaseModel):
         super(TweetUnderCommentModel, self).__init__(timeline, parent)
         self.id = id
 
-    def timeline_get(self):
-        timeline = self.timeline.get(id=self.id).comments
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(id=self.id, page=page).comments
         return timeline
 
     def timeline_new(self):
@@ -203,8 +214,8 @@ class TweetRetweetModel(TweetTimelineBaseModel):
         super(TweetRetweetModel, self).__init__(timeline, parent)
         self.id = id
 
-    def timeline_get(self):
-        timeline = self.timeline.get(id=self.id).reposts
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(id=self.id, page=page).reposts
         return timeline
 
     def timeline_new(self):
