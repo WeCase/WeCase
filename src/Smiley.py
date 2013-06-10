@@ -80,6 +80,7 @@ class SmileyModel(QtCore.QAbstractListModel):
             filename = filepath.split('/')[-1]
             if is_smiley(filename):
                 smiley_name = os.path.splitext(filepath)[0]
-                file_content = open(smiley_name).read().replace('\n', '')
+                file_content = open(smiley_name, encoding="UTF-8").read()
+                file_content = file_content.replace('\n', '')
                 smiley_model.appendRow(smiley_item(file_content,
                     filepath.replace(myself_path + "/ui", "")))

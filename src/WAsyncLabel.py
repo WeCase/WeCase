@@ -86,7 +86,7 @@ class WAsyncLabel(QtGui.QLabel):
         try:
             os.rename(down_path + filename + ".down",
                       down_path + filename)
-        except FileNotFoundError:
+        except OSError:
             pass
 
         return self.downloaded.emit(down_path + filename)

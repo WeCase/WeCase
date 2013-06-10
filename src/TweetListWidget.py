@@ -2,7 +2,7 @@ import os
 import re
 import urllib.request
 from time import sleep
-from WeHack import async
+from WeHack import async, start
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
 from WIconLabel import WIconLabel
@@ -388,7 +388,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.download_lock = False
         self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
-        os.system("xdg-open %s > /dev/null" % localfile)
+        start(localfile)
         self.imageLoaded.emit()
 
     def _showFullImage(self):
