@@ -116,19 +116,21 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         return new_items
 
     @async
-    def _common_get(self, timeline, pos):
+    def _common_get(self, timeline_func, pos):
         if self.lock:
             return
         self.lock = True
         # timeline is just a pointer to the method.
         # We are in another thread now, call it. UI won't freeze.
-        timeline = timeline()
+        timeline = timeline_func()
 
         # Timeline is not blank, but after filter(), timeline is blank.
         while timeline and (not self.filter(timeline)):
             # All tweets in this page are removed.
             # Load next page.
-            timeline = self._load_next_page()()
+            if timeline_func != self.timeline_new:
+                # We are not fetch new tweets.
+                timeline = self._load_next_page()()
 
         timeline = self.filter(timeline)
         self.newerLoaded.emit()
