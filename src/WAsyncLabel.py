@@ -4,6 +4,7 @@ import urllib.request
 import http.client
 from PyQt4 import QtCore, QtGui
 from const import cache_path as down_path
+from const import myself_path
 from WeHack import async
 
 
@@ -16,7 +17,7 @@ class WAsyncLabel(QtGui.QLabel):
         super(WAsyncLabel, self).__init__(parent)
         self.url = ""
         self.timer = QtCore.QTimer(self)
-        self.busy_icon = QtGui.QPixmap("./icon/busy.png")
+        self.busy_icon = QtGui.QPixmap(myself_path + "/icon/busy.png")
 
     def setBusy(self, busy):
         if busy:

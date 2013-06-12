@@ -92,7 +92,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
         busyWidget = QtGui.QWidget()
         layout = QtGui.QVBoxLayout(busyWidget)
         busy = QtGui.QLabel()
-        busy.setPixmap(QtGui.QPixmap("./icon/busy.png"))
+        busy.setPixmap(QtGui.QPixmap(const.myself_path + "/icon/busy.png"))
         layout.addWidget(busy)
         layout.setAlignment(QtCore.Qt.AlignCenter)
         busyWidget.setLayout(layout)
@@ -211,19 +211,19 @@ class SingleTweetWidget(QtGui.QFrame):
             self.retweet = WIconLabel(self)
             self.retweet.setObjectName("retweet")
             self.retweet.setText(str(self.tweet.retweets_count))
-            self.retweet.setIcon("./icon/retweets.png")
+            self.retweet.setIcon(const.myself_path + "/icon/retweets.png")
             self.retweet.clicked.connect(self._retweet)
             self.counterHorizontalLayout.addWidget(self.retweet)
 
             self.comment = WIconLabel(self)
             self.comment.setObjectName("comment")
-            self.comment.setIcon("./icon/comments.png")
+            self.comment.setIcon(const.myself_path + "/icon/comments.png")
             self.comment.setText(str(self.tweet.comments_count))
             self.comment.clicked.connect(self._comment)
             self.counterHorizontalLayout.addWidget(self.comment)
 
             self.favorite = WIconLabel(self)
-            self.favorite.setIcon("./icon/no_favorites.png")
+            self.favorite.setIcon(const.myself_path + "/icon/no_favorites.png")
             self.favorite.clicked.connect(self._favorite)
             self.counterHorizontalLayout.addWidget(self.favorite)
 
@@ -232,7 +232,7 @@ class SingleTweetWidget(QtGui.QFrame):
         elif self.tweet.type == TweetItem.COMMENT:
             self.reply = WIconLabel(self)
             self.reply.setObjectName("reply")
-            self.reply.setIcon("./icon/retweets.png")
+            self.reply.setIcon(const.myself_path + "/icon/retweets.png")
             self.reply.clicked.connect(self._reply)
             self.counterHorizontalLayout.addWidget(self.reply)
 
@@ -312,12 +312,12 @@ class SingleTweetWidget(QtGui.QFrame):
         retweet = WIconLabel(widget)
         retweet.setObjectName("retweet")
         retweet.setText(str(originalItem.retweets_count))
-        retweet.setIcon("./icon/retweets.png")
+        retweet.setIcon(const.myself_path + "/icon/retweets.png")
         retweet.clicked.connect(self._original_retweet)
         counterHorizontalLayout.addWidget(retweet)
         comment = WIconLabel(widget)
         comment.setObjectName("comment")
-        comment.setIcon("./icon/comments.png")
+        comment.setIcon(const.myself_path + "/icon/comments.png")
         comment.setText(str(originalItem.comments_count))
         comment.clicked.connect(self._original_comment)
         counterHorizontalLayout.addWidget(comment)
@@ -395,7 +395,7 @@ class SingleTweetWidget(QtGui.QFrame):
     def _favorite(self):
         try:
             self.client.favorites.create.post(id=self.tweet.id)
-            self.commonSignal.emit(lambda: self.favorite.setIcon("./icon/favorites.png"))
+            self.commonSignal.emit(lambda: self.favorite.setIcon(const.myself_path + "/icon/favorites.png"))
         except:
             pass
 
