@@ -195,10 +195,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def refresh(self):
         tweetView = self.get_current_tweetView()
-        model = tweetView.model()
-        model.timelineLoaded.connect(self.moveToTop)
-        #model.clear()
-        #model.load()
+        tweetView.model().timelineLoaded.connect(self.moveToTop)
         tweetView.refresh()
         self.reset_remind()
 
@@ -206,12 +203,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         tweetViews = {0: self.homeView, 1: self.mentionsView,
                       2: self.commentsView, 3: self.myView}
         return tweetViews[self.tabWidget.currentIndex()]
-
-    def get_current_model(self):
-        models = {0: self.all_timeline, 1: self.mentions,
-                  2: self.comment_to_me,
-                  3: self.my_timeline}
-        return models[self.tabWidget.currentIndex()]
 
     def closeEvent(self, event):
         self.timer.stop_event.set()
