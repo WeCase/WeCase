@@ -195,12 +195,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def refresh(self):
         tweetView = self.get_current_tweetView()
-        tweetView.setBusy(True, 0)
-        model = self.get_current_model()
+        model = tweetView.model()
         model.timelineLoaded.connect(self.moveToTop)
         #model.clear()
         #model.load()
-        model.new()
+        tweetView.refresh()
         self.reset_remind()
 
     def get_current_tweetView(self):

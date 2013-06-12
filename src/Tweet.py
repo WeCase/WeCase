@@ -60,7 +60,7 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
 class TweetTimelineBaseModel(TweetSimpleModel):
 
     timelineLoaded = QtCore.pyqtSignal()
-    newerLoaded = QtCore.pyqtSignal()
+    nothingLoaded = QtCore.pyqtSignal()
 
     def __init__(self, timeline=None, parent=None):
         super(TweetTimelineBaseModel, self).__init__(parent)
@@ -133,7 +133,9 @@ class TweetTimelineBaseModel(TweetSimpleModel):
                 timeline = self._load_next_page()()
 
         timeline = self.filter(timeline)
-        self.newerLoaded.emit()
+        if not timeline:
+            self.nothingLoaded.emit()
+
         if pos == -1:
             self.appendRows(timeline)
         else:

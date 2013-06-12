@@ -37,7 +37,7 @@ class TweetListWidget(QtGui.QWidget):
 
     def loadMore(self, value):
        if value == self.scrollArea.verticalScrollBar().maximum():
-           self.tweetListWidget.setBusy(True, -1)
+           self.setBusy(True, SimpleTweetListWidget.BOTTOM)
            model = self.tweetListWidget.model
            model.next()
 
@@ -47,8 +47,18 @@ class TweetListWidget(QtGui.QWidget):
     def setBusy(self, busy, pos):
         self.tweetListWidget.setBusy(busy, pos)
 
+    def model(self):
+        return self.tweetListWidget.model
+
+    def refresh(self):
+        self.setBusy(True, SimpleTweetListWidget.TOP)
+        self.tweetListWidget.model.new()
+
 
 class SimpleTweetListWidget(QtGui.QWidget):
+
+    TOP = 1
+    BOTTOM = 2
 
     def __init__(self, parent=None, without=[]):
         super(SimpleTweetListWidget, self).__init__(parent)
@@ -65,74 +75,58 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def setModel(self, model):
         self.model = model
         self.model.rowsInserted.connect(self._rowsInserted)
-        self.model.newerLoaded.connect(self._newerLoaded)
+        self.model.nothingLoaded.connect(self._hideBusyIcon)
 
-    def _newerLoaded(self):
-        self.setBusy(False, -1)
+    def _hideBusyIcon(self):
+        self.setBusy(False, self.BOTTOM)
 
     def _rowsInserted(self, parent, start, end):
-        self.setBusy(False, 0)
+        self.setBusy(False, self.TOP)
+        self.setBusy(False, self.BOTTOM)
         for index in range(start, end + 1):
             item = self.model.get_item(index)
             widget = SingleTweetWidget(item, self.without, self)
-            if self.top_busy_id:
-                self.layout.insertWidget(index + 1, widget)
-            else:
-                self.layout.insertWidget(index, widget)
+            self.layout.insertWidget(index, widget)
 
     def setupBusyIcon(self):
-        layout = QtGui.QVBoxLayout()
+        busyWidget = QtGui.QWidget()
+        layout = QtGui.QVBoxLayout(busyWidget)
         busy = QtGui.QLabel()
         busy.setPixmap(QtGui.QPixmap("./icon/busy.png"))
         layout.addWidget(busy)
         layout.setAlignment(QtCore.Qt.AlignCenter)
-        return layout
-
-    def clearLayout(self, layout):
-        for i in reversed(range(layout.count())):
-            item = layout.itemAt(i)
-
-            if isinstance(item, QtGui.QWidgetItem):
-                item.widget().close()
-                # or
-                # item.widget().setParent(None)
-            elif isinstance(item, QtGui.QSpacerItem):
-                pass
-                # no need to do extra stuff
-            else:
-                self.clearLayout(item.layout())
-
-            # remove the item from layout
-            layout.removeItem(item)
+        busyWidget.setLayout(layout)
+        return busyWidget
 
     def setBusy(self, busy, pos):
-        return  # Developement mask
-        if pos == 0:
+        if pos == self.TOP:
             self._setTopBusy(busy)
-        else:
+        elif pos == self.BOTTOM:
             self._setBottomBusy(busy)
 
     def _setTopBusy(self, busy):
-        if busy and not self.top_busy_id:
-            busy_icon_layout = self.setupBusyIcon()
-            self.layout.insertLayout(0, busy_icon_layout)
-            self.top_busy_id = id(self.layout.itemAt(0))
-        elif not busy:
-            if self.top_busy_id == id(self.layout.itemAt(0)):
-                item = self.layout.itemAt(0)
-                self.clearLayout(item)
-                self.top_busy_id = 0
+        top_widget = self.layout.itemAt(0)
+        if top_widget:
+            top_widget = top_widget.widget()
+        if busy and (not top_widget or top_widget.objectName() != "busyIcon"):
+            busy_widget = self.setupBusyIcon()
+            busy_widget.setObjectName("busyIcon")
+            self.layout.insertWidget(0, busy_widget)
+        elif not busy and top_widget and top_widget.objectName() == "busyIcon":
+            self.layout.removeWidget(top_widget)
+            top_widget.setParent(None)
 
     def _setBottomBusy(self, busy):
-        if busy and not self.bottom_busy_id:
-            busy_icon_layout = self.setupBusyIcon()
-            self.layout.addLayout(busy_icon_layout)
-            self.bottom_busy_id = id(self.layout.itemAt(self.layout.count() - 1))
-        elif not busy:
-            if self.bottom_busy_id == id(self.layout.itemAt(self.layout.count() - 1)):
-                item = self.layout.itemAt(self.layout.count() - 1)
-                self.clearLayout(item)
-                self.bottom_busy_id = 0
+        bottom_widget = self.layout.itemAt(self.layout.count() - 1)
+        if bottom_widget:
+            bottom_widget = bottom_widget.widget()
+        if busy and (not bottom_widget or bottom_widget.objectName() != "busyIcon"):
+            busy_widget = self.setupBusyIcon()
+            busy_widget.setObjectName("busyIcon")
+            self.layout.addWidget(busy_widget)
+        elif not busy and bottom_widget and bottom_widget.objectName() == "busyIcon":
+            self.layout.removeWidget(bottom_widget)
+            bottom_widget.setParent(None)
 
 
 class SingleTweetWidget(QtGui.QFrame):
