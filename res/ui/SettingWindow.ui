@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>371</width>
-    <height>277</height>
+    <height>311</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,7 +23,7 @@
    <iconset resource="wecase.qrc">
     <normaloff>:/IMG/img/preferences-other.png</normaloff>:/IMG/img/preferences-other.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="6,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="sizePolicy">
@@ -337,6 +337,75 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Cache</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Total Cache Size:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="cacheSizeLabel">
+           <property name="text">
+            <string>Computing...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QPushButton" name="cacheViewButton">
+           <property name="text">
+            <string>View by File Manager</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="cacheClearButton">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -480,6 +549,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cacheClearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>clearCache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cacheViewButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>viewCache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setIntervalText(int)</slot>
@@ -488,5 +589,7 @@
   <slot>removeBlackUser()</slot>
   <slot>addKeyword()</slot>
   <slot>removeKeyword()</slot>
+  <slot>clearCache()</slot>
+  <slot>viewCache()</slot>
  </slots>
 </ui>

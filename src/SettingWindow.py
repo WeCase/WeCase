@@ -6,17 +6,35 @@
 # License: GPL v3 or later.
 
 
-from PyQt4 import QtGui
+import os
+from PyQt4 import QtCore, QtGui
 from configparser import ConfigParser
 from SettingWindow_ui import Ui_SettingWindow
 import const
+from WeHack import async, start, getDirSize, clearDir
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
+
+    cacheCleared = QtCore.pyqtSignal()
+
     def __init__(self, parent=None):
         super(WeSettingsWindow, self).__init__(parent)
         self.setupUi(self)
         self.loadConfig()
+        self.cacheCleared.connect(self.showSize)
+
+    def setupUi(self, widget):
+        super(WeSettingsWindow, self).setupUi(widget)
+        self.showSize()
+
+    def showSize(self):
+        self.cacheSizeLabel.setText(self.getHumanReadableCacheSize())
+
+    def getHumanReadableCacheSize(self):
+        raw_bytes = getDirSize(const.cache_path)
+        megabytes_str = "%.1f MiB" % (raw_bytes / 1000000)
+        return megabytes_str
 
     def transformInterval(self, sliderValue):
         return (sliderValue // 60, sliderValue % 60)
@@ -109,3 +127,11 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 
     def reject(self):
         self.done(False)
+
+    @async
+    def clearCache(self):
+        clearDir(const.cache_path)
+        self.cacheCleared.emit()
+
+    def viewCache(self):
+        start(const.cache_path)

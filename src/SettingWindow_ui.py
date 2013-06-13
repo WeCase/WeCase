@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/SettingWindow.ui'
 #
-# Created: Sat Jun  8 02:10:39 2013
+# Created: Thu Jun 13 21:34:01 2013
 #      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
         SettingWindow.setObjectName(_fromUtf8("SettingWindow"))
-        SettingWindow.resize(371, 277)
+        SettingWindow.resize(371, 311)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -172,12 +172,38 @@ class Ui_SettingWindow(object):
         self.horizontalLayout_8.addLayout(self.verticalLayout_10)
         self.gridLayout.addLayout(self.horizontalLayout_8, 1, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
+        self.tab_3 = QtGui.QWidget()
+        self.tab_3.setObjectName(_fromUtf8("tab_3"))
+        self.verticalLayout_5 = QtGui.QVBoxLayout(self.tab_3)
+        self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
+        spacerItem5 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem5)
+        self.horizontalLayout_6 = QtGui.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
+        self.label_3 = QtGui.QLabel(self.tab_3)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.horizontalLayout_6.addWidget(self.label_3)
+        self.cacheSizeLabel = QtGui.QLabel(self.tab_3)
+        self.cacheSizeLabel.setObjectName(_fromUtf8("cacheSizeLabel"))
+        self.horizontalLayout_6.addWidget(self.cacheSizeLabel)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_6)
+        self.horizontalLayout_7 = QtGui.QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(_fromUtf8("horizontalLayout_7"))
+        self.cacheViewButton = QtGui.QPushButton(self.tab_3)
+        self.cacheViewButton.setObjectName(_fromUtf8("cacheViewButton"))
+        self.horizontalLayout_7.addWidget(self.cacheViewButton)
+        self.cacheClearButton = QtGui.QPushButton(self.tab_3)
+        self.cacheClearButton.setObjectName(_fromUtf8("cacheClearButton"))
+        self.horizontalLayout_7.addWidget(self.cacheClearButton)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_7)
+        spacerItem6 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem6)
+        self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
         self.buttonBox = QtGui.QDialogButtonBox(SettingWindow)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
-        self.verticalLayout.setStretch(0, 6)
         self.intervalDefine.setBuddy(self.intervalSlider)
         self.timeoutDefine.setBuddy(self.intervalSlider)
         self.label_2.setBuddy(self.mentionsChk)
@@ -192,6 +218,8 @@ class Ui_SettingWindow(object):
         QtCore.QObject.connect(self.btnRemoveBlackUser, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.removeBlackUser)
         QtCore.QObject.connect(self.btnAddKeyword, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.addKeyword)
         QtCore.QObject.connect(self.btnRemoveKeyword, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.removeKeyword)
+        QtCore.QObject.connect(self.cacheClearButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.clearCache)
+        QtCore.QObject.connect(self.cacheViewButton, QtCore.SIGNAL(_fromUtf8("clicked()")), SettingWindow.viewCache)
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
 
     def retranslateUi(self, SettingWindow):
@@ -212,5 +240,10 @@ class Ui_SettingWindow(object):
         self.btnAddKeyword.setText(_translate("SettingWindow", "Add", None))
         self.btnRemoveKeyword.setText(_translate("SettingWindow", "Remove", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("SettingWindow", "Filters", None))
+        self.label_3.setText(_translate("SettingWindow", "Total Cache Size:", None))
+        self.cacheSizeLabel.setText(_translate("SettingWindow", "Computing...", None))
+        self.cacheViewButton.setText(_translate("SettingWindow", "View by File Manager", None))
+        self.cacheClearButton.setText(_translate("SettingWindow", "Clear", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("SettingWindow", "Cache", None))
 
 import wecase_rc
