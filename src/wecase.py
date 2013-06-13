@@ -17,12 +17,12 @@ import signal
 
 def mkconfig():
     try:
-        os.mkdir(const.config_path.replace("/config_db", ""))
+        os.makedirs(const.config_path.replace("/config_db", ""))
     except OSError:
         pass
 
     try:
-        os.mkdir(const.cache_path)
+        os.makedirs(const.cache_path)
     except OSError:
         pass
 
