@@ -12,7 +12,6 @@ import urllib.parse
 import urllib.error
 import http
 from time import sleep
-from configparser import ConfigParser
 import threading
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
@@ -23,6 +22,7 @@ from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
+from WeCaseConfig import WeCaseConfig
 
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
@@ -50,19 +50,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.get_uid()
 
     def loadConfig(self):
-        self.config = ConfigParser()
-        self.config.read(const.config_path)
-
-        if not self.config.has_section('main'):
-            self.config['main'] = {}
-
-        self.main_config = self.config['main']
-        self.timer_interval = int(self.main_config.get('notify_interval', 30))
-        self.notify_timeout = int(self.main_config.get('notify_timeout', 5))
-        self.usersBlacklist = eval(self.main_config.get('usersBlacklist', "[]"))
-        self.tweetKeywordsBlacklist = eval(self.main_config.get("tweetKeywordsBlacklist", "[]"))
-        self.remindMentions = self.main_config.getboolean('remind_mentions', 1)
-        self.remindComments = self.main_config.getboolean('remind_comments', 1)
+        self.config = WeCaseConfig(const.config_path)
+        self.notify_interval = self.config.notify_interval
+        self.notify_timeout = self.config.notify_timeout
+        self.usersBlacklist = self.config.usersBlacklist
+        self.tweetKeywordsBlacklist = self.config.tweetsKeywordsBlacklist
+        self.remindMentions = self.config.remind_mentions
+        self.remindComments = self.config.remind_comments
 
     def applyConfig(self):
         try:
@@ -70,7 +64,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         except AttributeError:
             pass
 
-        self.timer = WTimer(self.timer_interval, self.show_notify)
+        self.timer = WTimer(self.notify_interval, self.show_notify)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
 

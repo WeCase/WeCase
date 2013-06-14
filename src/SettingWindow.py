@@ -8,10 +8,10 @@
 
 import os
 from PyQt4 import QtCore, QtGui
-from configparser import ConfigParser
 from SettingWindow_ui import Ui_SettingWindow
 import const
 from WeHack import async, start, getDirSize, clearDir
+from WeCaseConfig import WeCaseConfig
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
@@ -47,27 +47,16 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.timeoutLabel.setText(self.tr("%i sec") % sliderValue)
 
     def loadConfig(self):
-        self.config = ConfigParser()
-        self.config.read(const.config_path)
+        self.config = WeCaseConfig(const.config_path)
 
-        if not self.config.has_section('main'):
-            self.config['main'] = {}
-
-        self.main_config = self.config['main']
-        self.intervalSlider.setValue(int(self.main_config.get(
-            'notify_interval', "30")))
+        self.intervalSlider.setValue(self.config.notify_interval)
         self.setIntervalText(self.intervalSlider.value())
-        self.timeoutSlider.setValue(int(self.main_config.get(
-            "notify_timeout", "5")))
+        self.timeoutSlider.setValue(self.config.notify_timeout)
         self.setTimeoutText(self.timeoutSlider.value())
-        self.commentsChk.setChecked(self.main_config.getboolean(
-            "remind_comments", True))
-        self.mentionsChk.setChecked(self.main_config.getboolean(
-            "remind_mentions", True))
-        self.usersBlackListWidget.addItems(eval(self.main_config.get(
-            "usersBlacklist", "[]")))
-        self.tweetsKeywordsBlacklistWidget.addItems(eval(self.main_config.get(
-            "tweetKeywordsBlacklist", "[]")))
+        self.commentsChk.setChecked(self.config.remind_comments)
+        self.mentionsChk.setChecked(self.config.remind_mentions)
+        self.usersBlackListWidget.addItems(self.config.usersBlacklist)
+        self.tweetsKeywordsBlacklistWidget.addItems(self.config.tweetsKeywordsBlacklist)
 
     def _getListWidgetItemsStringList(self, listWidget):
         stringList = []
@@ -76,22 +65,13 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         return stringList
 
     def saveConfig(self):
-        self.config = ConfigParser()
-        self.config.read(const.config_path)
-
-        if not self.config.has_section('main'):
-            self.config['main'] = {}
-
-        self.main_config = self.config['main']
-        self.main_config['notify_interval'] = str(self.intervalSlider.value())
-        self.main_config['notify_timeout'] = str(self.timeoutSlider.value())
-        self.main_config['remind_comments'] = str(self.commentsChk.isChecked())
-        self.main_config['remind_mentions'] = str(self.mentionsChk.isChecked())
-        self.main_config['usersBlacklist'] = str(self._getListWidgetItemsStringList(self.usersBlackListWidget))
-        self.main_config['tweetKeywordsBlacklist'] = str(self._getListWidgetItemsStringList(self.tweetsKeywordsBlacklistWidget))
-
-        with open(const.config_path, "w+") as config_file:
-            self.config.write(config_file)
+        self.config.notify_interval = str(self.intervalSlider.value())
+        self.config.notify_timeout = str(self.timeoutSlider.value())
+        self.config.remind_comments = str(self.commentsChk.isChecked())
+        self.config.remind_mentions = str(self.mentionsChk.isChecked())
+        self.config.usersBlacklist = str(self._getListWidgetItemsStringList(self.usersBlackListWidget))
+        self.config.tweetsKeywordsBlacklist = str(self._getListWidgetItemsStringList(self.tweetsKeywordsBlacklistWidget))
+        self.config.save()
 
     def addBlackUser(self):
         user = QtGui.QInputDialog.getText(

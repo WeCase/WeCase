@@ -7,7 +7,6 @@
 
 
 import webbrowser
-from configparser import ConfigParser
 from WeHack import async
 from weibo import APIClient
 from PyQt4 import QtCore, QtGui
@@ -16,6 +15,7 @@ from WeCaseWindow import WeCaseWindow
 import const
 from TweetUtils import authorize
 from time import sleep
+from WeCaseConfig import WeCaseConfig
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
@@ -95,25 +95,16 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.login()
 
     def loadConfig(self):
-        self.config = ConfigParser()
-        self.config.read(const.config_path)
-
-        if not self.config.has_section('login'):
-            self.config['login'] = {}
-
-        self.login_config = self.config['login']
-        self.passwd = eval(self.login_config.get('passwd', "{}"))
-        self.last_login = str(self.login_config.get('last_login', ""))
-        self.auto_login = self.login_config.getboolean('auto_login', 0) and \
-                          self.allow_auto_login
+        self.login_config = WeCaseConfig(const.config_path, "login")
+        self.passwd = self.login_config.passwd
+        self.last_login = self.login_config.last_login
+        self.auto_login = self.login_config.auto_login and self.allow_auto_login
 
     def saveConfig(self):
-        self.login_config['passwd'] = str(self.passwd)
-        self.login_config['last_login'] = self.last_login
-        self.login_config['auto_login'] = str(self.chk_AutoLogin.isChecked())
-
-        with open(const.config_path, "w+") as config_file:
-            self.config.write(config_file)
+        self.login_config.passwd = self.passwd
+        self.login_config.last_login = self.last_login
+        self.login_config.auto_login = self.chk_AutoLogin.isChecked()
+        self.login_config.save()
 
     def login(self):
         self.pushButton_log.setText(self.tr("Login, waiting..."))
@@ -151,7 +142,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     def setPassword(self, username):
         if username:
-            self.txt_Password.setText(self.passwd[str(username)])
+            self.txt_Password.setText(self.passwd[username])
 
     @QtCore.pyqtSlot(bool)
     def uncheckAutoLogin(self, checked):
