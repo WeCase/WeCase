@@ -127,7 +127,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.reply()
         else:
             # If action is in other types, it must be a mistake.
-            assert(False)
+            assert False
 
     @async
     def retweet(self):
@@ -216,9 +216,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.textEdit.textCursor().insertText(wecase_smiley.smileyName)
 
     def checkChars(self):
-        '''Check textEdit's characters.
+        """Check textEdit's characters.
         If it larger than 140, Send Button will be disabled
-        and label will show red chars.'''
+        and label will show red chars."""
 
         text = self.textEdit.toPlainText()
         numLens = 140 - tweetLength(text)

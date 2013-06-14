@@ -19,12 +19,12 @@ def is_rc(filename):
 
 
 def generate_ui(name, path):
-    print("Generating UI file for %s" % (file))
+    print("Generating UI file for %s" % file)
     os.popen("pyuic4 %s > %s.py" % (path, file.replace('.ui', '_ui')))
 
 
 def generate_rc(name, path):
-    print("Generating RC file for %s" % (file))
+    print("Generating RC file for %s" % file)
     os.popen("pyrcc4 -py3 -compress 9 %s > %s.py" % (path, file.replace(".qrc", "_rc")))
 
 

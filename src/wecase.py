@@ -31,7 +31,7 @@ def my_excepthook(type, value, tback):
     # Let Qt complains about it.
     exception = "".join(traceback.format_exception(type, value, tback))
     error_info = "Oops, there is an unexcepted error: \n\n" + \
-                 "%s\n" % (exception) + \
+                 "%s\n" % exception + \
                  "Please report it at https://github.com/WeCase/WeCase/issues"
     QtGui.QMessageBox.critical(None, "Unknown Error", error_info)
 

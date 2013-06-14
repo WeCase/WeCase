@@ -36,7 +36,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         return megabytes_str
 
     def transformInterval(self, sliderValue):
-        return (sliderValue // 60, sliderValue % 60)
+        return sliderValue // 60, sliderValue % 60
 
     def setIntervalText(self, sliderValue):
         self.intervalLabel.setText(self.tr("%i min %i sec") %

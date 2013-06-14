@@ -41,13 +41,13 @@ class WIconLabel(QtGui.QLabel):
     def setIcon(self, icon):
         self._icon = icon
         if self._position == self.imageAtLeft:
-            self._icon_code = "<img src=\"%s\" />" % (icon)
+            self._icon_code = "<img src=\"%s\" />" % icon
         elif self._position == self.imageAtRight:
-            self._icon_code = "<img src=\"%s\" />" % (icon)
+            self._icon_code = "<img src=\"%s\" />" % icon
         elif self._position == self.imageAtTop:
-            self._icon_code = "<img src=\"%s\" />" % (icon) + "<br />"
+            self._icon_code = "<img src=\"%s\" />" % icon + "<br />"
         elif self._position == self.imageAtBottom:
-            self._icon_code = "<br />" + "<img src=\"%s\" />" % (icon)
+            self._icon_code = "<br />" + "<img src=\"%s\" />" % icon
         self.setText(self._text)
 
     def position(self):

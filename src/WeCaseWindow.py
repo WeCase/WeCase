@@ -101,8 +101,8 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.tabWidget.setTabText(2, self.tr("Comments"))
 
     def get_remind(self, uid):
-        '''this function is used to get unread_count
-        from Weibo API. uid is necessary.'''
+        """this function is used to get unread_count
+        from Weibo API. uid is necessary."""
 
         while 1:
             try:
@@ -114,7 +114,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         return reminds
 
     def get_uid(self):
-        '''How can I get my uid? here it is'''
+        """How can I get my uid? here it is"""
         try:
             self.uid = self.client.account.get_uid.get().uid
         except AttributeError:
@@ -148,7 +148,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             num_msg += 1
 
         if num_msg:
-            return
             self.notify.showMessage(self.tr("WeCase"), msg)
 
     def setTabText(self, index, string):

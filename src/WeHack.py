@@ -10,11 +10,11 @@ def async(func):
 @async
 def start(filename):
     if platform.system() == "Linux":
-        os.system("xdg-open %s > /dev/null" % (filename))
+        os.system("xdg-open %s > /dev/null" % filename)
     elif platform.system() == "Darwin":
-        os.system("open %s" % (filename))
+        os.system("open %s" % filename)
     elif platform.system() == "Windows":
-        os.system("start %s" % (filename))
+        os.system("start %s" % filename)
     else:
         assert False
 

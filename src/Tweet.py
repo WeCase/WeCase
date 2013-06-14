@@ -309,7 +309,7 @@ class TweetItem(QtCore.QObject):
         if passedSeconds < 0:
             return self.tr("Future!")
         if passedSeconds < 60:
-            return self.tr("%.0fs ago") % (passedSeconds)
+            return self.tr("%.0fs ago") % passedSeconds
         if passedSeconds < 3600:
             return self.tr("%.0fm ago") % (passedSeconds / 60)
         if passedSeconds < 86400:
@@ -361,7 +361,7 @@ class TweetItem(QtCore.QObject):
         # Always compare UTC time, do NOT compare LOCAL time.
         # See http://coolshell.cn/articles/5075.html for more details.
         if now_utc < create_utc:
-            # datetime do not support nagetive numbers
+            # datetime do not support negative numbers
             return -1
         else:
             passedSeconds = (now_utc - create_utc).seconds

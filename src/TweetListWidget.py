@@ -403,10 +403,6 @@ class SingleTweetWidget(QtGui.QFrame):
         from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
-        if tweet.type == TweetItem.RETWEET:
-            text = "//@" + tweet.author.name + ":" + tweet.text
-        else:
-            text = ""
         wecase_new = NewpostWindow("retweet", tweet)
         wecase_new.exec_()
 
