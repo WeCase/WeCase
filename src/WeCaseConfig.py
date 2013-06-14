@@ -71,11 +71,11 @@ class WeCaseConfig():
     # Section: login
     @property
     def passwd(self):
-        return eval(self._main_config.get("login", "{}"))
+        return eval(self._main_config.get("passwd", "{}"))
 
     @passwd.setter
     def passwd(self, accounts):
-        self._main_config["login"] = str(accounts)
+        self._main_config["passwd"] = str(accounts)
 
     @property
     def last_login(self):
