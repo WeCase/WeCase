@@ -4,18 +4,24 @@
 # WeCase -- This model implemented Model and Item for tweets
 # Copyright: GPL v3 or later.
 
-import threading
+
 from PyQt4 import QtCore
 from datetime import datetime
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
+from WeHack import async
+from TweetUtils import tweetLength
+import const
 
 
-class TweetAbstractModel(QtCore.QAbstractListModel):
-    def __init__(self, prototype, parent=None):
-        super(TweetAbstractModel, self).__init__()
-        self.setRoleNames(prototype.roles)
+class TweetSimpleModel(QtCore.QAbstractListModel):
+    rowInserted = QtCore.pyqtSignal(int)
+
+    def __init__(self, parent=None):
+        super(TweetSimpleModel, self).__init__(parent)
         self._tweets = []
+        self._tweetKeywordBlacklist = []
+        self._usersBlackList = []
 
     def appendRow(self, item):
         self.insertRow(self.rowCount(), item)
@@ -30,144 +36,212 @@ class TweetAbstractModel(QtCore.QAbstractListModel):
     def data(self, index, role):
         return self._tweets[index.row()].data(role)
 
+    def get_item(self, row):
+        return self._tweets[row]
+
     def insertRow(self, row, item):
         self.beginInsertRows(QtCore.QModelIndex(), row, row)
         self._tweets.insert(row, item)
+        self.rowInserted.emit(row)
         self.endInsertRows()
 
     def insertRows(self, row, items):
         self.beginInsertRows(QtCore.QModelIndex(), row, row + len(items) - 1)
         for item in items:
             self._tweets.insert(row, TweetItem(item))
+            self.rowInserted.emit(row)
         self.endInsertRows()
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
 
 
-class TweetCommonModel(TweetAbstractModel):
-    timelineLoaded = QtCore.pyqtSignal()
+class TweetTimelineBaseModel(TweetSimpleModel):
 
-    def __init__(self, prototype, timeline=None, parent=None):
-        super(TweetCommonModel, self).__init__(prototype, parent)
+    timelineLoaded = QtCore.pyqtSignal()
+    nothingLoaded = QtCore.pyqtSignal()
+
+    def __init__(self, timeline=None, parent=None):
+        super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
 
-    def _get_thread(self, page):
+    def timeline_get(self):
+        raise NotImplementedError
+
+    def timeline_new(self):
+        raise NotImplementedError
+
+    def timeline_old(self):
+        raise NotImplementedError
+
+    def first_id(self):
+        return int(self._tweets[0].id)
+
+    def last_id(self):
+        return int(self._tweets[-1].id)
+
+    def _load_next_page(self):
+        self.page += 1
+        timeline = lambda: self.timeline_get(page=self.page)
+        return timeline
+
+    def setTweetsKeywordsBlacklist(self, blacklist):
+        self._tweetKeywordBlacklist = blacklist
+
+    def setUsersBlacklist(self, blacklist):
+        self._usersBlackList = blacklist
+
+    def _inBlacklist(self, tweet):
+        if not tweet:
+            return False
+        elif self._inBlacklist(tweet.original):
+            return True
+
+        # Put all your statements at here
+        if tweet.withKeywords(self._tweetKeywordBlacklist):
+            return True
+        if tweet.author and (tweet.author.name in self._usersBlackList):
+            return True
+        return False
+
+    def filter(self, items):
+        new_items = []
+        for item in items:
+            if self._inBlacklist(TweetItem(item)):
+                continue
+            else:
+                new_items.append(item)
+        return new_items
+
+    @async
+    def _common_get(self, timeline_func, pos):
         if self.lock:
             return
         self.lock = True
-        timeline = self.timeline.get(page=page).statuses
-        self.appendRows(timeline)
+        # timeline is just a pointer to the method.
+        # We are in another thread now, call it. UI won't freeze.
+        timeline = timeline_func()
 
-        self.since = int(self._tweets[0].id)
-        self.max = int(self._tweets[-1].id)
+        # Timeline is not blank, but after filter(), timeline is blank.
+        while timeline and (not self.filter(timeline)):
+            # All tweets in this page are removed.
+            # Load next page.
+            if timeline_func != self.timeline_new:
+                # We are not fetch new tweets.
+                timeline = self._load_next_page()()
+
+        timeline = self.filter(timeline)
+        if not timeline:
+            self.nothingLoaded.emit()
+
+        if pos == -1:
+            self.appendRows(timeline)
+        else:
+            self.insertRows(pos, timeline)
         self.lock = False
 
-    def _get(self, page):
-        threading.Thread(group=None, target=self._get_thread,
-                         args=(page,)).start()
-
-    def _new_thread(self, since):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(since_id=since).statuses[::-1]
-        self.insertRows(0, timeline)
-
-        self.since = int(self._tweets[0].id)
-        self.lock = False
-        self.timelineLoaded.emit()
-
-    def _new(self, since):
-        threading.Thread(group=None, target=self._new_thread,
-                         args=(since,)).start()
-
-    def _old_thread(self, max):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(max_id=max).statuses
-
-         # Remove the first same tweet
-        self.appendRows(timeline[1::])
-        self.max = int(self._tweets[-1].id)
-        self.lock = False
-
-    def _old(self, max):
-        threading.Thread(group=None, target=self._old_thread,
-                args=(max,)).start()
-
-
-    # Public
     def load(self):
-        self._get(1)
         self.page = 1
-
-    def next(self):
-        self._old(self.max)
+        timeline = self.timeline_get
+        self._common_get(timeline, -1)
 
     def new(self):
-        self.page = 1
-        self._new(self.since)
-
-
-class TweetCommentModel(TweetCommonModel):
-    def __init__(self, prototype, timeline=None, parent=None):
-        super(TweetCommentModel, self).__init__(prototype, timeline, parent)
-
-    def _get_thread(self, page):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(page=page).comments
-        self.appendRows(timeline)
-
-        self.since = int(self._tweets[0].id)
-        self.max = int(self._tweets[-1].id)
-        self.lock = False
-
-    def _get(self, page):
-        threading.Thread(group=None, target=self._get_thread,
-                         args=(page,)).start()
-
-    def _new_thread(self, since):
-        if self.lock:
-            return
-        timeline = self.timeline.get(since_id=since).comments[::-1]
-        self.insertRows(0, timeline)
-        self.since = int(self._tweets[0].id)
-        self.lock = False
+        timeline = self.timeline_new
+        self._common_get(timeline, 0)
         self.timelineLoaded.emit()
 
-    def _new(self, since):
-        threading.Thread(group=None, target=self._new_thread,
-                         args=(since,)).start()
+    def next(self):
+        timeline = self.timeline_old
+        self._common_get(timeline, -1)
 
-    def _old_thread(self, max):
-        if self.lock:
-            return
-        self.lock = True
-        timeline = self.timeline.get(max_id=max).statuses
 
-         # Remove the first same tweet
-        self.appendRows(timeline[1::])
-        self.max = int(self._tweets[-1].id)
-        self.lock = False
+class TweetCommonModel(TweetTimelineBaseModel):
 
-    def _old(self, max):
-        threading.Thread(group=None, target=self._old_thread,
-                args=(max,)).start()
+    def __init__(self, timeline=None, parent=None):
+        super(TweetCommonModel, self).__init__(timeline, parent)
+
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(page=page).statuses
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(since_id=self.first_id()).statuses[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(max_id=self.last_id()).statuses
+        timeline = timeline[1::]
+        return timeline
+
+
+class TweetCommentModel(TweetTimelineBaseModel):
+    def __init__(self, timeline=None, parent=None):
+        super(TweetCommentModel, self).__init__(timeline, parent)
+        self.page = 0
+
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(page=page).comments
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(since_id=self.first_id()).comments[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(max_id=self.last_id()).comments
+        timeline = timeline[1::]
+        return timeline
+
+
+class TweetUnderCommentModel(TweetTimelineBaseModel):
+    def __init__(self, timeline=None, id=0, parent=None):
+        super(TweetUnderCommentModel, self).__init__(timeline, parent)
+        self.id = id
+
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(id=self.id, page=page).comments
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).comments[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(id=self.id, max_id=self.last_id()).comments
+        timeline = timeline[1::]
+        return timeline
+
+
+class TweetRetweetModel(TweetTimelineBaseModel):
+    def __init__(self, timeline=None, id=0, parent=None):
+        super(TweetRetweetModel, self).__init__(timeline, parent)
+        self.id = id
+
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(id=self.id, page=page).reposts
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).reposts[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(id=self.id, max_id=self.last_id()).reposts
+        timeline = timeline[1::]
+        return timeline
 
 
 class UserItem(QtCore.QObject):
     def __init__(self, item, parent=None):
+        # HACK: Ignore parent, can't create a child with different thread.
+        # Where is the thread? I don't know...
         super(UserItem, self).__init__()
         self._data = item
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @QtCore.pyqtProperty(int, constant=True)
     def id(self):
-        return self._data.get('idstr')
+        return self._data.get('id')
 
     @QtCore.pyqtProperty(str, constant=True)
     def name(self):
@@ -182,41 +256,11 @@ class TweetItem(QtCore.QObject):
     TWEET = 0
     RETWEET = 1
     COMMENT = 2
-    roles = {
-        QtCore.Qt.UserRole + 1: "type",
-        QtCore.Qt.UserRole + 2: "id",
-        QtCore.Qt.UserRole + 3: "mid",
-        QtCore.Qt.UserRole + 4: "url",
-        QtCore.Qt.UserRole + 5: "author",
-        QtCore.Qt.UserRole + 6: "time",
-        QtCore.Qt.UserRole + 7: "text",
-        QtCore.Qt.UserRole + 8: "original",
-        QtCore.Qt.UserRole + 9: "thumbnail_pic",
-        QtCore.Qt.UserRole + 10: "original_pic"
-    }
 
-    def __init__(self, item={}, parent=None):
-        super(TweetItem, self).__init__()
-        self._data = item
-
-        if not item:
-            return
-
-        self._roleData = {
-            "type": self.type,
-            "id": self.id,
-            "mid": self.mid,
-            "url": self.url,
-            "author": self.author,
-            "time": self.time,
-            "text": self.text,
-            "original": self.original,
-            "thumbnail_pic": self.thumbnail_pic,
-            "original_pic": self.original_pic,
-        }
-
-    def data(self, key):
-        return self._roleData[self.roles[key]]
+    def __init__(self, data={}, parent=None):
+        super(TweetItem, self).__init__(parent)
+        self._data = data
+        self.client = const.client
 
     @QtCore.pyqtProperty(int, constant=True)
     def type(self):
@@ -227,9 +271,9 @@ class TweetItem(QtCore.QObject):
         else:
             return self.TWEET
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @QtCore.pyqtProperty(int, constant=True)
     def id(self):
-        return self._data.get('idstr')
+        return self._data.get('id')
 
     @QtCore.pyqtProperty(str, constant=True)
     def mid(self):
@@ -258,7 +302,24 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(str, constant=True)
     def time(self):
-        return self._sinceTimeString(self._data.get('created_at'))
+        if not self.timestamp:
+            return
+
+        passedSeconds = self.passedSeconds
+        if passedSeconds < 0:
+            return self.tr("Future!")
+        if passedSeconds < 60:
+            return self.tr("%.0fs ago") % passedSeconds
+        if passedSeconds < 3600:
+            return self.tr("%.0fm ago") % (passedSeconds / 60)
+        if passedSeconds < 86400:
+            return self.tr("%.0fh ago") % (passedSeconds / 3600)
+
+        return self.tr("%.0fd ago") % (passedSeconds / 86400)
+
+    @QtCore.pyqtProperty(str, constant=True)
+    def timestamp(self):
+        return self._data.get('created_at')
 
     @QtCore.pyqtProperty(str, constant=True)
     def text(self):
@@ -283,26 +344,77 @@ class TweetItem(QtCore.QObject):
     def original_pic(self):
         return self._data.get('original_pic')
 
-    def _sinceTimeString(self, createTime):
-        if not createTime:
-            return
+    @QtCore.pyqtProperty(int, constant=True)
+    def retweets_count(self):
+        return self._data.get('reposts_count', 0)
 
-        create = time_parser().parse(createTime)
+    @QtCore.pyqtProperty(int, constant=True)
+    def comments_count(self):
+        return self._data.get('comments_count', 0)
+
+    @QtCore.pyqtProperty(int, constant=True)
+    def passedSeconds(self):
+        create = time_parser().parse(self.timestamp)
         create_utc = (create - create.utcoffset()).replace(tzinfo=None)
         now_utc = datetime.utcnow()
 
         # Always compare UTC time, do NOT compare LOCAL time.
         # See http://coolshell.cn/articles/5075.html for more details.
-        passedSeconds = (now_utc - create_utc).seconds
-
-        # datetime do not support nagetive numbers
         if now_utc < create_utc:
-            return self.tr("Time travel!")
-        if passedSeconds < 60:
-            return self.tr("%.0f seconds ago") % (passedSeconds)
-        if passedSeconds < 3600:
-            return self.tr("%.0f minutes ago") % (passedSeconds / 60)
-        if passedSeconds < 86400:
-            return self.tr("%.0f hours ago") % (passedSeconds / 3600)
+            # datetime do not support negative numbers
+            return -1
+        else:
+            passedSeconds = (now_utc - create_utc).seconds
+            return passedSeconds
 
-        return self.tr("%.0f days ago") % (passedSeconds / 86400)
+    def _cut_off(self, text):
+        cut_text = ""
+        for char in text:
+            if tweetLength(cut_text) >= 140:
+                break
+            else:
+                cut_text += char
+        return cut_text
+
+    def append_existing_replies(self, text=""):
+        if self.original.original:
+            text += "//@%s:%s//@%s:%s" % (
+                    self.author.name, self.text,
+                    self.original.author.name, self.original.text)
+        else:
+            text += "//@%s:%s" % (self.author.name, self.text)
+        return text
+
+    def reply(self, text, comment_ori=False, retweet=False):
+        self.client.comments.reply.post(id=self.original.id, cid=self.id,
+                                        comment=text, comment_ori=int(comment_ori))
+        if retweet:
+            text = self.append_existing_replies(text)
+            text = self._cut_off(text)
+            self.original.retweet(text)
+
+    def retweet(self, text, comment=False, comment_ori=False):
+        self.client.statuses.repost.post(id=self.id, status=text,
+                                         is_comment=int(comment + comment_ori * 2))
+
+    def comment(self, text, comment_ori=False, retweet=False):
+        self.client.comments.create.post(id=self.id, comment=text,
+                                         comment_ori=int(comment_ori))
+        if retweet:
+            self.retweet(text)
+
+    def refresh(self):
+        if self.type == self.TWEET or self.type == self.RETWEET:
+            self._data = self.client.statuses.show.get(id=self.id)
+
+    def withKeyword(self, keyword):
+        if keyword in self.text:
+            return True
+        else:
+            return False
+
+    def withKeywords(self, keywords):
+        for keyword in keywords:
+            if self.withKeyword(keyword):
+                return True
+        return False

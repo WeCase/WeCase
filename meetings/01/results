@@ -1,0 +1,28 @@
+biergaizi 说 :#topic 点名
+biergaizi 说 :#topic 点名
+biergaizi 说 :#topic 项目现状
+biergaizi 说 :#topic Bug 与原因
+biergaizi 说 :#idea 告知 biergaizi 一些 Qt 微博客户端（不是 QML 和 WebView）
+biergaizi 说 :#idea 完成回复评论 + 转发
+biergaizi 说 :#topic 跨平台
+biergaizi 说 :#topic 依赖、安装与打包
+biergaizi 说 :#idea 联系 @小白在安同，将打包的那些材料要来
+biergaizi 说 :#idea 可以考虑使用 OpenSUSE Build System 一次性打多种平台的包
+biergaizi 说 :#idea 每个 WeCase 版本正式 Release 之后，运行打包的 Bash 脚本，然后就会吐出一个压缩包，这个压缩包 Bundle 了 WeCase 的所有依赖，并且删除源码里的开发工具，将这个包作为压缩包发布，可供用户下载
+biergaizi 说 :#idea 各项打包任务优先考虑打包依赖，而非 WeCase 本身
+biergaizi 说 :#topic UI 与 UX
+biergaizi 说 :#topic 网站设计与维护
+biergaizi 说 :#idea 讨论网站大家都很积极，给出了 kernel.org 风格，GitHub Pages 风格，Chrome 风格，微软风格
+biergaizi 说 :#topic 联系交流与用户反馈
+biergaizi 说 :#idea Garfier 整理小白反馈
+biergaizi 说 :#idea 激活 LaunchPad，大力推广邮件列表
+biergaizi 说 :#idea 多多利用 IRC 和 QQ 群 189782088。
+biergaizi 说 :#idea 邮件列表上积极发言，让邮件列表成为一个活跃的交流谈论列表
+biergaizi 说 :#idea: 给 weibo@wecase.org 的邮箱，密码内部共享，负责维护官方微博
+biergaizi 说 :#idea 给每个人（愿意的）一个霸气的 @wecase.org 邮箱？
+biergaizi 说 :#idea 官方微博很重要，多多学习，“对用户卖萌，稳固用户群，吸引新用户”……
+biergaizi 说 :#idea 官方微博要及时解答用户问题
+biergaizi 说 :#topic 其它与吐槽
+biergaizi 说 :#idea 官方微博卖萌的问题，讨论结果是大家都非二次元向，也不会卖萌……这个任务分配给谁呢？
+biergaizi 说 :#idea 全局快捷键发微博
+biergaizi 说 :#idea 下次例会的时间暂定在周六七点。以后各种事务邮件列表赛高，加紧建设邮件列表！

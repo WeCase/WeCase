@@ -19,50 +19,45 @@
   <property name="unifiedTitleAndToolBarOnMac" stdset="0">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QWidget" name="widget" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>200</height>
-      </size>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QLabel" name="label">
-        <property name="font">
-         <font>
-          <family>Arial Black</family>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="text">
-         <string>140</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::PlainText</enum>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="WCompleteLineEdit" name="textEdit">
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Sunken</enum>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+     <item>
+      <widget class="WCompleteLineEdit" name="textEdit">
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>140</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -191,8 +186,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>278</y>
+     <x>492</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>280</x>
@@ -207,8 +202,8 @@
    <slot>addImage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>80</x>
-     <y>266</y>
+     <x>148</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>280</x>
@@ -233,46 +228,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>NewPostWindow</sender>
-   <signal>sendSuccessful()</signal>
-   <receiver>NewPostWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>280</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>280</x>
-     <y>145</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textEdit</sender>
-   <signal>textChanged()</signal>
-   <receiver>NewPostWindow</receiver>
-   <slot>checkChars()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>210</x>
-     <y>168</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>189</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_send</sender>
    <signal>clicked()</signal>
    <receiver>NewPostWindow</receiver>
    <slot>send()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>534</x>
-     <y>267</y>
+     <x>553</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>528</x>
@@ -287,12 +250,28 @@
    <slot>showSmiley()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>49</x>
-     <y>261</y>
+     <x>57</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>48</x>
      <y>228</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textEdit</sender>
+   <signal>textChanged()</signal>
+   <receiver>NewPostWindow</receiver>
+   <slot>checkChars()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>152</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>233</y>
     </hint>
    </hints>
   </connection>

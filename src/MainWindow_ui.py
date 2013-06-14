@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/MainWindow.ui'
 #
-# Created: Sat Apr 27 15:00:44 2013
+# Created: Thu Jun  6 09:44:45 2013
 #      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
-        frm_MainWindow.resize(295, 637)
+        frm_MainWindow.resize(300, 637)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_MainWindow.setWindowIcon(icon)
@@ -38,21 +38,17 @@ class Ui_frm_MainWindow(object):
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.tab)
-        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.homeView = QtDeclarative.QDeclarativeView(self.tab)
-        self.homeView.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.homeView.setFrameShadow(QtGui.QFrame.Sunken)
+        self.gridLayout_2 = QtGui.QGridLayout(self.tab)
+        self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.homeView = TweetListWidget(self.tab)
         self.homeView.setObjectName(_fromUtf8("homeView"))
-        self.verticalLayout_2.addWidget(self.homeView)
+        self.gridLayout_2.addWidget(self.homeView, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tab, _fromUtf8(""))
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName(_fromUtf8("tab_2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.tab_2)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
-        self.mentionsView = QtDeclarative.QDeclarativeView(self.tab_2)
-        self.mentionsView.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.mentionsView.setFrameShadow(QtGui.QFrame.Sunken)
+        self.mentionsView = TweetListWidget(self.tab_2)
         self.mentionsView.setObjectName(_fromUtf8("mentionsView"))
         self.verticalLayout_3.addWidget(self.mentionsView)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
@@ -60,9 +56,7 @@ class Ui_frm_MainWindow(object):
         self.tab_3.setObjectName(_fromUtf8("tab_3"))
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.tab_3)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
-        self.commentsView = QtDeclarative.QDeclarativeView(self.tab_3)
-        self.commentsView.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.commentsView.setFrameShadow(QtGui.QFrame.Sunken)
+        self.commentsView = TweetListWidget(self.tab_3)
         self.commentsView.setObjectName(_fromUtf8("commentsView"))
         self.verticalLayout_4.addWidget(self.commentsView)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
@@ -70,9 +64,7 @@ class Ui_frm_MainWindow(object):
         self.tab_4.setObjectName(_fromUtf8("tab_4"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.tab_4)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
-        self.myView = QtDeclarative.QDeclarativeView(self.tab_4)
-        self.myView.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.myView.setFrameShadow(QtGui.QFrame.Sunken)
+        self.myView = TweetListWidget(self.tab_4)
         self.myView.setObjectName(_fromUtf8("myView"))
         self.verticalLayout_5.addWidget(self.myView)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
@@ -105,7 +97,7 @@ class Ui_frm_MainWindow(object):
         frm_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(frm_MainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 295, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 300, 24))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -188,5 +180,5 @@ class Ui_frm_MainWindow(object):
         self.action_Settings.setText(_translate("frm_MainWindow", "&Settings", None))
         self.actionUpdate.setText(_translate("frm_MainWindow", "&Update", None))
 
-from PyQt4 import QtDeclarative
+from TweetListWidget import TweetListWidget
 import wecase_rc
