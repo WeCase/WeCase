@@ -36,10 +36,10 @@ class TweetListWidget(QtGui.QWidget):
         self.tweetListWidget.setModel(model)
 
     def loadMore(self, value):
-       if value == self.scrollArea.verticalScrollBar().maximum():
-           self.setBusy(True, SimpleTweetListWidget.BOTTOM)
-           model = self.tweetListWidget.model
-           model.next()
+        if value == self.scrollArea.verticalScrollBar().maximum():
+            self.setBusy(True, SimpleTweetListWidget.BOTTOM)
+            model = self.tweetListWidget.model
+            model.next()
 
     def moveToTop(self):
         self.scrollArea.verticalScrollBar().setSliderPosition(0)
