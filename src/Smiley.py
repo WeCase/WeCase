@@ -15,7 +15,7 @@ myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 class SmileyItem(QtCore.QAbstractItemModel):
     def __init__(self, name, path, parent=None):
-        QtCore.QAbstractItemModel.__init__(self, parent)
+        super(SmileyItem, self).__init__(parent)
         self.name = name
         self.path = path
 
@@ -25,7 +25,7 @@ class SmileyModel(QtCore.QAbstractListModel):
     pathRole = QtCore.Qt.UserRole + 2
 
     def __init__(self, parent=None):
-        QtCore.QAbstractListModel.__init__(self, parent)
+        super(SmileyModel, self).__init__(parent)
         self.setRoleNames(self.roleNames())
         self.smileies = []
 
@@ -50,6 +50,9 @@ class SmileyModel(QtCore.QAbstractListModel):
             return self.smileies[index.row()].path
         else:
             return None
+
+    def items(self):
+        return self.smileies
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.smileies)
@@ -77,6 +80,9 @@ class SmileyModel(QtCore.QAbstractListModel):
             filename = filepath.split('/')[-1]
             if is_smiley(filename):
                 smiley_name = os.path.splitext(filepath)[0]
-                file_content = open(smiley_name).read().replace('\n', '')
-                smiley_model.appendRow(smiley_item(file_content, 
-                    filepath.replace(myself_path + "/ui", "")))
+                file_content = open(smiley_name, encoding="UTF-8").read()
+                file_content = file_content.replace('\n', '')
+                smiley_model.appendRow(
+                    smiley_item(
+                        file_content,
+                        filepath.replace(myself_path + "/ui", "")))

@@ -1,0 +1,902 @@
+ha2q1w2007 说 :。。。被爹地揪耳朵剪头发去了，。。。10分钟内无人回应。。。
+Garfier 说 :额 查水表 那感谢名单上写你的微博ID
+biergaizi 说 :#idea 点名
+biergaizi 说 :错了
+biergaizi 说 :#undo
+biergaizi 说 :#topic 点名
+Garfier 说 :#？
+biergaizi 说 :# 是给时候分析日志的，不是机器人命令
+biergaizi 说 :#topic 点名
+biergaizi 说 :本次参会的有：
+Garfier 说 :哦哦
+GrinV 说 :感谢名单用微博ID 挺好的
+biergaizi 说 :<Garfier> 加菲猫550 真名栗健智
+biergaizi 说 :<biergaizi> 比尔盖子，真名 Tom Li 李懿峰
+biergaizi 说 :<cthbleachbit> cth_freemind 柴天浩
+biergaizi 说 :<ha2q1w2007> 七只小鸡 张钧凯（刚刚不见了）
+biergaizi 说 :<kawaiiushio> 雨宮汐
+biergaizi 说 :<HarryChen_yszzf> HarryChen-SIGKILL- 陈生气
+biergaizi 说 :<TonyChyi> 小骞爱开源 齐骞（？）
+biergaizi 说 :<GrinV> 咧威 林容威
+Garfier 说 :陈生气？
+biergaizi 说 :还有没点到的吗？
+biergaizi 说 :Garfier: 据说……
+HarryChen_yszzf 说 :陈晟祺…
+Garfier 说 :哦哦
+biergaizi 说 :好的
+biergaizi 说 :没问题，继续。
+kawaiiushio 说 :--.
+biergaizi 说 :#topic 项目现状
+biergaizi 说 :先说下代码量
+Garfier 说 :宫汐酱油啊
+TonyChyi 说 :回答盖子，然也
+biergaizi 说 :按照最新的统计结果，包括我还没有公开的代码，合计 3232 行，去除自动生成，合计 2316 行
+Garfier 说 :Good Job
+biergaizi 说 :还有许多功能缺乏实现
+biergaizi 说 :比如查看单条微博的评论，单个用户的微博
+biergaizi 说 :另外回复评论并转发已经 Broken 了，需要修复
+HarryChen_yszzf 说 :还有分组发布等等
+kawaiiushio 说 :微博内嵌视频
+biergaizi 说 :kawaiiushio: 咱不考虑
+kawaiiushio 说 :_(:з」∠)_
+cthbleachbit 说 :一个链接的事
+kawaiiushio 说 :私信功能呢
+Garfier 说 :内嵌视频 我们无需兼容FLASH
+biergaizi 说 :HarryChen_yszzf: 分组实现倒是第二期的米标
+kawaiiushio 说 :xmpp可实现
+Garfier 说 :私信用XMPP
+biergaizi 说 :私信实现无限期推迟
+kawaiiushio 说 :视频可以用html5
+kawaiiushio 说 :^_^
+HarryChen_yszzf 说 :视频还是给链接吧我觉着
+Garfier 说 :你以为新浪优酷土豆配合/
+HarryChen_yszzf 说 :现在内存吃的都那么厉害
+cthbleachbit 说 :20多个M差不多吧
+kawaiiushio 说 :好吧
+biergaizi 说 :因为私信实现完全的微博 API 不同，而且不能获取历史记录，我觉得如果单独客户端更好
+kawaiiushio 说 :把连接列出来
+biergaizi 说 :自己开个 Pidgin 更好
+kawaiiushio 说 :私信功能也删了吧
+biergaizi 说 :目前大概就是这个状况，下一个话题？
+kawaiiushio 说 :ok
+Garfier 说 :嗯
+cthbleachbit 说 :go on
+HarryChen_yszzf 说 :内存占用
+kawaiiushio 说 :UI呢
+HarryChen_yszzf 说 :这是个问题啊
+biergaizi 说 :#topic Bug 与原因
+biergaizi 说 :其实这个刚才提到了一些
+biergaizi 说 :先说内存占用吧
+Garfier 说 :UI不急
+HarryChen_yszzf 说 :我昨儿试了试只要往下拉就不停吃，不能释放前面的吗？
+biergaizi 说 :不要和我一起说话……
+cthbleachbit 说 :那个broken的转发+评论。。
+HarryChen_yszzf 说 :例如到了适当地方分页，前面的都释放
+biergaizi 说 :内存占用的原因和 UI 的实现有很大的关系
+biergaizi 说 :UI 的实现有两种原理，一种是 Widget Base，一种是 Painter Base（我造的这两个词{
+Garfier 说 :解释
+kawaiiushio 说 :.........
+kawaiiushio 说 :不明觉厉
+biergaizi 说 :Painter Base 就是画面上所有的东西都是按需 Painter 出来的，不滚动到下面，下面的元素是不会渲染了
+biergaizi 说 :Qt 的 ListView TableView 这些基于 MVC 架构的都是这么实现的
+biergaizi 说 :这样的优点就是内存占用小
+biergaizi 说 :即使有几百条也不会一次性都堆在那里
+HarryChen_yszzf 说 :我明白了，一种是当前渲染好显示的部分，另外就是通通的弄好交给系统…？
+biergaizi 说 :HarryChen_yszzf: 对，而且什么时候渲染，完全是系统找合适的时候
+Garfier 说 :哦～
+biergaizi 说 :这种方式看似虽好，但是有比较严重的问题。
+biergaizi 说 :那就是编程的时候需要在一个直角坐标系上绘图
+Garfier 说 :固定坐标了？
+biergaizi 说 :就像使用那些命令行数学工具一样
+biergaizi 说 :所有对象的坐标都必须自己计算
+HarryChen_yszzf 说 :我试过类似的，用Android的Canvas直接画界面
+HarryChen_yszzf 说 :很难自适应窗口大小改变啊
+biergaizi 说 :因此痛苦不已。0.01 之前的 WeCase 就是这么实现的
+biergaizi 说 :重载 ListView 的 Painter
+biergaizi 说 :还有第二个问题
+biergaizi 说 :那就是，Paint 出来的东西，是“假的”
+cthbleachbit 说 :仅仅是一堆像素？？
+HarryChen_yszzf 说 :不是一个个控件没有相应方法？
+biergaizi 说 :你仅仅是 Paint 出来了这个东西的图像，然而这个图像不是一个对象
+HarryChen_yszzf 说 :果然
+Garfier 说 :额
+biergaizi 说 :如果你想让这个东西活过来，那你就根据鼠标的坐标点慢慢算吧
+biergaizi 说 :有些东西的位置是不太可能计算出来的
+biergaizi 说 :于是，我们来到了 Widget Base
+HarryChen_yszzf 说 :我突然就对Java Swing和Android这些布局很感激啊
+biergaizi 说 :Widget Base 就很好理解了吧，所有的东西都是 Qt 对象
+Garfier 说 :原生
+biergaizi 说 :可以使用 Qt 的信号槽，连接，布局管理等等
+biergaizi 说 :正在开发中的 0.06 就是这种方法
+HarryChen_yszzf 说 :问题就是容易堆积太多？
+biergaizi 说 :然而，这种方法速成的界面不太容易优化
+biergaizi 说 :我想要微博列表，好，读出来，每一条建立一个微博对象
+biergaizi 说 :每个微博对象里面有文本框，图片框，按钮
+HarryChen_yszzf 说 :和Android的Adapater如出一辙啊
+Garfier 说 :内存吃不消了吧
+biergaizi 说 :然后把这些对象全部堆到一起
+HarryChen_yszzf 说 :可能是Py本身优化还不够
+biergaizi 说 :没有滚动条？好，加个 ScrollArea，看起来就像列表了
+biergaizi 说 :这些对象至始至终都会存在
+biergaizi 说 :内存占用当然就……
+HarryChen_yszzf 说 :和Android平台的微博客户端对比同样的Timeline吃的内存实在惊人
+HarryChen_yszzf 说 :Py有WeakReference这样的东西吗
+biergaizi 说 :有
+HarryChen_yszzf 说 :为啥不试试呢
+biergaizi 说 :不知道你是什么意思
+HarryChen_yszzf 说 :用弱引用，微博超过一定数量强行GC，前面的就回收了
+HarryChen_yszzf 说 :至少Java如此
+Garfier 说 :……
+biergaizi 说 :HarryChen_yszzf: 关键是一个对象就是一个对象，和界面上的按钮什么的一样，加个滚动条它就像列表了，但其实它就是自动生成的窗口布局
+biergaizi 说 :HarryChen_yszzf: 你不可能让一个窗口上的按钮平白无故放掉内存，消失吧
+HarryChen_yszzf 说 :做一个微博的类包括各种对象？
+biergaizi 说 :HarryChen_yszzf: 已经这样的
+biergaizi 说 :HarryChen_yszzf: 但是它本质上还是一个封装，底层还是我说的样子
+biergaizi 说 :HarryChen_yszzf: 于是我的想法暂时是超过一定数量，就从列表中把前面的丢弃
+biergaizi 说 :好了，就说到这里，然后是 QML
+HarryChen_yszzf 说 :嗯
+biergaizi 说 :在我使用这种方法之前，我一直使用的是 QML，在 0.05 版本（最新）也是 QML。
+biergaizi 说 :QML 就是一套 Qt 的界面描述语言，然而它不是原生界面
+biergaizi 说 :QML 的界面起初做起来感觉很爽
+biergaizi 说 :做着做着你就会感觉不对劲了
+biergaizi 说 :哎？我这不是 C++ 的 Qt 程序吗？
+HarryChen_yszzf 说 :怎么说？
+cthbleachbit 说 :不纯了。
+biergaizi 说 :啥时候变 JavaScript 的程序了
+biergaizi 说 :C++，或者 Python 仅仅用来启动 QML 界面，作为一个加载器
+biergaizi 说 :或者提供一些基础设施给 QML 调用
+biergaizi 说 :QML 完全成了主角
+Garfier 说 :所以抛弃
+biergaizi 说 :我一开始就注意到 QML 的这个问题，所以严格控制它的使用范围
+biergaizi 说 :仅仅在微博列表采用
+biergaizi 说 :但这引发了 QML 与主程序通讯上的很多问题
+biergaizi 说 :暴露大量的接口，仅仅是为了给 QML 使用
+biergaizi 说 :导致写起来非常的难受
+biergaizi 说 :同时你也不能深度控制 QML 的行为。想的话你就要给它写插件，更乱了
+biergaizi 说 :而且最终的界面不是原生的
+HarryChen_yszzf 说 :还没发跨平台？
+biergaizi 说 :我试图给它加个原生滚动条，结果发现，这实现不了，QML 的位置是无法计算的
+biergaizi 说 :不过说到底，QML 是一种 Painter 和 Widget 之间的状态，也就是说内存占用还算小
+biergaizi 说 :如果你试试 0.06 就会发现它占用了更大的内存
+HarryChen_yszzf 说 :我决心重启一下客户端不然要OOM然后ANR了…
+biergaizi 说 :因此界面问题将是以后一直纠结的问题
+cthbleachbit 说 :30M已测试。。。
+HarryChen_yszzf 说 :你一直向下拉
+HarryChen_yszzf 说 :拉几十次
+HarryChen_yszzf 说 :就不好玩了
+biergaizi 说 :反正 0.06 和内存使用和微博数量成正比例
+Garfier 说 :对于那些512机子来说30M算多
+biergaizi 说 :大概每条微博占 2000 K 内存
+HarryChen_yszzf 说 :我只有1G Ram
+Garfier 说 :图片那
+biergaizi 说 :大概每条微博占 400 K 内存
+biergaizi 说 :这样
+cthbleachbit 说 :现在55M，总共2GB RAM
+biergaizi 说 :令我奇怪的是，Choqok 是一个成功的微博客户端，也是 Widget Base，但是内存占用一共也就 20 M
+biergaizi 说 :我阅读了源代码却无法理解它工作的方式
+Garfier 说 :你认识开发者不是吗？
+biergaizi 说 :Garfier: 不认识啊
+Garfier 说 :……额
+biergaizi 说 :Miao 的作者也多次纠结界面，最后是
+biergaizi 说 :Painter Base 和 Widget Base 中间的状态
+biergaizi 说 :Qt 没有这种机制
+biergaizi 说 :所以还要继续找思路
+HarryChen_yszzf 说 :Miao在Mac上面占用的内存…
+HarryChen_yszzf 说 :So horrible...
+Garfier 说 :超大
+biergaizi 说 :HarryChen_yszzf: 初始占用多少？
+biergaizi 说 :我知道一段时间就 800M，我问初始
+HarryChen_yszzf 说 :我没记错的话40+
+Garfier 说 :Miao不好的地方是他太多功能，连浏览器都有
+biergaizi 说 :HarryChen_yszzf: 随着微博数量不断增长？
+HarryChen_yszzf 说 :你不用它都会增长
+biergaizi 说 :HarryChen_yszzf: 好的，下周我观察下
+biergaizi 说 :在内存占用不超过 Chrome 刷微博时，暂时无视
+HarryChen_yszzf 说 :顺便我是SL…Hackintosh
+cthbleachbit 说 :预加载机制？？
+biergaizi 说 :HarryChen_yszzf: Mountain Lion，黑苹果
+HarryChen_yszzf 说 :啊哦…要超越Chrome似乎不容易啊
+biergaizi 说 :HarryChen_yszzf: 很容易，你不停向下拉
+Garfier 说 :BOOM
+biergaizi 说 :轻易超过只开 weibo.com 的 Chrome
+HarryChen_yszzf 说 :我的Chrome一般情况开个weibo再B站立马300多了
+biergaizi 说 :好了，我等于把 UI 的一些问题也顺带讨论了
+Garfier 说 :WeCase每溢出现象吗
+Garfier 说 :没
+HarryChen_yszzf 说 :OOM？
+HarryChen_yszzf 说 :我估摸着在我256MB内存的机器上会很容易出现的
+biergaizi 说 :Garfier: 内存溢出是必然的，理论上任何程序都会。你让 Vim 处理巨大文件试试？
+Garfier 说 :哦
+biergaizi 说 :GraphicsView 看起来不错
+biergaizi 说 :不过它也不是原生界面了，这没关系，但是给我们的东西太少了
+biergaizi 说 :不知道画出来的东西是不是假和
+biergaizi 说 :s/和/的/
+cthbleachbit 说 :？？？
+biergaizi 说 :如果不是，这有可能是以后的方向
+ha2q1w2007 说 :。。。预计有误，理发店人超多。。。
+biergaizi 说 :GraphicsView 等于是一个更高级的画板
+biergaizi 说 :比 Painter 高层
+HarryChen_yszzf 说 :我总觉得用Canvas画东西心里不踏实…
+biergaizi 说 :QML 也是在它上面建立的
+Garfier 说 :讲到这，我有点明白为什么Airplay开发者说Linux开发成本过大了
+biergaizi 说 :Garfier: 和 Linux 无关
+Garfier 说 :题外话
+biergaizi 说 :Garfier: Qt 也是 Windows 上的常用框架，别忘了 WPS
+Garfier 说 :嗯。
+biergaizi 说 :Garfier: 我觉得我只是目前视野问题，想不到一个好的方案
+biergaizi 说 :以后还要继续看其它客户端的源代码
+Garfier 说 :如果跑出Qt限制呢？
+biergaizi 说 :Garfier: 其实也差不多
+biergaizi 说 :如果谁看到了 Qt 的微博客户端，只要不是 QML 或者 WebView 的，请告知我
+Garfier 说 :对了，你没问WPS实现方法？
+biergaizi 说 :Garfier: 肯定全都是自己画
+HarryChen_yszzf 说 :不开源啊
+Garfier 说 :怪不得
+biergaizi 说 :#idea 告知 biergaizi 一些 Qt 微博客户端（不是 QML 和 WebView）
+biergaizi 说 :好了，WeCase 还有什么 Bug 和问题？
+HarryChen_yszzf 说 :现在依赖还像以前那么恐怖吗…
+Garfier 说 :依赖，好多人不懂得怎么装，自己集成下？
+cthbleachbit 说 :写个脚本检测么
+GrinV 说 :我是看出错提示安装的依赖，问题不大
+biergaizi 说 :HarryChen_yszzf: 依赖不恐怖
+biergaizi 说 :HarryChen_yszzf: 只是很多人不会安装
+HarryChen_yszzf 说 :以前好多的
+Garfier 说 :各平台依赖支持度不一样啊
+GrinV 说 :从命令行启动，如果失败什么的，可以看到出错信息
+biergaizi 说 :偏题了！
+HarryChen_yszzf 说 :张钧凯太折腾了…
+HarryChen_yszzf 说 :好吧
+biergaizi 说 :那个broken的转发+回复评论
+HarryChen_yszzf 说 :为啥不工作呢
+biergaizi 说 :注意，是回复评论，而不是评论
+HarryChen_yszzf 说 :哦
+biergaizi 说 :这主要是当时的局限，现在应该好实现
+biergaizi 说 :Sina 的
+ha2q1w2007 说 :。。。能一次安装所有依赖么。。。
+biergaizi 说 :ha2q1w2007: 偏题！
+biergaizi 说 :评论 + 转发很简单，先评论，然后将转发，转发附带内容 = 原内容 + @昵称: 评论 //
+biergaizi 说 :而回复评论，是
+wecase 说 :sorry 刚刚掉线了。。。
+wecase 说 :话说有人提私信么？
+biergaizi 说 :先评论，然后接下来折腾啦
+biergaizi 说 :wecase: 不要和我一起说话
+HarryChen_yszzf 说 :wecase是谁
+Garfier 说 :同文
+biergaizi 说 :转发附带内容 =  对其回复 + 原评论 + 原附带
+biergaizi 说 :当初模型有缺陷，很难实现
+biergaizi 说 :现在应该很好实现了
+biergaizi 说 :#idea 完成回复评论 + 转发
+biergaizi 说 :#topic 跨平台
+biergaizi 说 :你们先吐槽
+Garfier 说 :吐槽点在哪儿
+cthbleachbit 说 :等我们吐完接着说。
+biergaizi 说 :哈哈
+biergaizi 说 :跨平台是不难实现的
+biergaizi 说 :但是整个程序都有严重依赖 Unix 的问题
+biergaizi 说 :首先，是路径文件
+cthbleachbit 说 :链接。
+biergaizi 说 :不算
+biergaizi 说 :WeCase 的 .config 和. cache 都是在 ~/ 下的，Windows 没有对应处理
+Garfier 说 :Windows无法实现软连接
+biergaizi 说 :Garfier: 可以
+Garfier 说 :好吧，
+biergaizi 说 :同时，还硬编码了 Unix 路径分隔符 "/"
+Garfier 说 :跨平台，那个矢量图绘制软件怎么弄的？
+HarryChen_yszzf 说 :我做会儿作业去…我先闭嘴
+biergaizi 说 :但这些都不是重点
+biergaizi 说 :重点是，WeCase 依赖 DBus 通知机制
+biergaizi 说 :如果没有的话，直接 ImportError……
+wecase 说 :...
+Garfier 说 :嗯，而且我们也没必要跨平台不是吗
+biergaizi 说 :Garfier: 有必要
+biergaizi 说 :Garfier: 工作量不大
+Garfier 说 :Why？
+GrinV 说 :为什么呢？不是说Linux下的客户端吗？
+biergaizi 说 :因此，我们必须建立一个抽象类 NotifyCenter，分别是先 WindowsNotify，LinuxNotify 和 MacNotify
+Garfier 说 :嗯，
+GrinV 说 :我觉得跨平台，挺多是有手机版本的
+biergaizi 说 :有人已经帮我们实现了 MacNotify，WindowsNotify 可以用一个空函数实现（不用弄哦）
+GrinV 说 :挺多改为 顶多
+biergaizi 说 :GrinV: 手机版本那就是重新实现了，不是跨平台……
+ha2q1w2007 说 :手机版本?android
+biergaizi 说 :我说的 Linux 微博客户端，其实是 A Weibo Client focus on Linux
+biergaizi 说 :我们添加的这些特性表面上看是跨平台，实际上呢？
+Garfier 说 :跨平台Windows 8可是个问题
+biergaizi 说 :在非 Linux 上体验依旧不好。
+biergaizi 说 :实际上跨平台的目的是整理代码，降低耦合
+biergaizi 说 :而并非只是为了跨平台
+biergaizi 说 :其实工作量不多，把 "/" 换成 os.seprator，建立一 class 的问题
+biergaizi 说 :各位还活着吗？
+GrinV 说 :这么说就明白了嘛
+Garfier 说 :……
+HarryChen_yszzf 说 :活着…不过题目做不出我先不说话…
+biergaizi 说 :#idea 依赖、安装与打包
+biergaizi 说 :#undo
+biergaizi 说 :下一个话题
+biergaizi 说 :#topic 依赖、安装与打包
+biergaizi 说 :吐槽吧！
+Garfier 说 :打包问题
+biergaizi 说 :deb 包有进展吗？
+Garfier 说 :额，没……我弄了好几个，失败……
+biergaizi 说 :安同的包怎么样了？
+Garfier 说 :人在？
+biergaizi 说 :安同他们有打包吗？
+Garfier 说 :听说有的
+Garfier 说 :貌似还加入官方源
+biergaizi 说 :#idea 联系 @小白在安同，将打包的那些材料要来
+Garfier 说 :那是SUSE啊
+biergaizi 说 :额：……
+biergaizi 说 :然后发布到 Ubuntu 的 WeCase 组 PPA 上
+biergaizi 说 :#idea 可以考虑使用 OpenSUSE Build System 一次性打多种平台的包
+biergaizi 说 :至于打包，我这里说一下细节
+biergaizi 说 :WeCase 依赖 python-notify2 和 sinaweibopy，这两个最好是独立的包，作为依赖，而不是直接内嵌
+biergaizi 说 :有人吗？
+Garfier 说 :有
+biergaizi 说 :另外，rpm 的包我也计划打包
+biergaizi 说 :另外，我说一个最管用的东西！
+GrinV 说 :直接说就好了，听着呢
+cthbleachbit 说 :安装脚本？？？
+biergaizi 说 :cthbleachbit: 聪明，不过是打包脚本
+Garfier 说 :我不想写makefine
+Garfier 说 :le
+Garfier 说 :你的Py脚本？
+cthbleachbit 说 :我记得是bash
+biergaizi 说 :就是说，每个 WeCase 版本正式 Release 之后，运行打包的 Bash 脚本，然后就会吐出一个压缩包，这个压缩包 Bundle 了 WeCase 的所有依赖，并且删除源码里的开发工具，将这个包作为源码包发布，可供用户下载
+Garfier 说 :Good
+biergaizi 说 :所有依赖，是“除了 PyQt”之外的
+Garfier 说 :嗯
+biergaizi 说 :#idea 每个 WeCase 版本正式 Release 之后，运行打包的 Bash 脚本，然后就会吐出一个压缩包，这个压缩包 Bundle 了 WeCase 的所有依赖，并且删除源码里的开发工具，将这个包作为压缩包发布，可供用户下载
+biergaizi 说 :用户也不需要亲自运行脚本
+biergaizi 说 :这个任务给我就行
+Garfier 说 :好
+biergaizi 说 :另外感谢星之光的 AUR 软件包，让 Arch 安装相当容易
+Garfier 说 :他维护着好多包
+biergaizi 说 :我在 Gentoo 方面也在努力，我已经将 notify2 推入 gentoo-zh 源（有权限就是好）
+biergaizi 说 :即使 WeCase 没有 Gentoo 包，安装依赖也会轻而易举
+biergaizi 说 :也就是说，
+biergaizi 说 :#idea 各项打包任务优先考虑打包依赖，而非 WeCase 本身
+Garfier 说 :恩
+biergaizi 说 :这样用户可以通过复制粘贴的方式安装依赖
+biergaizi 说 :完美了吧，好，下一个
+biergaizi 说 :#topic UI 与 UX
+biergaizi 说 :HarryChen_yszzf 肯定对此颇有微词
+Garfier 说 :我们找一些人设计UI
+HarryChen_yszzf 说 :我啊…
+biergaizi 说 :Garfier: Nop
+biergaizi 说 :咳咳
+biergaizi 说 :我先说一下整个 UI 的设计理念
+biergaizi 说 :第一，原生至上。
+Garfier 说 :+1 决不允许抄
+Garfier 说 :题外
+biergaizi 说 :即使别的软件可以实现让人头晕的飞入飞出，背景虚化。然而原生界面赛高。
+biergaizi 说 :也就是说，使用 WebView，QML 都是不允许的
+biergaizi 说 :这两个东西的确更好定制外观，但是脱离了平台
+biergaizi 说 :kawaiiushio 我正要说他，他就走了
+biergaizi 说 :我去！
+Garfier 说 :在群
+biergaizi 说 :好的你逃不掉
+qq(Tux) :@雨宮汐 的界面 biergaizi 说 :他的界面设计方案，完全就是 Metro 风格。我可以自信的说，用 QML 可以不难的实现这样的效果
+biergaizi 说 :可是，不使用 QML 的原因我已经再三强调了
+biergaizi 说 :WebView 也是同理。
+biergaizi 说 :按照我的观点，使用 WebView，不如直接用浏览器打开微博
+biergaizi 说 :接下来，是关于自己绘制界面的问题
+biergaizi 说 :如果的确需要，可以使用 QGraphicsView 和 QPainter
+biergaizi 说 :其中 GraphicsView 不能轻易使用
+biergaizi 说 :QPainter 可以随便用
+biergaizi 说 :但是，不允许脱离 Qt 的原生界面。
+biergaizi 说 :我为什么历尽最大努力保证界面的 Qt 原生性？
+biergaizi 说 :是因为 Qt 可是允许用户定制外观的，什么 Clearlooks，Oxygen
+biergaizi 说 :如果你自己画了，用户就不能这样做了
+biergaizi 说 :但如果的确需要，除了用 QPainter，还可以用 QStyle
+biergaizi 说 :另外，QStyleSheet 允许我们有 CSS 般的灵活，也是大力推荐定制界面时使用的
+biergaizi 说 :但依然不要得意忘形，请进行使用比较兼容的风格，另外颜色要多多从系统调色板中选取
+biergaizi 说 :Qt 中已经有的东西不要因为“不够好”自己实现，尽可能将就（就是尽量想办法足够好），或者子类化，不要自己画
+biergaizi 说 :大家对我这个观点有什么看法或异议？
+cthbleachbit 说 :没有，
+Garfier 说 :NO
+GrinV 说 :暂时没有
+biergaizi 说 :大家设计界面的时候也有注意，不要弄特别个性的界面风格，动画也暂时不要，否则以至于不能实现
+qq(雨宮汐) :... biergaizi 说 :雨宮汐的界面，基本上中了我所有的枪
+biergaizi 说 :下次我自己使用 QML 2 的时候，欢迎你来设计界面……
+GrinV 说 :弱弱问下大家对 主页风格的看法
+biergaizi 说 :GrinV: later
+biergaizi 说 :GrinV: 我在找东西，等一下
+biergaizi 说 :好了
+biergaizi 说 :Garfier 擅自关闭 Issue，给今天的会议挖坑
+Garfier 说 :我？
+biergaizi 说 :大家如果有什么 UI 的设计稿和改进建议，欢迎到 https://github.com/WeCase/WeCase/issues/18 这个 Issue 下评论
+titlbot 说 :⇪标题: 新界面设计 · Issue #18 · WeCase/WeCase · GitHub
+biergaizi 说 :Garfier: 这个 Issue 到 0.1 之前都不允许关闭
+Garfier 说 :O
+biergaizi 说 :Garfier: 而你刚才却给关闭了，我说怎么找不到了！WTF~
+biergaizi 说 :好了，UI 的讨论因为 Garfier 的坑被迫延长 6 分钟
+biergaizi 说 :最后一说，目前我们还在解决技术问题，用户体验的改进要慢慢来
+biergaizi 说 :好了，关于这个 Topic，还有要说的吗？
+biergaizi 说 :Are you still alive?
+cthbleachbit 说 :yep
+Garfier 说 :……
+biergaizi 说 :话题倒计时
+biergaizi 说 :5
+biergaizi 说 :4
+biergaizi 说 :3
+biergaizi 说 :2
+biergaizi 说 :1
+Garfier 说 :Close
+cthbleachbit 说 :下一个
+biergaizi 说 :#topic 网站设计与维护
+biergaizi 说 :我先简要说明一下
+biergaizi 说 :这个官方网站是放在 GitHub Pages 上的，由雨宮汐到处抄模版，完成制作
+biergaizi 说 :随后，无人管理
+Garfier 说 :枪毙
+biergaizi 说 :Wait
+biergaizi 说 :我的话还没说完
+Garfier 说 :那设计
+biergaizi 说 :你别断章取意
+Garfier 说 :……
+biergaizi 说 :GrinV 自告奋勇担任了维护任务
+biergaizi 说 :为网站添加了 Logo，还算不错
+biergaizi 说 :后来
+GrinV 说 :呵呵
+biergaizi 说 :GrinV 太忙了，也就没再作修改
+Garfier 说 :: )
+biergaizi 说 :GrinV: 你说说网站的事？
+GrinV 说 :我想先问问大家对现在主页风格的意见
+Garfier 说 :好多人批评
+biergaizi 说 :好的，我先代表几个人说说
+cthbleachbit 说 :有些过于花哨了，，，
+biergaizi 说 :哈哈哈
+biergaizi 说 :是这样
+Garfier 说 :新浪说无法下载，写着开发中
+biergaizi 说 :首先呢，@開源哥 说这个网站的 Ubuntu 风格很不错……
+biergaizi 说 :不过，这个设计的确需要砍掉
+biergaizi 说 :首先，0.06 版本是一个里程碑版本
+GrinV 说 :当初我改的时候有点无从下手，因为风格的问题。当然也不敢换另一种风格，后来打算是先在自己的github pages上当作测试，这样怎么弄都方便。比较不是官方主页，就用来测试的
+HarryChen_yszzf 说 :几何做完了我回来了
+biergaizi 说 :HarryChen_yszzf: 现在已经是网站问题了，你先看看 UI 那里，很重要
+Garfier 说 :我会整理
+biergaizi 说 :0.06 发布时，打包，网站必须解决
+biergaizi 说 :网站
+biergaizi 说 :这个设计的确需要砍掉
+GrinV 说 :其实风格嘛，我想多做几个基础框架让大家看看，选选。有比较的话会更好
+HarryChen_yszzf 说 :看完了
+biergaizi 说 :我打算弄成新的 http://kernel.org/ 这样
+titlbot 说 :⇪标题: The Linux Kernel Archives
+biergaizi 说 :大家觉得这种风格怎么样？
+cthbleachbit 说 :可以
+Garfier 说 :这样还不如download.wecase.org
+cthbleachbit 说 :风格。
+biergaizi 说 :第一个页面肯定不是下载
+Garfier 说 :对，这风格
+biergaizi 说 :我说的是风格
+biergaizi 说 :看看这个？https://www.kernel.org/category/about.html
+titlbot 说 :⇪标题: The Linux Kernel Archives - About
+GrinV 说 :http://lab.lepture.com/nico/ 这个超简洁风格呢？
+titlbot 说 :⇪标题: Nico
+biergaizi 说 :GrinV: 典型的 GitHub Pages 风格，我也喜欢
+biergaizi 说 :再看看这个
+Garfier 说 :为什么不弄Chrome主页的风格
+ha2q1w2007 说 :http://wecase.org/ 是什么
+titlbot 说 :⇪标题: 微盒- 最具人气的Linux微博客户端
+biergaizi 说 :按错了
+Garfier 说 :这种不好吗？https://www.google.com/intl/zh-CN/chrome/browser/
+titlbot 说 :⇪标题: Chrome 浏览器
+biergaizi 说 :看看这个？这是 microcai 的 avbot 主页 http://qqbot.avplayer.org/
+titlbot 说 :⇪标题: qqbot by avplayer
+GrinV 说 :chrome 风格的话，要有大的图片才能hold 住
+Garfier 说 :我可以做
+biergaizi 说 :avbot 那个怎么样？
+GrinV 说 :都行～挺好的，统一下意见就OK 了
+biergaizi 说 :http://qqbot.avplayer.org/
+titlbot 说 :⇪标题: qqbot by avplayer
+cthbleachbit 说 :同上
+biergaizi 说 :再举个 GitHub pages 的例子，http://www.digip.org/jansson/
+titlbot 说 :⇪标题: Jansson — C library for working with JSON data
+Garfier 说 :和GrinV举的是一种模板
+biergaizi 说 :还有一种，就是 Python 文档风格的
+biergaizi 说 :比如 Python 的文档页 http://docs.python.org/
+titlbot 说 :⇪标题: Overview — Python v3.3.2 documentation
+GrinV 说 :加菲猫倾向于大图，比尔倾向于文字。要哪种？
+Garfier 说 :图更直观，文字可以有更多的解释
+biergaizi 说 :除了 http://docs.python.org/  可以看看
+titlbot 说 :⇪标题: Overview — Python v3.3.2 documentation
+biergaizi 说 :http://www.digip.org/jansson/doc/2.4/  这个
+titlbot 说 :⇪标题: Jansson Documentation — Jansson 2.4 documentation
+Garfier 说 :这个页面中和了https://www.google.com/intl/zh-CN/chrome/browser/features.html
+titlbot 说 :⇪标题: Chrome 浏览器
+cthbleachbit 说 :这样呢http://windows.microsoft.com/en-us/windows-8/compare#t1=asus-vivotab-smart
+titlbot 说 :⇪标题: Windows vs. iPad: Compare tablets - Microsoft Windows
+GrinV 说 :说到文档页面，我最爱这个 风格 http://flask.pocoo.org/docs/
+titlbot 说 :⇪标题: Welcome to Flask — Flask 0.9dev documentation
+Garfier 说 :F*CK
+Garfier 说 :M$
+biergaizi 说 :M$ 这个还不错
+cthbleachbit 说 :仅仅是风格，不要太在意M$做了什么
+biergaizi 说 :但是仅仅适合作比较
+HarryChen_yszzf 说 :确实
+GrinV 说 :我觉得大图的话，wecase没啥展示的吧
+cthbleachbit 说 :界面，
+biergaizi 说 :（和 iPad 作比较这个略恶心）
+GrinV 说 :文字更好弄些
+biergaizi 说 :GrinV: 不喜欢 Flask 的文档，依旧喜欢 Python 文档，不过我又想到一个
+Garfier 说 :我想起了VBox主页
+cthbleachbit 说 :那个比较一般
+Garfier 说 :文字……
+biergaizi 说 :GrinV: 说起文档页，我喜欢这个 http://www.crummy.com/software/BeautifulSoup/
+titlbot 说 :⇪标题: Beautiful Soup: We called him Tortoise because he taught us.
+biergaizi 说 :但是里面的正式文档依旧是 Python 风格 http://www.crummy.com/software/BeautifulSoup/bs4/doc/
+titlbot 说 :⇪标题: Beautiful Soup Documentation — Beautiful Soup 4.2.0 documentation
+Garfier 说 :干嘛不把主页和文档页分开设计
+biergaizi 说 :Garfier: WeCase 不会有文档页
+biergaizi 说 :Garfier: 他不是 API
+GrinV 说 :主要是文档页是不是觉得用github提供的wiki比较好呀
+biergaizi 说 :Garfier: 我举文档页的例子，意思是它们也很适合当主页
+biergaizi 说 :比如 Python 文档页当主页感觉也会不差
+biergaizi 说 :请大家事后到 https://github.com/WeCase/wecase.github.com/issues/2 讨论主页事宜
+titlbot 说 :⇪标题: 新网站设计 · Issue #2 · WeCase/wecase.github.com · GitHub
+GrinV 说 :主要是没有很多内容支撑的话，文档风格体现得不是很好
+biergaizi 说 :GrinV: 文档页不用那么长，一屏，简介加下载，正合适
+Garfier 说 :所以，还是这个中和一些https://www.google.com/intl/zh-Hans/chrome/browser/features.html
+titlbot 说 :⇪标题: Chrome Browser
+cthbleachbit 说 :看着都不错，不知道哪个更合适。。。
+biergaizi 说 :关键是 WeCase 没有那么多值得吹嘘的特性
+biergaizi 说 :Garfier: 你应该比较会吹
+GrinV 说 :只要你提供图片，特性介绍都行
+Garfier 说 :简单写一些就好了
+biergaizi 说 :Garfier: 到时候吹之前先跟我商量一下，确认我把顺带特性实现了
+cthbleachbit 说 :233333
+Garfier 说 :……
+GrinV 说 :哈哈～～
+biergaizi 说 :总结一下
+biergaizi 说 :#idea 讨论网站大家都很积极，给出了 kernel.org 风格，GitHub Pages 风格，Chrome 风格，微软风格
+Garfier 说 :Google风格吧
+biergaizi 说 :网站方面的后续讨论，请务必在 https://github.com/WeCase/wecase.github.com/issues/2 进行
+titlbot 说 :⇪标题: 新网站设计 · Issue #2 · WeCase/wecase.github.com · GitHub
+biergaizi 说 :好了，这个话题还有要说吗？
+GrinV 说 :什么时候开始实现呢？
+biergaizi 说 :先得是草案吧，在那个 Issue #2 上进一步讨论
+GrinV 说 :好吧，那网站的就没问题了
+biergaizi 说 :倒计时
+biergaizi 说 :5
+biergaizi 说 :4
+biergaizi 说 :3
+biergaizi 说 :2
+biergaizi 说 :1
+Garfier 说 :Close
+biergaizi 说 :#topic 联系交流与用户反馈
+HarryChen_yszzf 说 :反馈学我们吧233做个反馈模块
+biergaizi 说 :Garfier: 在 Linux 贴吧宣传 WeCase
+biergaizi 说 :结果被一群人喷喷喷喷
+cthbleachbit 说 :还可以往让用户launchpad的邮件列表发邮件
+Garfier 说 :WC吗？喷很正常
+Garfier 说 :贴吧喷文化
+cthbleachbit 说 :有typo。。。
+GrinV 说 :拜托，我觉得Linux贴吧里的人都是那种，怎么说呢～～反正不太喜欢逛贴吧啦
+biergaizi 说 :Garfier: 下次宣传之前把宣传词给我，我修改一下
+biergaizi 说 :我虽然也不去贴吧
+Garfier 说 :我要转战论坛了吗？
+biergaizi 说 :Garfier: 继续贴吧没问题，但是宣传词的措辞我必须要插手，我是核心开发者，里边说的情况底细我自然清楚
+Garfier 说 :嗯
+biergaizi 说 :Garfier: 论坛什么的同理
+GrinV 说 :我不喜欢贴吧和论坛……微博挺好的
+cthbleachbit 说 :我觉得那些地方太乱了
+biergaizi 说 :GrinV: 微博对于这种信息的流失速度太快，对于宣传难以接受
+Garfier 说 :贴吧还可以，雨在
+biergaizi 说 :另外就是
+biergaizi 说 :Garfier: 别忘了雨和 Chrome 贴吧的大战……
+biergaizi 说 :另外就是用户反馈问题
+Garfier 说 :他去别的吧le
+cthbleachbit 说 :可以在“关于”窗口加
+biergaizi 说 :贴吧等处，有些反馈很重要，但是措辞都很小白，顺带喷，我看不下去
+GrinV 说 :反馈问题打算是用邮件的联系方式吗？还是其他
+Garfier 说 :反馈可以加入各Linux的崩溃报告机制
+biergaizi 说 :因此请 Garfier 及时整理小白反馈，修改措辞更严谨，并将这种反馈发给我
+Garfier 说 :OK
+cthbleachbit 说 :邮件可以
+biergaizi 说 :#idea Garfier 整理小白反馈
+biergaizi 说 :接下来就是邮件列表
+biergaizi 说 :TonyChyi 哦？正想说他他又走了
+cthbleachbit 说 :launchpad?
+biergaizi 说 :怎每次都这样……
+cthbleachbit 说 :LoL
+biergaizi 说 :TonyChyi 在建立了一个 WeiboLUG 的邮件列表
+GrinV 说 :为啥你每次说的那个人就刚走了呢
+biergaizi 说 :他说里面很冷清，WeCase 可以在里边交流
+Garfier 说 :RP
+biergaizi 说 :可是事实证明并不合适
+biergaizi 说 :因此，我打算理由 LaunchPad 的邮件列表
+HarryChen_yszzf 说 :理由？
+biergaizi 说 :同时 LaunchPad 也不会被封的那么厉害
+cthbleachbit 说 :理由--->利用？？？
+biergaizi 说 :嗯
+biergaizi 说 :LaunchPad 以后要兼任下载和邮件列表的功能
+Garfier 说 :log.txt 48085字节
+biergaizi 说 :WeCase 的 LaunchPad 是 Garfier 弄的，一直冷清，要活！
+Garfier 说 :对，是
+biergaizi 说 :#idea 激活 LaunchPad，大力推广邮件列表
+GrinV 说 :OK
+Garfier 说 :小鸡昨天还说开微信
+biergaizi 说 :大家要在邮件列表上积极发言
+biergaizi 说 :Garfier: 那个……可以是机器人，我弄一个？可以和项目其它地方互通。
+GrinV 说 :说实话我没有怎么玩过邮件列表
+biergaizi 说 :大家要在邮件列表上积极发言，让邮件列表成为一个活跃的交流谈论列表。
+Garfier 说 :随便吧，我没时间人工微信
+HarryChen_yszzf 说 :邮件列表刷屏太厉害了…
+biergaizi 说 :GrinV: 很简单，订阅，然后你就收到很多邮件，回复。和帖子一样。
+biergaizi 说 :HarryChen_yszzf: 这是你自己的问题
+cthbleachbit 说 :邮件分类。
+biergaizi 说 :HarryChen_yszzf: 比如我，都是写邮件列表过滤规则
+biergaizi 说 :HarryChen_yszzf: 来了邮件列表不做提醒，自动分类到单独收件箱
+biergaizi 说 :日常乱七八糟的事情不要上微博去说，太乱了
+biergaizi 说 :另外就是 IRC 的问题
+cthbleachbit 说 :平时也很冷清啊
+Garfier 说 :没时间挂
+biergaizi 说 :IRC 和 QQ 群 189782088 是互通了，要大力推广，多多利用
+biergaizi 说 :有时候在这里的交流比微博上互相评论要有效的多
+HarryChen 说 :我去
+biergaizi 说 :对于话题 “关于反馈和交流”，大家还有什么要说的吗？
+Garfier 说 :掉了
+Garfier 说 :官微有责任
+biergaizi 说 :#idea 多多利用 IRC 和 QQ 群 189782088。
+cthbleachbit 说 :现在是谁在维护官微
+biergaizi 说 :#idea 邮件列表上积极发言，让邮件列表成为一个活跃的交流谈论列表
+biergaizi 说 :基本上是 Garfier
+Garfier 说 :我，要不没人干
+biergaizi 说 :密码我直到
+biergaizi 说 :知道
+Garfier 说 :可你不去
+biergaizi 说 :这个密码麻烦 Garfier 时候散播一下，方便大家
+biergaizi 说 :Garfier: 我太忙了
+cthbleachbit 说 :初三？
+Garfier 说 :给个别的邮箱吧，我的163还有用呢
+Garfier 说 :比如×××@wecase.org
+biergaizi 说 :Garfier: 新浪可以改邮箱？
+Garfier 说 :不清楚，安全邮箱可以改
+biergaizi 说 :Garfier: 账号邮箱是不能改的……
+Garfier 说 :那天我问了。有人回答可以
+biergaizi 说 :好吧，都时候给你一个 weibo@wecase.org 的邮箱
+HarryChen 说 :盖子肯定没我忙…不说废话了先去洗澡去
+Garfier 说 :嗯
+biergaizi 说 :#idea: 给 weibo@wecase.org 的邮箱，密码内部共享，负责维护官方微博
+biergaizi 说 :#idea 给每个人（愿意的）一个霸气的 @wecase.org 邮箱？
+qq(31637385) :官微具体要干嘛呢 GrinV 说 :这个问题是我问道
+Garfier 说 :……你猜
+biergaizi 说 :这是个问题……
+cthbleachbit 说 :对用户卖萌，稳固用户群，吸引新用户。。。
+GrinV 说 :好吧～～这个我还真不懂哦
+qq(31637385) :哈哈 好逗 Garfier 说 :看看@Chrome实验室就好了
+biergaizi 说 :@Chrome实验室 是 雨 在弄吗？
+Garfier 说 :是
+biergaizi 说 :以前那个 Chrome
+Garfier 说 :贴吧官方微博
+biergaizi 说 :以前那个 @Chrome娘 在 Chrome 贴吧大战之后不能再用了
+Garfier 说 :对
+biergaizi 说 :所以他就只好脱离贴吧，变成实验室里
+Garfier 说 :嗯～
+biergaizi 说 :上次那个广告插件还引起大讨论
+Garfier 说 :还有@纸飞机音乐分享
+biergaizi 说 :维护微博这一块可以像他学习
+Garfier 说 :对～
+biergaizi 说 :另外 0.06 版本发布后，开发者认证也就过了，能提高点关注度
+GrinV 说 :哈哈～～我还以为你让他维护呢
+Garfier 说 :他太忙了
+Garfier 说 :那就
+GrinV 说 :主要是，你们是不是都比较 二次元呀
+Garfier 说 :==
+cthbleachbit 说 :表示不沾二次元
+GrinV 说 :我就是看海贼王什么的，所以有些二次元的话表示不太懂
+biergaizi 说 :GrinV: 至少其充量就是一个二次元维基百科巡查，吐槽条目，基本上和我没关系……
+biergaizi 说 :#idea 官方微博很重要，多多学习，“对用户卖萌，稳固用户群，吸引新用户”……
+Garfier 说 :这句话有点ZF风
+GrinV 说 :哈哈，我天然呆，萌不会卖哦～～
+cthbleachbit 说 :漏了“解答用户的问题”。。。
+biergaizi 说 :Garfier: ZF 风是没有语气的时候最好的风格……
+GrinV 说 :Tom Li 你会卖萌吗？
+cthbleachbit 说 :语文极差，不会卖萌。。
+biergaizi 说 :#idea 官方微博要及时解答用户问题
+biergaizi 说 :GrinV: 不行，不会卖萌啊……
+Garfier 说 :不会卖萌就跟着学了啦～
+biergaizi 说 :官博我不会主要弄的
+Garfier 说 :开发～
+GrinV 说 :tom li 看你起的网名就不萌
+biergaizi 说 :我在官博上负责发布（转发）新版本动态啥的
+biergaizi 说 :GrinV: 注意，这是我的真名！
+Garfier 说 :log.txt 53541字节
+GrinV 说 :tom li 我说的是你的微博名，tom li 是为了让你知道是和你说话
+biergaizi 说 :Garfier: log 看这个 http://log.wecaseproject.tk/189782088/20130601.html
+titlbot 说 :⇪无标题网页
+Garfier 说 :嗯，我自己留一份
+Garfier 说 :整理成PDF
+biergaizi 说 :GrinV:  IRC 上通用的方式是 昵称半角冒号空格内容，有些客户端是支持昵称自动补全的
+GrinV 说 :@biergaizi: 我试试
+Garfier 说 :怎样@人
+biergaizi 说 :GrinV: 不要加 AT
+GrinV 说 :biergaizi: 我试试
+Garfier 说 :biergaizi: 哦哦
+GrinV 说 :哦～为啥你名字有@呢？
+biergaizi 说 :对，这样我这里就能手都提示
+GrinV 说 :biergaizi: 你用的是手机呀
+biergaizi 说 :GrinV: 后面是我的主机名吧
+biergaizi 说 :GrinV: 是这样的，IRC 可以任意使用昵称，所以有 NameServ 提供身份认证
+biergaizi 说 :GrinV: 认证昵称必须给机器人输入密码才能生效
+biergaizi 说 :GrinV: 我的认证昵称是 biergaizi-
+biergaizi 说 :GrinV: 我的认证昵称是 biergaizi-mobile
+biergaizi 说 :GrinV: 我的名字用 AT 是因为他们不在 IRC 上而在微博上，用来区分
+GrinV 说 :biergaizi: 你有两个认证名称呀
+GrinV 说 :biergaizi: 好复杂
+biergaizi 说 :GrinV: 对，biergaizi 是 biergaizi-mobile 的链接
+biergaizi 说 :好了，讨论了微博，交流与反馈这一块还有啥 Idea
+cthbleachbit 说 :我就一个,cthbleachbit.
+GrinV 说 :暂时没想到
+biergaizi 说 :给 10s
+biergaizi 说 :10
+biergaizi 说 :9
+biergaizi 说 :8
+biergaizi 说 :7
+biergaizi 说 :6
+Garfier 说 :Close
+biergaizi 说 :5
+biergaizi 说 :4
+biergaizi 说 :3
+biergaizi 说 :2
+biergaizi 说 :1
+Garfier 说 :CCCClose
+biergaizi 说 :#topic 其它与吐槽
+biergaizi 说 :好了，还剩下什么呢？
+biergaizi 说 :WeCase 的特性需求？
+HarryChen 说 :我错过了什么吗…似乎我们中了一枪
+biergaizi 说 :HarryChen: 看 log，http://log.wecaseproject.tk/189782088/20130601.html
+titlbot 说 :⇪无标题网页
+biergaizi 说 :哦，忘了还有这个
+cthbleachbit 说 :？
+GrinV 说 :我觉得先把bug fix了再加特性
+biergaizi 说 :#idea 官方微博卖萌的问题，讨论结果是大家都非二次元向，也不会卖萌……这个任务分配给谁呢？
+biergaizi 说 :GrinV: 现在缺失特性就是最大的 Bug
+cthbleachbit 说 :特性？？？多帐号？？？
+Garfier 说 :特性……CLI吗？那个算了吧
+biergaizi 说 :Garfier: 2.0 版本再说了
+Garfier 说 :像OS X ML那样选中文字图片发微博？
+biergaizi 说 :Garfier: 那是浏览器特性啊……
+Garfier 说 :gedit
+GrinV 说 :看来大家都是常用网页版的
+Garfier 说 :copy gedit text to weibo
+biergaizi 说 :好了，讨论下 Meta 吧。要不要设立例会制度？
+biergaizi 说 :时间
+biergaizi 说 :不可能这么长
+biergaizi 说 :第一次问题比较多
+HarryChen 说 :我在想，能不能做个全局快捷键
+biergaizi 说 :以后大概每天一个小时
+biergaizi 说 :HarryChen: 很容易，采纳！！！
+cthbleachbit 说 :每天，，，受不了啊
+Garfier 说 :我反正不上晚自习
+HarryChen 说 :无论在哪里都能呼出发送界面
+biergaizi 说 :#idea: 全部快捷键
+biergaizi 说 :不是每天，是每周啊
+qq(咧威) :。。。。 biergaizi 说 :不是每天，是每周啊
+cthbleachbit 说 :每周应该差不多
+Garfier 说 :没事
+HarryChen 说 :盖子你要不要undo一下
+HarryChen 说 :typo
+biergaizi 说 :#undo
+biergaizi 说 :#idea 全局快捷键发微博
+biergaizi 说 :每周五 9:00 肯定不行，和 Fedora 时间冲突
+HarryChen 说 :盖子又手抽了
+biergaizi 说 :嗯！！
+biergaizi 说 :看来我要重新映射 Dvorak 快捷键！
+Garfier 说 :9:00 AM?!
+HarryChen 说 :233盖子你这么激动啊
+biergaizi 说 :大家挑个议会时间？
+HarryChen 说 :周六七点，不是挺好？
+biergaizi 说 :各位，Wake Up！例会时间！
+GrinV 说 :这个看情况吧，时间应该周五的时候放出，看大家时间而定吧
+Garfier 说 :我晚上在 20:00左右
+cthbleachbit 说 : 周六七点
+Garfier 说 :OK
+biergaizi 说 :#idea 下次例会的时间暂定在周六七点。以后各种事务邮件列表赛高，加紧建设邮件列表！
+HarryChen 说 :
+qq(咧威) :邮件列表吧 HarryChen 说 :我按什么了
+Garfier 说 :
+cthbleachbit 说 :
+HarryChen 说 :为什么我显示一片空白
+biergaizi 说 :好了，还有啥？没啥的话我再说一点散会
+biergaizi 说 :
+biergaizi 说 :2333333333
+biergaizi 说 :空格啊
+HarryChen 说 :啥东西？你们欺负我手机…
+HarryChen 说 :我去！
+biergaizi 说 :还有啥？没啥的话我再说一点散会
+Garfier 说 :复制粘贴好累
+HarryChen 说 :盖子你不打算在gitcafe做个备份？
+biergaizi 说 :Garfier: 0.06 版本会解决
+HarryChen 说 :GitHub可是悲剧过一次
+GrinV 说 :HarryChen: 你怕被墙吗？
+Garfier 说 :GC收费也悲剧
+biergaizi 说 :HarryChen: 我的 VPS 会做镜像。另外就算悲剧，真正的开发者都不会受影响
+GrinV 说 :国内的先观察一段时间吧
+HarryChen 说 :好吧
+Garfier 说 :我们有雨的GAE
+biergaizi 说 :+1
+biergaizi 说 :还有吗？
+HarryChen 说 :回头用RPi也弄个无缝VPN，盖子我暑假里会来找请教你的…偏题了
+Garfier 说 :我也会请教VPS购买和配置
+biergaizi 说 :HarryChen: 现在已经是随意发言阶段，大家说
+HarryChen 说 :话说
+Garfier 说 :log.txt 60048字节
+HarryChen 说 :那我就借这个地方征询下意见
+biergaizi 说 :IRC 的正确使用方法：除了我刚才说的 AT，还有一个命令 /me
+biergaizi 说 : ACTION 我在开会
+biergaizi 说 :用来表示自己的状态
+Garfier 说 : ACTION 我在做记录
+biergaizi 说 : ACTION 去厕所回来了
+biergaizi 说 :这样。
+biergaizi 说 :HarryChen: 你说吧。
+HarryChen 说 :我和姚沛然最近打算做一个App，用于便捷互粉
+biergaizi 说 :go on
+Garfier 说 :额，
+GrinV 说 : ACTION 我在测试状态
+cthbleachbit 说 : ACTION 饿了
+HarryChen 说 :通过NFC/二维码/蓝/WiFI Direct等各种方式实现各大SNS互粉
+HarryChen 说 :你们说这样的App会有市场吗？
+biergaizi 说 :HarryChen: 哈哈哈
+Garfier 说 :有点，点！
+GrinV 说 :HarryChen: 做了你就会知道了
+biergaizi 说 :HarryChen: 我觉得倒是可以作为微博客户端的附加特性
+HarryChen 说 :我觉得如果做得好会很成功啊
+HarryChen 说 :毕竟现在这需求挺大的
+GrinV 说 :HarryChen: 不妨一试呀
+Garfier 说 :让新浪收购去吧
+biergaizi 说 :HarryChen: 我觉得倒是可以作为微博客户端的附加特性，单独做好像不会有人用吧……
+biergaizi 说 :HarryChen: 比如给四次元加这个特性
+HarryChen 说 :集合多家SNS嘛
+GrinV 说 :biergaizi: 可以做插件安装吧
+Garfier 说 :啥……
+biergaizi 说 :GrinV: 移动应用不能这么扩展啊……
+HarryChen 说 :我先问问四次元的作者如何
+biergaizi 说 :HarryChen: GPLv3，自己干
+biergaizi 说 :HarryChen: 到时候可以 Pull Request
+HarryChen 说 :Pull Request我是知道的
+Garfier 说 :怎么个实现法？
+biergaizi 说 :HarryChen: 你和作者讨论讨论
+HarryChen 说 :谁能上微博让姚沛然进来下？我的UC坏了
+HarryChen 说 :我和他私聊…
+HarryChen 说 : ACTION Test
+Garfier 说 :HarryChen: 他刷了JB
+cthbleachbit 说 :？？？？
+HarryChen 说 :……让他进来就成
+HarryChen 说 :Jelly Bean
+biergaizi 说 :HarryChen: 我 AT 他了，无回应
+Garfier 说 :HarryChen: 你那个东西怎么实现？
+biergaizi 说 :HarryChen: 他说 On the way 了
+HarryChen 说 :很简单啊…只要两台手机能交换数据
+Garfier 说 :HarryChen: 信息自己填写？
+HarryChen 说 :互相交换UID就能达到
+biergaizi 说 :嗯，很简单-
+HarryChen 说 :什么啊，事先登陆
+Garfier 说 :HarryChen: 好吧
+Xavier__ 说 :Hi there
+biergaizi 说 :Xavier__: 好啊
+Garfier 说 :Xavier__: 欢迎
+biergaizi 说 :HarryChen: 请发言
+HarryChen 说 :妹子
+biergaizi 说 :？
+Xavier__ 说 :HarryChen: 妹你姐夫…… P.S.是这么玩的吧
+HarryChen 说 :Xavier__: 盖子的意思是我们可以先在四次元上实验一下互粉
+Garfier 说 : ACTION 终止记录中……log.txt 62913字节
+HarryChen 说 :咦，你下划线有多少？
+Xavier__ 说 :哦？
+biergaizi 说 :Garfier: 这样吧
+biergaizi 说 :我先结束 WeCase 的会议
+Garfier 说 :biergaizi: ？
+Xavier__ 说 :话说我登入的时候没写下划线啊
+biergaizi 说 :Xavier__: 昵称冲突
+Garfier 说 :biergaizi: 哦
+HarryChen 说 :.qqbot help
+biergaizi 说 :感觉大家的参与
+biergaizi 说 :会议即将结束
+biergaizi 说 :结束后可以继续讨论
+biergaizi 说 :倒计时
+biergaizi 说 :5
+biergaizi 说 :4
+Garfier 说 :1
+biergaizi 说 :3
+biergaizi 说 :2
+biergaizi 说 :1

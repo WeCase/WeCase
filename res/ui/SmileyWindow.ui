@@ -15,22 +15,16 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QDeclarativeView" name="smileyView">
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-    </widget>
+    <widget class="WSmileyListWidget" name="smileyView" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QDeclarativeView</class>
-   <extends>QGraphicsView</extends>
-   <header>QtDeclarative/QDeclarativeView</header>
+   <class>WSmileyListWidget</class>
+   <extends>QWidget</extends>
+   <header>SmileyWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

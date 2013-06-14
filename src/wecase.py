@@ -11,24 +11,40 @@ import os
 from PyQt4 import QtCore, QtGui
 from LoginWindow import LoginWindow
 import const
+import traceback
+import signal
 
 
 def mkconfig():
     try:
-        os.mkdir(const.config_path.replace("/config_db", ""))
+        os.makedirs(const.config_path.replace("/config_db", ""))
     except OSError:
         pass
 
     try:
-        os.mkdir(const.cache_path)
+        os.makedirs(const.cache_path)
     except OSError:
         pass
+
+
+def my_excepthook(type, value, tback):
+    # Let Qt complains about it.
+    exception = "".join(traceback.format_exception(type, value, tback))
+    error_info = "Oops, there is an unexcepted error: \n\n" + \
+                 "%s\n" % exception + \
+                 "Please report it at https://github.com/WeCase/WeCase/issues"
+    QtGui.QMessageBox.critical(None, "Unknown Error", error_info)
+
+    # Then call the default handler
+    sys.__excepthook__(type, value, tback)
 
 
 if __name__ == "__main__":
     mkconfig()
 
     app = QtGui.QApplication(sys.argv)
+    sys.excepthook = my_excepthook
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     # Qt's built-in string translator
     qt_translator = QtCore.QTranslator(app)

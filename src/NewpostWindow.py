@@ -6,56 +6,100 @@
 # License: GPL v3 or later.
 
 
-import re
-import threading
+from WeHack import async
 from PyQt4 import QtCore, QtGui
 from weibo import APIError
+from Tweet import TweetItem, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
 from SmileyWindow import SmileyWindow
+from TweetListWidget import TweetListWidget, SingleTweetWidget
+import const
 
 
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
-    client = None
     image = None
     apiError = QtCore.pyqtSignal(str)
     sendSuccessful = QtCore.pyqtSignal()
 
-    def __init__(self, parent=None, action="new", id=None, cid=None, text=""):
-        QtGui.QDialog.__init__(self, parent)
+    def __init__(self, action="new", tweet=None, parent=None):
+        super(NewpostWindow, self).__init__(parent)
+        self.client = const.client
+        self.tweet = tweet
         self.action = action
-        self.id = id
-        self.cid = cid
         self.setupUi(self)
-        self.setupMyUi()
-        self.textEdit.setText(text)
         self.textEdit.callback = self.mentions_suggest
         self.textEdit.mention_flag = "@"
         self.notify = Notify(timeout=1)
+        self._sent = False
+        self.sendSuccessful.connect(self.sent)
 
-    def setupMyUi(self):
+    def setupUi(self, widget):
+        super(NewpostWindow, self).setupUi(widget)
+        if self.action not in ["new", "reply"]:
+            self._create_tweetWidget()
+
         self.checkChars()
+        self.setupButtons()
+
+    def setupButtons(self):
+        # Disabled is the default state of buttons
+        self.chk_repost.setEnabled(False)
+        self.chk_comment.setEnabled(False)
+        self.chk_comment_original.setEnabled(False)
+
         if self.action == "new":
-            self.chk_repost.setEnabled(False)
-            self.chk_comment.setEnabled(False)
-            self.chk_comment_original.setEnabled(False)
+            # there is no tweet but we are sending a new one,
+            # disable all button
+            assert (not self.tweet)
         elif self.action == "retweet":
-            self.chk_repost.setEnabled(False)
-            self.pushButton_picture.setEnabled(False)
+            self.chk_comment.setEnabled(True)
+            if self.tweet.type == TweetItem.RETWEET:
+                self.textEdit.setText(self.tweet.append_existing_replies())
+                self.chk_comment_original.setEnabled(True)
         elif self.action == "comment":
-            self.chk_comment.setEnabled(False)
-            self.pushButton_picture.setEnabled(False)
+            self.chk_repost.setEnabled(True)
+            if self.tweet.type == TweetItem.RETWEET:
+                self.chk_comment_original.setEnabled(True)
         elif self.action == "reply":
-            self.chk_repost.setEnabled(False)
-            self.chk_comment.setEnabled(False)
-            self.pushButton_picture.setEnabled(False)
+            self.chk_repost.setEnabled(True)
+            if self.tweet.original.type == TweetItem.RETWEET:
+                self.chk_comment_original.setEnabled(True)
+
+    def _create_tweetWidget(self):
+        if self.action == "comment":
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
+        elif self.action == "retweet" and self.tweet.original:
+            self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"])
+        elif self.action == "retweet" and self.tweet:
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
+
+        # The read count is not a real-time value. So refresh it now.
+        self.tweet.refresh()
+        if self.action == "comment" and self.tweet.comments_count:
+            self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
+        elif self.action == "retweet" and self.tweet.retweets_count:
+            self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
+        else:
+            return
+        self.replyModel.load()
+
+        self.tweetWidget.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout.insertWidget(0, self.tweetWidget)
+        self.verticalLayout.setStretch(0, 1)
+
+        self.commentsWidget = TweetListWidget(self, ["image", "original"])
+        self.commentsWidget.setModel(self.replyModel)
+        self.commentsWidget.scrollArea.setMinimumSize(20, 200)
+        self.verticalLayout.insertWidget(1, self.commentsWidget)
+        self.verticalLayout.setStretch(1, 10)
 
     def mentions_suggest(self, text):
         ret_users = []
         try:
-            word = re.findall('@[-a-zA-Z0-9_\u4e00-\u9fa5]+', text)[-1]
-            word = word.replace('@', '')
+            word = text.split(' ')[-1]
+            word = word.split('@')[-1]
         except IndexError:
             return []
         if not word.strip():
@@ -65,59 +109,64 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             ret_users.append("@" + user['nickname'])
         return ret_users
 
+    def sent(self):
+        self._sent = True
+        self.close()
+
     def send(self):
         self.pushButton_send.setEnabled(False)
         if self.action == "new":
-            threading.Thread(group=None, target=self.new).start()
+            self.new()
         elif self.action == "retweet":
-            threading.Thread(group=None, target=self.retweet).start()
+            self.retweet()
         elif self.action == "comment":
-            threading.Thread(group=None, target=self.comment).start()
+            self.comment()
         elif self.action == "reply":
-            threading.Thread(group=None, target=self.reply).start()
+            self.reply()
+        else:
+            # If action is in other types, it must be a mistake.
+            assert False
 
+    @async
     def retweet(self):
         text = str(self.textEdit.toPlainText())
+        comment = int(self.chk_comment.isChecked())
+        comment_ori = int(self.chk_comment_original.isChecked())
         try:
-            self.client.statuses.repost.post(id=int(self.id), status=text,
-                                             is_comment=int((self.chk_comment.isChecked() +
-                                             self.chk_comment_original.isChecked() * 2)))
-            self.notify.showMessage(self.tr("WeCase"),
-                                    self.tr("Retweet Success!"))
-            self.sendSuccessful.emit()
+            self.tweet.retweet(text, comment, comment_ori)
         except APIError as e:
             self.apiError.emit(str(e))
             return
+        self.notify.showMessage(self.tr("WeCase"), self.tr("Retweet Success!"))
+        self.sendSuccessful.emit()
 
+    @async
     def comment(self):
         text = str(self.textEdit.toPlainText())
+        retweet = int(self.chk_repost.isChecked())
+        comment_ori = int(self.chk_comment_original.isChecked())
         try:
-            self.client.comments.create.post(id=int(self.id), comment=text,
-                                             comment_ori=int(self.chk_comment_original.isChecked()))
-            if self.chk_repost.isChecked():
-                self.client.statuses.repost.post(id=int(self.id), status=text)
-            self.notify.showMessage(self.tr("WeCase"),
-                                    self.tr("Comment Success!"))
-            self.sendSuccessful.emit()
+            self.tweet.comment(text, comment_ori, retweet)
         except APIError as e:
             self.apiError.emit(str(e))
             return
+        self.notify.showMessage(self.tr("WeCase"), self.tr("Comment Success!"))
+        self.sendSuccessful.emit()
 
+    @async
     def reply(self):
         text = str(self.textEdit.toPlainText())
+        comment_ori = int(self.chk_comment_original.isChecked())
+        retweet = int(self.chk_repost.isChecked())
         try:
-            self.client.comments.reply.post(id=int(self.id), cid=int(self.cid),
-                                            comment=text,
-                                            comment_ori=int(self.chk_comment_original.isChecked()))
-            if self.chk_repost.isChecked():
-                self.client.statuses.repost.post(id=int(self.id), status=text)
-            self.notify.showMessage(self.tr("WeCase"),
-                                    self.tr("Reply Success!"))
-            self.sendSuccessful.emit()
+            self.tweet.reply(text, comment_ori, retweet)
         except APIError as e:
             self.apiError.emit(str(e))
             return
+        self.notify.showMessage(self.tr("WeCase"), self.tr("Reply Success!"))
+        self.sendSuccessful.emit()
 
+    @async
     def new(self):
         text = str(self.textEdit.toPlainText())
 
@@ -165,9 +214,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.textEdit.textCursor().insertText(wecase_smiley.smileyName)
 
     def checkChars(self):
-        '''Check textEdit's characters.
+        """Check textEdit's characters.
         If it larger than 140, Send Button will be disabled
-        and label will show red chars.'''
+        and label will show red chars."""
 
         text = self.textEdit.toPlainText()
         numLens = 140 - tweetLength(text)
@@ -183,3 +232,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.label.setStyleSheet("color:red;")
             self.pushButton_send.setEnabled(False)
         self.label.setText(str(numLens))
+
+    def reject(self):
+        self.close()
+
+    def closeEvent(self, event):
+        # We have unsend text.
+        if (not self._sent) and (self.textEdit.toPlainText()):
+            choice = QtGui.QMessageBox.question(
+                self, self.tr("Close?"),
+                self.tr("All unpost text will lost."),
+                QtGui.QMessageBox.Yes,
+                QtGui.QMessageBox.No)
+            if choice == QtGui.QMessageBox.No:
+                event.ignore()
