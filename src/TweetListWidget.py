@@ -13,7 +13,6 @@ import const
 from const import cache_path
 
 
-# XXX: Busy Icons are broken.
 class TweetListWidget(QtGui.QWidget):
 
     def __init__(self, parent=None, without=[]):
