@@ -18,7 +18,9 @@ class Notify(QtCore.QObject):
         try:
             import notify2 as pynotify
         except ImportError:
-            QtGui.QMessageBox.warning(None, self.tr("Notification disabled"),
+            QtGui.QMessageBox.warning(
+                None,
+                self.tr("Notification disabled"),
                 self.tr("notify2 is not found. Notification will disable."))
             import nullNotify as pynotify
 

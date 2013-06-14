@@ -203,8 +203,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.counterHorizontalLayout = QtGui.QHBoxLayout()
         self.counterHorizontalLayout.setObjectName("counterhorizontalLayout")
-        self.horizontalSpacer = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding,
-                                                          QtGui.QSizePolicy.Minimum)
+        self.horizontalSpacer = QtGui.QSpacerItem(40, 20,
+                                                  QtGui.QSizePolicy.Expanding,
+                                                  QtGui.QSizePolicy.Minimum)
         self.counterHorizontalLayout.addItem(self.horizontalSpacer)
         if not (self.tweet.type == TweetItem.COMMENT):
             self.retweet = WIconLabel(self)
@@ -305,8 +306,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
         counterHorizontalLayout = QtGui.QHBoxLayout()
         counterHorizontalLayout.setObjectName("counterhorizontalLayout")
-        horizontalSpacer = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding,
-                                                     QtGui.QSizePolicy.Minimum)
+        horizontalSpacer = QtGui.QSpacerItem(40, 20,
+                                             QtGui.QSizePolicy.Expanding,
+                                             QtGui.QSizePolicy.Minimum)
         counterHorizontalLayout.addItem(horizontalSpacer)
         retweet = WIconLabel(widget)
         retweet.setObjectName("retweet")
@@ -431,5 +433,5 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _create_html_url(self, text):
         url = re.compile(r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))""")
-        new_text = url.sub( r"""<a href='\1'>\1</a>""", text)
+        new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text

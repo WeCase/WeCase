@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui
 
+
 class WTweetLabel(QtGui.QTextBrowser):
 
     def __init__(self, text, parent=None):

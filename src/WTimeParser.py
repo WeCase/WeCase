@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-# WeCase -- This model implemented a dateutil-compatible parser 
+# WeCase -- This model implemented a dateutil-compatible parser
 #           for Sina's time format
 # Copyright (C) 2013 Tom Li
 # License: GPL v3 or later.

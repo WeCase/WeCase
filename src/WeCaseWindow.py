@@ -63,7 +63,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.timer.start()
         self.notify.timeout = self.notify_timeout
 
-
     def setupModels(self):
         self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
         self.all_timeline.setUsersBlacklist(self.usersBlacklist)
@@ -88,7 +87,6 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.my_timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         self.my_timeline.load()
         self.myView.setModel(self.my_timeline)
-
 
     def reset_remind(self):
         if self.tabWidget.currentIndex() == 0:

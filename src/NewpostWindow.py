@@ -43,7 +43,6 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.checkChars()
         self.setupButtons()
 
-
     def setupButtons(self):
         # Disabled is the default state of buttons
         self.chk_repost.setEnabled(False)
@@ -67,7 +66,6 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.chk_repost.setEnabled(True)
             if self.tweet.original.type == TweetItem.RETWEET:
                 self.chk_comment_original.setEnabled(True)
-
 
     def _create_tweetWidget(self):
         if self.action == "comment":
@@ -242,9 +240,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         # We have unsend text.
         if (not self._sent) and (self.textEdit.toPlainText()):
             choice = QtGui.QMessageBox.question(
-                         self, self.tr("Close?"),
-                         self.tr("All unpost text will lost."),
-                         QtGui.QMessageBox.Yes,
-                         QtGui.QMessageBox.No)
+                self, self.tr("Close?"),
+                self.tr("All unpost text will lost."),
+                QtGui.QMessageBox.Yes,
+                QtGui.QMessageBox.No)
             if choice == QtGui.QMessageBox.No:
                 event.ignore()

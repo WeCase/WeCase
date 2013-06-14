@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 
+
 class WeCaseConfig():
 
     def __init__(self, path, section="main"):

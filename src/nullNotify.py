@@ -1,6 +1,7 @@
 def init(*args):
     return True
 
+
 class Notification():
     def __init__(self, *args):
         pass

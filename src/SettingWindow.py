@@ -74,9 +74,9 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 
     def addBlackUser(self):
         user = QtGui.QInputDialog.getText(
-               self, self.tr("Input A user:"),
-               self.tr("Please input a user"),
-               QtGui.QLineEdit.Normal, self.tr("Username"))[0]
+            self, self.tr("Input A user:"),
+            self.tr("Please input a user"),
+            QtGui.QLineEdit.Normal, self.tr("Username"))[0]
         if user:
             self.usersBlackListWidget.addItem(user)
 
@@ -86,10 +86,10 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 
     def addKeyword(self):
         keyword = QtGui.QInputDialog.getText(
-                  self,
-                  self.tr("Input a keyword:"),
-                  self.tr("Please input a keyword"),
-                  QtGui.QLineEdit.Normal, self.tr("Keyword"))[0]
+            self,
+            self.tr("Input a keyword:"),
+            self.tr("Please input a keyword"),
+            QtGui.QLineEdit.Normal, self.tr("Keyword"))[0]
         if keyword:
             self.tweetsKeywordsBlacklistWidget.addItem(keyword)
 

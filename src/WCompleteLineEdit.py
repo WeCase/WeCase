@@ -89,8 +89,9 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
             elif key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
                 # 补全单词
                 if currentIndex.isValid():
-                    text = self.getNewText(self.cursor.selectedText(),
-                            self.listView.currentIndex().data())
+                    text = self.getNewText(
+                        self.cursor.selectedText(),
+                        self.listView.currentIndex().data())
                     self.cursor.insertText(text)
                 self.textChanged.emit()
                 self.listView.hide()

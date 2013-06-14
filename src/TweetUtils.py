@@ -60,8 +60,8 @@ def get_mid(mid):
     def baseN(num, base):
         """Convert the base of a decimal."""
         CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        return ((num == 0) and "0") or (baseN(num // base, base).lstrip("0") +
-                CHAR[num % base])
+        return ((num == 0) and "0") or \
+               (baseN(num // base, base).lstrip("0") + CHAR[num % base])
 
     url = ""
 
