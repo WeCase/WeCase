@@ -7,7 +7,6 @@
 # License: GPL v3 or later.
 
 
-import threading
 from PyQt4 import QtGui, QtCore
 from WeHack import async
 

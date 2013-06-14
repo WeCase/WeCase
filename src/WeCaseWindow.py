@@ -6,13 +6,8 @@
 # License: GPL v3 or later.
 
 
-import os
-import urllib.request
-import urllib.parse
-import urllib.error
 import http
 from time import sleep
-import threading
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetCommonModel, TweetCommentModel, TweetItem

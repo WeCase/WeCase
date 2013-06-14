@@ -5,7 +5,6 @@
 # Copyright: GPL v3 or later.
 
 
-import threading
 from PyQt4 import QtCore
 from datetime import datetime
 from TweetUtils import get_mid

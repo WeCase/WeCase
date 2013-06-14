@@ -6,7 +6,6 @@
 # License: GPL v3 or later.
 
 
-import os
 from PyQt4 import QtCore, QtGui
 from SettingWindow_ui import Ui_SettingWindow
 import const

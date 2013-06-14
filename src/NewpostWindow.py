@@ -6,8 +6,6 @@
 # License: GPL v3 or later.
 
 
-import re
-from copy import deepcopy
 from WeHack import async
 from PyQt4 import QtCore, QtGui
 from weibo import APIError
