@@ -10,7 +10,7 @@ import http
 from time import sleep
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
-from Tweet import TweetCommonModel, TweetCommentModel, TweetItem
+from Tweet import TweetCommonModel, TweetCommentModel
 from MainWindow_ui import Ui_frm_MainWindow
 from Notify import Notify
 from NewpostWindow import NewpostWindow

@@ -6,7 +6,7 @@
 # License: GPL v3 or later.
 
 
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from Smiley import SmileyModel, SmileyItem
 from SmileyWindow_ui import Ui_SmileyWindow
 import const

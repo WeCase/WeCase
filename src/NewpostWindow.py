@@ -9,7 +9,7 @@
 from WeHack import async
 from PyQt4 import QtCore, QtGui
 from weibo import APIError
-from Tweet import TweetItem, TweetCommentModel, TweetUnderCommentModel, TweetRetweetModel
+from Tweet import TweetItem, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow

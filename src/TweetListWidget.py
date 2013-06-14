@@ -1,14 +1,12 @@
 import os
 import re
 import urllib.request
-from time import sleep
 from WeHack import async, start
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
-from WTimer import WTimer
 import const
 from const import cache_path
 
