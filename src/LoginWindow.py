@@ -7,37 +7,37 @@
 
 
 import webbrowser
-import urllib.request
-import urllib.parse
-import urllib.error
-import http.client
-import ssl
-import socket
-from configparser import ConfigParser
-import threading
+from WeHack import async
 from weibo import APIClient
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
 import const
+from TweetUtils import authorize
+from time import sleep
+from WeCaseConfig import WeCaseConfig
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
-    loginReturn = QtCore.pyqtSignal(object)
+    SUCCESS = 0
+    PASSWORD_ERROR = 1
+    NETWORK_ERROR = 2
+    loginReturn = QtCore.pyqtSignal(int)
 
-    def __init__(self, parent=None):
-        QtGui.QDialog.__init__(self, parent)
+    def __init__(self, allow_auto_login=True, parent=None):
+        super(LoginWindow, self).__init__(parent)
+        self.allow_auto_login = allow_auto_login
         self.loadConfig()
         self.setupUi(self)
-        self.setupMyUi()
         self.setupSignals()
+        self.net_err_count = 0
 
     def setupSignals(self):
         # Other singals defined in Desinger.
         self.loginReturn.connect(self.checkLogin)
         self.chk_Remember.clicked.connect(self.uncheckAutoLogin)
 
-    def accept(self, client):
+    def accept(self):
         if self.chk_Remember.isChecked():
             self.passwd[str(self.username)] = str(self.password)
             self.last_login = str(self.username)
@@ -45,28 +45,38 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             # closeEvent won't emit when we accept() the window, but will
             # emit when we reject() the window.
             self.saveConfig()
-        wecase_main = WeCaseWindow(client)
+        wecase_main = WeCaseWindow()
         wecase_main.show()
         # Maybe users will logout, so reset the status
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
         self.done(True)
 
-    def reject(self):
-        QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
-                                   self.tr("Check your account, "
-                                           "password and Internet Connection!")
-                                  )
+    def reject(self, status):
+        if status == self.PASSWORD_ERROR:
+            QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
+                                       self.tr("Check your account and password"))
+        elif status == self.NETWORK_ERROR and self.net_err_count < 3:
+            self.net_err_count += 1
+            sleep(0.5)
+            self.ui_authorize()
+            return
+        elif status == self.NETWORK_ERROR and self.net_err_count == 3:
+            QtGui.QMessageBox.critical(None, self.tr("Network Error"),
+                                       self.tr("Something wrong with the network, please try again."))
+            self.net_err_count = 0
+
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
 
-    def checkLogin(self, client):
-        if client:
-            self.accept(client)
+    def checkLogin(self, status):
+        if status == self.SUCCESS:
+            self.accept()
         else:
-            self.reject()
+            self.reject(status)
 
-    def setupMyUi(self):
+    def setupUi(self, widget):
+        super(LoginWindow, self).setupUi(widget)
         self.show()
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
         self.cmb_Users.addItem(self.last_login)
@@ -85,24 +95,16 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.login()
 
     def loadConfig(self):
-        self.config = ConfigParser()
-        self.config.read(const.config_path)
-
-        if not self.config.has_section('login'):
-            self.config['login'] = {}
-
-        self.login_config = self.config['login']
-        self.passwd = eval(self.login_config.get('passwd', "{}"))
-        self.last_login = str(self.login_config.get('last_login', ""))
-        self.auto_login = self.login_config.getboolean('auto_login', 0)
+        self.login_config = WeCaseConfig(const.config_path, "login")
+        self.passwd = self.login_config.passwd
+        self.last_login = self.login_config.last_login
+        self.auto_login = self.login_config.auto_login and self.allow_auto_login
 
     def saveConfig(self):
-        self.login_config['passwd'] = str(self.passwd)
-        self.login_config['last_login'] = self.last_login
-        self.login_config['auto_login'] = str(self.chk_AutoLogin.isChecked())
-
-        with open(const.config_path, "w+") as config_file:
-            self.config.write(config_file)
+        self.login_config.passwd = self.passwd
+        self.login_config.last_login = self.last_login
+        self.login_config.auto_login = self.chk_AutoLogin.isChecked()
+        self.login_config.save()
 
     def login(self):
         self.pushButton_log.setText(self.tr("Login, waiting..."))
@@ -112,58 +114,35 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def ui_authorize(self):
         self.username = self.cmb_Users.currentText()
         self.password = self.txt_Password.text()
-        threading.Thread(group=None, target=self.authorize,
-                         args=(self.username, self.password)).start()
+        self.authorize(self.username, self.password)
 
+    @async
     def authorize(self, username, password):
-        # TODO: This method is very messy, maybe do some cleanup?
-
-        client = APIClient(app_key=const.APP_KEY, app_secret=const.APP_SECRET,
-                           redirect_uri=const.CALLBACK_URL)
-
-        # Step 1: Get the authorize url from Sina
-        authorize_url = client.get_authorize_url()
-
-        # Step 2: Send the authorize info to Sina and get the authorize_code
-        # TODO: Rewrite them with urllib/urllib2
-        oauth2 = const.OAUTH2_PARAMETER
-        oauth2['userId'] = username
-        oauth2['passwd'] = password
-        postdata = urllib.parse.urlencode(oauth2)
-
-        conn = http.client.HTTPSConnection('api.weibo.com')
-        sock = socket.create_connection((conn.host, conn.port), conn.timeout, conn.source_address)
-        conn.sock = ssl.wrap_socket(sock, conn.key_file, conn.cert_file, ssl_version=ssl.PROTOCOL_TLSv1)
-
         try:
-            conn.request('POST', '/oauth2/authorize', postdata,
-                         {'Referer': authorize_url,
-                          'Content-Type': 'application/x-www-form-urlencoded'})
-        except OSError:
-            self.loginReturn.emit(None)
-            return
+            client = APIClient(app_key=const.APP_KEY, app_secret=const.APP_SECRET,
+                               redirect_uri=const.CALLBACK_URL)
 
-        res = conn.getresponse()
+            # Step 1: Get the authorize url from Sina
+            authorize_url = client.get_authorize_url()
 
-        location = res.getheader('location')
+            # Step 2: Send the authorize info to Sina and get the authorize_code
+            authorize_code = authorize(authorize_url, username, password)
+            if not authorize_code:
+                self.loginReturn.emit(self.PASSWORD_ERROR)
 
-        if not location:
-            return self.loginReturn.emit(None)
+            # Step 3: Get the access token by authorize_code
+            r = client.request_access_token(authorize_code)
 
-        authorize_code = location.split('=')[1]
-        conn.close()
-
-        # Step 3: Put the authorize information into SDK
-        r = client.request_access_token(authorize_code)
-        access_token = r.access_token
-        expires_in = r.expires_in
-
-        client.set_access_token(access_token, expires_in)
-        self.loginReturn.emit(client)
+            # Step 4: Setup the access token of SDK
+            client.set_access_token(r.access_token, r.expires_in)
+            const.client = client
+            self.loginReturn.emit(self.SUCCESS)
+        except:
+            self.loginReturn.emit(self.NETWORK_ERROR)
 
     def setPassword(self, username):
         if username:
-            self.txt_Password.setText(self.passwd[str(username)])
+            self.txt_Password.setText(self.passwd[username])
 
     @QtCore.pyqtSlot(bool)
     def uncheckAutoLogin(self, checked):

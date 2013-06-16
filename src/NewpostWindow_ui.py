@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/NewpostWindow.ui'
+# Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
 #
-# Created: Sun Apr 14 21:55:20 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Mon Jun 10 18:21:08 2013
+#      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -29,15 +29,17 @@ class Ui_NewPostWindow(object):
         NewPostWindow.resize(562, 306)
         NewPostWindow.setAutoFillBackground(False)
         NewPostWindow.setProperty("unifiedTitleAndToolBarOnMac", False)
-        self.verticalLayout = QtGui.QVBoxLayout(NewPostWindow)
+        self.verticalLayout_2 = QtGui.QVBoxLayout(NewPostWindow)
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.verticalLayout = QtGui.QVBoxLayout()
+        self.verticalLayout.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(NewPostWindow)
-        self.widget.setMinimumSize(QtCore.QSize(0, 200))
-        self.widget.setObjectName(_fromUtf8("widget"))
-        self.gridLayout = QtGui.QGridLayout(self.widget)
-        self.gridLayout.setMargin(0)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.textEdit = WCompleteLineEdit(NewPostWindow)
+        self.textEdit.setMouseTracking(True)
+        self.textEdit.setFrameShadow(QtGui.QFrame.Sunken)
+        self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.verticalLayout.addWidget(self.textEdit)
+        self.label = QtGui.QLabel(NewPostWindow)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Arial Black"))
         font.setPointSize(14)
@@ -46,13 +48,8 @@ class Ui_NewPostWindow(object):
         self.label.setTextFormat(QtCore.Qt.PlainText)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName(_fromUtf8("label"))
-        self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
-        self.textEdit = WCompleteLineEdit(self.widget)
-        self.textEdit.setMouseTracking(True)
-        self.textEdit.setFrameShadow(QtGui.QFrame.Sunken)
-        self.textEdit.setObjectName(_fromUtf8("textEdit"))
-        self.gridLayout.addWidget(self.textEdit, 0, 0, 1, 1)
-        self.verticalLayout.addWidget(self.widget)
+        self.verticalLayout.addWidget(self.label)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
         self.horizontalLayout.setContentsMargins(-1, -1, 0, -1)
@@ -71,7 +68,7 @@ class Ui_NewPostWindow(object):
         self.chk_comment_original = QtGui.QCheckBox(NewPostWindow)
         self.chk_comment_original.setObjectName(_fromUtf8("chk_comment_original"))
         self.horizontalLayout.addWidget(self.chk_comment_original)
-        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.widget_2 = QtGui.QWidget(NewPostWindow)
         self.widget_2.setMinimumSize(QtCore.QSize(0, 40))
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
@@ -92,17 +89,15 @@ class Ui_NewPostWindow(object):
         self.pushButton = QtGui.QPushButton(self.widget_2)
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.gridLayout_2.addWidget(self.pushButton, 0, 0, 1, 1)
-        self.verticalLayout.addWidget(self.widget_2)
-        self.verticalLayout.setStretch(0, 4)
+        self.verticalLayout_2.addWidget(self.widget_2)
 
         self.retranslateUi(NewPostWindow)
         QtCore.QObject.connect(self.pushButton_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.close)
         QtCore.QObject.connect(self.pushButton_picture, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.addImage)
         QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("apiError(QString)")), NewPostWindow.showError)
-        QtCore.QObject.connect(NewPostWindow, QtCore.SIGNAL(_fromUtf8("sendSuccessful()")), NewPostWindow.close)
-        QtCore.QObject.connect(self.textEdit, QtCore.SIGNAL(_fromUtf8("textChanged()")), NewPostWindow.checkChars)
         QtCore.QObject.connect(self.pushButton_send, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.send)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), NewPostWindow.showSmiley)
+        QtCore.QObject.connect(self.textEdit, QtCore.SIGNAL(_fromUtf8("textChanged()")), NewPostWindow.checkChars)
         QtCore.QMetaObject.connectSlotsByName(NewPostWindow)
 
     def retranslateUi(self, NewPostWindow):

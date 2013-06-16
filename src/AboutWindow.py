@@ -12,5 +12,5 @@ from AboutWindow_ui import Ui_About_Dialog
 
 class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
     def __init__(self, parent=None):
-        QtGui.QDialog.__init__(self, parent)
+        super(AboutWindow, self).__init__(parent)
         self.setupUi(self)

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/SmileyWindow.ui'
+# Form implementation generated from reading ui file 'ui/SmileyWindow.ui'
 #
-# Created: Sun Apr 14 21:55:20 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Fri May 31 23:32:18 2013
+#      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -29,9 +29,7 @@ class Ui_SmileyWindow(object):
         SmileyWindow.resize(533, 288)
         self.gridLayout = QtGui.QGridLayout(SmileyWindow)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.smileyView = QtDeclarative.QDeclarativeView(SmileyWindow)
-        self.smileyView.setFrameShape(QtGui.QFrame.NoFrame)
-        self.smileyView.setFrameShadow(QtGui.QFrame.Plain)
+        self.smileyView = WSmileyListWidget(SmileyWindow)
         self.smileyView.setObjectName(_fromUtf8("smileyView"))
         self.gridLayout.addWidget(self.smileyView, 0, 0, 1, 1)
 
@@ -41,4 +39,4 @@ class Ui_SmileyWindow(object):
     def retranslateUi(self, SmileyWindow):
         SmileyWindow.setWindowTitle(_translate("SmileyWindow", "Choose a smiley", None))
 
-from PyQt4 import QtDeclarative
+from SmileyWidget import WSmileyListWidget

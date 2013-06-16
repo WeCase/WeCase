@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>295</width>
+    <width>300</width>
     <height>637</height>
    </rect>
   </property>
@@ -28,16 +28,9 @@
        <attribute name="title">
         <string>Weibo</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QDeclarativeView" name="homeView">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-         </widget>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="TweetListWidget" name="homeView" native="true"/>
         </item>
        </layout>
       </widget>
@@ -47,14 +40,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QDeclarativeView" name="mentionsView">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-         </widget>
+         <widget class="TweetListWidget" name="mentionsView" native="true"/>
         </item>
        </layout>
       </widget>
@@ -64,14 +50,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QDeclarativeView" name="commentsView">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-         </widget>
+         <widget class="TweetListWidget" name="commentsView" native="true"/>
         </item>
        </layout>
       </widget>
@@ -81,14 +60,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QDeclarativeView" name="myView">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-         </widget>
+         <widget class="TweetListWidget" name="myView" native="true"/>
         </item>
        </layout>
       </widget>
@@ -169,8 +141,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>295</width>
-     <height>22</height>
+     <width>300</width>
+     <height>24</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -259,9 +231,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QDeclarativeView</class>
-   <extends>QGraphicsView</extends>
-   <header>QtDeclarative/QDeclarativeView</header>
+   <class>TweetListWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">TweetListWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
