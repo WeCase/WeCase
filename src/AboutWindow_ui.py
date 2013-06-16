@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/AboutWindow.ui'
+# Form implementation generated from reading ui file 'ui/AboutWindow.ui'
 #
-# Created: Sun Apr 14 21:55:20 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Sun Jun 16 21:43:07 2013
+#      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -34,21 +34,10 @@ class Ui_About_Dialog(object):
         About_Dialog.setSizePolicy(sizePolicy)
         About_Dialog.setMinimumSize(QtCore.QSize(354, 435))
         About_Dialog.setMaximumSize(QtCore.QSize(354, 435))
-        self.verticalLayout = QtGui.QVBoxLayout(About_Dialog)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.gridLayout = QtGui.QGridLayout()
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.label = QtGui.QLabel(About_Dialog)
-        font = QtGui.QFont()
-        font.setPointSize(48)
-        self.label.setFont(font)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName(_fromUtf8("label"))
-        self.gridLayout.addWidget(self.label, 0, 1, 1, 1)
-        self.label_2 = QtGui.QLabel(About_Dialog)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.gridLayout.addWidget(self.label_2, 1, 1, 1, 1)
+        self.verticalLayout_4 = QtGui.QVBoxLayout(About_Dialog)
+        self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
         self.label_3 = QtGui.QLabel(About_Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -61,8 +50,40 @@ class Ui_About_Dialog(object):
         self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase 80.png")))
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.gridLayout.addWidget(self.label_3, 0, 0, 1, 1)
-        self.verticalLayout.addLayout(self.gridLayout)
+        self.horizontalLayout_4.addWidget(self.label_3)
+        self.verticalLayout = QtGui.QVBoxLayout()
+        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.label = QtGui.QLabel(About_Dialog)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(48)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.verticalLayout.addWidget(self.label)
+        self.horizontalLayout_3 = QtGui.QHBoxLayout()
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem)
+        self.distLabel = QtGui.QLabel(About_Dialog)
+        self.distLabel.setObjectName(_fromUtf8("distLabel"))
+        self.horizontalLayout_3.addWidget(self.distLabel)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.label_2 = QtGui.QLabel(About_Dialog)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.verticalLayout.addWidget(self.label_2)
+        self.verticalLayout.setStretch(0, 2)
+        self.verticalLayout.setStretch(1, 1)
+        self.verticalLayout.setStretch(2, 3)
+        self.horizontalLayout_4.addLayout(self.verticalLayout)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_4)
         self.tabWidget = QtGui.QTabWidget(About_Dialog)
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.intro = QtGui.QWidget()
@@ -80,9 +101,9 @@ class Ui_About_Dialog(object):
         self.contirbutor.setObjectName(_fromUtf8("contirbutor"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.contirbutor)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.listView = QtGui.QListView(self.contirbutor)
-        self.listView.setObjectName(_fromUtf8("listView"))
-        self.verticalLayout_2.addWidget(self.listView)
+        self.contirbutorBroswer = QtGui.QTextBrowser(self.contirbutor)
+        self.contirbutorBroswer.setObjectName(_fromUtf8("contirbutorBroswer"))
+        self.verticalLayout_2.addWidget(self.contirbutorBroswer)
         self.tabWidget.addTab(self.contirbutor, _fromUtf8(""))
         self.gpl_license = QtGui.QWidget()
         self.gpl_license.setObjectName(_fromUtf8("gpl_license"))
@@ -236,18 +257,18 @@ class Ui_About_Dialog(object):
         self.textBrowser.setObjectName(_fromUtf8("textBrowser"))
         self.verticalLayout_3.addWidget(self.textBrowser)
         self.tabWidget.addTab(self.gpl_license, _fromUtf8(""))
-        self.verticalLayout.addWidget(self.tabWidget)
+        self.verticalLayout_4.addWidget(self.tabWidget)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.Btn_Close = QtGui.QPushButton(About_Dialog)
         self.Btn_Close.setStyleSheet(_fromUtf8(""))
         self.Btn_Close.setObjectName(_fromUtf8("Btn_Close"))
         self.horizontalLayout.addWidget(self.Btn_Close)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem1)
-        self.verticalLayout.addLayout(self.horizontalLayout)
+        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem2)
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
 
         self.retranslateUi(About_Dialog)
         self.tabWidget.setCurrentIndex(0)
@@ -257,6 +278,7 @@ class Ui_About_Dialog(object):
     def retranslateUi(self, About_Dialog):
         About_Dialog.setWindowTitle(_translate("About_Dialog", "About", None))
         self.label.setText(_translate("About_Dialog", "WeCase", None))
+        self.distLabel.setText(_translate("About_Dialog", "This is a vanilla version.", None))
         self.label_2.setText(_translate("About_Dialog", "A Linux weibo client", None))
         self.label_4.setText(_translate("About_Dialog", "WeCase is a simple, but not crude weibo client which is running on Linux desktop.\n"
 "\n"
@@ -269,6 +291,19 @@ class Ui_About_Dialog(object):
 "\n"
 "This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.intro), _translate("About_Dialog", "Intro", None))
+        self.contirbutorBroswer.setHtml(_translate("About_Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans Serif\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Organizer：</p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Garfield550 (加菲猫550)</p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Development Leader：</p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Tom Li (Biergaizi, 比尔盖子) &lt;biergaizi2009@gmail.com&gt;</p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Contributor：</p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">TonyChyi (小骞爱开源)</p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">（More）</p></body></html>", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.contirbutor), _translate("About_Dialog", "Contributor", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.gpl_license), _translate("About_Dialog", "GPL License", None))
         self.Btn_Close.setText(_translate("About_Dialog", "Close", None))
