@@ -17,8 +17,8 @@ def tweetLength(text):
     This function implemented a strings' length counter, the result of
     this function should be bug-for-bug compatible with Sina's.
 
-    >>> tweetLength("我司CEO与我司吉祥物...好大一坨！")
-    16
+    >>> tweetLength("Test")
+    2
     """
 
     def findall(regex, text):
@@ -125,24 +125,3 @@ def authorize(authorize_url, username, password):
     authorize_code = location.split('=')[1]
     conn.close()
     return authorize_code
-
-
-import unittest
-class TweetUtilsTest(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-    def test_tweetLength(self):
-        self.assertEqual(tweetLength("【转基因食品在美国】1、FDA在管理上和普通食品同等对待；2、2012年，转基因玉米种植面积占所有玉米的88%，大豆是93%，棉花是94%；过去十年美国人吃了3万亿份转基因餐食。再说转基因是美国阴谋的，先查查EPA（美国环保局）、USDA(美国农业部）、FDA（美国食品和药品管理局）的网站吧。"), 132)
-        self.assertEqual(tweetLength("我司CEO与我司吉祥物...好大一坨！"), 16)
-        self.assertEqual(tweetLength("这个很长8@&$&*@Q&$&*%&*#Q&%*&587q385,,,35,46,46,0fdfjkhsvbsjkbfsdjkbfsjkhgvbsdbvdjska fjs松江府斯渡口附近卡洛斯看得见三个计算机法国//-*-啊 杰克森的风景三等分角疯狂的风景快速减肥加 解放思考了封建凯瑟琳风景诵读佛经三加夫克拉934892580395835lljj开放加阿斯附近克利斯朵夫加,.,.,53453p[][][]][][402358935kc"), 150)
-
-    def test_get_mid(self):
-        self.assertEqual(get_mid("3591268992667779"), 'zCik3bc0H')
-        self.assertEqual(get_mid("3591370117495972"), 'zCkX9vs2M')
-        self.assertEqual(get_mid("3591291856713634"), 'zCiUVsawq')
-
-
-if __name__ == "__main__":
-    unittest.main()
