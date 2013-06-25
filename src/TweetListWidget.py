@@ -267,11 +267,18 @@ class SingleTweetWidget(QtGui.QFrame):
             self.timer.start(60 * 60 * 24 * 1000)
 
     def _update_time(self):
-        if self.tweet.type != TweetItem.COMMENT:
-            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
-        else:
-            self.time.setText(self.tweet.time)
-        self._setup_timer()
+        try:
+            if self.tweet.type != TweetItem.COMMENT:
+                self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
+            else:
+                self.time.setText(self.tweet.time)
+            self._setup_timer()
+        except RuntimeError:
+            # Trying to catch bug #49
+            error_info = "You found out a terrible bug #49\n"
+            error_info += "Info: self = %s\n"
+            error_info += "Please report it at: https://github.com/WeCase/WeCase/issues/49"
+            QtGui.QMessageBox.critical(None, "Bug #49 Detected", error_info)
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
