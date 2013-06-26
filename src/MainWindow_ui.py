@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui/MainWindow.ui'
 #
-# Created: Thu Jun  6 09:44:45 2013
-#      by: PyQt4 UI code generator 4.10.1
+# Created: Wed Jun 26 21:24:21 2013
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_frm_MainWindow(object):
     def setupUi(self, frm_MainWindow):
         frm_MainWindow.setObjectName(_fromUtf8("frm_MainWindow"))
-        frm_MainWindow.resize(300, 637)
+        frm_MainWindow.resize(315, 637)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_MainWindow.setWindowIcon(icon)
@@ -82,11 +82,8 @@ class Ui_frm_MainWindow(object):
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
-        self.pushButton_me = QtGui.QPushButton(self.widget)
-        self.pushButton_me.setObjectName(_fromUtf8("pushButton_me"))
-        self.gridLayout.addWidget(self.pushButton_me, 0, 3, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem1, 0, 4, 1, 1)
+        self.gridLayout.addItem(spacerItem1, 0, 3, 1, 1)
         self.pushButton_refresh = QtGui.QPushButton(self.widget)
         self.pushButton_refresh.setObjectName(_fromUtf8("pushButton_refresh"))
         self.gridLayout.addWidget(self.pushButton_refresh, 0, 1, 1, 1)
@@ -97,7 +94,7 @@ class Ui_frm_MainWindow(object):
         frm_MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(frm_MainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 300, 24))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 315, 24))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -167,7 +164,6 @@ class Ui_frm_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("frm_MainWindow", "@ME", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("frm_MainWindow", "Comments", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("frm_MainWindow", "My tweet", None))
-        self.pushButton_me.setText(_translate("frm_MainWindow", "&Me", None))
         self.pushButton_refresh.setText(_translate("frm_MainWindow", "&Refresh", None))
         self.pushButton_new.setText(_translate("frm_MainWindow", "&New Weibo", None))
         self.menu_WeCase.setTitle(_translate("frm_MainWindow", "&WeCase", None))
