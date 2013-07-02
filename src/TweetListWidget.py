@@ -1,12 +1,15 @@
 import os
 import re
 import urllib.request
+from urllib.error import URLError, ContentTooShortError
+from http.client import BadStatusLine
 from WeHack import async, start
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
+from WRotatingLabel import WRotatingLabel
 import const
 from const import cache_path
 
@@ -88,8 +91,9 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def setupBusyIcon(self):
         busyWidget = QtGui.QWidget()
         layout = QtGui.QVBoxLayout(busyWidget)
-        busy = QtGui.QLabel()
+        busy = WRotatingLabel()
         busy.setPixmap(QtGui.QPixmap(const.myself_path + "/icon/busy.png"))
+        busy.setRotating(True)
         layout.addWidget(busy)
         layout.setAlignment(QtCore.Qt.AlignCenter)
         busyWidget.setLayout(layout)
@@ -384,7 +388,12 @@ class SingleTweetWidget(QtGui.QFrame):
                                              "large")  # A simple trick ... ^_^
         localfile = cache_path + original_pic.split("/")[-1]
         if not os.path.exists(localfile):
-            urllib.request.urlretrieve(original_pic, localfile)
+            while True:
+                try:
+                    urllib.request.urlretrieve(original_pic, localfile)
+                    break
+                except (BadStatusLine, URLError, ContentTooShortError):
+                    continue
 
         self.download_lock = False
         self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
