@@ -1,7 +1,8 @@
 import os
 from time import sleep
 import urllib.request
-import http.client
+from urllib.error import URLError, ContentTooShortError
+from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from const import cache_path as down_path
 from const import myself_path
@@ -89,7 +90,7 @@ class WAsyncLabel(QtGui.QLabel):
             try:
                 urllib.request.urlretrieve(url, down_path + filename + ".down")
                 break
-            except (http.client.BadStatusLine, urllib.error.URLError):
+            except (BadStatusLine, URLError, ContentTooShortError):
                 continue
 
         try:
