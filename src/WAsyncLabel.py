@@ -81,7 +81,7 @@ class WAsyncLabel(QtGui.QLabel):
             try:
                 urllib.request.urlretrieve(url, down_path + filename + ".down")
                 break
-            except http.client.BadStatusLine:
+            except (http.client.BadStatusLine, urllib.error.URLError):
                 continue
 
         try:
