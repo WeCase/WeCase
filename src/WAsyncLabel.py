@@ -16,6 +16,7 @@ class WAsyncLabel(QtGui.QLabel):
     def __init__(self, parent=None):
         super(WAsyncLabel, self).__init__(parent)
         self.url = ""
+        self._image = None
         self.timer = QtCore.QTimer(self)
         self.busy_icon = QtGui.QPixmap(myself_path + "/icon/busy.png")
 
@@ -100,4 +101,5 @@ class WAsyncLabel(QtGui.QLabel):
         return self.downloaded.emit(down_path + filename)
 
     def mouseReleaseEvent(self, e):
-        self.clicked.emit()
+        if self._image:
+            self.clicked.emit()
