@@ -70,12 +70,19 @@ class WAsyncLabel(QtGui.QLabel):
 
     @async
     def _fetch(self, url, filename):
-        while os.path.exists(down_path + filename + ".down"):
-            sleep(0.5)
-            continue
+        def delete_tmp():
+            try:
+                os.remove(down_path + filename + ".down")
+                return True
+            except OSError:
+                return False
 
         if os.path.exists(down_path + filename):
+            delete_tmp()
             return self.downloaded.emit(down_path + filename)
+
+        while os.path.exists(down_path + filename + ".down"):
+            sleep(0.5)
 
         while 1:
             try:
