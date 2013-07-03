@@ -45,14 +45,14 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def setupButtons(self):
         # Disabled is the default state of buttons
+        self.pushButton_picture.setEnabled(False)
         self.chk_repost.setEnabled(False)
         self.chk_comment.setEnabled(False)
         self.chk_comment_original.setEnabled(False)
 
         if self.action == "new":
-            # there is no tweet but we are sending a new one,
-            # disable all button
-            assert (not self.tweet)
+            assert (not self.tweet)  # Shouldn't have a tweet object.
+            self.pushButton_picture.setEnabled(True)
         elif self.action == "retweet":
             self.chk_comment.setEnabled(True)
             if self.tweet.type == TweetItem.RETWEET:
@@ -66,6 +66,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.chk_repost.setEnabled(True)
             if self.tweet.original.type == TweetItem.RETWEET:
                 self.chk_comment_original.setEnabled(True)
+        else:
+            assert False
 
     def _create_tweetWidget(self):
         if self.action == "comment":
