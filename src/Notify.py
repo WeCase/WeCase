@@ -9,20 +9,16 @@
 from PyQt4 import QtCore, QtGui
 import const
 
+try:
+    import notify2 as pynotify
+except ImportError:
+    import nullNotify as pynotify
 
 class Notify(QtCore.QObject):
     image = const.myself_path + "/ui/img/WeCase 80.png"
 
     def __init__(self, appname=QtCore.QObject().tr("WeCase"), timeout=5):
         super(Notify, self).__init__()
-        try:
-            import notify2 as pynotify
-        except ImportError:
-            QtGui.QMessageBox.warning(
-                None,
-                self.tr("Notification disabled"),
-                self.tr("notify2 is not found. Notification will disable."))
-            import nullNotify as pynotify
 
         pynotify.init(appname)
         self.timeout = timeout
