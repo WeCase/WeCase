@@ -271,12 +271,11 @@ class SingleTweetWidget(QtGui.QFrame):
             self.timer.start(60 * 60 * 24 * 1000)
 
     def _update_time(self):
-        try:
-            if self.tweet.type != TweetItem.COMMENT:
-                self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
-            else:
-                self.time.setText("<a href='%s'>%s</a>" % (self.tweet.original.url, self.tweet.time))
-            self._setup_timer()
+        if self.tweet.type != TweetItem.COMMENT:
+            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
+        else:
+            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.original.url, self.tweet.time))
+        self._setup_timer()
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
