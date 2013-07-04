@@ -277,12 +277,6 @@ class SingleTweetWidget(QtGui.QFrame):
             else:
                 self.time.setText("<a href='%s'>%s</a>" % (self.tweet.original.url, self.tweet.time))
             self._setup_timer()
-        except RuntimeError:
-            # Sometimes, user closed the window and the window
-            # has been garbage collected already, but
-            # the timer is still running. It will cause a runtime error
-            self.timer.stop()
-            self.timer.setParent(None)
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
@@ -449,3 +443,10 @@ class SingleTweetWidget(QtGui.QFrame):
         url = re.compile(r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))""")
         new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
+
+    def __del__(self):
+        # Sometimes, user closed the window and the window
+        # has been garbage collected already, but
+        # the timer is still running. It will cause a runtime error
+        # I don't know if this solution really works.
+        self.timer.stop()
