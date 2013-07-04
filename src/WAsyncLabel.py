@@ -79,27 +79,27 @@ class WAsyncLabel(QtGui.QLabel):
             except OSError:
                 return False
 
-        if os.path.exists(down_path + filename):
-            delete_tmp()
-            return self.downloaded.emit(down_path + filename)
-
-        while os.path.exists(down_path + filename + ".down"):
-            sleep(0.5)
+        def download():
+            while 1:
+                try:
+                    urllib.request.urlretrieve(url, down_path + filename + ".down")
+                    os.rename(down_path + filename + ".down",
+                              down_path + filename)
+                    return
+                except (BadStatusLine, URLError):
+                    continue
+                except OSError:
+                    return
 
         while 1:
-            try:
-                urllib.request.urlretrieve(url, down_path + filename + ".down")
-                break
-            except (BadStatusLine, URLError, ContentTooShortError):
+            if os.path.exists(down_path + filename):
+                delete_tmp()
+                return self.downloaded.emit(down_path + filename)
+            elif os.path.exists(down_path + filename + ".down"):
+                sleep(0.5)
                 continue
-
-        try:
-            os.rename(down_path + filename + ".down",
-                      down_path + filename)
-        except OSError:
-            pass
-
-        return self.downloaded.emit(down_path + filename)
+            else:
+                download()
 
     def mouseReleaseEvent(self, e):
         if self._image:
