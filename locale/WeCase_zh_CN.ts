@@ -7,8 +7,18 @@
         <source>WeCase</source>
         <translation type="obsolete">微盒</translation>
     </message>
+    <message>
+        <location filename="wecase.py" line="45"/>
+        <source>Notification disabled</source>
+        <translation>通知已禁用</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="45"/>
+        <source>notify2 is not found. Notification will disable.</source>
+        <translation>notify2 未找到。通知将被禁用。</translation>
+    </message>
 </context>
-<context>
+<context encoding="UTF-8">
     <name>About_Dialog</name>
     <message>
         <location filename="ui/AboutWindow.ui" line="32"/>
@@ -16,32 +26,32 @@
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="45"/>
+        <location filename="ui/AboutWindow.ui" line="87"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="55"/>
+        <location filename="ui/AboutWindow.ui" line="124"/>
         <source>A Linux weibo client</source>
         <translation>一款 Linux 微博客户端</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="102"/>
+        <location filename="ui/AboutWindow.ui" line="142"/>
         <source>Intro</source>
         <translation>简介</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="134"/>
+        <location filename="ui/AboutWindow.ui" line="174"/>
         <source>Contributor</source>
         <translation>贡献者</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="144"/>
+        <location filename="ui/AboutWindow.ui" line="200"/>
         <source>GPL License</source>
         <translation>GPL 许可证</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="326"/>
+        <location filename="ui/AboutWindow.ui" line="382"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -61,7 +71,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="108"/>
+        <location filename="ui/AboutWindow.ui" line="148"/>
         <source>WeCase is a simple, but not crude weibo client which is running on Linux desktop.
 
 
@@ -82,6 +92,28 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 
 
 软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
+    </message>
+    <message>
+        <location filename="ui/AboutWindow.ui" line="115"/>
+        <source>This is a vanilla version.</source>
+        <translation>这是一份上游原版。</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="ui/AboutWindow.ui" line="180"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organizer：&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Garfield550 (加菲猫550)&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Development Leader：&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tom Li (Biergaizi, 比尔盖子) &amp;lt;biergaizi2009@gmail.com&amp;gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Contributor：&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;TonyChyi (小骞爱开源)&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;（More）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -188,27 +220,27 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="NewpostWindow.py" line="180"/>
+        <location filename="NewpostWindow.py" line="182"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="140"/>
+        <location filename="NewpostWindow.py" line="142"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="153"/>
+        <location filename="NewpostWindow.py" line="155"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="166"/>
+        <location filename="NewpostWindow.py" line="168"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="180"/>
+        <location filename="NewpostWindow.py" line="182"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -218,47 +250,47 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">图片 (*.png *.jpg *.bmp *.gif) </translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="193"/>
+        <location filename="NewpostWindow.py" line="195"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="195"/>
+        <location filename="NewpostWindow.py" line="197"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="201"/>
+        <location filename="NewpostWindow.py" line="203"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="205"/>
+        <location filename="NewpostWindow.py" line="207"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="205"/>
+        <location filename="NewpostWindow.py" line="207"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="208"/>
+        <location filename="NewpostWindow.py" line="210"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="190"/>
+        <location filename="NewpostWindow.py" line="192"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="242"/>
+        <location filename="NewpostWindow.py" line="244"/>
         <source>Close?</source>
         <translation>关闭？</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="242"/>
+        <location filename="NewpostWindow.py" line="244"/>
         <source>All unpost text will lost.</source>
         <translation>所有未发布的文字将丢弃。</translation>
     </message>
@@ -566,55 +598,55 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
     <message>
         <location filename="ui/MainWindow.ui" line="100"/>
         <source>&amp;Me</source>
-        <translation>我(&amp;M)</translation>
+        <translation type="obsolete">我(&amp;M)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="200"/>
+        <location filename="ui/MainWindow.ui" line="193"/>
         <source>&amp;Refresh</source>
         <translation>刷新(&amp;R)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="127"/>
+        <location filename="ui/MainWindow.ui" line="120"/>
         <source>&amp;New Weibo</source>
         <translation>新微博(&amp;N)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="165"/>
+        <location filename="ui/MainWindow.ui" line="158"/>
         <source>&amp;WeCase</source>
         <translation>微盒(&amp;W)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="174"/>
+        <location filename="ui/MainWindow.ui" line="167"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="180"/>
+        <location filename="ui/MainWindow.ui" line="173"/>
         <source>&amp;Options</source>
         <translation>选项(&amp;H)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="195"/>
+        <location filename="ui/MainWindow.ui" line="188"/>
         <source>&amp;About...</source>
         <translation>关于(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="205"/>
+        <location filename="ui/MainWindow.ui" line="198"/>
         <source>&amp;Log out</source>
         <translation>注销(&amp;L)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="214"/>
+        <location filename="ui/MainWindow.ui" line="207"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="223"/>
+        <location filename="ui/MainWindow.ui" line="216"/>
         <source>&amp;Settings</source>
         <translation>设置(&amp;S)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="228"/>
+        <location filename="ui/MainWindow.ui" line="221"/>
         <source>&amp;Update</source>
         <translation>升级(&amp;U)</translation>
     </message>
