@@ -9,11 +9,17 @@
 
 import re
 from math import ceil
+import const
 
 
 def tweetLength(text):
-    """ This function implemented a strings' length counter, the result of
-    this function should be bug-for-bug compatible with Sina's."""
+    """
+    This function implemented a strings' length counter, the result of
+    this function should be bug-for-bug compatible with Sina's.
+
+    >>> tweetLength("Test")
+    2
+    """
 
     def findall(regex, text):
         """ re.findall() sometimes output unexcepted results. This function
@@ -54,13 +60,19 @@ def tweetLength(text):
 
 
 def get_mid(mid):
-    """Convert a id of a tweet to a mid."""
+    """
+    Convert a id string of a tweet to a mid string.
+    You'll need a mid to generate an URL for a single tweet page.
+
+    >>> get_mid("3591268992667779")
+    'zCik3bc0H'
+    """
 
     def baseN(num, base):
         """Convert the base of a decimal."""
         CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        return ((num == 0) and "0") or (baseN(num // base, base).lstrip("0") +
-                CHAR[num % base])
+        return ((num == 0) and "0") or \
+               (baseN(num // base, base).lstrip("0") + CHAR[num % base])
 
     url = ""
 
@@ -80,3 +92,36 @@ def get_mid(mid):
 
         i -= 7
     return url
+
+
+def authorize(authorize_url, username, password):
+    """Send the authorize info to Sina and get the authorize_code"""
+    import urllib.request
+    import urllib.parse
+    import urllib.error
+    import http.client
+    import ssl
+    import socket
+
+    oauth2 = const.OAUTH2_PARAMETER
+    oauth2['userId'] = username
+    oauth2['passwd'] = password
+    postdata = urllib.parse.urlencode(oauth2)
+
+    conn = http.client.HTTPSConnection('api.weibo.com')
+    sock = socket.create_connection((conn.host, conn.port), conn.timeout, conn.source_address)
+    conn.sock = ssl.wrap_socket(sock, conn.key_file, conn.cert_file, ssl_version=ssl.PROTOCOL_TLSv1)
+
+    conn.request('POST', '/oauth2/authorize', postdata,
+                 {'Referer': authorize_url,
+                  'Content-Type': 'application/x-www-form-urlencoded'})
+
+    res = conn.getresponse()
+    location = res.getheader('location')
+
+    if not location:
+        return False
+
+    authorize_code = location.split('=')[1]
+    conn.close()
+    return authorize_code

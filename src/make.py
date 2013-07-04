@@ -18,18 +18,17 @@ def is_rc(filename):
         return False
 
 
-def generate_ui(name, path):
-    print("Generating UI file for %s" % (file))
+def generate_ui(file, path):
+    print("Generating UI file for %s" % file)
     os.popen("pyuic4 %s > %s.py" % (path, file.replace('.ui', '_ui')))
 
 
-def generate_rc(name, path):
-    print("Generating RC file for %s" % (file))
+def generate_rc(file, path):
+    print("Generating RC file for %s" % file)
     os.popen("pyrcc4 -py3 -compress 9 %s > %s.py" % (path, file.replace(".qrc", "_rc")))
 
 
 def process_ui():
-    global file
     for file in os.listdir(UI_PATH):
         path = os.path.join(UI_PATH, file)
         if os.path.isdir(path):

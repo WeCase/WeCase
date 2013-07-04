@@ -6,15 +6,20 @@
 # License: GPL v3 or later.
 
 
-from PyQt4 import QtCore
-import notify2 as pynotify
+from PyQt4 import QtCore, QtGui
 import const
 
+try:
+    import notify2 as pynotify
+except ImportError:
+    import nullNotify as pynotify
 
-class Notify():
+class Notify(QtCore.QObject):
     image = const.myself_path + "/ui/img/WeCase 80.png"
 
     def __init__(self, appname=QtCore.QObject().tr("WeCase"), timeout=5):
+        super(Notify, self).__init__()
+
         pynotify.init(appname)
         self.timeout = timeout
         self.n = pynotify.Notification(appname)

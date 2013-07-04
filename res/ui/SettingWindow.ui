@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>187</height>
+    <width>371</width>
+    <height>311</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -23,7 +23,7 @@
    <iconset resource="wecase.qrc">
     <normaloff>:/IMG/img/preferences-other.png</normaloff>:/IMG/img/preferences-other.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="6,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="sizePolicy">
@@ -39,130 +39,370 @@
       <attribute name="title">
        <string>Notify</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLabel" name="intervalDefine">
-           <property name="text">
-            <string>Interval for notify checking</string>
-           </property>
-           <property name="buddy">
-            <cstring>intervalSlider</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="intervalSlider">
-           <property name="minimum">
-            <number>5</number>
-           </property>
-           <property name="maximum">
-            <number>360</number>
-           </property>
-           <property name="singleStep">
-            <number>30</number>
-           </property>
-           <property name="pageStep">
-            <number>0</number>
-           </property>
-           <property name="value">
-            <number>5</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="intervalLabel">
-           <property name="text">
-            <string>? ms</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="timeoutDefine">
-           <property name="text">
-            <string>Timeout for popup notify</string>
-           </property>
-           <property name="buddy">
-            <cstring>intervalSlider</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="timeoutSlider">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>100</number>
-           </property>
-           <property name="singleStep">
-            <number>30</number>
-           </property>
-           <property name="pageStep">
-            <number>0</number>
-           </property>
-           <property name="value">
-            <number>1</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="timeoutLabel">
-           <property name="text">
-            <string>? ms</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Remind me when I have:</string>
-           </property>
-           <property name="buddy">
-            <cstring>mentionsChk</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QCheckBox" name="mentionsChk">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="intervalDefine">
              <property name="text">
-              <string>@ Me</string>
+              <string>Interval for notify checking</string>
+             </property>
+             <property name="buddy">
+              <cstring>intervalSlider</cstring>
              </property>
             </widget>
            </item>
-           <item>
-            <widget class="QCheckBox" name="commentsChk">
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QSlider" name="intervalSlider">
+             <property name="minimum">
+              <number>5</number>
+             </property>
+             <property name="maximum">
+              <number>360</number>
+             </property>
+             <property name="singleStep">
+              <number>30</number>
+             </property>
+             <property name="pageStep">
+              <number>0</number>
+             </property>
+             <property name="value">
+              <number>5</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="intervalLabel">
              <property name="text">
-              <string>Comments</string>
+              <string>? ms</string>
              </property>
             </widget>
            </item>
           </layout>
          </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="timeoutDefine">
+             <property name="text">
+              <string>Timeout for popup notify</string>
+             </property>
+             <property name="buddy">
+              <cstring>intervalSlider</cstring>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QSlider" name="timeoutSlider">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="singleStep">
+              <number>30</number>
+             </property>
+             <property name="pageStep">
+              <number>0</number>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+            <widget class="QLabel" name="timeoutLabel">
+             <property name="text">
+              <string>? ms</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Remind me when I have:</string>
+             </property>
+             <property name="buddy">
+              <cstring>mentionsChk</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item alignment="Qt::AlignVCenter">
+              <widget class="QCheckBox" name="mentionsChk">
+               <property name="text">
+                <string>@ Me</string>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignVCenter">
+              <widget class="QCheckBox" name="commentsChk">
+               <property name="text">
+                <string>Comments</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Commentary: &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;most debugging problems are fixed easily; &lt;br/&gt;identifying the location of the problem is hard.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::RichText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Filters</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>These users won't show in any timeline:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="usersBlackListWidget"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnAddBlackUser">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnRemoveBlackUser">
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Tweets with these keywords won't show:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListWidget" name="tweetsKeywordsBlacklistWidget">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <spacer name="verticalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnAddKeyword">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnRemoveKeyword">
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Cache</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Total Cache Size:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="cacheSizeLabel">
+           <property name="text">
+            <string>Computing...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QPushButton" name="cacheViewButton">
+           <property name="text">
+            <string>View by File Manager</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="cacheClearButton">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -181,6 +421,38 @@
   <include location="wecase.qrc"/>
  </resources>
  <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>179</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>179</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
   <connection>
    <sender>intervalSlider</sender>
    <signal>valueChanged(int)</signal>
@@ -214,34 +486,98 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
+   <sender>btnAddBlackUser</sender>
+   <signal>clicked()</signal>
    <receiver>SettingWindow</receiver>
-   <slot>accept()</slot>
+   <slot>addBlackUser()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>179</x>
-     <y>170</y>
+     <x>318</x>
+     <y>67</y>
     </hint>
     <hint type="destinationlabel">
-     <x>179</x>
-     <y>93</y>
+     <x>185</x>
+     <y>138</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
+   <sender>btnRemoveBlackUser</sender>
+   <signal>clicked()</signal>
    <receiver>SettingWindow</receiver>
-   <slot>reject()</slot>
+   <slot>removeBlackUser()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>179</x>
-     <y>170</y>
+     <x>318</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>179</x>
-     <y>93</y>
+     <x>185</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnAddKeyword</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>addKeyword()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnRemoveKeyword</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>removeKeyword()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>198</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cacheClearButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>clearCache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cacheViewButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingWindow</receiver>
+   <slot>viewCache()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>
@@ -249,5 +585,11 @@
  <slots>
   <slot>setIntervalText(int)</slot>
   <slot>setTimeoutText(int)</slot>
+  <slot>addBlackUser()</slot>
+  <slot>removeBlackUser()</slot>
+  <slot>addKeyword()</slot>
+  <slot>removeKeyword()</slot>
+  <slot>clearCache()</slot>
+  <slot>viewCache()</slot>
  </slots>
 </ui>

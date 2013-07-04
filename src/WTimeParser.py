@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-# WeCase -- This model implemented a dateutil-compatible parser 
+# WeCase -- This model implemented a dateutil-compatible parser
 #           for Sina's time format
 # Copyright (C) 2013 Tom Li
 # License: GPL v3 or later.
@@ -38,8 +38,9 @@ class WTimeParser():
     def parse(self, time_string):
         """
         Sina's time-string parser.
-        Input a timeString, like Sat Apr 06 00:49:30 +0800 2013
-        Output a datetime(2013, 4, 6, 0, 49, 30, tzinfo=tzoffset(None, 28800))
+
+        >>> t.parse("Sat Apr 06 00:49:30 +0800 2013")
+        datetime(2013, 4, 6, 0, 49, 30, tzinfo=tzoffset(None, 28800))
         """
 
         hour = minute = second = 0
