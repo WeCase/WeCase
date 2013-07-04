@@ -13,8 +13,13 @@ import const
 
 
 def tweetLength(text):
-    """ This function implemented a strings' length counter, the result of
-    this function should be bug-for-bug compatible with Sina's."""
+    """
+    This function implemented a strings' length counter, the result of
+    this function should be bug-for-bug compatible with Sina's.
+
+    >>> tweetLength("Test")
+    2
+    """
 
     def findall(regex, text):
         """ re.findall() sometimes output unexcepted results. This function
@@ -55,7 +60,13 @@ def tweetLength(text):
 
 
 def get_mid(mid):
-    """Convert a id of a tweet to a mid."""
+    """
+    Convert a id string of a tweet to a mid string.
+    You'll need a mid to generate an URL for a single tweet page.
+
+    >>> get_mid("3591268992667779")
+    'zCik3bc0H'
+    """
 
     def baseN(num, base):
         """Convert the base of a decimal."""

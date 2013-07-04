@@ -22,6 +22,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.setupUi(self)
         self.loadConfig()
         self.cacheCleared.connect(self.showSize)
+        self.needRestart = False
 
     def setupUi(self, widget):
         super(WeSettingsWindow, self).setupUi(widget)
@@ -73,6 +74,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.config.save()
 
     def addBlackUser(self):
+        self.needRestart = True
         user = QtGui.QInputDialog.getText(
             self, self.tr("Input A user:"),
             self.tr("Please input a user"),
@@ -81,10 +83,12 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
             self.usersBlackListWidget.addItem(user)
 
     def removeBlackUser(self):
+        self.needRestart = True
         row = self.usersBlackListWidget.currentRow()
         self.usersBlackListWidget.takeItem(row)
 
     def addKeyword(self):
+        self.needRestart = True
         keyword = QtGui.QInputDialog.getText(
             self,
             self.tr("Input a keyword:"),
@@ -94,14 +98,16 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
             self.tweetsKeywordsBlacklistWidget.addItem(keyword)
 
     def removeKeyword(self):
+        self.needRestart = True
         row = self.tweetsKeywordsBlacklistWidget.currentRow()
         self.tweetsKeywordsBlacklistWidget.takeItem(row)
 
     def accept(self):
         self.saveConfig()
-        QtGui.QMessageBox.information(
-            self, self.tr("Restart"),
-            self.tr("Filter's settings need to restart WeCase to take effect."))
+        if self.needRestart:
+            QtGui.QMessageBox.information(
+                self, self.tr("Restart"),
+                self.tr("Settings need to restart WeCase to take effect."))
         self.done(True)
 
     def reject(self):
@@ -110,6 +116,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
     @async
     def clearCache(self):
         clearDir(const.cache_path)
+        self.needRestart = True
         self.cacheCleared.emit()
 
     def viewCache(self):
