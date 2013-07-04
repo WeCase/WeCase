@@ -272,9 +272,11 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _update_time(self):
         if self.tweet.type != TweetItem.COMMENT:
-            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
+            self.time.setText("<a href='%s'>%s</a>" %
+                              (self.tweet.url, self.tweet.time))
         else:
-            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.original.url, self.tweet.time))
+            self.time.setText("<a href='%s'>%s</a>" %
+                              (self.tweet.original.url, self.tweet.time))
         self._setup_timer()
 
     def _createOriginalLabel(self):
@@ -295,7 +297,9 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         originalItem = self.tweet.original
         try:
-            textLabel.setText("@%s: " % originalItem.author.name + self._create_html_url(originalItem.text))
+            textLabel.setText("@%s: " %
+                              originalItem.author.name + \
+                              self._create_html_url(originalItem.text))
         except:
             #originalItem.text == This tweet deleted by author
             textLabel.setText(self._create_html_url(originalItem.text))
@@ -403,7 +407,10 @@ class SingleTweetWidget(QtGui.QFrame):
     def _favorite(self):
         try:
             self.client.favorites.create.post(id=self.tweet.id)
-            self.commonSignal.emit(lambda: self.favorite.setIcon(const.myself_path + "/icon/favorites.png"))
+            self.commonSignal.emit(lambda:
+                                       self.favorite.setIcon(
+                                           const.myself_path + \
+                                           "/icon/favorites.png"))
         except:
             pass
 
@@ -439,7 +446,11 @@ class SingleTweetWidget(QtGui.QFrame):
         self._comment(self.tweet.original)
 
     def _create_html_url(self, text):
-        url = re.compile(r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))""")
+        url = re.compile(r"(?i)\b((?:https?://|www\d{0,3}[.]"
+                         r"|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+"
+                         r"|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+"
+                         r"(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|"
+                         r"[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
         new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
 
