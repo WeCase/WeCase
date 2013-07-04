@@ -278,11 +278,11 @@ class SingleTweetWidget(QtGui.QFrame):
                 self.time.setText("<a href='%s'>%s</a>" % (self.tweet.original.url, self.tweet.time))
             self._setup_timer()
         except RuntimeError:
-            # Trying to catch bug #49
-            error_info = "You found out a terrible bug #49\n"
-            error_info += "Info: self = %s\n"
-            error_info += "Please report it at: https://github.com/WeCase/WeCase/issues/49"
-            QtGui.QMessageBox.critical(None, "Bug #49 Detected", error_info)
+            # Sometimes, user closed the window and the window
+            # has been garbage collected already, but
+            # the timer is still running. It will cause a runtime error
+            self.timer.stop()
+            self.timer.setParent(None)
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
