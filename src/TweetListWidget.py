@@ -1,12 +1,15 @@
 import os
 import re
 import urllib.request
+from urllib.error import URLError, ContentTooShortError
+from http.client import BadStatusLine
 from WeHack import async, start
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
+from WRotatingLabel import WRotatingLabel
 import const
 from const import cache_path
 
@@ -88,8 +91,9 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def setupBusyIcon(self):
         busyWidget = QtGui.QWidget()
         layout = QtGui.QVBoxLayout(busyWidget)
-        busy = QtGui.QLabel()
+        busy = WRotatingLabel()
         busy.setPixmap(QtGui.QPixmap(const.myself_path + "/icon/busy.png"))
+        busy.setRotating(True)
         layout.addWidget(busy)
         layout.setAlignment(QtCore.Qt.AlignCenter)
         busyWidget.setLayout(layout)
@@ -267,11 +271,19 @@ class SingleTweetWidget(QtGui.QFrame):
             self.timer.start(60 * 60 * 24 * 1000)
 
     def _update_time(self):
-        if self.tweet.type != TweetItem.COMMENT:
-            self.time.setText("<a href='%s'>%s</a>" % (self.tweet.url, self.tweet.time))
-        else:
-            self.time.setText(self.tweet.time)
-        self._setup_timer()
+        try:
+            if self.tweet.type != TweetItem.COMMENT:
+                self.time.setText("<a href='%s'>%s</a>" %
+                                  (self.tweet.url, self.tweet.time))
+            else:
+                self.time.setText("<a href='%s'>%s</a>" %
+                                  (self.tweet.original.url, self.tweet.time))
+            self._setup_timer()
+        except:
+            # Sometimes, user closed the window and the window
+            # has been garbage collected already, but
+            # the timer is still running. It will cause a runtime error
+            pass
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
@@ -291,7 +303,9 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         originalItem = self.tweet.original
         try:
-            textLabel.setText("@%s: " % originalItem.author.name + self._create_html_url(originalItem.text))
+            textLabel.setText("@%s: " %
+                              originalItem.author.name + \
+                              self._create_html_url(originalItem.text))
         except:
             #originalItem.text == This tweet deleted by author
             textLabel.setText(self._create_html_url(originalItem.text))
@@ -377,7 +391,12 @@ class SingleTweetWidget(QtGui.QFrame):
                                              "large")  # A simple trick ... ^_^
         localfile = cache_path + original_pic.split("/")[-1]
         if not os.path.exists(localfile):
-            urllib.request.urlretrieve(original_pic, localfile)
+            while True:
+                try:
+                    urllib.request.urlretrieve(original_pic, localfile)
+                    break
+                except (BadStatusLine, URLError, ContentTooShortError):
+                    continue
 
         self.download_lock = False
         self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
@@ -394,7 +413,10 @@ class SingleTweetWidget(QtGui.QFrame):
     def _favorite(self):
         try:
             self.client.favorites.create.post(id=self.tweet.id)
-            self.commonSignal.emit(lambda: self.favorite.setIcon(const.myself_path + "/icon/favorites.png"))
+            self.commonSignal.emit(lambda:
+                                       self.favorite.setIcon(
+                                           const.myself_path + \
+                                           "/icon/favorites.png"))
         except:
             pass
 
@@ -430,6 +452,10 @@ class SingleTweetWidget(QtGui.QFrame):
         self._comment(self.tweet.original)
 
     def _create_html_url(self, text):
-        url = re.compile(r"""(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))""")
+        url = re.compile(r"(?i)\b((?:https?://|www\d{0,3}[.]"
+                         r"|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+"
+                         r"|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+"
+                         r"(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|"
+                         r"[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
         new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text

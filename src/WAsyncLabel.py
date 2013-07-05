@@ -1,7 +1,8 @@
 import os
 from time import sleep
 import urllib.request
-import http.client
+from urllib.error import URLError, ContentTooShortError
+from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from const import cache_path as down_path
 from const import myself_path
@@ -16,6 +17,7 @@ class WAsyncLabel(QtGui.QLabel):
     def __init__(self, parent=None):
         super(WAsyncLabel, self).__init__(parent)
         self.url = ""
+        self._image = None
         self.timer = QtCore.QTimer(self)
         self.busy_icon = QtGui.QPixmap(myself_path + "/icon/busy.png")
 
@@ -70,27 +72,35 @@ class WAsyncLabel(QtGui.QLabel):
 
     @async
     def _fetch(self, url, filename):
-        while os.path.exists(down_path + filename + ".down"):
-            sleep(0.5)
-            continue
+        def delete_tmp():
+            try:
+                os.remove(down_path + filename + ".down")
+                return True
+            except OSError:
+                return False
 
-        if os.path.exists(down_path + filename):
-            return self.downloaded.emit(down_path + filename)
+        def download():
+            while 1:
+                try:
+                    urllib.request.urlretrieve(url, down_path + filename + ".down")
+                    os.rename(down_path + filename + ".down",
+                              down_path + filename)
+                    return
+                except (BadStatusLine, URLError):
+                    continue
+                except OSError:
+                    return
 
         while 1:
-            try:
-                urllib.request.urlretrieve(url, down_path + filename + ".down")
-                break
-            except http.client.BadStatusLine:
+            if os.path.exists(down_path + filename):
+                delete_tmp()
+                return self.downloaded.emit(down_path + filename)
+            elif os.path.exists(down_path + filename + ".down"):
+                sleep(0.5)
                 continue
-
-        try:
-            os.rename(down_path + filename + ".down",
-                      down_path + filename)
-        except OSError:
-            pass
-
-        return self.downloaded.emit(down_path + filename)
+            else:
+                download()
 
     def mouseReleaseEvent(self, e):
-        self.clicked.emit()
+        if self._image:
+            self.clicked.emit()

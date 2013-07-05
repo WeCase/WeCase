@@ -38,6 +38,15 @@ def my_excepthook(type, value, tback):
     # Then call the default handler
     sys.__excepthook__(type, value, tback)
 
+def import_warning():
+    try:
+        import notify2
+    except ImportError:
+        QtGui.QMessageBox.warning(
+            None,
+            QtCore.QObject().tr("Notification disabled"),
+            QtCore.QObject().tr("notify2 is not found. Notification will disable."))
+
 
 if __name__ == "__main__":
     mkconfig()
@@ -59,6 +68,7 @@ if __name__ == "__main__":
                        const.myself_path + "locale")
     app.installTranslator(my_translator)
 
+    import_warning()
     wecase_login = LoginWindow()
 
     exit_status = app.exec_()

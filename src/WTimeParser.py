@@ -38,8 +38,9 @@ class WTimeParser():
     def parse(self, time_string):
         """
         Sina's time-string parser.
-        Input a timeString, like Sat Apr 06 00:49:30 +0800 2013
-        Output a datetime(2013, 4, 6, 0, 49, 30, tzinfo=tzoffset(None, 28800))
+
+        >>> t.parse("Sat Apr 06 00:49:30 +0800 2013")
+        datetime(2013, 4, 6, 0, 49, 30, tzinfo=tzoffset(None, 28800))
         """
 
         hour = minute = second = 0
