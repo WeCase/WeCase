@@ -4,6 +4,7 @@ import urllib.request
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
 from WeHack import async, start
+from weibo import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem
 from WIconLabel import WIconLabel
@@ -417,33 +418,29 @@ class SingleTweetWidget(QtGui.QFrame):
                                        self.favorite.setIcon(
                                            const.myself_path + \
                                            "/icon/favorites.png"))
-        except:
-            pass
+        except APIError as e:
+            self._e = e
+            self.commonSignal.emit(lambda: self._handle_api_error(self._e))
 
     def _retweet(self, tweet=None):
-        from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
-        wecase_new = NewpostWindow("retweet", tweet)
-        wecase_new.exec_()
+
+        self.exec_newpost_window("retweet", tweet)
 
     def _comment(self, tweet=None):
-        from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
         if tweet.type == TweetItem.COMMENT:
             self._reply(tweet)
             return
 
-        wecase_new = NewpostWindow("comment", tweet)
-        wecase_new.exec_()
+        self.exec_newpost_window("comment", tweet)
 
     def _reply(self, tweet=None):
-        from NewpostWindow import NewpostWindow
         if not tweet:
             tweet = self.tweet
-        wecase_new = NewpostWindow("reply", tweet)
-        wecase_new.exec_()
+        self.exec_newpost_window("reply", tweet)
 
     def _original_retweet(self):
         self._retweet(self.tweet.original)
@@ -459,3 +456,22 @@ class SingleTweetWidget(QtGui.QFrame):
                          r"[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
         new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
+
+    def exec_newpost_window(self, action, tweet):
+        from NewpostWindow import NewpostWindow
+        try:
+            wecase_new = NewpostWindow(action, tweet)
+            wecase_new.exec_()
+        except APIError as e:
+            self._handle_api_error(e)
+
+    def _handle_api_error(self, exception):
+        if exception.error_code == 20101:
+            QtGui.QMessageBox.information(self, self.tr("Error"),
+                                          self.tr("This tweet have been deleted."))
+        elif exception.error_code == 20704:
+            QtGui.QMessageBox.information(self, self.tr("Error"),
+                                          self.tr("This tweet have been collected already.."))
+        else:
+            QtGui.QMessageBox.warning(self, self.tr("Unknown Error"),
+                                      str(exception))
