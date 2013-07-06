@@ -13,6 +13,7 @@ from LoginWindow import LoginWindow
 import const
 import traceback
 import signal
+import logging
 
 
 def mkconfig():
@@ -30,7 +31,7 @@ def mkconfig():
 def my_excepthook(type, value, tback):
     # Let Qt complains about it.
     exception = "".join(traceback.format_exception(type, value, tback))
-    error_info = "Oops, there is an unexcepted error: \n\n" + \
+    error_info = "Oops, there is an unexpected error: \n\n" + \
                  "%s\n" % exception + \
                  "Please report it at https://github.com/WeCase/WeCase/issues"
     QtGui.QMessageBox.critical(None, "Unknown Error", error_info)
@@ -49,6 +50,7 @@ def import_warning():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     mkconfig()
 
     app = QtGui.QApplication(sys.argv)
