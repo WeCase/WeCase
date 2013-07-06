@@ -15,7 +15,7 @@ class tzoffset(tzinfo):
     ZERO = timedelta(0)
 
     def __init__(self, tzname, utcoffset):
-        super(tzinfo, self).__init__()
+        super(tzoffset, self).__init__()
 
         self.utcoffset_value = timedelta(hours=utcoffset / 3600)
         self.tzname_value = tzname
@@ -42,9 +42,6 @@ class WTimeParser():
         >>> t.parse("Sat Apr 06 00:49:30 +0800 2013")
         datetime(2013, 4, 6, 0, 49, 30, tzinfo=tzoffset(None, 28800))
         """
-
-        hour = minute = second = 0
-        timezone_offset = 0
 
         date_list = time_string.split(' ')
         year = int(date_list[5])
