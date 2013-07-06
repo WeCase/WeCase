@@ -26,7 +26,6 @@ Dependencies 依赖
 1. Python 3 
 2. PyQt4 (python3-pyqt, python3-qt4)
 3. Python-notify2 (python3-notify2)
-4. Python-requests (python3-requests)
 
 Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
 
