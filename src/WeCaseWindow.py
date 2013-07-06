@@ -97,7 +97,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.client.remind.set_count.post(type="mention_status")
             self.tabTextChanged.emit(1, self.tr("@Me"))
         elif self.tabWidget.currentIndex() == 2:
-            #self.client.remind.set_count.post(type="cmt")
+            self.client.remind.set_count.post(type="cmt")
             self.tabTextChanged.emit(2, self.tr("Comments"))
 
     def get_remind(self, uid):
