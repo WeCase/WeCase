@@ -13,7 +13,22 @@ This project is under heavy development.
 
 IRC Channel IRC频道
 ------
-\#wecase @ freenode
+
+###使用IRC客户端
+
+加入irc.freenode.net的#wecase频道
+
+###使用浏览器
+
+点击[#wecase](http://webchat.freenode.net/?channels=wecase)在线加入IRC频道
+
+订阅邮件列表
+-----
+
+发送空邮件到 **wecase+subscribe@googlegroups.com**
+
+或者点击[这里](https://groups.google.com/forum/?hl=zh-CN&fromgroups#!forum/wecase)加入
+
 
 Development Guide 开发指南
 ------
