@@ -51,7 +51,7 @@ Note: Some distributions use different packages names, or do not contain `python
 
 Installation Guide 安装指南
 -----
-1. Install the dependencies for WeCase. 
+1. Install the dependencies for WeCase.
 
    安装WeCase所需要的依赖。
 
@@ -64,11 +64,11 @@ Installation Guide 安装指南
 4. Get the sdk `git submodule init; git submodule update`
 
    取得sdk`git submodule init; git submodule update`
-   
+
 5. Install SDK `cd sdk; sudo python3 setup.py install`
 
    安装sdk`cd sdk; sudo python3 setup.py install`
-   
+
 6. Run `python3 ./src/wecase.py` in root directory of the source code.
 
    在源码的根目录下运行`python3 ./src/wecase.py`
