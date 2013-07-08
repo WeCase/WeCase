@@ -22,7 +22,7 @@ def tweetLength(text):
     """
 
     def findall(regex, text):
-        """ re.findall() sometimes output unexcepted results. This function
+        """ re.findall() sometimes output unexpected results. This function
         is a special version of findall() """
 
         results = []

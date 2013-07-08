@@ -38,9 +38,7 @@ class SmileyModel(QtCore.QAbstractListModel):
         self.endInsertRows()
 
     def roleNames(self):
-        names = {}
-        names[self.nameRole] = "name"
-        names[self.pathRole] = "path"
+        names = {self.nameRole: "name", self.pathRole: "path"}
         return names
 
     def data(self, index, role):

@@ -33,7 +33,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.net_err_count = 0
 
     def setupSignals(self):
-        # Other singals defined in Desinger.
+        # Other signals defined in Designer.
         self.loginReturn.connect(self.checkLogin)
         self.chk_Remember.clicked.connect(self.uncheckAutoLogin)
 
@@ -41,7 +41,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         if self.chk_Remember.isChecked():
             self.passwd[str(self.username)] = str(self.password)
             self.last_login = str(self.username)
-            # Because this is a model dislog,
+            # Because this is a model dialog,
             # closeEvent won't emit when we accept() the window, but will
             # emit when we reject() the window.
             self.saveConfig()

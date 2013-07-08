@@ -7,11 +7,14 @@
 
 from PyQt4 import QtCore
 from datetime import datetime
+from http.client import BadStatusLine
+from urllib.error import URLError
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async
 from TweetUtils import tweetLength
 import const
+import logging
 
 
 class TweetSimpleModel(QtCore.QAbstractListModel):
@@ -116,20 +119,35 @@ class TweetTimelineBaseModel(TweetSimpleModel):
 
     @async
     def _common_get(self, timeline_func, pos):
+        def tprint(*args):
+            import threading
+            logging.debug(threading.current_thread().name + " " + "".join(*args))
+
         if self.lock:
             return
         self.lock = True
-        # timeline is just a pointer to the method.
-        # We are in another thread now, call it. UI won't freeze.
-        timeline = timeline_func()
+
+        while 1:
+            # try until success
+            try:
+                # timeline is just a pointer to the method.
+                # We are in another thread now, call it. UI won't freeze.
+                timeline = timeline_func()
+                break
+            except (BadStatusLine, URLError):
+                tprint("Retrying...")
+                continue
 
         # Timeline is not blank, but after filter(), timeline is blank.
         while timeline and (not self.filter(timeline)):
             # All tweets in this page are removed.
             # Load next page.
-            if timeline_func != self.timeline_new:
-                # We are not fetch new tweets.
-                timeline = self._load_next_page()()
+            if timeline_func == self.timeline_new:
+                # We are fetching new tweet, do nothing.
+                break
+
+            # We are not fetch new tweets.
+            timeline = self._load_next_page()()
 
         timeline = self.filter(timeline)
         if not timeline:
@@ -176,6 +194,7 @@ class TweetCommonModel(TweetTimelineBaseModel):
 
 
 class TweetCommentModel(TweetTimelineBaseModel):
+
     def __init__(self, timeline=None, parent=None):
         super(TweetCommentModel, self).__init__(timeline, parent)
         self.page = 0

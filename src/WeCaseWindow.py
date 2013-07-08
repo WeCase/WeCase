@@ -18,6 +18,7 @@ from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
 from WeCaseConfig import WeCaseConfig
+from WeHack import async
 
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
@@ -88,15 +89,16 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.my_timeline.load()
         self.myView.setModel(self.my_timeline)
 
+    @async
     def reset_remind(self):
         if self.tabWidget.currentIndex() == 0:
-            self.tabWidget.setTabText(0, self.tr("Weibo"))
+            self.tabTextChanged.emit(0, self.tr("Weibo"))
         elif self.tabWidget.currentIndex() == 1:
             self.client.remind.set_count.post(type="mention_status")
-            self.tabWidget.setTabText(1, self.tr("@Me"))
+            self.tabTextChanged.emit(1, self.tr("@Me"))
         elif self.tabWidget.currentIndex() == 2:
             self.client.remind.set_count.post(type="cmt")
-            self.tabWidget.setTabText(2, self.tr("Comments"))
+            self.tabTextChanged.emit(2, self.tr("Comments"))
 
     def get_remind(self, uid):
         """this function is used to get unread_count

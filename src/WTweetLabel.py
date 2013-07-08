@@ -3,7 +3,7 @@ from PyQt4 import QtCore, QtGui
 
 class WTweetLabel(QtGui.QTextBrowser):
 
-    def __init__(self, text, parent=None):
+    def __init__(self, parent=None):
         super(WTweetLabel, self).__init__(parent)
         self.setReadOnly(True)
         self.setFrameStyle(QtGui.QFrame.NoFrame)
