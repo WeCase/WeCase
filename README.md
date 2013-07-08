@@ -13,7 +13,22 @@ This project is under heavy development.
 
 IRC Channel IRC频道
 ------
-\#wecase @ freenode
+
+###使用IRC客户端
+
+加入irc.freenode.net的#wecase频道
+
+###使用浏览器
+
+点击[#wecase](http://webchat.freenode.net/?channels=wecase)在线加入IRC频道
+
+订阅邮件列表
+-----
+
+发送空邮件到 **wecase+subscribe@googlegroups.com**
+
+或者点击[这里](https://groups.google.com/forum/?hl=zh-CN&fromgroups#!forum/wecase)加入
+
 
 Development Guide 开发指南
 ------
@@ -25,8 +40,10 @@ Dependencies 依赖
 -----
 1. Python 3 
 2. PyQt4 (python3-pyqt, python3-qt4)
-3. Python-notify2 (python3-notify2)
-4. Python-requests (python3-requests)
+
+3. Optional 可选
+
+   Python-notify2 (python3-notify2)
 
 Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
 
@@ -34,7 +51,7 @@ Note: Some distributions use different packages names, or do not contain `python
 
 Installation Guide 安装指南
 -----
-1. Install the dependencies for WeCase. 
+1. Install the dependencies for WeCase.
 
    安装WeCase所需要的依赖。
 
@@ -47,11 +64,11 @@ Installation Guide 安装指南
 4. Get the sdk `git submodule init; git submodule update`
 
    取得sdk`git submodule init; git submodule update`
-   
+
 5. Install SDK `cd sdk; sudo python3 setup.py install`
 
    安装sdk`cd sdk; sudo python3 setup.py install`
-   
+
 6. Run `python3 ./src/wecase.py` in root directory of the source code.
 
    在源码的根目录下运行`python3 ./src/wecase.py`
