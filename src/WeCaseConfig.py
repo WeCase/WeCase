@@ -1,6 +1,8 @@
 from configparser import ConfigParser
+from WeHack import singleton
 
 
+@singleton
 class WeCaseConfig():
 
     def __init__(self, path, section="main"):
