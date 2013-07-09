@@ -19,6 +19,7 @@ from AboutWindow import AboutWindow
 import const
 from WeCaseConfig import WeCaseConfig
 from WeHack import async
+from WeRuntimeInfo import WeRuntimeInfo
 
 
 class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
@@ -32,10 +33,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.setupUi(self)
         self.tweetViews = [self.homeView, self.mentionsView,
                            self.commentsView, self.myView]
+        self.info = WeRuntimeInfo()
         self.client = const.client
         self.loadConfig()
-        self.setupModels()
         self.init_account()
+        self.setupModels()
         self.IMG_AVATAR = -2
         self.IMG_THUMB = -1
         self.notify = Notify(timeout=self.notify_timeout)
@@ -43,7 +45,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.download_lock = []
 
     def init_account(self):
-        self.get_uid()
+        self.uid()
 
     def loadConfig(self):
         self.config = WeCaseConfig(const.config_path)
@@ -113,12 +115,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
                 continue
         return reminds
 
-    def get_uid(self):
+    def uid(self):
         """How can I get my uid? here it is"""
-        try:
-            self.uid = self.client.account.get_uid.get().uid
-        except AttributeError:
-            return None
+        if not self.info.get("uid"):
+            self.info["uid"] = self.client.account.get_uid.get().uid
+        return self.info["uid"]
 
     def show_notify(self):
         # This function is run in another thread by WTimer.
@@ -126,7 +127,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         # We use SIGNAL self.tabTextChanged and SLOT self.setTabText()
         # to display unread count
 
-        reminds = self.get_remind(self.uid)
+        reminds = self.get_remind(self.uid())
         msg = self.tr("You have:") + "\n"
         num_msg = 0
 

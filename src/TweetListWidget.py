@@ -13,6 +13,7 @@ from WAsyncLabel import WAsyncLabel
 from WRotatingLabel import WRotatingLabel
 import const
 from const import cache_path
+from WeRuntimeInfo import WeRuntimeInfo
 
 
 class TweetListWidget(QtGui.QWidget):
@@ -209,6 +210,10 @@ class SingleTweetWidget(QtGui.QFrame):
                                                   QtGui.QSizePolicy.Minimum)
         self.counterHorizontalLayout.addItem(self.horizontalSpacer)
 
+        if WeRuntimeInfo().get("uid") == self.tweet.author.id:
+            self.delete = self._createDeleteLabel()
+            self.counterHorizontalLayout.addWidget(self.delete)
+
         if not (self.tweet.type == TweetItem.COMMENT):
             self.retweet = self._createRetweetLabel()
             self.counterHorizontalLayout.addWidget(self.retweet)
@@ -385,6 +390,13 @@ class SingleTweetWidget(QtGui.QFrame):
         reply.clicked.connect(self._reply)
         return reply
 
+    def _createDeleteLabel(self):
+        delete = WIconLabel(self)
+        delete.setObjectName("delete")
+        delete.setIcon(const.myself_path + "/icon/deletes.png")
+        delete.clicked.connect(self._delete)
+        return delete
+
     @async
     def fetch_open_original_pic(self, thumbnail_pic):
         """Fetch and open original pic from thumbnail pic url.
@@ -450,6 +462,22 @@ class SingleTweetWidget(QtGui.QFrame):
         if not tweet:
             tweet = self.tweet
         self.exec_newpost_window("reply", tweet)
+
+    def _delete(self):
+        choice = QtGui.QMessageBox.question(
+                self, self.tr("Delete?"),
+                self.tr("You can't undo your deletion."),
+                QtGui.QMessageBox.Yes,
+                QtGui.QMessageBox.No)
+        if choice == QtGui.QMessageBox.No:
+            return
+
+        try:
+            self.tweet.delete()
+        except APIError as e:
+            self._handle_api_error(e)
+        self.timer.stop()
+        self.hide()
 
     def _original_retweet(self):
         self._retweet(self.tweet.original)
