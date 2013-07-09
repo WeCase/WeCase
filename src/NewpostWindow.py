@@ -87,15 +87,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             return
         self.replyModel.load()
 
+        self.splitter = QtGui.QSplitter(self)
+        self.splitter.setOrientation(QtCore.Qt.Vertical)
+        self.verticalLayout.insertWidget(0, self.splitter)
         self.tweetWidget.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout.insertWidget(0, self.tweetWidget)
-        self.verticalLayout.setStretch(0, 1)
+        self.splitter.addWidget(self.tweetWidget)
 
         self.commentsWidget = TweetListWidget(self, ["image", "original"])
         self.commentsWidget.setModel(self.replyModel)
         self.commentsWidget.scrollArea.setMinimumSize(20, 200)
-        self.verticalLayout.insertWidget(1, self.commentsWidget)
-        self.verticalLayout.setStretch(1, 10)
+        self.splitter.addWidget(self.commentsWidget)
+        self.splitter.addWidget(self.textEdit)
 
     def mentions_suggest(self, text):
         ret_users = []
