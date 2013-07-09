@@ -20,7 +20,7 @@ IRC Channel IRC频道
 
 ###使用浏览器
 
-点击[#wecase](http://webchat.freenode.net/?channels=wecase)在线加入IRC频道
+点击[#wecase](https://kiwiirc.com/client/irc.freenode.net/wecase)在线加入IRC频道
 
 订阅邮件列表
 -----
