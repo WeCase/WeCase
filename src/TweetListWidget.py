@@ -13,6 +13,7 @@ from WAsyncLabel import WAsyncLabel
 from WRotatingLabel import WRotatingLabel
 import const
 from const import cache_path
+from WeRuntimeInfo import WeRuntimeInfo
 
 
 class TweetListWidget(QtGui.QWidget):
@@ -201,8 +202,6 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.horizontalLayout.setStretch(1, 1)
         self.horizontalLayout.setStretch(2, 10)
-        #self.verticalLayout.setStretch(1, 1)
-        #self.verticalLayout.setStretch(2, 10)
 
         self.counterHorizontalLayout = QtGui.QHBoxLayout()
         self.counterHorizontalLayout.setObjectName("counterhorizontalLayout")
@@ -210,40 +209,28 @@ class SingleTweetWidget(QtGui.QFrame):
                                                   QtGui.QSizePolicy.Expanding,
                                                   QtGui.QSizePolicy.Minimum)
         self.counterHorizontalLayout.addItem(self.horizontalSpacer)
+
+        if WeRuntimeInfo().get("uid") == self.tweet.author.id:
+            self.delete = self._createDeleteLabel()
+            self.counterHorizontalLayout.addWidget(self.delete)
+
         if not (self.tweet.type == TweetItem.COMMENT):
-            self.retweet = WIconLabel(self)
-            self.retweet.setObjectName("retweet")
-            self.retweet.setText(str(self.tweet.retweets_count))
-            self.retweet.setIcon(const.myself_path + "/icon/retweets.png")
-            self.retweet.clicked.connect(self._retweet)
+            self.retweet = self._createRetweetLabel()
             self.counterHorizontalLayout.addWidget(self.retweet)
 
-            self.comment = WIconLabel(self)
-            self.comment.setObjectName("comment")
-            self.comment.setIcon(const.myself_path + "/icon/comments.png")
-            self.comment.setText(str(self.tweet.comments_count))
-            self.comment.clicked.connect(self._comment)
+            self.comment = self._createCommentLabel()
             self.counterHorizontalLayout.addWidget(self.comment)
 
-            self.favorite = WIconLabel(self)
-            self.favorite.setIcon(const.myself_path + "/icon/no_favorites.png")
-            self.favorite.clicked.connect(self._favorite)
+            self.favorite = self._createFavoriteLabel()
             self.counterHorizontalLayout.addWidget(self.favorite)
 
             self.counterHorizontalLayout.setAlignment(QtCore.Qt.AlignTop)
-            #self.verticalLayout.setSpacing(0)
         elif self.tweet.type == TweetItem.COMMENT:
-            self.reply = WIconLabel(self)
-            self.reply.setObjectName("reply")
-            self.reply.setIcon(const.myself_path + "/icon/retweets.png")
-            self.reply.clicked.connect(self._reply)
+            self.reply = self._createReplyLabel()
             self.counterHorizontalLayout.addWidget(self.reply)
 
         self.verticalLayout.addLayout(self.counterHorizontalLayout)
         self.horizontalLayout.addLayout(self.verticalLayout)
-
-        #self.verticalLayout.setStretch(3, 10)
-        #self.verticalLayout.setStretch(4, 1)
 
         self.setStyleSheet("""
             QFrame#SingleTweetWidget {
@@ -308,10 +295,8 @@ class SingleTweetWidget(QtGui.QFrame):
                               originalItem.author.name + \
                               self._create_html_url(originalItem.text))
         except:
-            #originalItem.text == This tweet deleted by author
+            # originalItem.text == This tweet deleted by author
             textLabel.setText(self._create_html_url(originalItem.text))
-        #textLabel.setWordWrap(True)
-        #textLabel.setIndent(0)
         layout.addWidget(textLabel)
 
         if originalItem.thumbnail_pic:
@@ -375,6 +360,42 @@ class SingleTweetWidget(QtGui.QFrame):
         widgetLayout.addWidget(frame)
 
         return widget
+
+    def _createFavoriteLabel(self):
+        favorite = WIconLabel(self)
+        favorite.setIcon(const.myself_path + "/icon/no_favorites.png")
+        favorite.clicked.connect(self._favorite)
+        return favorite
+
+    def _createRetweetLabel(self):
+        retweet = WIconLabel(self)
+        retweet.setObjectName("retweet")
+        retweet.setText(str(self.tweet.retweets_count))
+        retweet.setIcon(const.myself_path + "/icon/retweets.png")
+        retweet.clicked.connect(self._retweet)
+        return retweet
+
+    def _createCommentLabel(self):
+        comment = WIconLabel(self)
+        comment.setObjectName("comment")
+        comment.setIcon(const.myself_path + "/icon/comments.png")
+        comment.setText(str(self.tweet.comments_count))
+        comment.clicked.connect(self._comment)
+        return comment
+
+    def _createReplyLabel(self):
+        reply = WIconLabel(self)
+        reply.setObjectName("reply")
+        reply.setIcon(const.myself_path + "/icon/retweets.png")
+        reply.clicked.connect(self._reply)
+        return reply
+
+    def _createDeleteLabel(self):
+        delete = WIconLabel(self)
+        delete.setObjectName("delete")
+        delete.setIcon(const.myself_path + "/icon/deletes.png")
+        delete.clicked.connect(self._delete)
+        return delete
 
     @async
     def fetch_open_original_pic(self, thumbnail_pic):
@@ -441,6 +462,22 @@ class SingleTweetWidget(QtGui.QFrame):
         if not tweet:
             tweet = self.tweet
         self.exec_newpost_window("reply", tweet)
+
+    def _delete(self):
+        choice = QtGui.QMessageBox.question(
+                self, self.tr("Delete?"),
+                self.tr("You can't undo your deletion."),
+                QtGui.QMessageBox.Yes,
+                QtGui.QMessageBox.No)
+        if choice == QtGui.QMessageBox.No:
+            return
+
+        try:
+            self.tweet.delete()
+        except APIError as e:
+            self._handle_api_error(e)
+        self.timer.stop()
+        self.hide()
 
     def _original_retweet(self):
         self._retweet(self.tweet.original)

@@ -30,7 +30,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.loadConfig()
         self.setupUi(self)
         self.setupSignals()
-        self.net_err_count = 0
+        self.err_count = 0
 
     def setupSignals(self):
         # Other signals defined in Designer.
@@ -53,18 +53,22 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.done(True)
 
     def reject(self, status):
-        if status == self.PASSWORD_ERROR:
-            QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
-                                       self.tr("Check your account and password"))
-        elif status == self.NETWORK_ERROR and self.net_err_count < 3:
-            self.net_err_count += 1
+        if status in [self.NETWORK_ERROR, self.PASSWORD_ERROR] and self.err_count < 5:
+            print("Retry...")
+            self.err_count += 1
             sleep(0.5)
             self.ui_authorize()
             return
-        elif status == self.NETWORK_ERROR and self.net_err_count == 3:
+        elif status == self.PASSWORD_ERROR:
+            print("PASSWORD_ERROR", self.err_count)
+            QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
+                                       self.tr("Check your account and password"))
+            self.err_count = 0
+        elif status == self.NETWORK_ERROR:
+            print("NETWORK_ERROR", self.err_count)
             QtGui.QMessageBox.critical(None, self.tr("Network Error"),
                                        self.tr("Something wrong with the network, please try again."))
-            self.net_err_count = 0
+            self.err_count = 0
 
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
@@ -129,6 +133,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             authorize_code = authorize(authorize_url, username, password)
             if not authorize_code:
                 self.loginReturn.emit(self.PASSWORD_ERROR)
+                return
 
             # Step 3: Get the access token by authorize_code
             r = client.request_access_token(authorize_code)
@@ -137,8 +142,10 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             client.set_access_token(r.access_token, r.expires_in)
             const.client = client
             self.loginReturn.emit(self.SUCCESS)
+            return
         except:
             self.loginReturn.emit(self.NETWORK_ERROR)
+            return
 
     def setPassword(self, username):
         if username:

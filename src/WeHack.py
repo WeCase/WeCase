@@ -9,6 +9,15 @@ def async(func):
     return exec_thread
 
 
+def singleton(cls):
+    instances = {}
+    def get_instance(*args):
+        if cls not in instances:
+            instances[cls] = cls(*args)
+        return instances[cls]
+    return get_instance
+
+
 @async
 def start(filename):
     if platform.system() == "Linux":

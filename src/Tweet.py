@@ -422,8 +422,14 @@ class TweetItem(QtCore.QObject):
         if retweet:
             self.retweet(text)
 
+    def delete(self):
+        if self.type in [self.TWEET, self.RETWEET]:
+            self.client.statuses.destroy.post(id=self.id)
+        elif self.type == self.COMMENT:
+            self.client.comments.destroy.post(cid=self.id)
+
     def refresh(self):
-        if self.type == self.TWEET or self.type == self.RETWEET:
+        if self.type in [self.TWEET, self.RETWEET]:
             self._data = self.client.statuses.show.get(id=self.id)
 
     def withKeyword(self, keyword):
