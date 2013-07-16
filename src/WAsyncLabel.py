@@ -4,12 +4,13 @@ import urllib.request
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
+from WImageLabel import WImageLabel
 from const import cache_path as down_path
 from const import myself_path
 from WeHack import async
 
 
-class WAsyncLabel(QtGui.QLabel):
+class WAsyncLabel(WImageLabel):
 
     clicked = QtCore.pyqtSignal()
     downloaded = QtCore.pyqtSignal(str)
@@ -19,7 +20,8 @@ class WAsyncLabel(QtGui.QLabel):
         self.url = ""
         self._image = None
         self.timer = QtCore.QTimer(self)
-        self.busy_icon = QtGui.QPixmap(myself_path + "/icon/busy.png")
+        self.busy_icon_path = myself_path + "/icon/busy.gif"
+        self.busy_icon = QtGui.QPixmap(self.busy_icon_path)
 
     def setBusy(self, busy):
         if busy:
@@ -57,7 +59,8 @@ class WAsyncLabel(QtGui.QLabel):
         super(WAsyncLabel, self).setPixmap(image)
 
     def setPixmap(self, url):
-        super(WAsyncLabel, self).setPixmap(self.busy_icon)
+        super(WAsyncLabel, self).setImage(self.busy_icon_path)
+        self.start()
         if not ("http" in url):
             self._setPixmap(url)
             return
