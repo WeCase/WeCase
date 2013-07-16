@@ -44,6 +44,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.applyConfig()
         self.download_lock = []
 
+    def setupUi(self, widget):
+        super(WeCaseWindow, self).setupUi(widget)
+        self.action_Refresh.setShortcut(QtGui.QKeySequence("F5"))
+
     def init_account(self):
         self.uid()
 
