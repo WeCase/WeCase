@@ -16,14 +16,14 @@ class WRotatingLabel(QtGui.QLabel):
 
     def setRotating(self, state):
         if state:
-            self.rotating.start(50)
+            self.rotating.start(20)
         else:
             self.rotating.stop()
 
     def drawRotatingImage(self):
         rotated_pixmap = self._pixmap.transformed(QtGui.QTransform().rotate(self.degress))
         super(WRotatingLabel, self).setPixmap(rotated_pixmap)
-        self.degress += 8
+        self.degress += 60
         self.degress %= 360
 
     def setPixmap(self, pixmap):

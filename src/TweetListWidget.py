@@ -10,7 +10,7 @@ from Tweet import TweetItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
-from WRotatingLabel import WRotatingLabel
+from WImageLabel import WImageLabel
 import const
 from const import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
@@ -93,9 +93,8 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def setupBusyIcon(self):
         busyWidget = QtGui.QWidget()
         layout = QtGui.QVBoxLayout(busyWidget)
-        busy = WRotatingLabel()
-        busy.setPixmap(QtGui.QPixmap(const.myself_path + "/icon/busy.png"))
-        busy.setRotating(True)
+        busy = WImageLabel()
+        busy.setImage(const.myself_path + "/icon/busy.gif")
         layout.addWidget(busy)
         layout.setAlignment(QtCore.Qt.AlignCenter)
         busyWidget.setLayout(layout)
