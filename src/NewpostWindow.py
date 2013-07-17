@@ -37,7 +37,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
-        self.pushButton_send.setShortcut(QtGui.QKeySequence("Ctrl+Return"))
+        self.sendAction = QtGui.QAction(self)
+        self.sendAction.triggered.connect(self.send)
+        self.sendAction.setShortcut(QtGui.QKeySequence("Ctrl+Return"))
+        self.addAction(self.sendAction)
 
         if self.action not in ["new", "reply"]:
             self._create_tweetWidget()
