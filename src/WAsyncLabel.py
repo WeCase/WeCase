@@ -6,34 +6,38 @@ from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
 from const import cache_path as down_path
-from const import myself_path
+from const import icon
 from WeHack import async
 
 
 class WAsyncLabel(WImageLabel):
 
     clicked = QtCore.pyqtSignal()
-    downloaded = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
         super(WAsyncLabel, self).__init__(parent)
-        self.url = ""
+        self._url = ""
         self._image = None
-        self.timer = QtCore.QTimer(self)
-        self.busy_icon_path = myself_path + "/icon/busy.gif"
-        self.busy_icon = QtGui.QPixmap(self.busy_icon_path)
+
+        self.fetcher = WAsyncFetcher(self)
+        self.fetcher.fetched.connect(self._setPixmap)
+        self.busyIcon = icon("busy.gif")
+        self.busyIconPixmap = QtGui.QPixmap(self.busyIcon)
+
+    def url(self):
+        return self._url
 
     def setBusy(self, busy):
         if busy:
-            self.degress = 0
-            self.timer.timeout.connect(self.drawBusyIcon)
-            self.timer.start(50)
+            self.animation = QtGui.QMovie(self.busyIcon)
+            self.animation.start()
+            self.animation.frameChanged.connect(self.drawBusyIcon)
         else:
             self.clearBusyIcon()
 
     def drawBusyIcon(self):
         image = QtGui.QPixmap(self._image)
-        icon = self.busy_icon.transformed(QtGui.QTransform().rotate(self.degress))
+        icon = self.animation.currentPixmap()
 
         height = (image.height() - icon.height()) / 2
         width = (image.width() - icon.width()) / 2
@@ -41,40 +45,48 @@ class WAsyncLabel(WImageLabel):
         painter.drawPixmap(width, height, icon)
         painter.end()
         super(WAsyncLabel, self).setPixmap(image)
-        self.degress += 8
-        self.degress %= 360
 
     def clearBusyIcon(self):
-        self.timer.stop()
+        self.animation.stop()
         super(WAsyncLabel, self).setPixmap(self._image)
-
-    def url(self):
-        return self.url
 
     def _setPixmap(self, path):
         image = QtGui.QPixmap(path)
-        if image.width() < self.busy_icon.width():
-            image = image.scaledToWidth(self.busy_icon.width())
+        if image.width() < self.busyIconPixmap.width():
+            image = image.scaledToWidth(self.busyIconPixmap.width())
         self._image = image
         super(WAsyncLabel, self).setPixmap(image)
 
     def setPixmap(self, url):
-        super(WAsyncLabel, self).setImage(self.busy_icon_path)
+        super(WAsyncLabel, self).setImage(self.busyIcon)
         self.start()
         if not ("http" in url):
             self._setPixmap(url)
             return
-        self.url = url
-        self.downloaded.connect(self._setPixmap)
-        self._fetch_meta()
+        self._url = url
+        self._fetch()
 
-    def _fetch_meta(self):
-        filename = "%s_%s" % (self.url.split('/')[-2],
-                              self.url.split('/')[-1])
-        self._fetch(self.url, filename)
+    def _formattedFilename(self):
+        return "%s_%s" % (self._url.split('/')[-2],
+                          self._url.split('/')[-1])
+
+    def _fetch(self):
+        self.fetcher.fetch(self._url, self._formattedFilename())
+
+    def mouseReleaseEvent(self, e):
+        if self._image:
+            self.clicked.emit()
+
+
+class WAsyncFetcher(QtCore.QObject):
+
+    fetched = QtCore.pyqtSignal(str)
+
+    def __init__(self, parent=None):
+        super(WAsyncFetcher, self).__init__(parent)
 
     @async
-    def _fetch(self, url, filename):
+    def fetch(self, url, filename):
         def delete_tmp():
             try:
                 os.remove(down_path + filename + ".down")
@@ -97,13 +109,9 @@ class WAsyncLabel(WImageLabel):
         while 1:
             if os.path.exists(down_path + filename):
                 delete_tmp()
-                return self.downloaded.emit(down_path + filename)
+                return self.fetched.emit(down_path + filename)
             elif os.path.exists(down_path + filename + ".down"):
                 sleep(0.5)
                 continue
             else:
                 download()
-
-    def mouseReleaseEvent(self, e):
-        if self._image:
-            self.clicked.emit()

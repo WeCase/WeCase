@@ -425,7 +425,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.imageLoaded.emit()
 
     def _showFullImage(self):
-        self.fetch_open_original_pic(self.imageLabel.url)
+        self.fetch_open_original_pic(self.imageLabel._url)
 
     def commonProcessor(self, object):
         object()
