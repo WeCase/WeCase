@@ -43,6 +43,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.notify = Notify(timeout=self.notify_timeout)
         self.applyConfig()
         self.download_lock = []
+        self._last_reminds_count = 0
 
     def setupUi(self, widget):
         super(WeCaseWindow, self).setupUi(widget)
@@ -151,11 +152,10 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         reminds = self.get_remind(self.uid())
         msg = self.tr("You have:") + "\n"
-        num_msg = 0
+        reminds_count = 0
 
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
-            print("Got it!")
             self.tabTextChanged.emit(self.tabWidget.indexOf(self.homeTab),
                                      self.tr("Weibo(%d)")
                                      % reminds['status'])
@@ -165,17 +165,18 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.tabTextChanged.emit(self.tabWidget.indexOf(self.mentionsTab),
                                      self.tr("@Me(%d)")
                                      % reminds['mention_status'])
-            num_msg += 1
+            reminds_count += 1
 
         if reminds['cmt'] and self.remindComments:
             msg += self.tr("%d unread comment(s)") % reminds['cmt'] + "\n"
             self.tabTextChanged.emit(self.tabWidget.indexOf(self.commentsTab),
                                      self.tr("Comments(%d)")
                                      % reminds['cmt'])
-            num_msg += 1
+            reminds_count += 1
 
-        if num_msg:
+        if reminds_count and reminds_count != self._last_reminds_count:
             self.notify.showMessage(self.tr("WeCase"), msg)
+            self._last_reminds_count = reminds_count
 
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
