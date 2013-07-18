@@ -36,3 +36,7 @@ config_path = home_path + '/.config/wecase/config_db'
 cache_path = home_path + '/.cache/wecase/'
 myself_name = sys.argv[0].split('/')[-1]
 myself_path = os.path.dirname(os.path.realpath(__file__)) + '/'
+
+
+def icon(name):
+    return myself_path + "/icon/" + name
