@@ -50,6 +50,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.action_Refresh.setShortcut(QtGui.QKeySequence("F5"))
         self.pushButton_new.setParent(self)
         self.pushButton_refresh.setParent(self)
+        self.pushButton_refresh.setText("")
+        self.pushButton_refresh.setIcon(
+            QtGui.QIcon(QtGui.QPixmap(const.icon("refresh.png"))))
         self.buttonWidget = QtGui.QWidget()
         self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
         self.buttonLayout.addWidget(self.pushButton_refresh)
