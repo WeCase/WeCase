@@ -265,7 +265,9 @@ class SingleTweetWidget(QtGui.QFrame):
         """)
 
         self.username.setText(" " + self.tweet.author.name)
-        self.tweetText.setText(self._create_html_url(self.tweet.text))
+        text = self._create_html_url(self.tweet.text)
+        text = self._create_smiles(text)
+        self.tweetText.setText(self._create_html_url(text))
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._update_time)
         self._update_time()
@@ -314,13 +316,14 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel = WTweetLabel(frame)
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         originalItem = self.tweet.original
+
+        text = self._create_html_url(originalItem.text)
+        text = self._create_smiles(text)
         try:
-            textLabel.setText("@%s: " %
-                              originalItem.author.name + \
-                              self._create_html_url(originalItem.text))
+            textLabel.setText("@%s: " % originalItem.author.name + text)
         except:
             # originalItem.text == This tweet deleted by author
-            textLabel.setText(self._create_html_url(originalItem.text))
+            textLabel.setText(text)
         layout.addWidget(textLabel)
 
         if originalItem.thumbnail_pic:
@@ -517,6 +520,13 @@ class SingleTweetWidget(QtGui.QFrame):
                          r"[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
         new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
+
+    def _create_smiles(self, text):
+        for key, value in const.SMILES.items():
+            print(key, value)
+            text = text.replace("[%s]" % key, '<img src="%s" />' %
+                                (const.myself_path + value))
+        return text
 
     def exec_newpost_window(self, action, tweet):
         from NewpostWindow import NewpostWindow
