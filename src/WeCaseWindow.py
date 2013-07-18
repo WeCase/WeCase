@@ -52,8 +52,9 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.pushButton_new.setParent(self)
         self.pushButton_refresh.setParent(self)
         self.pushButton_refresh.setText("")
-        self.pushButton_refresh.setIcon(
-            QtGui.QIcon(QtGui.QPixmap(const.icon("refresh.png"))))
+        self.pushButton_refresh.setIcon(QtGui.QIcon(const.icon("refresh.png")))
+        self.pushButton_new.setText("")
+        self.pushButton_new.setIcon(QtGui.QIcon(const.icon("new.png")))
         self.buttonWidget = QtGui.QWidget()
         self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
         self.buttonLayout.addWidget(self.pushButton_refresh)
