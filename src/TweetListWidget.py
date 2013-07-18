@@ -66,18 +66,31 @@ class SimpleTweetListWidget(QtGui.QWidget):
         super(SimpleTweetListWidget, self).__init__(parent)
         self.client = const.client
         self.without = without
-        self.top_busy_id = 0
-        self.bottom_busy_id = 0
         self.setupUi()
 
     def setupUi(self):
         self.layout = QtGui.QVBoxLayout(self)
         self.setLayout(self.layout)
 
+        #self.searchAction = QtGui.QAction(self)
+        #self.searchAction.triggered.connect(self.search)
+        #self.searchAction.setShortcut(QtGui.QKeySequence("Ctrl+F"))
+        #self.addAction(self.searchAction)
+
     def setModel(self, model):
         self.model = model
         self.model.rowsInserted.connect(self._rowsInserted)
         self.model.nothingLoaded.connect(self._hideBusyIcon)
+
+    #def search(self):
+    #    widget = self.layout.itemAt(0).widget()
+    #    if (not self.busy()) and widget.objectName() != "searchEdit":
+    #        searchEdit = QtGui.QLineEdit(self)
+    #        searchEdit.setObjectName("searchEdit")
+    #        self.layout.insertWidget(0, searchEdit)
+    #    else:
+    #        self.layout.takeAt(0)
+    #        widget.setParent(None)
 
     def _hideBusyIcon(self):
         self.setBusy(False, self.BOTTOM)
@@ -100,6 +113,22 @@ class SimpleTweetListWidget(QtGui.QWidget):
         busyWidget.setLayout(layout)
         return busyWidget
 
+    def busy(self):
+        top_widget = self.layout.itemAt(0)
+        if top_widget:
+            top_widget = top_widget.widget()
+
+        bottom_widget = self.layout.itemAt(self.layout.count() - 1)
+        if bottom_widget:
+            bottom_widget = bottom_widget.widget()
+
+        if top_widget and top_widget.objectName() == "busyIcon":
+            return self.TOP
+        elif bottom_widget and bottom_widget.objectName() == "busyIcon":
+            return self.BOTTOM
+        else:
+            return False
+
     def setBusy(self, busy, pos):
         if pos == self.TOP:
             self._setTopBusy(busy)
@@ -107,26 +136,22 @@ class SimpleTweetListWidget(QtGui.QWidget):
             self._setBottomBusy(busy)
 
     def _setTopBusy(self, busy):
-        top_widget = self.layout.itemAt(0)
-        if top_widget:
-            top_widget = top_widget.widget()
-        if busy and (not top_widget or top_widget.objectName() != "busyIcon"):
+        if busy and self.busy() != self.TOP:
             busy_widget = self.setupBusyIcon()
             busy_widget.setObjectName("busyIcon")
             self.layout.insertWidget(0, busy_widget)
-        elif not busy and top_widget and top_widget.objectName() == "busyIcon":
+        elif not busy and self.busy() == self.TOP:
+            top_widget = self.layout.itemAt(0).widget()
             self.layout.removeWidget(top_widget)
             top_widget.setParent(None)
 
     def _setBottomBusy(self, busy):
-        bottom_widget = self.layout.itemAt(self.layout.count() - 1)
-        if bottom_widget:
-            bottom_widget = bottom_widget.widget()
-        if busy and (not bottom_widget or bottom_widget.objectName() != "busyIcon"):
+        if busy and self.busy() != self.BOTTOM:
             busy_widget = self.setupBusyIcon()
             busy_widget.setObjectName("busyIcon")
             self.layout.addWidget(busy_widget)
-        elif not busy and bottom_widget and bottom_widget.objectName() == "busyIcon":
+        elif not busy and self.busy() == self.BOTTOM:
+            bottom_widget = self.layout.itemAt(self.layout.count() - 1).widget()
             self.layout.removeWidget(bottom_widget)
             bottom_widget.setParent(None)
 
