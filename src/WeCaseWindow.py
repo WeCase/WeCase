@@ -47,6 +47,13 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def setupUi(self, widget):
         super(WeCaseWindow, self).setupUi(widget)
         self.action_Refresh.setShortcut(QtGui.QKeySequence("F5"))
+        self.pushButton_new.setParent(self)
+        self.pushButton_refresh.setParent(self)
+        self.buttonWidget = QtGui.QWidget()
+        self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
+        self.buttonLayout.addWidget(self.pushButton_refresh)
+        self.buttonLayout.addWidget(self.pushButton_new)
+        self.menubar.setCornerWidget(self.buttonWidget)
         self._setTabIcon(0, QtGui.QPixmap(const.icon("sina.png")))
         self._setTabIcon(1, QtGui.QPixmap(const.icon("mentions.png")))
         self._setTabIcon(2, QtGui.QPixmap(const.icon("comments2.png")))
