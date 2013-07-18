@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/MainWindow.ui'
 #
-# Created: Fri Jul 19 00:40:47 2013
+# Created: Fri Jul 19 03:53:08 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -117,9 +117,6 @@ class Ui_frm_MainWindow(object):
         self.menuO_ptions = QtGui.QMenu(self.menubar)
         self.menuO_ptions.setObjectName(_fromUtf8("menuO_ptions"))
         frm_MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtGui.QStatusBar(frm_MainWindow)
-        self.statusbar.setObjectName(_fromUtf8("statusbar"))
-        frm_MainWindow.setStatusBar(self.statusbar)
         self.action_About = QtGui.QAction(frm_MainWindow)
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/where_s_my_weibo.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)

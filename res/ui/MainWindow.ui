@@ -199,7 +199,6 @@
    <addaction name="menuO_ptions"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="action_About">
    <property name="icon">
     <iconset resource="wecase.qrc">
