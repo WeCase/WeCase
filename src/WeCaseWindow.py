@@ -31,6 +31,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
         self.setupUi(self)
+        self._setupSysTray()
         self.tweetViews = [self.homeView, self.mentionsView,
                            self.commentsView, self.myView]
         self.info = WeRuntimeInfo()
@@ -61,6 +62,19 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self._setTabIcon(0, QtGui.QPixmap(const.icon("sina.png")))
         self._setTabIcon(1, QtGui.QPixmap(const.icon("mentions.png")))
         self._setTabIcon(2, QtGui.QPixmap(const.icon("comments2.png")))
+
+    def _setupSysTray(self):
+        self.systray = QtGui.QSystemTrayIcon()
+        self.systray.activated.connect(self.clickedSystray)
+        self.systray.setToolTip("WeCase")
+        self.systray.setIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
+        self.systray.show()
+
+    def clickedSystray(self):
+        if self.isVisible():
+            self.hide()
+        else:
+            self.show()
 
     def _setTabIcon(self, index, icon):
         icon = QtGui.QIcon(icon.transformed(QtGui.QTransform().rotate(90)))
