@@ -54,9 +54,33 @@ class WAsyncLabel(WImageLabel):
         super(WAsyncLabel, self).setPixmap(self._image)
 
     def _setPixmap(self, path):
-        image = QtGui.QPixmap(path)
-        if image.width() < self.busyIconPixmap.width():
-            image = image.scaledToWidth(self.busyIconPixmap.width())
+        _image = QtGui.QPixmap(path)
+        minimalHeight = self.busyIconPixmap.height()
+        minimalWidth = self.busyIconPixmap.width()
+
+        if _image.height() < minimalHeight or _image.width() < minimalWidth:
+            if _image.height() > minimalHeight:
+                height = _image.height()
+            else:
+                height = minimalHeight
+
+            if _image.width() > minimalWidth:
+                width = _image.width()
+            else:
+                width = minimalWidth
+
+            image = QtGui.QPixmap(width, height)
+            painter = QtGui.QPainter(image)
+            path = QtGui.QPainterPath()
+            path.addRect(0, 0, width, height)
+            painter.fillPath(path, QtGui.QBrush(QtCore.Qt.gray))
+            painter.drawPixmap((width - _image.width()) / 2,
+                               (height - _image.height()) / 2,
+                               _image)
+            painter.end()
+        else:
+            image = _image
+
         self._image = image
         super(WAsyncLabel, self).setPixmap(image)
 
