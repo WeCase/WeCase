@@ -513,12 +513,14 @@ class SingleTweetWidget(QtGui.QFrame):
         self._comment(self.tweet.original)
 
     def _create_html_url(self, text):
-        url = re.compile(r"(?i)\b((?:https?://|www\d{0,3}[.]"
+        COMMON_URL_RE = (r"(?i)\b((?:https?://|www\d{0,3}[.]"
                          r"|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+"
                          r"|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+"
                          r"(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|"
                          r"[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
-        new_text = url.sub(r"""<a href='\1'>\1</a>""", text)
+        SINA_URL_RE = r"(http://t.cn/.{7})"
+        regex = re.compile("((%s)|(%s))" % (SINA_URL_RE, COMMON_URL_RE))
+        new_text = regex.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
 
     def _create_smiles(self, text):
