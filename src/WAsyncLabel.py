@@ -69,12 +69,8 @@ class WAsyncLabel(WImageLabel):
         self._url = url
         self._fetch()
 
-    def _formattedFilename(self):
-        return "%s_%s" % (self._url.split('/')[-2],
-                          self._url.split('/')[-1])
-
     def _fetch(self):
-        self.fetcher.fetch(self._url, self._formattedFilename())
+        self.fetcher.fetch(self._url)
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton and self._image:
@@ -103,8 +99,15 @@ class WAsyncFetcher(QtCore.QObject):
     def __init__(self, parent=None):
         super(WAsyncFetcher, self).__init__(parent)
 
-    @async
-    def fetch(self, url, filename):
+    @staticmethod
+    def _formattedFilename(url):
+        return "%s_%s" % (url.split('/')[-2],
+                          url.split('/')[-1])
+
+    def down(self, url, filename=""):
+        if not filename:
+            filename = self._formattedFilename(url)
+
         def delete_tmp():
             try:
                 os.remove(down_path + filename + ".down")
@@ -127,9 +130,14 @@ class WAsyncFetcher(QtCore.QObject):
         while 1:
             if os.path.exists(down_path + filename):
                 delete_tmp()
-                return self.fetched.emit(down_path + filename)
+                self.fetched.emit(down_path + filename)
+                return down_path + filename
             elif os.path.exists(down_path + filename + ".down"):
                 sleep(0.5)
                 continue
             else:
                 download()
+
+    @async
+    def fetch(self, url, filename=""):
+        self.down(url, filename)

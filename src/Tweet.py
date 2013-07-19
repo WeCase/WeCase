@@ -193,6 +193,27 @@ class TweetCommonModel(TweetTimelineBaseModel):
         return timeline
 
 
+class TweetUserModel(TweetTimelineBaseModel):
+
+    def __init__(self, timeline, uid, parent=None):
+        super(TweetUserModel, self).__init__(timeline, parent)
+        self._uid = uid
+
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(page=page, uid=self._uid).statuses
+        return timeline
+
+    def timeline_new(self):
+        timeline = self.timeline.get(since_id=self.first_id(),
+                                     uid=self._uid).statuses[::-1]
+        return timeline
+
+    def timeline_old(self):
+        timeline = self.timeline.get(max_id=self.last_id(), uid=self._uid).statuses
+        timeline = timeline[1::]
+        return timeline
+
+
 class TweetCommentModel(TweetTimelineBaseModel):
 
     def __init__(self, timeline=None, parent=None):

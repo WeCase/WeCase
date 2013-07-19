@@ -10,8 +10,8 @@ import http
 from time import sleep
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
-from Tweet import TweetCommonModel, TweetCommentModel
-from MainWindow_ui import Ui_frm_MainWindow
+from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel
+#from MainWindow_ui import Ui_frm_MainWindow
 from Notify import Notify
 from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
@@ -20,20 +20,25 @@ import const
 from WeCaseConfig import WeCaseConfig
 from WeHack import async
 from WeRuntimeInfo import WeRuntimeInfo
+from TweetListWidget import TweetListWidget
+from WAsyncLabel import WAsyncFetcher
+import wecase_rc
 
 
-class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
+class WeCaseWindow(QtGui.QMainWindow):
+
     client = None
     uid = None
+    timelineLoaded = QtCore.pyqtSignal(int)
     imageLoaded = QtCore.pyqtSignal(str)
     tabTextChanged = QtCore.pyqtSignal(int, str)
 
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
+        self._iconPixmap = {}
         self.setupUi(self)
         self._setupSysTray()
-        self.tweetViews = [self.homeView, self.mentionsView,
-                           self.commentsView, self.myView]
+        self.tweetViews = [self.homeView, self.mentionsView, self.commentsView]
         self.info = WeRuntimeInfo()
         self.client = const.client
         self.loadConfig()
@@ -45,9 +50,142 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.applyConfig()
         self.download_lock = []
         self._last_reminds_count = 0
+        self._setupUserTab(self.uid())
 
     def setupUi(self, widget):
         super(WeCaseWindow, self).setupUi(widget)
+
+    def _setupTab(self, view):
+        tab = QtGui.QWidget()
+        layout = QtGui.QGridLayout(tab)
+        layout.addWidget(view)
+        return tab
+
+    def _setupUserTab(self, uid):
+        view = TweetListWidget(self)
+        timeline = TweetUserModel(self.client.statuses.user_timeline, uid, self)
+        timeline.setUsersBlacklist(self.usersBlacklist)
+        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+        timeline.load()
+        view.setModel(timeline)
+        tab = self._setupTab(view)
+        fetcher = WAsyncFetcher()
+        f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
+        self.tabWidget.addTab(tab, "")
+        image = QtGui.QPixmap(f)
+        self._setTabIcon(tab, image)
+
+    def drawNum(self, pixmap):
+        return pixmap
+
+    def userClicked(self, userItem):
+        self._setupUserTab(userItem.id)
+
+    def setupUi(self, mainWindow):
+        mainWindow.resize(315, 637)
+        mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
+        mainWindow.setDocumentMode(False)
+        mainWindow.setDockOptions(QtGui.QMainWindow.AllowTabbedDocks |
+                                  QtGui.QMainWindow.AnimatedDocks)
+
+        self.centralwidget = QtGui.QWidget(mainWindow)
+        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+
+        self.tabWidget = QtGui.QTabWidget(self.centralwidget)
+        self.tabWidget.setTabPosition(QtGui.QTabWidget.West)
+        self.tabWidget.setTabShape(QtGui.QTabWidget.Rounded)
+        self.tabWidget.setDocumentMode(False)
+        self.tabWidget.setMovable(True)
+
+        self.homeView = TweetListWidget()
+        self.homeView.userClicked.connect(self.userClicked)
+        self.homeTab = self._setupTab(self.homeView)
+        self.tabWidget.addTab(self.homeTab, "")
+
+        self.mentionsView = TweetListWidget()
+        self.mentionsView.userClicked.connect(self.userClicked)
+        self.mentionsTab = self._setupTab(self.mentionsView)
+        self.tabWidget.addTab(self.mentionsTab, "")
+
+        self.commentsView = TweetListWidget()
+        self.commentsView.userClicked.connect(self.userClicked)
+        self.commentsTab = self._setupTab(self.commentsView)
+        self.tabWidget.addTab(self.commentsTab, "")
+
+        self.verticalLayout.addWidget(self.tabWidget)
+
+        self.widget = QtGui.QWidget(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred,
+                                       QtGui.QSizePolicy.Fixed)
+        self.widget.setSizePolicy(sizePolicy)
+        self.widget.setMinimumSize(QtCore.QSize(0, 30))
+        self.gridLayout = QtGui.QGridLayout(self.widget)
+        self.gridLayout.setMargin(0)
+        spacerItem = QtGui.QSpacerItem(40, 20,
+                                       QtGui.QSizePolicy.Expanding,
+                                       QtGui.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
+
+        spacerItem1 = QtGui.QSpacerItem(40, 20,
+                                        QtGui.QSizePolicy.Expanding,
+                                        QtGui.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 0, 3, 1, 1)
+
+        self.pushButton_refresh = QtGui.QPushButton(self.widget)
+        self.gridLayout.addWidget(self.pushButton_refresh, 0, 1, 1, 1)
+        self.pushButton_new = QtGui.QPushButton(self.widget)
+        self.gridLayout.addWidget(self.pushButton_new, 0, 2, 1, 1)
+        self.verticalLayout.addWidget(self.widget)
+        mainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtGui.QMenuBar(mainWindow)
+        self.menubar.setEnabled(True)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 315, 22))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,
+                                       QtGui.QSizePolicy.Preferred)
+        self.menubar.setSizePolicy(sizePolicy)
+#        self.menubar.setMinimumSize(QtCore.QSize(0, 0))
+        self.menubar.setDefaultUp(False)
+        self.menu_WeCase = QtGui.QMenu(self.menubar)
+        self.menuHelp = QtGui.QMenu(self.menubar)
+        self.menuO_ptions = QtGui.QMenu(self.menubar)
+        mainWindow.setMenuBar(self.menubar)
+        self.action_About = QtGui.QAction(mainWindow)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/IMG/img/where_s_my_weibo.svg"))
+        self.action_About.setIcon(icon1)
+        self.action_Refresh = QtGui.QAction(mainWindow)
+        self.action_Log_out = QtGui.QAction(mainWindow)
+        self.action_Exit = QtGui.QAction(mainWindow)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/IMG/img/application-exit.svg"))
+        self.action_Exit.setIcon(icon2)
+        self.action_Settings = QtGui.QAction(mainWindow)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/IMG/img/preferences-other.png"))
+        self.action_Settings.setIcon(icon3)
+        self.menu_WeCase.addAction(self.action_Refresh)
+        self.menu_WeCase.addSeparator()
+        self.menu_WeCase.addAction(self.action_Log_out)
+        self.menu_WeCase.addAction(self.action_Exit)
+        self.menuHelp.addAction(self.action_About)
+        self.menuO_ptions.addAction(self.action_Settings)
+        self.menubar.addAction(self.menu_WeCase.menuAction())
+        self.menubar.addAction(self.menuO_ptions.menuAction())
+        self.menubar.addAction(self.menuHelp.menuAction())
+
+        self.retranslateUi(mainWindow)
+        self.action_Exit.triggered.connect(mainWindow.close)
+        self.action_About.triggered.connect(mainWindow.showAbout)
+        self.action_Settings.triggered.connect(mainWindow.showSettings)
+        self.action_Log_out.triggered.connect(mainWindow.logout)
+        self.action_Refresh.triggered.connect(mainWindow.refresh)
+
+        self.pushButton_refresh.clicked.connect(mainWindow.refresh)
+        self.pushButton_new.clicked.connect(mainWindow.postTweet)
+        self.timelineLoaded.connect(self.moveToTop)
+        self.imageLoaded.connect(self.setLoaded)
+        self.tabTextChanged.connect(self.setTabText)
+
         self.action_Refresh.setShortcut(QtGui.QKeySequence("F5"))
         self.pushButton_new.setParent(self)
         self.pushButton_refresh.setParent(self)
@@ -60,9 +198,23 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.buttonLayout.addWidget(self.pushButton_refresh)
         self.buttonLayout.addWidget(self.pushButton_new)
         self.menubar.setCornerWidget(self.buttonWidget)
-        self._setTabIcon(0, QtGui.QPixmap(const.icon("sina.png")))
-        self._setTabIcon(1, QtGui.QPixmap(const.icon("mentions.png")))
-        self._setTabIcon(2, QtGui.QPixmap(const.icon("comments2.png")))
+
+        self._setTabIcon(self.homeTab, QtGui.QPixmap(const.icon("sina.png")))
+        self._setTabIcon(self.mentionsTab, QtGui.QPixmap(const.icon("mentions.png")))
+        self._setTabIcon(self.commentsTab, QtGui.QPixmap(const.icon("comments2.png")))
+
+    def retranslateUi(self, frm_MainWindow):
+        frm_MainWindow.setWindowTitle(self.tr("WeCase"))
+        self.pushButton_refresh.setText(self.tr("&Refresh"))
+        self.pushButton_new.setText(self.tr("&New Weibo"))
+        self.menu_WeCase.setTitle(self.tr("&WeCase"))
+        self.menuHelp.setTitle(self.tr("&Help"))
+        self.menuO_ptions.setTitle(self.tr("&Options"))
+        self.action_About.setText(self.tr("&About..."))
+        self.action_Refresh.setText(self.tr("&Refresh"))
+        self.action_Log_out.setText(self.tr("&Log out"))
+        self.action_Exit.setText(self.tr("&Exit"))
+        self.action_Settings.setText(self.tr("&Settings"))
 
     def _setupSysTray(self):
         self.systray = QtGui.QSystemTrayIcon()
@@ -77,9 +229,11 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         else:
             self.show()
 
-    def _setTabIcon(self, index, icon):
-        icon = QtGui.QIcon(icon.transformed(QtGui.QTransform().rotate(90)))
-        self.tabWidget.setTabIcon(index, icon)
+    def _setTabIcon(self, tab, icon):
+        pixmap = icon.transformed(QtGui.QTransform().rotate(90))
+        icon = QtGui.QIcon(pixmap)
+        self._iconPixmap[icon.cacheKey()] = pixmap
+        self.tabWidget.setTabIcon(self.tabWidget.indexOf(tab), icon)
         self.tabWidget.setIconSize(QtCore.QSize(24, 24))
 
     def init_account(self):
@@ -123,25 +277,19 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.comment_to_me.load()
         self.commentsView.setModel(self.comment_to_me)
 
-        self.my_timeline = TweetCommonModel(self.client.statuses.user_timeline, self)
-        self.my_timeline.setUsersBlacklist(self.usersBlacklist)
-        self.my_timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        self.my_timeline.load()
-        self.myView.setModel(self.my_timeline)
-
     @async
     def reset_remind(self):
         if self.currentTweetView() == self.homeView:
             self.tabTextChanged.emit(self.tabWidget.currentIndex(),
-                                     self.tr("Weibo"))
+                                     self.tr("0"))
         elif self.currentTweetView() == self.mentionsView:
             self.client.remind.set_count.post(type="mention_status")
             self.tabTextChanged.emit(self.tabWidget.currentIndex(),
-                                     self.tr("@Me"))
+                                     self.tr("0"))
         elif self.currentTweetView() == self.commentsView:
             self.client.remind.set_count.post(type="cmt")
             self.tabTextChanged.emit(self.tabWidget.currentIndex(),
-                                     self.tr("Comments"))
+                                     self.tr("0"))
 
     def get_remind(self, uid):
         """this function is used to get unread_count
@@ -175,20 +323,20 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
             self.tabTextChanged.emit(self.tabWidget.indexOf(self.homeTab),
-                                     self.tr("Weibo(%d)")
+                                     self.tr("%d")
                                      % reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
             msg += self.tr("%d unread @ME") % reminds['mention_status'] + "\n"
             self.tabTextChanged.emit(self.tabWidget.indexOf(self.mentionsTab),
-                                     self.tr("@Me(%d)")
+                                     self.tr("%d")
                                      % reminds['mention_status'])
             reminds_count += 1
 
         if reminds['cmt'] and self.remindComments:
             msg += self.tr("%d unread comment(s)") % reminds['cmt'] + "\n"
             self.tabTextChanged.emit(self.tabWidget.indexOf(self.commentsTab),
-                                     self.tr("Comments(%d)")
+                                     self.tr("%d")
                                      % reminds['cmt'])
             reminds_count += 1
 
@@ -196,8 +344,15 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
             self.notify.showMessage(self.tr("WeCase"), msg)
             self._last_reminds_count = reminds_count
 
-    def setTabText(self, index, string):
-        self.tabWidget.setTabText(index, string)
+    def setTabText(self, index, count):
+        tabIcon = self.tabWidget.tabIcon(index)
+        _tabPixmap = self._iconPixmap[tabIcon.cacheKey()]
+        tabPixmap = _tabPixmap.transformed(QtGui.QTransform().rotate(-90))
+        icon = NotifyBadgeDrawer().draw(tabPixmap, count)
+        icon = icon.transformed(QtGui.QTransform().rotate(90))
+        icon = QtGui.QIcon(icon)
+        self._iconPixmap[icon.cacheKey()] = _tabPixmap
+        self.tabWidget.setTabIcon(index, icon)
 
     def moveToTop(self):
         self.currentTweetView().moveToTop()
@@ -240,3 +395,63 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     def closeEvent(self, event):
         self.timer.stop_event.set()
+
+
+class NotifyBadgeDrawer():
+
+    def fillEllipse(self, p, x, y, size, extra, brush):
+        path = QtGui.QPainterPath()
+        path.addEllipse(x, y, size + extra, size)
+        p.fillPath(path, brush)
+
+    def drawBadge(self, p, x, y, size, text, brush):
+        p.setFont(QtGui.QFont(QtGui.QWidget().font().family(), size * 1 / 2,
+                              QtGui.QFont.Bold))
+
+        # Method 1:
+        #while (size - p.fontMetrics().width(text) < 6):
+        #    pointSize = p.font().pointSize() - 1
+        #    if pointSize < 6:
+        #        weight = QtGui.QFont.Normal
+        #    else:
+        #        weight = QtGui.QFont.Bold
+        #    p.setFont(QtGui.QFont(p.font().family(), p.font().pointSize() - 1, weight))
+        # Method 2:
+        extra = (len(text) - 1) * 10
+        x -= extra
+
+        shadowColor = QtGui.QColor(0, 0, 0, size)
+        self.fillEllipse(p, x + 1, y, size, extra, shadowColor)
+        self.fillEllipse(p, x - 1, y, size, extra, shadowColor)
+        self.fillEllipse(p, x, y + 1, size, extra, shadowColor)
+        self.fillEllipse(p, x, y - 1, size, extra, shadowColor)
+
+        p.setPen(QtGui.QPen(QtCore.Qt.white, 2))
+        self.fillEllipse(p, x, y, size - 3, extra, brush)
+        p.drawEllipse(x, y, size - 3 + extra, size - 3)
+
+        p.setPen(QtGui.QPen(QtCore.Qt.white, 1))
+        p.drawText(x, y, size - 3 + extra, size - 3, QtCore.Qt.AlignCenter, text)
+
+    def draw(self, _pixmap, text):
+        pixmap = QtGui.QPixmap(_pixmap)
+        if text == "0":
+            return pixmap
+
+        size = 15
+        redGradient = QtGui.QRadialGradient(0.0, 0.0, 17.0, size - 3, size - 3)
+        redGradient.setColorAt(0.0, QtGui.QColor(0xe0, 0x84, 0x9b))
+        redGradient.setColorAt(0.5, QtGui.QColor(0xe9, 0x34, 0x43))
+        redGradient.setColorAt(1.0, QtGui.QColor(0xec, 0x0c, 0x00))
+
+        topRight = pixmap.rect().topRight()
+        # magic, don't touch
+        offset = topRight.x() - size / 2 - size / 4 - size / 7.5
+
+        p = QtGui.QPainter(pixmap)
+        p.setRenderHint(QtGui.QPainter.TextAntialiasing)
+        p.setRenderHint(QtGui.QPainter.Antialiasing)
+        self.drawBadge(p, offset, 0, size, text, QtGui.QBrush(redGradient))
+        p.end()
+
+        return pixmap
