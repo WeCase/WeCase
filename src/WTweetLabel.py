@@ -26,4 +26,7 @@ class WTweetLabel(QtGui.QTextBrowser):
         self.setMinimumHeight(size.height() + 2 * self.frameWidth())
 
     def openLink(self, url):
-        webbrowser.open(url.toString())
+        url = url.toString()
+        if not "://" in url:
+            url = "http://" + url
+        webbrowser.open(url)
