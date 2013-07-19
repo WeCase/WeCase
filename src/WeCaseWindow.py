@@ -31,6 +31,7 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
         self.setupUi(self)
+        self._setupSysTray()
         self.tweetViews = [self.homeView, self.mentionsView,
                            self.commentsView, self.myView]
         self.info = WeRuntimeInfo()
@@ -43,10 +44,43 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         self.notify = Notify(timeout=self.notify_timeout)
         self.applyConfig()
         self.download_lock = []
+        self._last_reminds_count = 0
 
     def setupUi(self, widget):
         super(WeCaseWindow, self).setupUi(widget)
         self.action_Refresh.setShortcut(QtGui.QKeySequence("F5"))
+        self.pushButton_new.setParent(self)
+        self.pushButton_refresh.setParent(self)
+        self.pushButton_refresh.setText("")
+        self.pushButton_refresh.setIcon(QtGui.QIcon(const.icon("refresh.png")))
+        self.pushButton_new.setText("")
+        self.pushButton_new.setIcon(QtGui.QIcon(const.icon("new.png")))
+        self.buttonWidget = QtGui.QWidget()
+        self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
+        self.buttonLayout.addWidget(self.pushButton_refresh)
+        self.buttonLayout.addWidget(self.pushButton_new)
+        self.menubar.setCornerWidget(self.buttonWidget)
+        self._setTabIcon(0, QtGui.QPixmap(const.icon("sina.png")))
+        self._setTabIcon(1, QtGui.QPixmap(const.icon("mentions.png")))
+        self._setTabIcon(2, QtGui.QPixmap(const.icon("comments2.png")))
+
+    def _setupSysTray(self):
+        self.systray = QtGui.QSystemTrayIcon()
+        self.systray.activated.connect(self.clickedSystray)
+        self.systray.setToolTip("WeCase")
+        self.systray.setIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
+        self.systray.show()
+
+    def clickedSystray(self):
+        if self.isVisible():
+            self.hide()
+        else:
+            self.show()
+
+    def _setTabIcon(self, index, icon):
+        icon = QtGui.QIcon(icon.transformed(QtGui.QTransform().rotate(90)))
+        self.tabWidget.setTabIcon(index, icon)
+        self.tabWidget.setIconSize(QtCore.QSize(24, 24))
 
     def init_account(self):
         self.uid()
@@ -97,14 +131,17 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
     @async
     def reset_remind(self):
-        if self.tabWidget.currentIndex() == 0:
-            self.tabTextChanged.emit(0, self.tr("Weibo"))
-        elif self.tabWidget.currentIndex() == 1:
+        if self.currentTweetView() == self.homeView:
+            self.tabTextChanged.emit(self.tabWidget.currentIndex(),
+                                     self.tr("Weibo"))
+        elif self.currentTweetView() == self.mentionsView:
             self.client.remind.set_count.post(type="mention_status")
-            self.tabTextChanged.emit(1, self.tr("@Me"))
-        elif self.tabWidget.currentIndex() == 2:
+            self.tabTextChanged.emit(self.tabWidget.currentIndex(),
+                                     self.tr("@Me"))
+        elif self.currentTweetView() == self.commentsView:
             self.client.remind.set_count.post(type="cmt")
-            self.tabTextChanged.emit(2, self.tr("Comments"))
+            self.tabTextChanged.emit(self.tabWidget.currentIndex(),
+                                     self.tr("Comments"))
 
     def get_remind(self, uid):
         """this function is used to get unread_count
@@ -133,33 +170,37 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
 
         reminds = self.get_remind(self.uid())
         msg = self.tr("You have:") + "\n"
-        num_msg = 0
+        reminds_count = 0
 
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
-            self.tabTextChanged.emit(0, self.tr("Weibo(%d)")
+            self.tabTextChanged.emit(self.tabWidget.indexOf(self.homeTab),
+                                     self.tr("Weibo(%d)")
                                      % reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
             msg += self.tr("%d unread @ME") % reminds['mention_status'] + "\n"
-            self.tabTextChanged.emit(1, self.tr("@Me(%d)")
+            self.tabTextChanged.emit(self.tabWidget.indexOf(self.mentionsTab),
+                                     self.tr("@Me(%d)")
                                      % reminds['mention_status'])
-            num_msg += 1
+            reminds_count += 1
 
         if reminds['cmt'] and self.remindComments:
             msg += self.tr("%d unread comment(s)") % reminds['cmt'] + "\n"
-            self.tabTextChanged.emit(2, self.tr("Comments(%d)")
+            self.tabTextChanged.emit(self.tabWidget.indexOf(self.commentsTab),
+                                     self.tr("Comments(%d)")
                                      % reminds['cmt'])
-            num_msg += 1
+            reminds_count += 1
 
-        if num_msg:
+        if reminds_count and reminds_count != self._last_reminds_count:
             self.notify.showMessage(self.tr("WeCase"), msg)
+            self._last_reminds_count = reminds_count
 
     def setTabText(self, index, string):
         self.tabWidget.setTabText(index, string)
 
     def moveToTop(self):
-        self.get_current_tweetView().moveToTop()
+        self.currentTweetView().moveToTop()
 
     def setLoaded(self):
         pass
@@ -187,15 +228,15 @@ class WeCaseWindow(QtGui.QMainWindow, Ui_frm_MainWindow):
         wecase_new.exec_()
 
     def refresh(self):
-        tweetView = self.get_current_tweetView()
+        tweetView = self.currentTweetView()
         tweetView.model().timelineLoaded.connect(self.moveToTop)
         tweetView.refresh()
         self.reset_remind()
 
-    def get_current_tweetView(self):
-        tweetViews = {0: self.homeView, 1: self.mentionsView,
-                      2: self.commentsView, 3: self.myView}
-        return tweetViews[self.tabWidget.currentIndex()]
+    def currentTweetView(self):
+        # The most tricky part of MainWindow.
+        # See MainWindow_ui.py for details.
+        return self.tabWidget.currentWidget().layout().itemAt(0).widget()
 
     def closeEvent(self, event):
         self.timer.stop_event.set()

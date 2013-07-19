@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="IMG">
+    <file>mentions.png</file>
     <file>img/wc_1024r.png</file>
     <file>img/WeCase.svg</file>
     <file>img/WeCase 16.png</file>

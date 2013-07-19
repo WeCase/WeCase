@@ -47,3 +47,6 @@ def clearDir(folder):
                 os.unlink(file_path)
         except OSError:
             pass
+
+def UNUSED(var):
+    return var

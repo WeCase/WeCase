@@ -53,27 +53,29 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     mkconfig()
 
-    app = QtGui.QApplication(sys.argv)
+    App = QtGui.QApplication(sys.argv)
+    App.setApplicationName("WeCase")
+
     sys.excepthook = my_excepthook
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     # Qt's built-in string translator
-    qt_translator = QtCore.QTranslator(app)
+    qt_translator = QtCore.QTranslator(App)
     qt_translator.load("qt_" + QtCore.QLocale.system().name(),
                        QtCore.QLibraryInfo.location(
                        QtCore.QLibraryInfo.TranslationsPath))
-    app.installTranslator(qt_translator)
+    App.installTranslator(qt_translator)
 
     # WeCase's own string translator
-    my_translator = QtCore.QTranslator(app)
+    my_translator = QtCore.QTranslator(App)
     my_translator.load("WeCase_" + QtCore.QLocale.system().name(),
                        const.myself_path + "locale")
-    app.installTranslator(my_translator)
+    App.installTranslator(my_translator)
 
     import_warning()
     wecase_login = LoginWindow()
 
-    exit_status = app.exec_()
+    exit_status = App.exec_()
 
     # Cleanup code here.
 

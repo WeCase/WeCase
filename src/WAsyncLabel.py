@@ -24,6 +24,9 @@ class WAsyncLabel(WImageLabel):
         self.busyIcon = icon("busy.gif")
         self.busyIconPixmap = QtGui.QPixmap(self.busyIcon)
 
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.contextMenu)
+
     def url(self):
         return self._url
 
@@ -74,8 +77,23 @@ class WAsyncLabel(WImageLabel):
         self.fetcher.fetch(self._url, self._formattedFilename())
 
     def mouseReleaseEvent(self, e):
-        if self._image:
+        if e.button() == QtCore.Qt.LeftButton and self._image:
             self.clicked.emit()
+
+    def contextMenu(self, pos):
+        if not self._image:
+            return
+        saveAction = QtGui.QAction(self)
+        saveAction.setText(self.tr("Save"))
+        saveAction.triggered.connect(self.save)
+        menu = QtGui.QMenu()
+        menu.addAction(saveAction)
+        menu.exec(self.mapToGlobal(pos))
+
+    def save(self):
+        file = QtGui.QFileDialog.getOpenFileName(self,
+                                                 self.tr("Choose a path"))
+        self._image.save(file)
 
 
 class WAsyncFetcher(QtCore.QObject):

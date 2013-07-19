@@ -1,4 +1,5 @@
 from PyQt4 import QtCore, QtGui
+import webbrowser
 
 
 class WTweetLabel(QtGui.QTextBrowser):
@@ -11,7 +12,9 @@ class WTweetLabel(QtGui.QTextBrowser):
         pal.setColor(QtGui.QPalette.Base, QtCore.Qt.transparent)
         self.setPalette(pal)
 
-        self.setOpenExternalLinks(True)
+        self.setOpenLinks(False)
+        self.setOpenExternalLinks(False)
+        self.anchorClicked.connect(self.openLink)
         self.setLineWrapMode(QtGui.QTextEdit.WidgetWidth)
         self.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
         self.connect(self.document().documentLayout(),
@@ -21,3 +24,6 @@ class WTweetLabel(QtGui.QTextBrowser):
     @QtCore.pyqtSlot(QtCore.QSizeF)
     def adjustMinimumSize(self, size):
         self.setMinimumHeight(size.height() + 2 * self.frameWidth())
+
+    def openLink(self, url):
+        webbrowser.open(url.toString())
