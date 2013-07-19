@@ -267,7 +267,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.username.setText(" " + self.tweet.author.name)
         text = self._create_html_url(self.tweet.text)
         text = self._create_smiles(text)
-        self.tweetText.setText(self._create_html_url(text))
+        self.tweetText.setText(text)
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._update_time)
         self._update_time()
