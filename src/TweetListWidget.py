@@ -6,7 +6,7 @@ from http.client import BadStatusLine
 from WeHack import async, start
 from weibo import APIError
 from PyQt4 import QtCore, QtGui
-from Tweet import TweetItem
+from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
@@ -18,9 +18,12 @@ from WeRuntimeInfo import WeRuntimeInfo
 
 class TweetListWidget(QtGui.QWidget):
 
+    userClicked = QtCore.pyqtSignal(UserItem)
+
     def __init__(self, parent=None, without=[]):
         super(TweetListWidget, self).__init__(parent)
         self.tweetListWidget = SimpleTweetListWidget(None, without)
+        self.tweetListWidget.userClicked.connect(self.userClicked)
         self.setupUi()
 
     def setupUi(self):
@@ -61,6 +64,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
     TOP = 1
     BOTTOM = 2
+    userClicked = QtCore.pyqtSignal(UserItem)
 
     def __init__(self, parent=None, without=[]):
         super(SimpleTweetListWidget, self).__init__(parent)
@@ -101,6 +105,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
         for index in range(start, end + 1):
             item = self.model.get_item(index)
             widget = SingleTweetWidget(item, self.without, self)
+            widget.userClicked.connect(self.userClicked)
             self.layout.insertWidget(index, widget)
 
     def setupBusyIcon(self):
@@ -159,6 +164,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
 class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
+    userClicked = QtCore.pyqtSignal(UserItem)
     commonSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, tweet=None, without=[], parent=None):
@@ -188,6 +194,7 @@ class SingleTweetWidget(QtGui.QFrame):
         sizePolicy.setHeightForWidth(self.avatar.sizePolicy().hasHeightForWidth())
         self.avatar.setSizePolicy(sizePolicy)
         self.avatar.setAlignment(QtCore.Qt.AlignTop)
+        self.avatar.clicked.connect(self._userClicked)
         self.verticalLayout_2.addWidget(self.avatar)
 
         self.time = QtGui.QLabel(self)
@@ -547,3 +554,6 @@ class SingleTweetWidget(QtGui.QFrame):
         else:
             QtGui.QMessageBox.warning(self, self.tr("Unknown Error"),
                                       str(exception))
+
+    def _userClicked(self):
+        self.userClicked.emit(self.tweet.author)

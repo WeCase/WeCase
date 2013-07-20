@@ -8,12 +8,12 @@
         <translation type="obsolete">微盒</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="45"/>
+        <location filename="wecase.py" line="46"/>
         <source>Notification disabled</source>
         <translation>通知已禁用</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="45"/>
+        <location filename="wecase.py" line="46"/>
         <source>notify2 is not found. Notification will disable.</source>
         <translation>notify2 未找到。通知将被禁用。</translation>
     </message>
@@ -119,7 +119,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LoginWindow</name>
     <message>
-        <location filename="LoginWindow.py" line="57"/>
+        <location filename="LoginWindow.py" line="64"/>
         <source>Authorize Failed!</source>
         <translation>认证失败！</translation>
     </message>
@@ -129,12 +129,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">检查您的账号和密码！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="69"/>
+        <location filename="LoginWindow.py" line="73"/>
         <source>GO!</source>
         <translation>走起！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="110"/>
+        <location filename="LoginWindow.py" line="114"/>
         <source>Login, waiting...</source>
         <translation>登录中，请稍候……</translation>
     </message>
@@ -144,17 +144,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">检查您的账号，密码和网络连接！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="57"/>
+        <location filename="LoginWindow.py" line="64"/>
         <source>Check your account and password</source>
         <translation>检查您的账号和密码</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="65"/>
+        <location filename="LoginWindow.py" line="69"/>
         <source>Network Error</source>
         <translation>网络错误</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="65"/>
+        <location filename="LoginWindow.py" line="69"/>
         <source>Something wrong with the network, please try again.</source>
         <translation>网络有问题，请重试。</translation>
     </message>
@@ -220,27 +220,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="NewpostWindow.py" line="182"/>
+        <location filename="NewpostWindow.py" line="189"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="142"/>
+        <location filename="NewpostWindow.py" line="149"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="155"/>
+        <location filename="NewpostWindow.py" line="162"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="168"/>
+        <location filename="NewpostWindow.py" line="175"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="182"/>
+        <location filename="NewpostWindow.py" line="189"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -250,47 +250,47 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">图片 (*.png *.jpg *.bmp *.gif) </translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="195"/>
+        <location filename="NewpostWindow.py" line="202"/>
         <source>Picture</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="197"/>
+        <location filename="NewpostWindow.py" line="204"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="203"/>
+        <location filename="NewpostWindow.py" line="210"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="207"/>
+        <location filename="NewpostWindow.py" line="214"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="207"/>
+        <location filename="NewpostWindow.py" line="214"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="210"/>
+        <location filename="NewpostWindow.py" line="217"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="192"/>
+        <location filename="NewpostWindow.py" line="199"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="244"/>
+        <location filename="NewpostWindow.py" line="251"/>
         <source>Close?</source>
         <translation>关闭？</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="244"/>
+        <location filename="NewpostWindow.py" line="251"/>
         <source>All unpost text will lost.</source>
         <translation>所有未发布的文字将丢弃。</translation>
     </message>
@@ -429,27 +429,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="310"/>
+        <location filename="Tweet.py" line="350"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="312"/>
+        <location filename="Tweet.py" line="352"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="314"/>
+        <location filename="Tweet.py" line="354"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="316"/>
+        <location filename="Tweet.py" line="356"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="318"/>
+        <location filename="Tweet.py" line="358"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
@@ -459,27 +459,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="WeCaseWindow.py" line="133"/>
         <source>Weibo(%d)</source>
-        <translation>微博(%d)</translation>
+        <translation type="obsolete">微博(%d)</translation>
     </message>
     <message>
         <location filename="WeCaseWindow.py" line="138"/>
         <source>@Me(%d)</source>
-        <translation>@我(%d)</translation>
+        <translation type="obsolete">@我(%d)</translation>
     </message>
     <message>
         <location filename="WeCaseWindow.py" line="144"/>
         <source>Comments(%d)</source>
-        <translation>评论(%d)</translation>
+        <translation type="obsolete">评论(%d)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="149"/>
+        <location filename="WeCaseWindow.py" line="344"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
         <location filename="WeCaseWindow.py" line="93"/>
         <source>Weibo</source>
-        <translation>微博</translation>
+        <translation type="obsolete">微博</translation>
     </message>
     <message>
         <location filename="wecase.py" line="333"/>
@@ -489,27 +489,82 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="WeCaseWindow.py" line="99"/>
         <source>Comments</source>
-        <translation>评论</translation>
+        <translation type="obsolete">评论</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="128"/>
+        <location filename="WeCaseWindow.py" line="320"/>
         <source>You have:</source>
         <translation>您有：</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="137"/>
+        <location filename="WeCaseWindow.py" line="330"/>
         <source>%d unread @ME</source>
         <translation>%d 条未读 @提醒</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="143"/>
+        <location filename="WeCaseWindow.py" line="337"/>
         <source>%d unread comment(s)</source>
         <translation>%d 条未读评论 </translation>
     </message>
     <message>
         <location filename="WeCaseWindow.py" line="96"/>
         <source>@Me</source>
-        <translation>@我</translation>
+        <translation type="obsolete">@我</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="214"/>
+        <source>&amp;Refresh</source>
+        <translation>刷新(&amp;R)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="209"/>
+        <source>&amp;New Weibo</source>
+        <translation>新微博(&amp;N)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="210"/>
+        <source>&amp;WeCase</source>
+        <translation>微盒(&amp;W)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="211"/>
+        <source>&amp;Help</source>
+        <translation>帮助(&amp;H)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="212"/>
+        <source>&amp;Options</source>
+        <translation>选项(&amp;H)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="213"/>
+        <source>&amp;About...</source>
+        <translation>关于(&amp;A)...</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="215"/>
+        <source>&amp;Log out</source>
+        <translation>注销(&amp;L)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="216"/>
+        <source>&amp;Exit</source>
+        <translation>退出(&amp;E)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="217"/>
+        <source>&amp;Settings</source>
+        <translation>设置(&amp;S)</translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="291"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="WeCaseWindow.py" line="338"/>
+        <source>%d</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -576,22 +631,22 @@ p, li { white-space: pre-wrap; }
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="29"/>
+        <location filename="ui/MainWindow.ui" line="50"/>
         <source>Weibo</source>
         <translation>微博</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="39"/>
+        <location filename="ui/MainWindow.ui" line="60"/>
         <source>@ME</source>
         <translation>@我</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="49"/>
+        <location filename="ui/MainWindow.ui" line="70"/>
         <source>Comments</source>
         <translation>评论</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="59"/>
+        <location filename="ui/MainWindow.ui" line="80"/>
         <source>My tweet</source>
         <translation>我的微博</translation>
     </message>
@@ -601,54 +656,54 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">我(&amp;M)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="193"/>
+        <location filename="ui/MainWindow.ui" line="213"/>
         <source>&amp;Refresh</source>
         <translation>刷新(&amp;R)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="120"/>
+        <location filename="ui/MainWindow.ui" line="141"/>
         <source>&amp;New Weibo</source>
         <translation>新微博(&amp;N)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="158"/>
+        <location filename="ui/MainWindow.ui" line="179"/>
         <source>&amp;WeCase</source>
         <translation>微盒(&amp;W)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="167"/>
+        <location filename="ui/MainWindow.ui" line="188"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="173"/>
+        <location filename="ui/MainWindow.ui" line="194"/>
         <source>&amp;Options</source>
         <translation>选项(&amp;H)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="188"/>
+        <location filename="ui/MainWindow.ui" line="208"/>
         <source>&amp;About...</source>
         <translation>关于(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="198"/>
+        <location filename="ui/MainWindow.ui" line="218"/>
         <source>&amp;Log out</source>
         <translation>注销(&amp;L)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="207"/>
+        <location filename="ui/MainWindow.ui" line="227"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="ui/MainWindow.ui" line="216"/>
+        <location filename="ui/MainWindow.ui" line="236"/>
         <source>&amp;Settings</source>
         <translation>设置(&amp;S)</translation>
     </message>
     <message>
         <location filename="ui/MainWindow.ui" line="221"/>
         <source>&amp;Update</source>
-        <translation>升级(&amp;U)</translation>
+        <translation type="obsolete">升级(&amp;U)</translation>
     </message>
 </context>
 </TS>

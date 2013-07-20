@@ -54,9 +54,33 @@ class WAsyncLabel(WImageLabel):
         super(WAsyncLabel, self).setPixmap(self._image)
 
     def _setPixmap(self, path):
-        image = QtGui.QPixmap(path)
-        if image.width() < self.busyIconPixmap.width():
-            image = image.scaledToWidth(self.busyIconPixmap.width())
+        _image = QtGui.QPixmap(path)
+        minimalHeight = self.busyIconPixmap.height()
+        minimalWidth = self.busyIconPixmap.width()
+
+        if _image.height() < minimalHeight or _image.width() < minimalWidth:
+            if _image.height() > minimalHeight:
+                height = _image.height()
+            else:
+                height = minimalHeight
+
+            if _image.width() > minimalWidth:
+                width = _image.width()
+            else:
+                width = minimalWidth
+
+            image = QtGui.QPixmap(width, height)
+            painter = QtGui.QPainter(image)
+            path = QtGui.QPainterPath()
+            path.addRect(0, 0, width, height)
+            painter.fillPath(path, QtGui.QBrush(QtCore.Qt.gray))
+            painter.drawPixmap((width - _image.width()) / 2,
+                               (height - _image.height()) / 2,
+                               _image)
+            painter.end()
+        else:
+            image = _image
+
         self._image = image
         super(WAsyncLabel, self).setPixmap(image)
 
@@ -69,12 +93,8 @@ class WAsyncLabel(WImageLabel):
         self._url = url
         self._fetch()
 
-    def _formattedFilename(self):
-        return "%s_%s" % (self._url.split('/')[-2],
-                          self._url.split('/')[-1])
-
     def _fetch(self):
-        self.fetcher.fetch(self._url, self._formattedFilename())
+        self.fetcher.fetch(self._url)
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton and self._image:
@@ -103,8 +123,15 @@ class WAsyncFetcher(QtCore.QObject):
     def __init__(self, parent=None):
         super(WAsyncFetcher, self).__init__(parent)
 
-    @async
-    def fetch(self, url, filename):
+    @staticmethod
+    def _formattedFilename(url):
+        return "%s_%s" % (url.split('/')[-2],
+                          url.split('/')[-1])
+
+    def down(self, url, filename=""):
+        if not filename:
+            filename = self._formattedFilename(url)
+
         def delete_tmp():
             try:
                 os.remove(down_path + filename + ".down")
@@ -127,9 +154,14 @@ class WAsyncFetcher(QtCore.QObject):
         while 1:
             if os.path.exists(down_path + filename):
                 delete_tmp()
-                return self.fetched.emit(down_path + filename)
+                self.fetched.emit(down_path + filename)
+                return down_path + filename
             elif os.path.exists(down_path + filename + ".down"):
                 sleep(0.5)
                 continue
             else:
                 download()
+
+    @async
+    def fetch(self, url, filename=""):
+        self.down(url, filename)
