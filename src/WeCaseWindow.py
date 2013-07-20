@@ -50,7 +50,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.applyConfig()
         self.download_lock = []
         self._last_reminds_count = 0
-        self._setupUserTab(self.uid())
+        self._setupUserTab(self.uid(), False)
 
     def setupUi(self, widget):
         super(WeCaseWindow, self).setupUi(widget)
@@ -61,7 +61,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         layout.addWidget(view)
         return tab
 
-    def _setupUserTab(self, uid):
+    def _setupUserTab(self, uid, switch=True):
         view = TweetListWidget(self)
         timeline = TweetUserModel(self.client.statuses.user_timeline, uid, self)
         timeline.setUsersBlacklist(self.usersBlacklist)
@@ -74,6 +74,8 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tabWidget.addTab(tab, "")
         image = QtGui.QPixmap(f)
         self._setTabIcon(tab, image)
+        if switch:
+            self.tabWidget.setCurrentWidget(tab)
 
     def drawNum(self, pixmap):
         return pixmap
@@ -82,7 +84,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._setupUserTab(userItem.id)
 
     def setupUi(self, mainWindow):
-        mainWindow.resize(315, 637)
+        mainWindow.resize(330, 637)
         mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
         mainWindow.setDocumentMode(False)
         mainWindow.setDockOptions(QtGui.QMainWindow.AllowTabbedDocks |
