@@ -182,7 +182,6 @@ class SingleTweetWidget(QtGui.QFrame):
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout_2 = QtGui.QVBoxLayout()
-        #self.verticalLayout_2.setSizeConstraint(QtGui.QLayout.SetFixedSize)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
 
         self.avatar = WAsyncLabel(self)
@@ -219,7 +218,6 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.tweetText = WTweetLabel(self)
         self.tweetText.setObjectName("tweetText")
-        #self.tweetText.setWordWrap(True)
         self.tweetText.setAlignment(QtCore.Qt.AlignTop)
         self.verticalLayout.addWidget(self.tweetText)
 
@@ -358,8 +356,6 @@ class SingleTweetWidget(QtGui.QFrame):
         layout.setMargin(8)
         layout.setSpacing(0)
         layout.addLayout(counterHorizontalLayout)
-        #layout.setStretch(1, 10)
-        #layout.setStretch(2, 100)
 
         frame.setStyleSheet("""
             QFrame#originalFrame {
