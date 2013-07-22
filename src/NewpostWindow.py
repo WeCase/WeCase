@@ -75,18 +75,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             assert False
 
     def _create_tweetWidget(self):
-        if self.action == "comment":
-            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
-        elif self.action == "retweet" and self.tweet.original:
-            self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"], self)
-        elif self.action == "retweet" and self.tweet:
-            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
-
         # The read count is not a real-time value. So refresh it now.
         self.tweet.refresh()
+
         if self.action == "comment" and self.tweet.comments_count:
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
             self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
         elif self.action == "retweet" and self.tweet.retweets_count:
+            if self.tweet:
+                self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
+            elif self.tweet.original:
+                self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"], self)
             self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
         else:
             return
