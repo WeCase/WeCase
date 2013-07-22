@@ -76,11 +76,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def _create_tweetWidget(self):
         if self.action == "comment":
-            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
         elif self.action == "retweet" and self.tweet.original:
-            self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"])
+            self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"], self)
         elif self.action == "retweet" and self.tweet:
-            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"])
+            self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
 
         # The read count is not a real-time value. So refresh it now.
         self.tweet.refresh()
