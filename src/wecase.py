@@ -78,5 +78,6 @@ if __name__ == "__main__":
     exit_status = App.exec_()
 
     # Cleanup code here.
+    App.deleteLater()
 
     sys.exit(exit_status)
