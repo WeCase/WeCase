@@ -320,7 +320,7 @@ class SingleTweetWidget(QtGui.QFrame):
         layout = QtGui.QVBoxLayout(frame)
         layout.setObjectName("originalLayout")
         layout.setAlignment(QtCore.Qt.AlignTop)
-        textLabel = WTweetLabel(frame)
+        textLabel = WTweetLabel()
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         originalItem = self.tweet.original
 
