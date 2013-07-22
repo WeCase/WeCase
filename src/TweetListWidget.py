@@ -22,7 +22,7 @@ class TweetListWidget(QtGui.QWidget):
 
     def __init__(self, parent=None, without=[]):
         super(TweetListWidget, self).__init__(parent)
-        self.tweetListWidget = SimpleTweetListWidget(None, without)
+        self.tweetListWidget = SimpleTweetListWidget(parent, without)
         self.tweetListWidget.userClicked.connect(self.userClicked)
         self.setupUi()
 
