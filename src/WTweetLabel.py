@@ -16,7 +16,7 @@ class WTweetLabel(QtGui.QTextBrowser):
         self.setOpenExternalLinks(False)
         self.anchorClicked.connect(self.openLink)
         self.setLineWrapMode(QtGui.QTextEdit.WidgetWidth)
-        self.setWordWrapMode(QtGui.QTextOption.WrapAnywhere)
+        self.setWordWrapMode(QtGui.QTextOption.WrapAtWordBoundaryOrAnywhere)
         self.connect(self.document().documentLayout(),
                      QtCore.SIGNAL("documentSizeChanged(QSizeF)"),
                      QtCore.SLOT("adjustMinimumSize(QSizeF)"))
