@@ -29,7 +29,7 @@ for line in sys.stdin:
         filename = line
     else:
         if line.startswith("import"):
-            modulename = process_import(filename, line)
+            process_import(filename, line)
         elif line.startswith("from"):
-            modulename = process_from(filename, line)
+            process_from(filename, line)
 print_footer()
