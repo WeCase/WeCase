@@ -314,19 +314,23 @@ class WeCaseWindow(QtGui.QMainWindow):
         if reminds['status'] != 0:
             # Note: do NOT send notify here, or users will crazy.
             self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.homeTab),
-                                     reminds['status'])
+                                      reminds['status'])
 
         if reminds['mention_status'] and self.remindMentions:
             msg += self.tr("%d unread @ME") % reminds['mention_status'] + "\n"
             self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.mentionsTab),
-                                     reminds['mention_status'])
+                                      reminds['mention_status'])
             reminds_count += 1
+        else:
+            self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.mentionsTab), 0)
 
         if reminds['cmt'] and self.remindComments:
             msg += self.tr("%d unread comment(s)") % reminds['cmt'] + "\n"
             self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsTab),
-                                     reminds['cmt'])
+                                      reminds['cmt'])
             reminds_count += 1
+        else:
+            self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsTab), 0)
 
         if reminds_count and reminds_count != self._last_reminds_count:
             self.notify.showMessage(self.tr("WeCase"), msg)
