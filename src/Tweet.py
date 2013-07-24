@@ -11,7 +11,7 @@ from http.client import BadStatusLine
 from urllib.error import URLError
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
-from WeHack import async
+from WeHack import async, UNUSED
 from TweetUtils import tweetLength
 import const
 import logging
@@ -274,6 +274,7 @@ class TweetRetweetModel(TweetTimelineBaseModel):
 
 class UserItem(QtCore.QObject):
     def __init__(self, item, parent=None):
+        UNUSED(parent)
         # HACK: Ignore parent, can't create a child with different thread.
         # Where is the thread? I don't know...
         super(UserItem, self).__init__()

@@ -1,4 +1,8 @@
+from WeHack import UNUSED
+
+
 def init(*args):
+    UNUSED(args)
     return True
 
 

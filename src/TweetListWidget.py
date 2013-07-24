@@ -3,7 +3,7 @@ import re
 import urllib.request
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
-from WeHack import async, start
+from WeHack import async, start, UNUSED
 from weibo import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
@@ -100,6 +100,8 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.setBusy(False, self.BOTTOM)
 
     def _rowsInserted(self, parent, start, end):
+        UNUSED(parent)  # parent is useless
+
         self.setBusy(False, self.TOP)
         self.setBusy(False, self.BOTTOM)
         for index in range(start, end + 1):
@@ -456,7 +458,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.imageLoaded.emit()
 
     def _showFullImage(self):
-        self.fetch_open_original_pic(self.imageLabel._url)
+        self.fetch_open_original_pic(self.imageLabel.url())
 
     def commonProcessor(self, object):
         object()
