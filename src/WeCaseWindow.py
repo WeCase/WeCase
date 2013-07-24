@@ -360,6 +360,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         wecase_about.exec_()
 
     def logout(self):
+        self.info["uid"] = ""
         self.close()
         # This is a model dialog, if we exec it before we close MainWindow
         # MainWindow won't close
