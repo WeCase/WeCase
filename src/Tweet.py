@@ -79,9 +79,11 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         raise NotImplementedError
 
     def first_id(self):
+        assert self._tweets
         return int(self._tweets[0].id)
 
     def last_id(self):
+        assert self._tweets
         return int(self._tweets[-1].id)
 
     def _load_next_page(self):
