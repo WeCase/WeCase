@@ -360,7 +360,6 @@ class WeCaseWindow(QtGui.QMainWindow):
         wecase_about.exec_()
 
     def logout(self):
-        self.info["uid"] = ""
         self.close()
         # This is a model dialog, if we exec it before we close MainWindow
         # MainWindow won't close
@@ -383,7 +382,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         return self.tabWidget.currentWidget().layout().itemAt(0).widget()
 
     def closeEvent(self, event):
+        self.systray.hide()
         self.timer.stop_event.set()
+        self.timer.join()
+        # Reset uid when the thread exited.
+        self.info["uid"] = None
 
 
 class NotifyBadgeDrawer():
