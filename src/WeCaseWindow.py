@@ -430,7 +430,7 @@ class NotifyBadgeDrawer():
         if text == "0":
             return pixmap
         if len(text) > 2:
-            text = ".."
+            text = "N"
 
         size = 15
         redGradient = QtGui.QRadialGradient(0.0, 0.0, 17.0, size - 3, size - 3)
