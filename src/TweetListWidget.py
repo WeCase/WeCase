@@ -273,7 +273,8 @@ class SingleTweetWidget(QtGui.QFrame):
         """)
 
         self.username.setText(" " + self.tweet.author.name)
-        text = self._create_html_url(self.tweet.text)
+        text = QtCore.Qt.escape(self.tweet.text)
+        text = self._create_html_url(text)
         text = self._create_smiles(text)
         self.tweetText.setText(text)
         self.timer = QtCore.QTimer(self)
@@ -325,7 +326,8 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         originalItem = self.tweet.original
 
-        text = self._create_html_url(originalItem.text)
+        text = QtCore.Qt.escape(originalItem.text)
+        text = self._create_html_url(text)
         text = self._create_smiles(text)
         try:
             textLabel.setText("@%s: " % originalItem.author.name + text)
