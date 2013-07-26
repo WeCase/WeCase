@@ -1,9 +1,8 @@
 from configparser import ConfigParser
-from WeHack import singleton
+from WeHack import Singleton
 
 
-@singleton
-class WeCaseConfig():
+class WeCaseConfig(metaclass=Singleton):
 
     def __init__(self, path, section="main"):
         self._path = path

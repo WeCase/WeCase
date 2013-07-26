@@ -1,7 +1,6 @@
-from WeHack import singleton
+from WeHack import Singleton
 
 
-@singleton
-class WeRuntimeInfo(dict):
+class WeRuntimeInfo(dict, metaclass=Singleton):
     def __init__(self, *args):
         dict.__init__(self, args)
