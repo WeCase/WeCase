@@ -3,7 +3,7 @@
 
 from math import ceil
 from PyQt4 import QtCore, QtGui
-from WIconLabel import WIconLabel
+from WImageLabel import WImageLabel
 
 
 class WFaceListWidget(QtGui.QWidget):
@@ -17,22 +17,36 @@ class WFaceListWidget(QtGui.QWidget):
         self._model = model
         self._setupUi()
 
-    def _setupUi(self):
-        # The values are hardcoded, just keep them.
-        self.layout = QtGui.QGridLayout()
+    def _setupTabWidget(self, faces):
+        layout = QtGui.QGridLayout()
+        tab = QtGui.QWidget()
+        tab.setLayout(layout)
 
-        items = self._model.items()
-        col = 13
-        row = ceil(len(items) / 13) - 1
-
+        col = self._model.gridSize().width()
+        row = self._model.gridSize().height()
         index = 0
-        for i in range(0, row):
-            for j in range(0, col):
-                item = items[index]
-                widget = WSmileyWidget(item)
-                widget.smileyClicked.connect(self.smileyClicked)
-                self.layout.addWidget(widget, i, j)
+
+        for i in range(row):
+            for j in range(col):
+                try:
+                    face = faces[index]
+                    widget = WSmileyWidget(face)
+                    widget.smileyClicked.connect(self.smileyClicked)
+                except IndexError:
+                    widget = QtGui.QWidget()
+                layout.addWidget(widget, i, j)
                 index += 1
+        return tab
+
+    def _setupUi(self):
+        self.layout = QtGui.QVBoxLayout()
+        self.tabWidget = QtGui.QTabWidget()
+        self.layout.addWidget(self.tabWidget)
+
+        faces = self._model.items()
+        for category, faces in faces.items():
+            tab = self._setupTabWidget(faces)
+            self.tabWidget.addTab(tab, category)
         self.setLayout(self.layout)
 
 
@@ -43,10 +57,9 @@ class WSmileyWidget(QtGui.QWidget):
     def __init__(self, smiley, parent=None):
         super(WSmileyWidget, self).__init__(parent)
         self._smiley = smiley
-        self.smileyLabel = WIconLabel(self)
+        self.smileyLabel = WImageLabel(self)
         self.smileyLabel.setToolTip(smiley.name)
-        self.smileyLabel.setIcon(smiley.path)
-        self.smileyLabel.setPosition(WIconLabel.imageAtTop)
+        self.smileyLabel.setImage(smiley.path)
         self.smileyLabel.clicked.connect(self._smileyClicked)
 
     def _smileyClicked(self):

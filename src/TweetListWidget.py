@@ -14,6 +14,7 @@ from WImageLabel import WImageLabel
 import const
 from const import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
+from Face import FaceModel
 
 
 class TweetListWidget(QtGui.QWidget):
@@ -529,9 +530,10 @@ class SingleTweetWidget(QtGui.QFrame):
         return new_text
 
     def _create_smiles(self, text):
-        for key, value in const.FACES.items():
-            text = text.replace("[%s]" % key, '<img src="%s" />' %
-                                (const.myself_path + value))
+        faceModel = FaceModel()
+        faceModel.init()
+        for name, path in faceModel.dic().items():
+            text = text.replace("[%s]" % name, '<img src="%s" />' % path)
         return text
 
     def exec_newpost_window(self, action, tweet):

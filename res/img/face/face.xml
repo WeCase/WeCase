@@ -1,0 +1,2327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FACEDEFINE>
+    <WNDCONFIG>
+        <Align Col="14" Row="6" />
+        <GifSize Cx="22" Cy="22" />
+        <GifWndSize Cx="379" Cy="163"/>
+        <MainWndSize Cx="400" Cy="215"/>
+    </WNDCONFIG>
+	<FACEINFO type="SYSTEM" version="1" name="默认" counts="82">
+		<FACE id="shenshou" shortcut="" tip="草泥马">
+			<FACE_ORG>常用表情/shenshou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="horse2" shortcut="" tip="神马">
+			<FACE_ORG>常用表情/horse2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="fuyun" shortcut="" tip="浮云">
+			<FACE_ORG>常用表情/fuyun_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="geili" shortcut="" tip="给力">
+			<FACE_ORG>常用表情/geili_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="wg" shortcut="" tip="围观">
+			<FACE_ORG>常用表情/wg_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="vw" shortcut="" tip="威武">
+			<FACE_ORG>常用表情/vw_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="panda" shortcut="" tip="熊猫">
+			<FACE_ORG>常用表情/panda_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="rabbit" shortcut="" tip="兔子">
+			<FACE_ORG>常用表情/rabbit_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="otm" shortcut="" tip="奥特曼">
+			<FACE_ORG>常用表情/otm_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="j" shortcut="" tip="囧">
+			<FACE_ORG>常用表情/j_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hufen" shortcut="" tip="互粉">
+			<FACE_ORG>常用表情/hufen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="liwu" shortcut="" tip="礼物">
+			<FACE_ORG>常用表情/liwu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="smilea" shortcut="" tip="呵呵">
+			<FACE_ORG>常用表情/smilea_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tootha" shortcut="" tip="嘻嘻">
+			<FACE_ORG>常用表情/tootha_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="laugh" shortcut="" tip="哈哈">
+			<FACE_ORG>常用表情/laugh.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tza" shortcut="" tip="可爱">
+			<FACE_ORG>常用表情/tza_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="kl" shortcut="" tip="可怜">
+			<FACE_ORG>常用表情/kl_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="kbsa" shortcut="" tip="挖鼻屎">
+			<FACE_ORG>常用表情/kbsa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cj" shortcut="" tip="吃惊">
+			<FACE_ORG>常用表情/cj_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="shamea" shortcut="" tip="害羞">
+			<FACE_ORG>常用表情/shamea_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="zy" shortcut="" tip="挤眼">
+			<FACE_ORG>常用表情/zy_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bz" shortcut="" tip="闭嘴">
+			<FACE_ORG>常用表情/bz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bs2" shortcut="" tip="鄙视">
+			<FACE_ORG>常用表情/bs2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lovea" shortcut="" tip="爱你">
+			<FACE_ORG>常用表情/lovea_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sada" shortcut="" tip="泪">
+			<FACE_ORG>常用表情/sada_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="heia" shortcut="" tip="偷笑">
+			<FACE_ORG>常用表情/heia_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="qq" shortcut="" tip="亲亲">
+			<FACE_ORG>常用表情/qq_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sb" shortcut="" tip="生病">
+			<FACE_ORG>常用表情/sb_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="mb" shortcut="" tip="太开心">
+			<FACE_ORG>常用表情/mb_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ldln" shortcut="" tip="懒得理你">
+			<FACE_ORG>常用表情/ldln_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="yhh" shortcut="" tip="右哼哼">
+			<FACE_ORG>常用表情/yhh_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="zhh" shortcut="" tip="左哼哼">
+			<FACE_ORG>常用表情/zhh_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="x" shortcut="" tip="嘘">
+			<FACE_ORG>常用表情/x_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cry" shortcut="" tip="衰">
+			<FACE_ORG>常用表情/cry.gif</FACE_ORG>
+		</FACE>
+		<FACE id="wq" shortcut="" tip="委屈">
+			<FACE_ORG>常用表情/wq_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="t" shortcut="" tip="吐">
+			<FACE_ORG>常用表情/t_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="k" shortcut="" tip="打哈欠">
+			<FACE_ORG>常用表情/k_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bba" shortcut="" tip="抱抱">
+			<FACE_ORG>常用表情/bba_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="angrya" shortcut="" tip="怒">
+			<FACE_ORG>常用表情/angrya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="yw" shortcut="" tip="疑问">
+			<FACE_ORG>常用表情/yw_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cza" shortcut="" tip="馋嘴">
+			<FACE_ORG>常用表情/cza_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="88" shortcut="" tip="拜拜">
+			<FACE_ORG>常用表情/88_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sk" shortcut="" tip="思考">
+			<FACE_ORG>常用表情/sk_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sweata" shortcut="" tip="汗">
+			<FACE_ORG>常用表情/sweata_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sleepya" shortcut="" tip="困">
+			<FACE_ORG>常用表情/sleepya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sleepa" shortcut="" tip="睡觉">
+			<FACE_ORG>常用表情/sleepa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="money" shortcut="" tip="钱">
+			<FACE_ORG>常用表情/money_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sw" shortcut="" tip="失望">
+			<FACE_ORG>常用表情/sw_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cool" shortcut="" tip="酷">
+			<FACE_ORG>常用表情/cool_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hsa" shortcut="" tip="花心">
+			<FACE_ORG>常用表情/hsa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hatea" shortcut="" tip="哼">
+			<FACE_ORG>常用表情/hatea_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gza" shortcut="" tip="鼓掌">
+			<FACE_ORG>常用表情/gza_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dizzya" shortcut="" tip="晕">
+			<FACE_ORG>常用表情/dizzya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bs" shortcut="" tip="悲伤">
+			<FACE_ORG>常用表情/bs_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="crazya" shortcut="" tip="抓狂">
+			<FACE_ORG>常用表情/crazya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="h" shortcut="" tip="黑线">
+			<FACE_ORG>常用表情/h_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="yx" shortcut="" tip="阴险">
+			<FACE_ORG>常用表情/yx_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="nm" shortcut="" tip="怒骂">
+			<FACE_ORG>常用表情/nm_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hearta" shortcut="" tip="心">
+			<FACE_ORG>常用表情/hearta_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="unheart" shortcut="" tip="伤心">
+			<FACE_ORG>常用表情/unheart.gif</FACE_ORG>
+		</FACE>
+		<FACE id="pig" shortcut="" tip="猪头">
+			<FACE_ORG>常用表情/pig.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ye" shortcut="" tip="耶">
+			<FACE_ORG>常用表情/ye_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="good" shortcut="" tip="good">
+			<FACE_ORG>常用表情/good_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="no" shortcut="" tip="不要">
+			<FACE_ORG>常用表情/no_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="z2" shortcut="" tip="赞">
+			<FACE_ORG>常用表情/z2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="come" shortcut="" tip="来">
+			<FACE_ORG>常用表情/come_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sad" shortcut="" tip="弱">
+			<FACE_ORG>常用表情/sad_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lazu" shortcut="" tip="蜡烛">
+			<FACE_ORG>常用表情/lazu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cake" shortcut="" tip="蛋糕">
+			<FACE_ORG>常用表情/cake.gif</FACE_ORG>
+		</FACE>
+		<FACE id="clock" shortcut="" tip="钟">
+			<FACE_ORG>常用表情/clock_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="m" shortcut="" tip="话筒">
+			<FACE_ORG>常用表情/m_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sdz" shortcut="" tip="书呆子">
+			<FACE_ORG>常用表情/sdz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="d" shortcut="" tip="顶">
+			<FACE_ORG>常用表情/d_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="fn" shortcut="" tip="愤怒">
+			<FACE_ORG>常用表情/fn_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gm" shortcut="" tip="感冒">
+			<FACE_ORG>常用表情/gm_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="o" shortcut="" tip="拳头">
+			<FACE_ORG>常用表情/o_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ws" shortcut="" tip="握手">
+			<FACE_ORG>常用表情/ws_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bad" shortcut="" tip="最差">
+			<FACE_ORG>常用表情/bad_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="left" shortcut="" tip="左抱抱">
+			<FACE_ORG>常用表情/left_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="right" shortcut="" tip="右抱抱">
+			<FACE_ORG>常用表情/right_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="k" shortcut="" tip="打哈气">
+			<FACE_ORG>常用表情/k_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="浪小花" counts="95">
+		<FACE id="lxhzhuanfa_org" shortcut="" tip="转发">
+			<FACE_ORG>浪小花/lxhzhuanfa_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhwahaha_org" shortcut="" tip="笑哈哈">
+			<FACE_ORG>浪小花/lxhwahaha_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhdeyidixiao_org" shortcut="" tip="得意地笑">
+			<FACE_ORG>浪小花/lxhdeyidixiao_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhxixi_org" shortcut="" tip="噢耶">
+			<FACE_ORG>浪小花/lxhxixi_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhtouxiao_org" shortcut="" tip="偷乐">
+			<FACE_ORG>浪小花/lxhtouxiao_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhtongku_org" shortcut="" tip="泪流满面">
+			<FACE_ORG>浪小花/lxhtongku_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhjuhan_org" shortcut="" tip="巨汗">
+			<FACE_ORG>浪小花/lxhjuhan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhkoubishi_org" shortcut="" tip="抠鼻屎">
+			<FACE_ORG>浪小花/lxhkoubishi_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhqiuguanzhu_org" shortcut="" tip="求关注">
+			<FACE_ORG>浪小花/lxhqiuguanzhu_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhv5_org" shortcut="" tip="真V5">
+			<FACE_ORG>浪小花/lxhv5_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhweiguan_org" shortcut="" tip="群体围观">
+			<FACE_ORG>浪小花/lxhweiguan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhholdzhu_org" shortcut="" tip="hold住">
+			<FACE_ORG>浪小花/lxhholdzhu_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhxiudada_org" shortcut="" tip="羞嗒嗒">
+			<FACE_ORG>浪小花/lxhxiudada_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhpubuhan_org" shortcut="" tip="非常汗">
+			<FACE_ORG>浪小花/lxhpubuhan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhxuyuan_org" shortcut="" tip="许愿">
+			<FACE_ORG>浪小花/lxhxuyuan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhzhuakuang_org" shortcut="" tip="崩溃">
+			<FACE_ORG>浪小花/lxhzhuakuang_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhaojiong_org" shortcut="" tip="好囧">
+			<FACE_ORG>浪小花/lxhhaojiong_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhchijing_org" shortcut="" tip="震惊">
+			<FACE_ORG>浪小花/lxhchijing_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbiefanwo_org" shortcut="" tip="别烦我">
+			<FACE_ORG>浪小花/lxhbiefanwo_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbuhaoyisi_org" shortcut="" tip="不好意思">
+			<FACE_ORG>浪小花/lxhbuhaoyisi_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhjiujie_org" shortcut="" tip="纠结">
+			<FACE_ORG>浪小花/lxhjiujie_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhguzhang_org" shortcut="" tip="拍手">
+			<FACE_ORG>浪小花/lxhguzhang_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhgeili_org" shortcut="" tip="给劲">
+			<FACE_ORG>浪小花/lxhgeili_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhlike_org" shortcut="" tip="好喜欢">
+			<FACE_ORG>浪小花/lxhlike_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhainio_org" shortcut="" tip="好爱哦">
+			<FACE_ORG>浪小花/lxhainio_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhluguo_org" shortcut="" tip="路过这儿">
+			<FACE_ORG>浪小花/lxhluguo_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbeicui_org" shortcut="" tip="悲催">
+			<FACE_ORG>浪小花/lxhbeicui_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbuxiangshangban_org" shortcut="" tip="不想上班">
+			<FACE_ORG>浪小花/lxhbuxiangshangban_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhzaokuangzheng_org" shortcut="" tip="躁狂症">
+			<FACE_ORG>浪小花/lxhzaokuangzheng_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhshuaishuaishou_org" shortcut="" tip="甩甩手">
+			<FACE_ORG>浪小花/lxhshuaishuaishou_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhqiaoqiao_org" shortcut="" tip="瞧瞧">
+			<FACE_ORG>浪小花/lxhqiaoqiao_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhtongyi_org" shortcut="" tip="同意">
+			<FACE_ORG>浪小花/lxhtongyi_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhheduole_org" shortcut="" tip="喝多了">
+			<FACE_ORG>浪小花/lxhheduole_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhlalalala_org" shortcut="" tip="啦啦啦啦">
+			<FACE_ORG>浪小花/lxhlalalala_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhjiekexun_org" shortcut="" tip="杰克逊">
+			<FACE_ORG>浪小花/lxhjiekexun_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhleifeng_org" shortcut="" tip="雷锋">
+			<FACE_ORG>浪小花/lxhleifeng_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhdaigan_org" shortcut="" tip="带感">
+			<FACE_ORG>浪小花/lxhdaigan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhqinyikou_org" shortcut="" tip="亲一口">
+			<FACE_ORG>浪小花/lxhqinyikou_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhqixi_org" shortcut="" tip="七夕">
+			<FACE_ORG>浪小花/lxhqixi_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhjiayou_org" shortcut="" tip="加油啊">
+			<FACE_ORG>浪小花/lxhjiayou_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhkunsile_org" shortcut="" tip="困死了">
+			<FACE_ORG>浪小花/lxhkunsile_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhyouyali_org" shortcut="" tip="有鸭梨">
+			<FACE_ORG>浪小花/lxhyouyali_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhliangle_org" shortcut="" tip="右边亮了">
+			<FACE_ORG>浪小花/lxhliangle_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhfangjiala_org" shortcut="" tip="撒花">
+			<FACE_ORG>浪小花/lxhfangjiala_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhaobang_org" shortcut="" tip="好棒">
+			<FACE_ORG>浪小花/lxhhaobang_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhxiangyixiang_org" shortcut="" tip="想一想">
+			<FACE_ORG>浪小花/lxhxiangyixiang_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhxiaban_org" shortcut="" tip="下班">
+			<FACE_ORG>浪小花/lxhxiaban_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhzuiyou_org" shortcut="" tip="最右">
+			<FACE_ORG>浪小花/lxhzuiyou_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhzhongjian_org" shortcut="" tip="中箭">
+			<FACE_ORG>浪小花/lxhzhongjian_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhqiubite_org" shortcut="" tip="丘比特">
+			<FACE_ORG>浪小花/lxhqiubite_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhuxiangmobai_org" shortcut="" tip="互相膜拜">
+			<FACE_ORG>浪小花/lxhhuxiangmobai_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhmobai_org" shortcut="" tip="膜拜了">
+			<FACE_ORG>浪小花/lxhmobai_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhfangdianpaomei_org" shortcut="" tip="放电抛媚">
+			<FACE_ORG>浪小花/lxhfangdianpaomei_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhshandian_org" shortcut="" tip="霹雳">
+			<FACE_ORG>浪小花/lxhshandian_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbeidian_org" shortcut="" tip="被电">
+			<FACE_ORG>浪小花/lxhbeidian_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhpaizhuan_org" shortcut="" tip="拍砖">
+			<FACE_ORG>浪小花/lxhpaizhuan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhuxiangpaizhuan_org" shortcut="" tip="互相拍砖">
+			<FACE_ORG>浪小花/lxhhuxiangpaizhuan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhcaifang_org" shortcut="" tip="采访">
+			<FACE_ORG>浪小花/lxhcaifang_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhfabiaoyanlun_org" shortcut="" tip="发表言论">
+			<FACE_ORG>浪小花/lxhfabiaoyanlun_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhniu_org" shortcut="" tip="牛">
+			<FACE_ORG>浪小花/lxhniu_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhrose_org" shortcut="" tip="玫瑰">
+			<FACE_ORG>浪小花/lxhrose_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhzan_org" shortcut="" tip="赞啊">
+			<FACE_ORG>浪小花/lxhzan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhtuijian_org" shortcut="" tip="推荐">
+			<FACE_ORG>浪小花/lxhtuijian_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhmengfan_org" shortcut="" tip="萌翻">
+			<FACE_ORG>浪小花/lxhmengfan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhzhaocai_org" shortcut="" tip="招财">
+			<FACE_ORG>浪小花/lxhzhaocai_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhganhuoche_org" shortcut="" tip="赶火车">
+			<FACE_ORG>浪小花/lxhganhuoche_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhlizhiqingnian_org" shortcut="" tip="立志青年">
+			<FACE_ORG>浪小花/lxhlizhiqingnian_org.gif</FACE_ORG> 
+		</FACE>
+ 		<FACE id="lxhdese_org" shortcut="" tip="得瑟">
+			<FACE_ORG>浪小花/lxhdese_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhweibo3yr_org" shortcut="" tip="微博三岁啦">
+			<FACE_ORG>浪小花/lxhweibo3yr_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhfuhuojie_org" shortcut="" tip="复活节">
+			<FACE_ORG>浪小花/lxhfuhuojie_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhjihuoche_org" shortcut="" tip="挤火车">
+			<FACE_ORG>浪小花/lxhjihuoche_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhyurenjie_org" shortcut="" tip="愚人节">
+			<FACE_ORG>浪小花/lxhyurenjie_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhshoucang_org" shortcut="" tip="收藏">
+			<FACE_ORG>浪小花/lxhshoucang_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhappygold_org" shortcut="" tip="喜得金牌">
+			<FACE_ORG>浪小花/lxhhappygold_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhduoguan_org" shortcut="" tip="夺冠感动">
+			<FACE_ORG>浪小花/lxhduoguan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhguanjun_org" shortcut="" tip="冠军诞生">
+			<FACE_ORG>浪小花/lxhguanjun_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhchuanhuoju_org" shortcut="" tip="传火炬">
+			<FACE_ORG>浪小花/lxhchuanhuoju_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhgold_org" shortcut="" tip="奥运金牌">
+			<FACE_ORG>浪小花/lxhgold_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbronze_org" shortcut="" tip="奥运银牌">
+			<FACE_ORG>浪小花/lxhbronze_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhsilver_org" shortcut="" tip="奥运铜牌">
+			<FACE_ORG>浪小花/lxhsilver_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="germany_org" shortcut="" tip="德国队加油">
+			<FACE_ORG>浪小花/germany_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="spain_org" shortcut="" tip="西班牙队加油">
+			<FACE_ORG>浪小花/spain_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="portugal_org" shortcut="" tip="葡萄牙队加油">
+			<FACE_ORG>浪小花/portugal_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="italy_org" shortcut="" tip="意大利队加油">
+			<FACE_ORG>浪小花/italy_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhshuahuadeng_org" shortcut="" tip="耍花灯">
+			<FACE_ORG>浪小花/lxhshuahuadeng_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhyuanxiaohappy_org" shortcut="" tip="元宵快乐">
+			<FACE_ORG>浪小花/lxhyuanxiaohappy_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhchitangyuan_org" shortcut="" tip="吃汤圆">
+			<FACE_ORG>浪小花/lxhchitangyuan_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhjinyuanbao_org" shortcut="" tip="金元宝">
+			<FACE_ORG>浪小花/lxhjinyuanbao_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhongbaonalai_org" shortcut="" tip="红包拿来">
+			<FACE_ORG>浪小花/lxhhongbaonalai_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhfudaola_org" shortcut="" tip="福到啦">
+			<FACE_ORG>浪小花/lxhfudaola_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbianpao_org" shortcut="" tip="放鞭炮">
+			<FACE_ORG>浪小花/lxhbianpao_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhhongbao_org" shortcut="" tip="发红包">
+			<FACE_ORG>浪小花/lxhhongbao_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhdahongdenglong_org" shortcut="" tip="大红灯笼">
+			<FACE_ORG>浪小花/lxhdahongdenglong_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhbainianle_org" shortcut="" tip="拜年了">
+			<FACE_ORG>浪小花/lxhbainianle_org.gif</FACE_ORG> 
+		</FACE>
+		<FACE id="lxhlongxiao_org" shortcut="" tip="龙啸">
+			<FACE_ORG>浪小花/lxhlongxiao_org.gif</FACE_ORG> 
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="郭斯特" counts="26">
+		<FACE id="gstwabishi_org" shortcut="" tip="gst挖鼻屎">
+			<FACE_ORG>郭斯特/gstwabishi_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gsttiantian_org" shortcut="" tip="gst舔舔">
+			<FACE_ORG>郭斯特/gsttiantian_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gsthaoxiushe_org" shortcut="" tip="gst好羞射">
+			<FACE_ORG>郭斯特/gsthaoxiushe_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstchouniya_org" shortcut="" tip="gst抽你">
+			<FACE_ORG>郭斯特/gstchouniya_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstrenjiabuyi_org" shortcut="" tip="gst人家不依">
+			<FACE_ORG>郭斯特/gstrenjiabuyi_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gsthaonandong_org" shortcut="" tip="gst好难懂">
+			<FACE_ORG>郭斯特/gsthaonandong_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstrangwosi_org" shortcut="" tip="gst不活了">
+			<FACE_ORG>郭斯特/gstrangwosi_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstzhuanzhuanzhuan_org" shortcut="" tip="gst转转转">
+			<FACE_ORG>郭斯特/gstzhuanzhuanzhuan_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gsthan_org" shortcut="" tip="gst汗">
+			<FACE_ORG>郭斯特/gsthan_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstganmalu_org" shortcut="" tip="gst干嘛噜">
+			<FACE_ORG>郭斯特/gstganmalu_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstrerere_org" shortcut="" tip="gst热热热">
+			<FACE_ORG>郭斯特/gstrerere_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstnaini_org" shortcut="" tip="gst耐你">
+			<FACE_ORG>郭斯特/gstnaini_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstkun_org" shortcut="" tip="gst困">
+			<FACE_ORG>郭斯特/gstkun_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gsthaopaya_org" shortcut="" tip="gst好怕呀">
+			<FACE_ORG>郭斯特/gsthaopaya_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstfagongzila_org" shortcut="" tip="gst发工资啦">
+			<FACE_ORG>郭斯特/gstfagongzila_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstchaoxiaoni_org" shortcut="" tip="gst嘲笑你">
+			<FACE_ORG>郭斯特/gstchaoxiaoni_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstyameidie_org" shortcut="" tip="gst呀咩爹">
+			<FACE_ORG>郭斯特/gstyameidie_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstxiabanla_org" shortcut="" tip="gst下班啦">
+			<FACE_ORG>郭斯特/gstxiabanla_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstwanan_org" shortcut="" tip="gst晚安">
+			<FACE_ORG>郭斯特/gstwanan_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gsttouxiang_org" shortcut="" tip="gst败了">
+			<FACE_ORG>郭斯特/gsttouxiang_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstsiwenzi_org" shortcut="" tip="gst死蚊子">
+			<FACE_ORG>郭斯特/gstsiwenzi_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstshuaibile_org" shortcut="" tip="gst帅毙了">
+			<FACE_ORG>郭斯特/gstshuaibile_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstrouroulian_org" shortcut="" tip="gst揉揉脸">
+			<FACE_ORG>郭斯特/gstrouroulian_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstheiheihei_org" shortcut="" tip="gst嘿嘿嘿">
+			<FACE_ORG>郭斯特/gstheiheihei_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstdese_org" shortcut="" tip="gst得瑟">
+			<FACE_ORG>郭斯特/gstdese_org.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gstaima_org" shortcut="" tip="gst艾玛">
+			<FACE_ORG>郭斯特/gstaima_org.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="白骨精" counts="60">
+		<FACE id="xbzixin" shortcut="" tip="xb自信">
+			<FACE_ORG>白骨精/xbzixin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbzhuan" shortcut="" tip="xb转">
+			<FACE_ORG>白骨精/xbzhuan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbzhuanquan" shortcut="" tip="xb转圈">
+			<FACE_ORG>白骨精/xbzhuanquan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbzhizhi" shortcut="" tip="xb指指">
+			<FACE_ORG>白骨精/xbzhizhi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbzhaoshou" shortcut="" tip="xb招手">
+			<FACE_ORG>白骨精/xbzhaoshou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbzhaojing" shortcut="" tip="xb照镜">
+			<FACE_ORG>白骨精/xbzhaojing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbyu" shortcut="" tip="xb雨">
+			<FACE_ORG>白骨精/xbyu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbyinxiao" shortcut="" tip="xb坏笑">
+			<FACE_ORG>白骨精/xbyinxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbyihuo" shortcut="" tip="xb疑惑">
+			<FACE_ORG>白骨精/xbyihuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbyaobai" shortcut="" tip="xb摇摆">
+			<FACE_ORG>白骨精/xbyaobai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbyanjing" shortcut="" tip="xb眼镜">
+			<FACE_ORG>白骨精/xbyanjing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbyali" shortcut="" tip="xb压力">
+			<FACE_ORG>白骨精/xbyali_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbxing" shortcut="" tip="xb星">
+			<FACE_ORG>白骨精/xbxing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbxingfen" shortcut="" tip="xb兴奋">
+			<FACE_ORG>白骨精/xbxingfen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbxihuan" shortcut="" tip="xb喜欢">
+			<FACE_ORG>白骨精/xbxihuan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbxiaohua" shortcut="" tip="xb小花">
+			<FACE_ORG>白骨精/xbxiaohua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbwunai" shortcut="" tip="xb无奈">
+			<FACE_ORG>白骨精/xbwunai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbwulian" shortcut="" tip="xb捂脸">
+			<FACE_ORG>白骨精/xbwulian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbtianshi" shortcut="" tip="xb天使">
+			<FACE_ORG>白骨精/xbtianshi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbtaiyang" shortcut="" tip="xb太阳">
+			<FACE_ORG>白骨精/xbtaiyang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbshuijiao" shortcut="" tip="xb睡觉">
+			<FACE_ORG>白骨精/xbshuijiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbshuaicong" shortcut="" tip="xb甩葱">
+			<FACE_ORG>白骨精/xbshuaicong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbshengri" shortcut="" tip="xb生日">
+			<FACE_ORG>白骨精/xbshengri_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbshanzi" shortcut="" tip="xb扇子">
+			<FACE_ORG>白骨精/xbshanzi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbshangxin" shortcut="" tip="xb伤心">
+			<FACE_ORG>白骨精/xbshangxin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbrou" shortcut="" tip="xb揉">
+			<FACE_ORG>白骨精/xbrou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbqiushen" shortcut="" tip="xb求神">
+			<FACE_ORG>白骨精/xbqiushen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbqingwa" shortcut="" tip="xb青蛙">
+			<FACE_ORG>白骨精/xbqingwa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbqidai" shortcut="" tip="xb期待">
+			<FACE_ORG>白骨精/xbqidai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbpaozao" shortcut="" tip="xb泡澡">
+			<FACE_ORG>白骨精/xbpaozao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbnu" shortcut="" tip="xb怒">
+			<FACE_ORG>白骨精/xbnu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbnuli" shortcut="" tip="xb努力">
+			<FACE_ORG>白骨精/xbnuli_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbmuzhi" shortcut="" tip="xb拇指">
+			<FACE_ORG>白骨精/xbmuzhi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbmiao" shortcut="" tip="xb喵">
+			<FACE_ORG>白骨精/xbmiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xblaba" shortcut="" tip="xb喇叭">
+			<FACE_ORG>白骨精/xblaba_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbku" shortcut="" tip="xb哭">
+			<FACE_ORG>白骨精/xbku_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbkanshu" shortcut="" tip="xb看书">
+			<FACE_ORG>白骨精/xbkanshu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbkaican" shortcut="" tip="xb开餐">
+			<FACE_ORG>白骨精/xbkaican_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbjushou" shortcut="" tip="xb举手">
+			<FACE_ORG>白骨精/xbjushou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbjianxiao" shortcut="" tip="xb奸笑">
+			<FACE_ORG>白骨精/xbjianxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhun" shortcut="" tip="xb昏">
+			<FACE_ORG>白骨精/xbhun_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhuishou" shortcut="" tip="xb挥手">
+			<FACE_ORG>白骨精/xbhuishou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhuanle" shortcut="" tip="xb欢乐">
+			<FACE_ORG>白骨精/xbhuanle_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhecha" shortcut="" tip="xb喝茶">
+			<FACE_ORG>白骨精/xbhecha_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhan" shortcut="" tip="xb汗">
+			<FACE_ORG>白骨精/xbhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhaixiu" shortcut="" tip="xb害羞">
+			<FACE_ORG>白骨精/xbhaixiu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbhaipa" shortcut="" tip="xb害怕">
+			<FACE_ORG>白骨精/xbhaipa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbfengchui" shortcut="" tip="xb风吹">
+			<FACE_ORG>白骨精/xbfengchui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbfengche" shortcut="" tip="xb风车">
+			<FACE_ORG>白骨精/xbfengche_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbemo" shortcut="" tip="xb恶魔">
+			<FACE_ORG>白骨精/xbemo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbdaxiao" shortcut="" tip="xb大笑">
+			<FACE_ORG>白骨精/xbdaxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbdai" shortcut="" tip="xb呆">
+			<FACE_ORG>白骨精/xbdai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbchushou" shortcut="" tip="xb触手">
+			<FACE_ORG>白骨精/xbchushou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbchui" shortcut="" tip="xb吹">
+			<FACE_ORG>白骨精/xbchui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbchitang" shortcut="" tip="xb吃糖">
+			<FACE_ORG>白骨精/xbchitang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbchifan" shortcut="" tip="xb吃饭">
+			<FACE_ORG>白骨精/xbchifan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbchibao" shortcut="" tip="xb吃包">
+			<FACE_ORG>白骨精/xbchibao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbchangge" shortcut="" tip="xb唱歌">
+			<FACE_ORG>白骨精/xbchangge_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xbbaishou" shortcut="" tip="xb摆手">
+			<FACE_ORG>白骨精/xbbaishou_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="hello菜菜" counts="30">
+		<FACE id="caizouzou" shortcut="" tip="cai走走">
+			<FACE_ORG>hello菜菜/caizouzou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caizouren" shortcut="" tip="cai揍人">
+			<FACE_ORG>hello菜菜/caizouren_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caizhuangqiang" shortcut="" tip="cai撞墙">
+			<FACE_ORG>hello菜菜/caizhuangqiang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caizhengya" shortcut="" tip="cai正呀">
+			<FACE_ORG>hello菜菜/caizhengya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caixixi" shortcut="" tip="cai嘻嘻">
+			<FACE_ORG>hello菜菜/caixixi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caixiuxiu" shortcut="" tip="cai羞羞">
+			<FACE_ORG>hello菜菜/caixiuxiu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caiwuyu" shortcut="" tip="cai无语">
+			<FACE_ORG>hello菜菜/caiwuyu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caituoguang" shortcut="" tip="cai脱光">
+			<FACE_ORG>hello菜菜/caituoguang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caitoutoumomo" shortcut="" tip="cai偷摸">
+			<FACE_ORG>hello菜菜/caitoutoumomo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caitaihaole" shortcut="" tip="cai太好了">
+			<FACE_ORG>hello菜菜/caitaihaole_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caiqingzhu" shortcut="" tip="cai庆祝">
+			<FACE_ORG>hello菜菜/caiqingzhu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caiqian" shortcut="" tip="cai钱">
+			<FACE_ORG>hello菜菜/caiqian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caiqianshui" shortcut="" tip="cai潜水">
+			<FACE_ORG>hello菜菜/caiqianshui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caipaxiu" shortcut="" tip="cai怕羞">
+			<FACE_ORG>hello菜菜/caipaxiu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cailuoye" shortcut="" tip="cai落叶">
+			<FACE_ORG>hello菜菜/cailuoye_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caiku" shortcut="" tip="cai哭">
+			<FACE_ORG>hello菜菜/caiku_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caikaixin" shortcut="" tip="cai开心">
+			<FACE_ORG>hello菜菜/caikaixin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caijingxia" shortcut="" tip="cai惊吓">
+			<FACE_ORG>hello菜菜/caijingxia_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caijianxiao" shortcut="" tip="cai奸笑">
+			<FACE_ORG>hello菜菜/caijianxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caihuangtou" shortcut="" tip="cai晃头">
+			<FACE_ORG>hello菜菜/caihuangtou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caihalou" shortcut="" tip="cai哈喽">
+			<FACE_ORG>hello菜菜/caihalou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caifeiwen" shortcut="" tip="cai飞吻">
+			<FACE_ORG>hello菜菜/caifeiwen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caidunan" shortcut="" tip="cai肚腩">
+			<FACE_ORG>hello菜菜/caidunan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caidada" shortcut="" tip="cai打打">
+			<FACE_ORG>hello菜菜/caidada_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caichelian" shortcut="" tip="cai扯脸">
+			<FACE_ORG>hello菜菜/caichelian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caichayan" shortcut="" tip="cai插眼">
+			<FACE_ORG>hello菜菜/caichayan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caibishi" shortcut="" tip="cai鼻屎">
+			<FACE_ORG>hello菜菜/caibishi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caibengkui" shortcut="" tip="cai崩溃">
+			<FACE_ORG>hello菜菜/caibengkui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caibaibai" shortcut="" tip="cai拜拜">
+			<FACE_ORG>hello菜菜/caibaibai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="caia" shortcut="" tip="cai啊">
+			<FACE_ORG>hello菜菜/caia_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="癫当" counts="39">
+		<FACE id="dinzhuanzhuan" shortcut="" tip="din转转">
+			<FACE_ORG>癫当/dinzhuanzhuan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinzhuangqiang" shortcut="" tip="din撞墙">
+			<FACE_ORG>癫当/dinzhuangqiang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinzhuakuang" shortcut="" tip="din抓狂">
+			<FACE_ORG>癫当/dinzhuakuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinzanhao" shortcut="" tip="din赞好">
+			<FACE_ORG>癫当/dinzanhao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinxinxi" shortcut="" tip="din信息">
+			<FACE_ORG>癫当/dinxinxi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinxingfen" shortcut="" tip="din兴奋">
+			<FACE_ORG>癫当/dinxingfen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dintuizhuang" shortcut="" tip="din推撞">
+			<FACE_ORG>癫当/dintuizhuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dintiano" shortcut="" tip="din天哦">
+			<FACE_ORG>癫当/dintiano_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dintantan" shortcut="" tip="din弹弹">
+			<FACE_ORG>癫当/dintantan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinshuohua" shortcut="" tip="din说话">
+			<FACE_ORG>癫当/dinshuohua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinshuijiao" shortcut="" tip="din睡觉">
+			<FACE_ORG>癫当/dinshuijiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinshuai" shortcut="" tip="din帅">
+			<FACE_ORG>癫当/dinshuai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinshanbi" shortcut="" tip="din闪避">
+			<FACE_ORG>癫当/dinshanbi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinqinqin" shortcut="" tip="din亲亲">
+			<FACE_ORG>癫当/dinqinqin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinpaishou" shortcut="" tip="din拍手">
+			<FACE_ORG>癫当/dinpaishou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinnu" shortcut="" tip="din怒">
+			<FACE_ORG>癫当/dinnu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinmotou" shortcut="" tip="din摸头">
+			<FACE_ORG>癫当/dinmotou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinliuxue" shortcut="" tip="din流血">
+			<FACE_ORG>癫当/dinliuxue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinlihai" shortcut="" tip="din厉害">
+			<FACE_ORG>癫当/dinlihai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinlianhong" shortcut="" tip="din脸红">
+			<FACE_ORG>癫当/dinlianhong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinlei" shortcut="" tip="din泪">
+			<FACE_ORG>癫当/dinlei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinkankan" shortcut="" tip="din看看">
+			<FACE_ORG>癫当/dinkankan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinjianxiang" shortcut="" tip="din贱香">
+			<FACE_ORG>癫当/dinjianxiang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinhuishou" shortcut="" tip="din挥手">
+			<FACE_ORG>癫当/dinhuishou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinhuazhuang" shortcut="" tip="din化妆">
+			<FACE_ORG>癫当/dinhuazhuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinhe" shortcut="" tip="din喝">
+			<FACE_ORG>癫当/dinhe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinhan" shortcut="" tip="din汗">
+			<FACE_ORG>癫当/dinhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinhaixiu" shortcut="" tip="din害羞">
+			<FACE_ORG>癫当/dinhaixiu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinguilian" shortcut="" tip="din鬼脸">
+			<FACE_ORG>癫当/dinguilian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinguale" shortcut="" tip="din挂了">
+			<FACE_ORG>癫当/dinguale_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinfenshenb" shortcut="" tip="din分身1">
+			<FACE_ORG>癫当/dinfenshenb_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinfenshena" shortcut="" tip="din分身2">
+			<FACE_ORG>癫当/dinfenshena_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dindiandang" shortcut="" tip="din癫当">
+			<FACE_ORG>癫当/dindiandang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dindaixiong" shortcut="" tip="din戴熊">
+			<FACE_ORG>癫当/dindaixiong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinchi" shortcut="" tip="din吃">
+			<FACE_ORG>癫当/dinchi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinbianshen" shortcut="" tip="din变身">
+			<FACE_ORG>癫当/dinbianshen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinbianlian" shortcut="" tip="din变脸">
+			<FACE_ORG>癫当/dinbianlian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinbaiqi" shortcut="" tip="din白旗">
+			<FACE_ORG>癫当/dinbaiqi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dinaini" shortcut="" tip="din爱你">
+			<FACE_ORG>癫当/dinaini_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="面瘫萝卜" counts="25">
+		<FACE id="lbzhuangsha" shortcut="" tip="lb装傻">
+			<FACE_ORG>面瘫萝卜/lbzhuangsha_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbyi" shortcut="" tip="lb咦">
+			<FACE_ORG>面瘫萝卜/lbyi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lben" shortcut="" tip="lb嗯">
+			<FACE_ORG>面瘫萝卜/lben_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbzaogao" shortcut="" tip="lb糟糕">
+			<FACE_ORG>面瘫萝卜/lbzaogao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbheihei" shortcut="" tip="lb嘿嘿">
+			<FACE_ORG>面瘫萝卜/lbheihei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbbishi" shortcut="" tip="lb鄙视">
+			<FACE_ORG>面瘫萝卜/lbbishi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbchuo" shortcut="" tip="lb戳">
+			<FACE_ORG>面瘫萝卜/lbchuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbyaotou" shortcut="" tip="lb摇头">
+			<FACE_ORG>面瘫萝卜/lbyaotou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbjing" shortcut="" tip="lb惊">
+			<FACE_ORG>面瘫萝卜/lbjing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbhuanle" shortcut="" tip="lb欢乐">
+			<FACE_ORG>面瘫萝卜/lbhuanle_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lblei" shortcut="" tip="lb雷">
+			<FACE_ORG>面瘫萝卜/lblei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbe" shortcut="" tip="lb呃">
+			<FACE_ORG>面瘫萝卜/lbe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbcengyou" shortcut="" tip="lb蹭右">
+			<FACE_ORG>面瘫萝卜/lbcengyou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbcengzuo" shortcut="" tip="lb蹭左">
+			<FACE_ORG>面瘫萝卜/lbcengzuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lba" shortcut="" tip="lb啊">
+			<FACE_ORG>面瘫萝卜/lba_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbheng" shortcut="" tip="lb哼">
+			<FACE_ORG>面瘫萝卜/lbheng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbsahuan" shortcut="" tip="lb撒欢">
+			<FACE_ORG>面瘫萝卜/lbsahuan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbshuang" shortcut="" tip="lb爽">
+			<FACE_ORG>面瘫萝卜/lbshuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbwei" shortcut="" tip="lb味">
+			<FACE_ORG>面瘫萝卜/lbwei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lblihai" shortcut="" tip="lb厉害">
+			<FACE_ORG>面瘫萝卜/lblihai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbshuai" shortcut="" tip="lb帅">
+			<FACE_ORG>面瘫萝卜/lbshuai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbku_thumb" shortcut="" tip="lb哭">
+			<FACE_ORG>面瘫萝卜/lbku_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbhe" shortcut="" tip="lb呵">
+			<FACE_ORG>面瘫萝卜/lbhe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbxi" shortcut="" tip="lb嘻">
+			<FACE_ORG>面瘫萝卜/lbxi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lbtaoyan" shortcut="" tip="lb讨厌">
+			<FACE_ORG>面瘫萝卜/lbtaoyan_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="罗小黑" counts="45">
+		<FACE id="lxhxshuaya" shortcut="" tip="lxhx刷牙">
+			<FACE_ORG>罗小黑/lxhxshuaya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxwenhao" shortcut="" tip="lxhx问号">
+			<FACE_ORG>罗小黑/lxhxwenhao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxbingle" shortcut="" tip="lxhx病了">
+			<FACE_ORG>罗小黑/lxhxbingle_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxjing" shortcut="" tip="lxhx惊">
+			<FACE_ORG>罗小黑/lxhxjing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxhan" shortcut="" tip="lxhx汗">
+			<FACE_ORG>罗小黑/lxhxhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxleimu" shortcut="" tip="lxhx泪目">
+			<FACE_ORG>罗小黑/lxhxleimu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxwuyu" shortcut="" tip="lxhx无语">
+			<FACE_ORG>罗小黑/lxhxwuyu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxtu" shortcut="" tip="lxhx吐">
+			<FACE_ORG>罗小黑/lxhxtu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxmiao" shortcut="" tip="lxhx喵">
+			<FACE_ORG>罗小黑/lxhxmiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxshiluo" shortcut="" tip="lxhx失落">
+			<FACE_ORG>罗小黑/lxhxshiluo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxshunmao" shortcut="" tip="lxhx顺毛">
+			<FACE_ORG>罗小黑/lxhxshunmao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxhua" shortcut="" tip="lxhx划">
+			<FACE_ORG>罗小黑/lxhxhua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdoushangxia" shortcut="" tip="lxhx逗上下">
+			<FACE_ORG>罗小黑/lxhxdoushangxia_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxhenai" shortcut="" tip="lxhx喝奶">
+			<FACE_ORG>罗小黑/lxhxhenai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxhen" shortcut="" tip="lxhx狠">
+			<FACE_ORG>罗小黑/lxhxhen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxfendou" shortcut="" tip="lxhx奋斗">
+			<FACE_ORG>罗小黑/lxhxfendou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxgunguo" shortcut="" tip="lxhx滚过">
+			<FACE_ORG>罗小黑/lxhxgunguo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdoubugei" shortcut="" tip="lxhx都不给">
+			<FACE_ORG>罗小黑/lxhxdoubugei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxruguo" shortcut="" tip="lxhx蠕过">
+			<FACE_ORG>罗小黑/lxhxruguo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxwuliao" shortcut="" tip="lxhx无聊">
+			<FACE_ORG>罗小黑/lxhxwuliao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxtingge" shortcut="" tip="lxhx听歌">
+			<FACE_ORG>罗小黑/lxhxtingge_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxkuanghuan" shortcut="" tip="lxhx狂欢">
+			<FACE_ORG>罗小黑/lxhxkuanghuan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxmiao2" shortcut="" tip="lxhx喵喵">
+			<FACE_ORG>罗小黑/lxhxmiao2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxlanyao" shortcut="" tip="lxhx懒腰">
+			<FACE_ORG>罗小黑/lxhxlanyao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdese" shortcut="" tip="lxhx得瑟">
+			<FACE_ORG>罗小黑/lxhxdese_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdeyi" shortcut="" tip="lxhx得意">
+			<FACE_ORG>罗小黑/lxhxdeyi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxzou" shortcut="" tip="lxhx走">
+			<FACE_ORG>罗小黑/lxhxzou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxtangzhongqiang" shortcut="" tip="lxhx躺中枪">
+			<FACE_ORG>罗小黑/lxhxtangzhongqiang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxsahuan" shortcut="" tip="lxhx撒欢">
+			<FACE_ORG>罗小黑/lxhxsahuan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxqiubiaoyang" shortcut="" tip="lxhx求表扬">
+			<FACE_ORG>罗小黑/lxhxqiubiaoyang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxbushuang" shortcut="" tip="lxhx不爽">
+			<FACE_ORG>罗小黑/lxhxbushuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxzhuanti" shortcut="" tip="lxhx转体">
+			<FACE_ORG>罗小黑/lxhxzhuanti_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdouzuoyou" shortcut="" tip="lxhx逗左右">
+			<FACE_ORG>罗小黑/lxhxdouzuoyou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxshuijiao" shortcut="" tip="lxhx睡觉">
+			<FACE_ORG>罗小黑/lxhxshuijiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxtaoyan" shortcut="" tip="lxhx讨厌">
+			<FACE_ORG>罗小黑/lxhxtaoyan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxsaohui" shortcut="" tip="lxhx扫灰">
+			<FACE_ORG>罗小黑/lxhxsaohui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdadishu" shortcut="" tip="lxhx打地鼠">
+			<FACE_ORG>罗小黑/lxhxdadishu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxzhuodi" shortcut="" tip="lxhx啄地">
+			<FACE_ORG>罗小黑/lxhxzhuodi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxzhuantou" shortcut="" tip="lxhx转头">
+			<FACE_ORG>罗小黑/lxhxzhuantou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxxianzhuo" shortcut="" tip="lxhx掀桌">
+			<FACE_ORG>罗小黑/lxhxxianzhuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxbenpao" shortcut="" tip="lxhx奔跑">
+			<FACE_ORG>罗小黑/lxhxbenpao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxdouzhuanquan" shortcut="" tip="lxhx逗转圈">
+			<FACE_ORG>罗小黑/lxhxdouzhuanquan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxyuannian" shortcut="" tip="lxhx怨念">
+			<FACE_ORG>罗小黑/lxhxyuannian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxhuaquan" shortcut="" tip="lxhx画圈">
+			<FACE_ORG>罗小黑/lxhxhuaquan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lxhxtiaoyue" shortcut="" tip="lxhx跳跃">
+			<FACE_ORG>罗小黑/lxhxtiaoyue_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="冷兔" counts="35">
+		<FACE id="ltwuyi" shortcut="" tip="lt五一">
+			<FACE_ORG>冷兔/ltwuyi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltyinxian" shortcut="" tip="lt阴险">
+			<FACE_ORG>冷兔/ltyinxian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltyaobai" shortcut="" tip="lt摇摆">
+			<FACE_ORG>冷兔/ltyaobai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltxiu" shortcut="" tip="lt羞">
+			<FACE_ORG>冷兔/ltxiu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltshanxia" shortcut="" tip="lt闪瞎">
+			<FACE_ORG>冷兔/ltshanxia_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltpaishou" shortcut="" tip="lt拍手">
+			<FACE_ORG>冷兔/ltpaishou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltdanteng" shortcut="" tip="lt蛋疼">
+			<FACE_ORG>冷兔/ltdanteng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltsahua" shortcut="" tip="lt撒花">
+			<FACE_ORG>冷兔/ltsahua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltmuqinjie" shortcut="" tip="lt母亲节">
+			<FACE_ORG>冷兔/ltmuqinjie_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltwabi" shortcut="" tip="lt挖鼻">
+			<FACE_ORG>冷兔/ltwabi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lehaqian" shortcut="" tip="lt哈欠">
+			<FACE_ORG>冷兔/lehaqian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltleimu" shortcut="" tip="lt泪目">
+			<FACE_ORG>冷兔/ltleimu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltlei" shortcut="" tip="lt雷">
+			<FACE_ORG>冷兔/ltlei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltzhongqiang" shortcut="" tip="lt中枪">
+			<FACE_ORG>冷兔/ltzhongqiang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lterduo" shortcut="" tip="lt耳朵">
+			<FACE_ORG>冷兔/lterduo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltding" shortcut="" tip="lt顶">
+			<FACE_ORG>冷兔/ltding_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltqianshui" shortcut="" tip="lt潜水">
+			<FACE_ORG>冷兔/ltqianshui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltpaizhuodaxiao" shortcut="" tip="lt拍桌大笑">
+			<FACE_ORG>冷兔/ltpaizhuodaxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltheixian" shortcut="" tip="lt黑线">
+			<FACE_ORG>冷兔/ltheixian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltpenxue" shortcut="" tip="lt喷血">
+			<FACE_ORG>冷兔/ltpenxue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltjuhan" shortcut="" tip="lt巨汗">
+			<FACE_ORG>冷兔/ltjuhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltyihuo" shortcut="" tip="lt疑惑">
+			<FACE_ORG>冷兔/ltyihuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltfuyun" shortcut="" tip="lt浮云">
+			<FACE_ORG>冷兔/ltfuyun_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltxiaohua" shortcut="" tip="lt笑话">
+			<FACE_ORG>冷兔/ltxiaohua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltpen" shortcut="" tip="lt喷">
+			<FACE_ORG>冷兔/ltpen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltxue" shortcut="" tip="lt雪">
+			<FACE_ORG>冷兔/ltxue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltzhuanfa" shortcut="" tip="lt转发">
+			<FACE_ORG>冷兔/ltzhuanfa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lttoukui" shortcut="" tip="lt偷窥">
+			<FACE_ORG>冷兔/lttoukui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltjingxia" shortcut="" tip="lt惊吓">
+			<FACE_ORG>冷兔/ltjingxia_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltjiong" shortcut="" tip="lt囧">
+			<FACE_ORG>冷兔/ltjiong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lthuifeiyanmie" shortcut="" tip="lt灰飞烟灭">
+			<FACE_ORG>冷兔/lthuifeiyanmie_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltbengfeng" shortcut="" tip="lt冰封">
+			<FACE_ORG>冷兔/ltbengfeng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lttu" shortcut="" tip="lt吐">
+			<FACE_ORG>冷兔/lttu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltfuyun" shortcut="" tip="lt吹泡泡">
+			<FACE_ORG>冷兔/ltchuipaopao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ltfuyun" shortcut="" tip="lt吓">
+			<FACE_ORG>冷兔/ltxia_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="小幺鸡" counts="34">
+		<FACE id="xyjfengle" shortcut="" tip="j疯了">
+			<FACE_ORG>小幺鸡/xyjfengle_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjsajiao" shortcut="" tip="j撒娇">
+			<FACE_ORG>小幺鸡/xyjsajiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjtuxue" shortcut="" tip="j吐血">
+			<FACE_ORG>小幺鸡/xyjtuxue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjlangxiao" shortcut="" tip="j浪笑">
+			<FACE_ORG>小幺鸡/xyjlangxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjzuoyi" shortcut="" tip="j作揖">
+			<FACE_ORG>小幺鸡/xyjzuoyi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjaiya" shortcut="" tip="j哎呀">
+			<FACE_ORG>小幺鸡/xyjaiya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjguale" shortcut="" tip="j挂了">
+			<FACE_ORG>小幺鸡/xyjguale_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjniuyangge" shortcut="" tip="j扭秧歌">
+			<FACE_ORG>小幺鸡/xyjniuyangge_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjmeiyan" shortcut="" tip="j媚眼">
+			<FACE_ORG>小幺鸡/xyjmeiyan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjlaima" shortcut="" tip="j来嘛">
+			<FACE_ORG>小幺鸡/xyjlaima_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xyjceng" shortcut="" tip="j蹭">
+			<FACE_ORG>小幺鸡/xyjceng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="longnianxyjyu" shortcut="" tip="xyj年年有鱼">
+			<FACE_ORG>小幺鸡/longnianxyjyu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="longnianxyjhb" shortcut="" tip="xyj红包">
+			<FACE_ORG>小幺鸡/longnianxyjhb_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="longnianxyjbai" shortcut="" tip="xyj拜年">
+			<FACE_ORG>小幺鸡/longnianxyjbai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sh_org" shortcut="" tip="抓沙发">
+			<FACE_ORG>小幺鸡/chn_zhuashafa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_zhenhan" shortcut="" tip="震撼">
+			<FACE_ORG>小幺鸡/chn_zhenhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_yun" shortcut="" tip="晕晕">
+			<FACE_ORG>小幺鸡/chn_yun_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_xiayan" shortcut="" tip="瞎眼">
+			<FACE_ORG>小幺鸡/chn_xiayan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_weinan" shortcut="" tip="为难">
+			<FACE_ORG>小幺鸡/chn_weinan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_tian" shortcut="" tip="舔">
+			<FACE_ORG>小幺鸡/chn_tian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_liuhan" shortcut="" tip="流汗">
+			<FACE_ORG>小幺鸡/chn_liuhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_leng" shortcut="" tip="冷">
+			<FACE_ORG>小幺鸡/chn_leng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_laoda" shortcut="" tip="老大">
+			<FACE_ORG>小幺鸡/chn_laoda_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_keshui" shortcut="" tip="瞌睡">
+			<FACE_ORG>小幺鸡/chn_keshui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_kelian" shortcut="" tip="可怜的">
+			<FACE_ORG>小幺鸡/chn_kelian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_kafei" shortcut="" tip="咖啡咖啡">
+			<FACE_ORG>小幺鸡/chn_kafei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_huaixiao" shortcut="" tip="坏笑">
+			<FACE_ORG>小幺鸡/chn_huaixiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_ding" shortcut="" tip="顶啊">
+			<FACE_ORG>小幺鸡/chn_ding_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_deyi" shortcut="" tip="好得意">
+			<FACE_ORG>小幺鸡/chn_deyi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_chonga" shortcut="" tip="冲啊">
+			<FACE_ORG>小幺鸡/chn_chonga_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_chixigua" shortcut="" tip="吃西瓜">
+			<FACE_ORG>小幺鸡/chn_chixigua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_buyaoya" shortcut="" tip="不要啊">
+			<FACE_ORG>小幺鸡/chn_buyaoya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_biaolei" shortcut="" tip="飙泪中">
+			<FACE_ORG>小幺鸡/chn_biaolei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chn_aini" shortcut="" tip="爱你哦">
+			<FACE_ORG>小幺鸡/chn_aini_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="桂宝" counts="60">
+		<FACE id="guibao1sikao" shortcut="" tip="g思考">
+			<FACE_ORG>桂宝/guibao1sikao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xh_org" shortcut="" tip="g震惊">
+			<FACE_ORG>桂宝/guibao2zhenjing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao3kuangxiao" shortcut="" tip="g狂笑">
+			<FACE_ORG>桂宝/guibao3kuangxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao4lianhong" shortcut="" tip="g脸红">
+			<FACE_ORG>桂宝/guibao4lianhong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao5faleng" shortcut="" tip="g发愣">
+			<FACE_ORG>桂宝/guibao5faleng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao6hualao" shortcut="" tip="g话痨">
+			<FACE_ORG>桂宝/guibao6hualao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao7chuifa" shortcut="" tip="g吹发">
+			<FACE_ORG>桂宝/guibao7chuifa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao8baoku" shortcut="" tip="g爆哭">
+			<FACE_ORG>桂宝/guibao8baoku_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao9shangxin" shortcut="" tip="g伤心">
+			<FACE_ORG>桂宝/guibao9shangxin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao10dese" shortcut="" tip="g得瑟">
+			<FACE_ORG>桂宝/guibao10dese_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao11meiyan" shortcut="" tip="g魅眼">
+			<FACE_ORG>桂宝/guibao11meiyan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao12wugu" shortcut="" tip="g无辜">
+			<FACE_ORG>桂宝/guibao12wugu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao13tiaomei" shortcut="" tip="g挑眉">
+			<FACE_ORG>桂宝/guibao13tiaomei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao14mojing" shortcut="" tip="g墨镜1">
+			<FACE_ORG>桂宝/guibao14mojing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao16mojing" shortcut="" tip="g墨镜2">
+			<FACE_ORG>桂宝/guibao16mojing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao17bianlian" shortcut="" tip="g变脸">
+			<FACE_ORG>桂宝/guibao17bianlian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao18shanxiao" shortcut="" tip="g扇笑">
+			<FACE_ORG>桂宝/guibao18shanxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao19koubi" shortcut="" tip="g扣鼻">
+			<FACE_ORG>桂宝/guibao19koubi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xd_org" shortcut="" tip="g扣鼻2">
+			<FACE_ORG>桂宝/guibao20koubi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao21baohan" shortcut="" tip="g瀑汗">
+			<FACE_ORG>桂宝/guibao21baohan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao22handi" shortcut="" tip="g汗滴">
+			<FACE_ORG>桂宝/guibao22handi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gx2_org" shortcut="" tip="g咀嚼">
+			<FACE_ORG>桂宝/guibao23jujue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao24yinying" shortcut="" tip="g阴影">
+			<FACE_ORG>桂宝/guibao24yinying_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao25bixue" shortcut="" tip="g鼻血">
+			<FACE_ORG>桂宝/guibao25bixue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao26outu" shortcut="" tip="g呕吐">
+			<FACE_ORG>桂宝/guibao26outu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao27penxue" shortcut="" tip="g噴血">
+			<FACE_ORG>桂宝/guibao27penxue_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao28leidi" shortcut="" tip="g泪滴">
+			<FACE_ORG>桂宝/guibao28leidi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao29jingya" shortcut="" tip="g惊讶1">
+			<FACE_ORG>桂宝/guibao29jingya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao30touyun" shortcut="" tip="g头晕">
+			<FACE_ORG>桂宝/guibao30touyun_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao31shanya" shortcut="" tip="g闪牙1">
+			<FACE_ORG>桂宝/guibao31shanya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao32shanya" shortcut="" tip="g闪牙2">
+			<FACE_ORG>桂宝/guibao32shanya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao33juhan" shortcut="" tip="g巨汗">
+			<FACE_ORG>桂宝/guibao33juhan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao34guzhang" shortcut="" tip="g鼓掌">
+			<FACE_ORG>桂宝/guibao34guzhang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao35zhaohu" shortcut="" tip="g招呼">
+			<FACE_ORG>桂宝/guibao35zhaohu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao36guzhang" shortcut="" tip="g鼓掌2">
+			<FACE_ORG>桂宝/guibao36guzhang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao37wusuowei" shortcut="" tip="g无所谓">
+			<FACE_ORG>桂宝/guibao37wusuowei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao38leiji" shortcut="" tip="g雷击">
+			<FACE_ORG>桂宝/guibao38leiji_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao39xiexiao" shortcut="" tip="g邪笑">
+			<FACE_ORG>桂宝/guibao39xiexiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao40luoben" shortcut="" tip="g裸奔1">
+			<FACE_ORG>桂宝/guibao40luoben_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao41luoben" shortcut="" tip="g裸奔2">
+			<FACE_ORG>桂宝/guibao41luoben_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao42luoben" shortcut="" tip="g裸奔3">
+			<FACE_ORG>桂宝/guibao42luoben_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bx_org" shortcut="" tip="g举刀">
+			<FACE_ORG>桂宝/guibao43judao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao44hecha" shortcut="" tip="g喝茶">
+			<FACE_ORG>桂宝/guibao44hecha_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao45yaoshou" shortcut="" tip="g摇手">
+			<FACE_ORG>桂宝/guibao45yaoshou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao46bingle" shortcut="" tip="g病了">
+			<FACE_ORG>桂宝/guibao46bingle_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao47dongshang" shortcut="" tip="g冻上">
+			<FACE_ORG>桂宝/guibao47dongshang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao48haoleng" shortcut="" tip="g好冷">
+			<FACE_ORG>桂宝/guibao48haoleng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao49weiqu" shortcut="" tip="g委屈">
+			<FACE_ORG>桂宝/guibao49weiqu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao50fapiao" shortcut="" tip="g发飘">
+			<FACE_ORG>桂宝/guibao50fapiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao51maimeng" shortcut="" tip="g卖萌">
+			<FACE_ORG>桂宝/guibao51maimeng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao52changge" shortcut="" tip="g唱歌">
+			<FACE_ORG>桂宝/guibao52changge_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao53chitang" shortcut="" tip="g吃糖">
+			<FACE_ORG>桂宝/guibao53chitang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao54guibao" shortcut="" tip="g桂宝">
+			<FACE_ORG>桂宝/guibao54guibao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao55wangwang" shortcut="" tip="g汪汪">
+			<FACE_ORG>桂宝/guibao55wangwang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao56tushe" shortcut="" tip="g吐舌">
+			<FACE_ORG>桂宝/guibao56tushe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao57gutou" shortcut="" tip="g骨头">
+			<FACE_ORG>桂宝/guibao57gutou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao58koushui" shortcut="" tip="g口水">
+			<FACE_ORG>桂宝/guibao58koushui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bx_org" shortcut="" tip="g惊讶2">
+			<FACE_ORG>桂宝/guibao59jingya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao60baoku" shortcut="" tip="g爆哭2">
+			<FACE_ORG>桂宝/guibao60baoku_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="guibao60jidong" shortcut="" tip="g激动">
+			<FACE_ORG>桂宝/guibao60jidong_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="彼尔德" counts="26">
+		<FACE id="brddengtui" shortcut="" tip="bed蹬腿">
+			<FACE_ORG>彼尔德/brddengtui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdtantiao" shortcut="" tip="bed弹跳">
+			<FACE_ORG>彼尔德/brdtantiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdche" shortcut="" tip="bed扯">
+			<FACE_ORG>彼尔德/brdche_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdlingluan" shortcut="" tip="bed凌乱">
+			<FACE_ORG>彼尔德/brdlingluan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdbenpao" shortcut="" tip="bed奔跑">
+			<FACE_ORG>彼尔德/brdbenpao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdyangwoqizuo" shortcut="" tip="bed仰卧起坐">
+			<FACE_ORG>彼尔德/brdyangwoqizuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdchuyu" shortcut="" tip="bed出浴">
+			<FACE_ORG>彼尔德/brdchuyu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdlianyao" shortcut="" tip="bed练腰">
+			<FACE_ORG>彼尔德/brdlianyao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdpi" shortcut="" tip="bed皮">
+			<FACE_ORG>彼尔德/brdpi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdnaoyang" shortcut="" tip="bed挠痒">
+			<FACE_ORG>彼尔德/brdnaoyang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdlalala" shortcut="" tip="bed啦啦啦">
+			<FACE_ORG>彼尔德/brdlalala_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdjuyaling" shortcut="" tip="bed举哑铃">
+			<FACE_ORG>彼尔德/brdjuyaling_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdpiaohu" shortcut="" tip="bed飘忽">
+			<FACE_ORG>彼尔德/brdpiaohu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdpaishou" shortcut="" tip="bed拍手">
+			<FACE_ORG>彼尔德/brdpaishou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdheiha" shortcut="" tip="bed嘿哈">
+			<FACE_ORG>彼尔德/brdheiha_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdtabu" shortcut="" tip="bed踏步">
+			<FACE_ORG>彼尔德/brdtabu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdrouyan" shortcut="" tip="bed揉眼">
+			<FACE_ORG>彼尔德/brdrouyan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdzhuanquan" shortcut="" tip="bed转圈">
+			<FACE_ORG>彼尔德/brdzhuanquan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdfeiwen" shortcut="" tip="bed飞吻">
+			<FACE_ORG>彼尔德/brdfeiwen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdtiao" shortcut="" tip="bed跳">
+			<FACE_ORG>彼尔德/brdtiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdbazhang" shortcut="" tip="bed巴掌">
+			<FACE_ORG>彼尔德/brdbazhang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdsajiao" shortcut="" tip="bed撒娇">
+			<FACE_ORG>彼尔德/brdsajiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdpailian" shortcut="" tip="bed拍脸">
+			<FACE_ORG>彼尔德/brdpailian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdhaobao" shortcut="" tip="bed好饱">
+			<FACE_ORG>彼尔德/brdhaobao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdpao" shortcut="" tip="bed跑">
+			<FACE_ORG>彼尔德/brdpao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="brdtiao" shortcut="" tip="bed兴奋">
+			<FACE_ORG>彼尔德/brdxingfen_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="小纯洁" counts="42">
+		<FACE id="cshuai" shortcut="" tip="c帅">
+			<FACE_ORG>小纯洁/cshuai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cqiexi" shortcut="" tip="c窃喜">
+			<FACE_ORG>小纯洁/cqiexi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cmihu" shortcut="" tip="c迷糊">
+			<FACE_ORG>小纯洁/cmihu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cmiantan" shortcut="" tip="c面瘫">
+			<FACE_ORG>小纯洁/cmiantan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cjiong" shortcut="" tip="c囧">
+			<FACE_ORG>小纯洁/cjiong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chan" shortcut="" tip="c汗">
+			<FACE_ORG>小纯洁/chan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cgaoming" shortcut="" tip="c高明">
+			<FACE_ORG>小纯洁/cgaoming_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cdaxiao" shortcut="" tip="c大笑">
+			<FACE_ORG>小纯洁/cdaxiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cbianlian" shortcut="" tip="c变脸">
+			<FACE_ORG>小纯洁/cbianlian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjzuoyoukan" shortcut="" tip="c左右看">
+			<FACE_ORG>小纯洁/xcjzuoyoukan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjhuaixiao" shortcut="" tip="c坏笑">
+			<FACE_ORG>小纯洁/xcjhuaixiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjkanrenao" shortcut="" tip="c看热闹">
+			<FACE_ORG>小纯洁/xcjkanrenao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjkaixin" shortcut="" tip="c开心">
+			<FACE_ORG>小纯洁/xcjkaixin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjguanzhu" shortcut="" tip="c关注">
+			<FACE_ORG>小纯洁/xcjguanzhu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjjiaoxiu" shortcut="" tip="c娇羞">
+			<FACE_ORG>小纯洁/xcjjiaoxiu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjwuyu" shortcut="" tip="c无语">
+			<FACE_ORG>小纯洁/xcjwuyu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjyihuo" shortcut="" tip="c疑惑">
+			<FACE_ORG>小纯洁/xcjyihuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjzhengjing" shortcut="" tip="c正经">
+			<FACE_ORG>小纯洁/xcjzhengjing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjwuliao" shortcut="" tip="c无聊">
+			<FACE_ORG>小纯洁/xcjwuliao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjwabikong" shortcut="" tip="c挖鼻孔">
+			<FACE_ORG>小纯洁/xcjwabikong_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjqidai" shortcut="" tip="c期待">
+			<FACE_ORG>小纯洁/xcjqidai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjyaotoukan" shortcut="" tip="c摇头看">
+			<FACE_ORG>小纯洁/xcjyaotoukan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjqinqin" shortcut="" tip="c亲亲">
+			<FACE_ORG>小纯洁/xcjqinqin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjxiushe" shortcut="" tip="c羞涩">
+			<FACE_ORG>小纯洁/xcjxiushe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjbeicui" shortcut="" tip="c悲催">
+			<FACE_ORG>小纯洁/xcjbeicui_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjzhengjing" shortcut="" tip="c得瑟">
+			<FACE_ORG>小纯洁/xcjdese_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjlengyan" shortcut="" tip="c冷眼">
+			<FACE_ORG>小纯洁/xcjlengyan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjjingya" shortcut="" tip="c惊讶">
+			<FACE_ORG>小纯洁/xcjjingya_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjweiqu" shortcut="" tip="c委屈">
+			<FACE_ORG>小纯洁/xcjweiqu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjshuaishetou" shortcut="" tip="c甩舌头">
+			<FACE_ORG>小纯洁/xcjshuaishetou_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjyaotoumeng" shortcut="" tip="c摇头萌">
+			<FACE_ORG>小纯洁/xcjyaotoumeng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjzhuakuang" shortcut="" tip="c抓狂">
+			<FACE_ORG>小纯洁/xcjzhuakuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjfahuo" shortcut="" tip="c发火">
+			<FACE_ORG>小纯洁/xcjfahuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjmaimeng" shortcut="" tip="c卖萌">
+			<FACE_ORG>小纯洁/xcjmaimeng_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjshangxin" shortcut="" tip="c伤心">
+			<FACE_ORG>小纯洁/xcjshangxin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjwulian" shortcut="" tip="c捂脸">
+			<FACE_ORG>小纯洁/xcjwulian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjzhenjingku" shortcut="" tip="c震惊哭">
+			<FACE_ORG>小纯洁/xcjzhenjingku_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjyaobai" shortcut="" tip="c摇摆">
+			<FACE_ORG>小纯洁/xcjyaobai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjdeyixiao" shortcut="" tip="c得意笑">
+			<FACE_ORG>小纯洁/xcjdeyixiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjfanzao" shortcut="" tip="c烦躁">
+			<FACE_ORG>小纯洁/xcjfanzao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjdeyi" shortcut="" tip="c得意">
+			<FACE_ORG>小纯洁/xcjdeyi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xcjlianhong" shortcut="" tip="c脸红">
+			<FACE_ORG>小纯洁/xcjlianhong_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="BOBO和TOTO" counts="37">
+		<FACE id="longniantoto" shortcut="" tip="toto拜年">
+			<FACE_ORG>BOBO和TOTO/longniantoto_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobolongnian" shortcut="" tip="bobo拜年">
+			<FACE_ORG>BOBO和TOTO/bobolongnian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totowuliao" shortcut="" tip="toto无聊">
+			<FACE_ORG>BOBO和TOTO/totowuliao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totowozuiyaogun" shortcut="" tip="toto我最摇滚">
+			<FACE_ORG>BOBO和TOTO/totowozuiyaogun_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoshuluo" shortcut="" tip="toto数落">
+			<FACE_ORG>BOBO和TOTO/totoshuluo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoshuijiao" shortcut="" tip="toto睡觉">
+			<FACE_ORG>BOBO和TOTO/totoshuijiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoshuaitoufa" shortcut="" tip="toto甩头发">
+			<FACE_ORG>BOBO和TOTO/totoshuaitoufa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totopiaoguo" shortcut="" tip="toto飘过">
+			<FACE_ORG>BOBO和TOTO/totopiaoguo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totokuanghan" shortcut="" tip="toto狂汗">
+			<FACE_ORG>BOBO和TOTO/totokuanghan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totohaolei" shortcut="" tip="toto好累">
+			<FACE_ORG>BOBO和TOTO/totohaolei_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobozhuakuang" shortcut="" tip="bobo抓狂">
+			<FACE_ORG>BOBO和TOTO/bobozhuakuang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="boboyiwen" shortcut="" tip="bobo疑问">
+			<FACE_ORG>BOBO和TOTO/boboyiwen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobopaomeiyan" shortcut="" tip="bobo抛媚眼">
+			<FACE_ORG>BOBO和TOTO/bobopaomeiyan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobomobai" shortcut="" tip="bobo膜拜">
+			<FACE_ORG>BOBO和TOTO/bobomobai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobojiujie" shortcut="" tip="bobo纠结">
+			<FACE_ORG>BOBO和TOTO/bobojiujie_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobobuyaoa" shortcut="" tip="bobo不要啊">
+			<FACE_ORG>BOBO和TOTO/bobobuyaoa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobobulini" shortcut="" tip="bobo不理你">
+			<FACE_ORG>BOBO和TOTO/bobobulini_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoyouai" shortcut="" tip="有爱">
+			<FACE_ORG>BOBO和TOTO/totoyouai_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoyes" shortcut="" tip="气死了">
+			<FACE_ORG>BOBO和TOTO/totoyes_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tototingge" shortcut="" tip="我爱听">
+			<FACE_ORG>BOBO和TOTO/tototingge_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totonu" shortcut="" tip="怒火">
+			<FACE_ORG>BOBO和TOTO/totonu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoleigu" shortcut="" tip="擂鼓">
+			<FACE_ORG>BOBO和TOTO/totoleigu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totojixiao" shortcut="" tip="讥笑">
+			<FACE_ORG>BOBO和TOTO/totojixiao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="totoheixianpaoqian" shortcut="" tip="抛钱">
+			<FACE_ORG>BOBO和TOTO/totoheixianpaoqian_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="boboxianhua" shortcut="" tip="变花">
+			<FACE_ORG>BOBO和TOTO/boboxianhua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="boboweiqu" shortcut="" tip="飙泪">
+			<FACE_ORG>BOBO和TOTO/boboweiqu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobotoukan" shortcut="" tip="藏猫猫">
+			<FACE_ORG>BOBO和TOTO/bobotoukan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobotiaopi" shortcut="" tip="淘气">
+			<FACE_ORG>BOBO和TOTO/bobotiaopi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="boboshengmenqi" shortcut="" tip="生闷气">
+			<FACE_ORG>BOBO和TOTO/boboshengmenqi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="boboren" shortcut="" tip="忍">
+			<FACE_ORG>BOBO和TOTO/boboren_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobopaopaotang" shortcut="" tip="泡泡糖">
+			<FACE_ORG>BOBO和TOTO/bobopaopaotang_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobook" shortcut="" tip="好的">
+			<FACE_ORG>BOBO和TOTO/bobook_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobohi" shortcut="" tip="Hi">
+			<FACE_ORG>BOBO和TOTO/bobohi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobofeiwen" shortcut="" tip="飞吻">
+			<FACE_ORG>BOBO和TOTO/bobofeiwen_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobochixigua" shortcut="" tip="我爱西瓜">
+			<FACE_ORG>BOBO和TOTO/bobochixigua_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobochijing" shortcut="" tip="吓一跳">
+			<FACE_ORG>BOBO和TOTO/bobochijing_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bobochifan" shortcut="" tip="吃饭">
+			<FACE_ORG>BOBO和TOTO/bobochifan_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="天气" counts="87">
+		<FACE id="w" shortcut="" tip="雾">
+			<FACE_ORG>天气/w_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tf" shortcut="" tip="台风">
+			<FACE_ORG>天气/tf_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sc" shortcut="" tip="沙尘暴">
+			<FACE_ORG>天气/sc_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="qzdy" shortcut="" tip="晴转多云">
+			<FACE_ORG>天气/qzdy_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lx" shortcut="" tip="流星">
+			<FACE_ORG>天气/lx_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ljf" shortcut="" tip="龙卷风">
+			<FACE_ORG>天气/ljf_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hs2" shortcut="" tip="洪水">
+			<FACE_ORG>天气/hs2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gf" shortcut="" tip="风">
+			<FACE_ORG>天气/gf_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dyzq" shortcut="" tip="多云转晴">
+			<FACE_ORG>天气/dyzq_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ch" shortcut="" tip="彩虹">
+			<FACE_ORG>天气/ch_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="bb2" shortcut="" tip="冰雹">
+			<FACE_ORG>天气/bb2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="wind" shortcut="" tip="微风">
+			<FACE_ORG>天气/wind_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sunny" shortcut="" tip="阳光">
+			<FACE_ORG>天气/sunny_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="snow" shortcut="" tip="雪">
+			<FACE_ORG>天气/snow_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sh" shortcut="" tip="闪电">
+			<FACE_ORG>天气/sh_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="rain" shortcut="" tip="下雨">
+			<FACE_ORG>天气/rain.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dark" shortcut="" tip="阴天">
+			<FACE_ORG>天气/dark_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="byz2" shortcut="" tip="白羊">
+			<FACE_ORG>天气/byz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ssz2" shortcut="" tip="射手">
+			<FACE_ORG>天气/ssz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="syz2" shortcut="" tip="双鱼">
+			<FACE_ORG>天气/syz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="szz2" shortcut="" tip="双子">
+			<FACE_ORG>天气/szz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tpz2" shortcut="" tip="天秤">
+			<FACE_ORG>天气/tpz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="txz2" shortcut="" tip="天蝎">
+			<FACE_ORG>天气/txz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="spz2" shortcut="" tip="水瓶">
+			<FACE_ORG>天气/spz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cnz2" shortcut="" tip="处女">
+			<FACE_ORG>天气/cnz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="jnz2" shortcut="" tip="金牛">
+			<FACE_ORG>天气/jnz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="jxz2" shortcut="" tip="巨蟹">
+			<FACE_ORG>天气/jxz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="leo2" shortcut="" tip="狮子">
+			<FACE_ORG>天气/leo2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="mjz2" shortcut="" tip="摩羯">
+			<FACE_ORG>天气/mjz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="txz" shortcut="" tip="天蝎座">
+			<FACE_ORG>天气/txz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tpz" shortcut="" tip="天秤座">
+			<FACE_ORG>天气/tpz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="szz" shortcut="" tip="双子座">
+			<FACE_ORG>天气/szz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="syz" shortcut="" tip="双鱼座">
+			<FACE_ORG>天气/syz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ssz" shortcut="" tip="射手座">
+			<FACE_ORG>天气/ssz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="spz" shortcut="" tip="水瓶座">
+			<FACE_ORG>天气/spz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="mjz" shortcut="" tip="摩羯座">
+			<FACE_ORG>天气/mjz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="leo" shortcut="" tip="狮子座">
+			<FACE_ORG>天气/leo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="jxz" shortcut="" tip="巨蟹座">
+			<FACE_ORG>天气/jxz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="jnz" shortcut="" tip="金牛座">
+			<FACE_ORG>天气/jnz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cnz" shortcut="" tip="处女座">
+			<FACE_ORG>天气/cnz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="byz" shortcut="" tip="白羊座">
+			<FACE_ORG>天气/byz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="aixincd" shortcut="" tip="爱心传递">
+			<FACE_ORG>天气/aixincd_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="green_band" shortcut="" tip="绿丝带">
+			<FACE_ORG>天气/green_band_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="pink" shortcut="" tip="粉红丝带">
+			<FACE_ORG>天气/pink_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="red_band" shortcut="" tip="红丝带">
+			<FACE_ORG>天气/red_band_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+	<FACEINFO type="" version="1" name="休闲" counts="83">
+		<FACE id="bianpao" shortcut="" tip="鞭炮">
+			<FACE_ORG>休闲/bianpao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hongbao1" shortcut="" tip="让红包飞">
+			<FACE_ORG>休闲/hongbao1_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="weijin" shortcut="" tip="围脖">
+			<FACE_ORG>休闲/weijin_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="wennuanmaozi" shortcut="" tip="温暖帽子">
+			<FACE_ORG>休闲/wennuanmaozi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="shoutao" shortcut="" tip="手套">
+			<FACE_ORG>休闲/shoutao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hongbao" shortcut="" tip="红包">
+			<FACE_ORG>休闲/hongbao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xi" shortcut="" tip="喜">
+			<FACE_ORG>休闲/xi_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="liwu" shortcut="" tip="礼物">
+			<FACE_ORG>休闲/liwu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cake" shortcut="" tip="蛋糕">
+			<FACE_ORG>休闲/cake.gif</FACE_ORG>
+		</FACE>
+		<FACE id="r" shortcut="" tip="钻戒">
+			<FACE_ORG>休闲/r_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="diamond" shortcut="" tip="钻石">
+			<FACE_ORG>休闲/diamond_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dynamicbus" shortcut="" tip="大巴">
+			<FACE_ORG>休闲/dynamicbus_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="travel" shortcut="" tip="飞机">
+			<FACE_ORG>休闲/travel_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="zxc" shortcut="" tip="自行车">
+			<FACE_ORG>休闲/zxc_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="jc" shortcut="" tip="汽车">
+			<FACE_ORG>休闲/jc_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sj2" shortcut="" tip="手机">
+			<FACE_ORG>休闲/sj2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="camera" shortcut="" tip="照相机">
+			<FACE_ORG>休闲/camera_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="y" shortcut="" tip="药">
+			<FACE_ORG>休闲/y_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="dn" shortcut="" tip="电脑">
+			<FACE_ORG>休闲/dn_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sz" shortcut="" tip="手纸">
+			<FACE_ORG>休闲/sz_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="yellowMood" shortcut="" tip="落叶">
+			<FACE_ORG>休闲/yellowMood_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="christree" shortcut="" tip="圣诞树">
+			<FACE_ORG>休闲/christree_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chrishat" shortcut="" tip="圣诞帽">
+			<FACE_ORG>休闲/chrishat_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chrisfather" shortcut="" tip="圣诞老人">
+			<FACE_ORG>休闲/chrisfather_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chrisbell" shortcut="" tip="圣诞铃铛">
+			<FACE_ORG>休闲/chrisbell_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="chrisocks" shortcut="" tip="圣诞袜">
+			<FACE_ORG>休闲/chrisocks_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="darenanniversary" shortcut="" tip="达人一周年">
+			<FACE_ORG>休闲/darenanniversary_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="weibovip" shortcut="" tip="皇小冠">
+			<FACE_ORG>休闲/weibovip_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="longniao" shortcut="" tip="神龙">
+			<FACE_ORG>休闲/longniao_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lundunaohuo" shortcut="" tip="伦敦奥火">
+			<FACE_ORG>休闲/lundunaohuo_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="longdan" shortcut="" tip="龙蛋">
+			<FACE_ORG>休闲/longdan_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="weibo2zhounian" shortcut="" tip="微博蛋糕">
+			<FACE_ORG>休闲/weibo2zhounian_thumb.png</FACE_ORG>
+		</FACE>
+		<FACE id="iPhone" shortcut="" tip="iPhone">
+			<FACE_ORG>休闲/iPhone_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="shfabu" shortcut="" tip="上海志愿者">
+			<FACE_ORG>休闲/shfabu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="yinyuehe" shortcut="" tip="音乐盒">
+			<FACE_ORG>休闲/yinyuehe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="shoufa" shortcut="" tip="首发">
+			<FACE_ORG>休闲/shoufa_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="g" shortcut="" tip="狗">
+			<FACE_ORG>休闲/g_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="xunlu" shortcut="" tip="驯鹿">
+			<FACE_ORG>休闲/xunlu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hj" shortcut="" tip="火炬">
+			<FACE_ORG>休闲/hj_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="jy" shortcut="" tip="脚印">
+			<FACE_ORG>休闲/jy_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="Jobs" shortcut="" tip="悼念乔布斯">
+			<FACE_ORG>休闲/Jobs_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tupianimage" shortcut="" tip="图片">
+			<FACE_ORG>休闲/tupianimage_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cafe" shortcut="" tip="咖啡">
+			<FACE_ORG>休闲/cafe_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="nycake" shortcut="" tip="粉蛋糕">
+			<FACE_ORG>休闲/nycake_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="muqinjie" shortcut="" tip="康乃馨">
+			<FACE_ORG>休闲/muqinjie_thumb.png</FACE_ORG>
+		</FACE>
+		<FACE id="candy" shortcut="" tip="糖果">
+			<FACE_ORG>休闲/candy_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="wine" shortcut="" tip="酒壶">
+			<FACE_ORG>休闲/wine_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="lazu" shortcut="" tip="蜡烛">
+			<FACE_ORG>休闲/lazu_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="mooncake3" shortcut="" tip="月饼">
+			<FACE_ORG>休闲/mooncake3_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="moon1" shortcut="" tip="满月">
+			<FACE_ORG>休闲/moon1_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="qkl" shortcut="" tip="巧克力">
+			<FACE_ORG>休闲/qkl_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="nanguatou2" shortcut="" tip="万圣节">
+			<FACE_ORG>休闲/nanguatou2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="j2" shortcut="" tip="酒">
+			<FACE_ORG>休闲/j2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="fan" shortcut="" tip="风扇">
+			<FACE_ORG>休闲/fan.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gz3" shortcut="" tip="工作">
+			<FACE_ORG>休闲/gz3_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="star" shortcut="" tip="星">
+			<FACE_ORG>休闲/star_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="green" shortcut="" tip="叶子">
+			<FACE_ORG>休闲/green_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gq" shortcut="" tip="钢琴">
+			<FACE_ORG>休闲/gq_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="foot" shortcut="" tip="印迹">
+			<FACE_ORG>休闲/foot_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cha" shortcut="" tip="茶">
+			<FACE_ORG>休闲/cha_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="clock" shortcut="" tip="钟">
+			<FACE_ORG>休闲/clock_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="sun" shortcut="" tip="太阳">
+			<FACE_ORG>休闲/sun.gif</FACE_ORG>
+		</FACE>
+		<FACE id="umb" shortcut="" tip="雨伞">
+			<FACE_ORG>休闲/umb_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="watermelon" shortcut="" tip="西瓜">
+			<FACE_ORG>休闲/watermelon.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tel" shortcut="" tip="电话">
+			<FACE_ORG>休闲/tel_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="tv" shortcut="" tip="电视机">
+			<FACE_ORG>休闲/tv_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="shao" shortcut="" tip="哨子">
+			<FACE_ORG>休闲/shao.gif</FACE_ORG>
+		</FACE>
+		<FACE id="zhishujie" shortcut="" tip="植树节">
+			<FACE_ORG>休闲/zhishujie_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="cheer" shortcut="" tip="干杯">
+			<FACE_ORG>休闲/cheer.gif</FACE_ORG>
+		</FACE>
+		<FACE id="gz2" shortcut="" tip="档案">
+			<FACE_ORG>休闲/gz2_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="hat" shortcut="" tip="帽子">
+			<FACE_ORG>休闲/hat_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="movie" shortcut="" tip="电影">
+			<FACE_ORG>休闲/movie_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="moon" shortcut="" tip="月亮">
+			<FACE_ORG>休闲/moon.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ktv" shortcut="" tip="唱歌">
+			<FACE_ORG>休闲/ktv_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="music" shortcut="" tip="音乐">
+			<FACE_ORG>休闲/music_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="ice" shortcut="" tip="冰棍">
+			<FACE_ORG>休闲/ice.gif</FACE_ORG>
+		</FACE>
+		<FACE id="football" shortcut="" tip="足球">
+			<FACE_ORG>休闲/football.gif</FACE_ORG>
+		</FACE>
+		<FACE id="m_thumb" shortcut="" tip="话筒">
+			<FACE_ORG>休闲/m_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="flower" shortcut="" tip="鲜花">
+			<FACE_ORG>休闲/flower_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="flower" shortcut="" tip="花">
+			<FACE_ORG>休闲/flower.gif</FACE_ORG>
+		</FACE>
+		<FACE id="weibo3yr" shortcut="" tip="微博三周年">
+			<FACE_ORG>休闲/weibo3yr_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="house_thumb" shortcut="" tip="房子">
+			<FACE_ORG>休闲/house_thumb.gif</FACE_ORG>
+		</FACE>
+		<FACE id="shenshou" shortcut="" tip="草泥马">
+			<FACE_ORG>休闲/shenshou_thumb.gif</FACE_ORG>
+		</FACE>
+	</FACEINFO>
+</FACEDEFINE>

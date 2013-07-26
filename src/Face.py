@@ -7,80 +7,87 @@
 
 import sys
 import os
+import const
+from WeHack import Singleton
+from collections import OrderedDict
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
 from PyQt4 import QtCore
 
 myself_name = sys.argv[0].split('/')[-1]
 myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 
-class FaceItem(QtCore.QAbstractItemModel):
-    def __init__(self, name, path, parent=None):
-        super(FaceItem, self).__init__(parent)
-        self.name = name
-        self.path = path
+class FaceItem():
+    def __init__(self, xml_node):
+        super(FaceItem, self).__init__()
+        self.__xml_node = xml_node
+
+    @property
+    def name(self):
+        return self.__xml_node.get("tip")
+
+    @property
+    def path(self):
+        return const.face_path + self.__xml_node[0].text
+
+    @property
+    def category(self):
+        return self.__xml_node[0].text.split("/")[0]
 
 
-class FaceModel(QtCore.QAbstractListModel):
+class FaceModel(metaclass=Singleton):
     nameRole = QtCore.Qt.UserRole + 1
     pathRole = QtCore.Qt.UserRole + 2
 
-    def __init__(self, parent=None):
-        super(FaceModel, self).__init__(parent)
-        self.setRoleNames(self.roleNames())
+    def __init__(self):
+        super(FaceModel, self).__init__()
         self.faces = []
+        self.__loaded = False
 
     def appendRow(self, item):
         self.insertRow(self.rowCount(), item)
 
     def insertRow(self, row, item):
-        self.beginInsertRows(QtCore.QModelIndex(), row, row)
         self.faces.insert(row, item)
-        self.endInsertRows()
-
-    def roleNames(self):
-        names = {self.nameRole: "name", self.pathRole: "path"}
-        return names
-
-    def data(self, index, role):
-        if role == self.nameRole:
-            return self.faces[index.row()].name
-        elif role == self.pathRole:
-            return self.faces[index.row()].path
-        else:
-            return None
 
     def items(self):
-        return self.faces
+        faces = OrderedDict()
+
+        category = ""
+        for face in self.faces:
+            if category != face.category:
+                category = face.category
+                faces[category] = []
+            else:
+                faces[category].append(face)
+
+        return faces
+
+    def dic(self):
+        dic = {}
+        for face in self.faces:
+            dic[face.name] = face.path
+        return dic
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self.faces)
 
-    @staticmethod
-    def init_faces(root, face_model, face_item):
-        def walk(root):
-            for file in os.listdir(root):
-                path = os.path.join(root, file)
-                if os.path.isdir(path):
-                    for file in walk(path):
-                        yield file
-                else:
-                    yield path
+    def gridSize(self):
+        size = self.__tree.find("./WNDCONFIG/Align")
+        width = int(size.get("Col"))
+        height = int(size.get("Row"))
+        return QtCore.QSize(width, height)
 
-        def is_faces(filename):
-            filename = filename.split('.')
-            if filename[-1] == "gif":
-                return True
-            else:
-                return False
+    def init(self):
+        if self.__loaded:
+            return
 
-        for filepath in walk(root):
-            filepath = os.path.abspath(filepath)
-            filename = filepath.split('/')[-1]
-            if is_faces(filename):
-                faces_name = os.path.splitext(filepath)[0]
-                file_content = open(faces_name, encoding="UTF-8").read()
-                file_content = file_content.replace('\n', '')
-                face_model.appendRow(
-                    face_item(
-                        file_content,
-                        filepath.replace(myself_path + "/ui", "")))
+        self.__tree = ET.ElementTree(file=const.face_path + "./face.xml")
+
+        for face in self.__tree.iterfind("./FACEINFO/"):
+            assert face.tag == "FACE"
+            self.appendRow(FaceItem(face))
+        self.__loaded = True
