@@ -529,7 +529,7 @@ class SingleTweetWidget(QtGui.QFrame):
         return new_text
 
     def _create_smiles(self, text):
-        for key, value in const.SMILES.items():
+        for key, value in const.FACES.items():
             text = text.replace("[%s]" % key, '<img src="%s" />' %
                                 (const.myself_path + value))
         return text

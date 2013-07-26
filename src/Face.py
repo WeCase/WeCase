@@ -13,28 +13,28 @@ myself_name = sys.argv[0].split('/')[-1]
 myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 
-class SmileyItem(QtCore.QAbstractItemModel):
+class FaceItem(QtCore.QAbstractItemModel):
     def __init__(self, name, path, parent=None):
-        super(SmileyItem, self).__init__(parent)
+        super(FaceItem, self).__init__(parent)
         self.name = name
         self.path = path
 
 
-class SmileyModel(QtCore.QAbstractListModel):
+class FaceModel(QtCore.QAbstractListModel):
     nameRole = QtCore.Qt.UserRole + 1
     pathRole = QtCore.Qt.UserRole + 2
 
     def __init__(self, parent=None):
-        super(SmileyModel, self).__init__(parent)
+        super(FaceModel, self).__init__(parent)
         self.setRoleNames(self.roleNames())
-        self.smileies = []
+        self.faces = []
 
     def appendRow(self, item):
         self.insertRow(self.rowCount(), item)
 
     def insertRow(self, row, item):
         self.beginInsertRows(QtCore.QModelIndex(), row, row)
-        self.smileies.insert(row, item)
+        self.faces.insert(row, item)
         self.endInsertRows()
 
     def roleNames(self):
@@ -43,20 +43,20 @@ class SmileyModel(QtCore.QAbstractListModel):
 
     def data(self, index, role):
         if role == self.nameRole:
-            return self.smileies[index.row()].name
+            return self.faces[index.row()].name
         elif role == self.pathRole:
-            return self.smileies[index.row()].path
+            return self.faces[index.row()].path
         else:
             return None
 
     def items(self):
-        return self.smileies
+        return self.faces
 
     def rowCount(self, parent=QtCore.QModelIndex()):
-        return len(self.smileies)
+        return len(self.faces)
 
     @staticmethod
-    def init_smileies(root, smiley_model, smiley_item):
+    def init_faces(root, face_model, face_item):
         def walk(root):
             for file in os.listdir(root):
                 path = os.path.join(root, file)
@@ -66,7 +66,7 @@ class SmileyModel(QtCore.QAbstractListModel):
                 else:
                     yield path
 
-        def is_smiley(filename):
+        def is_faces(filename):
             filename = filename.split('.')
             if filename[-1] == "gif":
                 return True
@@ -76,11 +76,11 @@ class SmileyModel(QtCore.QAbstractListModel):
         for filepath in walk(root):
             filepath = os.path.abspath(filepath)
             filename = filepath.split('/')[-1]
-            if is_smiley(filename):
-                smiley_name = os.path.splitext(filepath)[0]
-                file_content = open(smiley_name, encoding="UTF-8").read()
+            if is_faces(filename):
+                faces_name = os.path.splitext(filepath)[0]
+                file_content = open(faces_name, encoding="UTF-8").read()
                 file_content = file_content.replace('\n', '')
-                smiley_model.appendRow(
-                    smiley_item(
+                face_model.appendRow(
+                    face_item(
                         file_content,
                         filepath.replace(myself_path + "/ui", "")))

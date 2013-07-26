@@ -13,7 +13,7 @@ from Tweet import TweetItem, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
-from SmileyWindow import SmileyWindow
+from FaceWindow import FaceWindow
 from TweetListWidget import TweetListWidget, SingleTweetWidget
 import const
 
@@ -217,9 +217,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.pushButton_send.setEnabled(True)
 
     def showSmiley(self):
-        wecase_smiley = SmileyWindow()
+        wecase_smiley = FaceWindow()
         if wecase_smiley.exec_():
-            self.textEdit.textCursor().insertText(wecase_smiley.smileyName)
+            self.textEdit.textCursor().insertText(wecase_smiley.faceName)
 
     def checkChars(self):
         """Check textEdit's characters.

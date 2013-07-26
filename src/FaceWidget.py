@@ -6,12 +6,12 @@ from PyQt4 import QtCore, QtGui
 from WIconLabel import WIconLabel
 
 
-class WSmileyListWidget(QtGui.QWidget):
+class WFaceListWidget(QtGui.QWidget):
 
     smileyClicked = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
-        super(WSmileyListWidget, self).__init__(parent)
+        super(WFaceListWidget, self).__init__(parent)
 
     def setModel(self, model):
         self._model = model

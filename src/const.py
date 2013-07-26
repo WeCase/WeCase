@@ -26,8 +26,8 @@ OAUTH2_PARAMETER = {'client_id': APP_KEY,
                     'ticket': '',
                     'withOfficalFlag': 0}
 
-# TODO: Move it to the right place, rewrite Smiley.py
-SMILES = {'good': 'ui/img/smiley/L6/good_thumb.gif',
+# TODO: Move it to the right place, rewrite Face.py
+FACES = {'good': 'ui/img/smiley/L6/good_thumb.gif',
           'ok': 'ui/img/smiley/L6/ok_thumb.gif',
           '不要': 'ui/img/smiley/L6/no_thumb.gif',
           '互粉': 'ui/img/smiley/L1/hufen_thumb.gif',
