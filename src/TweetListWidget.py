@@ -276,7 +276,7 @@ class SingleTweetWidget(QtGui.QFrame):
         text = QtCore.Qt.escape(self.tweet.text)
         text = self._create_html_url(text)
         text = self._create_smiles(text)
-        self.tweetText.setText(text)
+        self.tweetText.setHtml(text)
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self._update_time)
         self._update_time()
@@ -330,10 +330,10 @@ class SingleTweetWidget(QtGui.QFrame):
         text = self._create_html_url(text)
         text = self._create_smiles(text)
         try:
-            textLabel.setText("@%s: " % originalItem.author.name + text)
+            textLabel.setHtml("@%s: " % originalItem.author.name + text)
         except:
             # originalItem.text == This tweet deleted by author
-            textLabel.setText(text)
+            textLabel.setHtml(text)
         layout.addWidget(textLabel)
 
         if originalItem.thumbnail_pic:
