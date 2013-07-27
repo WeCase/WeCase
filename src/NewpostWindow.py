@@ -254,3 +254,5 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 QtGui.QMessageBox.No)
             if choice == QtGui.QMessageBox.No:
                 event.ignore()
+            else:
+                self.setParent(None)
