@@ -34,6 +34,7 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
+        self.setAttribute(QtCore.Qt.WA_QuitOnClose, True)
         self._iconPixmap = {}
         self.setupUi(self)
         self._setupSysTray()
@@ -369,7 +370,7 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def postTweet(self):
         wecase_new = NewpostWindow()
-        wecase_new.exec_()
+        wecase_new.show()
 
     def refresh(self):
         tweetView = self.currentTweetView()
@@ -393,6 +394,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.timer.join()
         # Reset uid when the thread exited.
         self.info["uid"] = None
+        print("Die")
 
 
 class NotifyBadgeDrawer():
