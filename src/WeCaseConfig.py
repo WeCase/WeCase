@@ -69,6 +69,15 @@ class WeCaseConfig(metaclass=Singleton):
     def tweetsKeywordsBlacklist(self, keywords):
         self._main_config["tweetKeywordsBlacklist"] = str(keywords)
 
+    @property
+    def mainwindow_geometry(self):
+        return eval(self._main_config.get("mainwindow_geometry",
+                                          '{"height": 637, "width": 330}'))
+
+    @mainwindow_geometry.setter
+    def mainwindow_geometry(self, geometry_dic):
+        self._main_config["mainwindow_geometry"] = str(geometry_dic)
+
     # Section: login
     @property
     def passwd(self):

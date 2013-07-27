@@ -17,7 +17,7 @@ from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
 from WeCaseConfig import WeCaseConfig
-from WeHack import async
+from WeHack import async, setGeometry, getGeometry
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
 from WAsyncLabel import WAsyncFetcher
@@ -77,7 +77,6 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._setupUserTab(userItem.id)
 
     def setupUi(self, mainWindow):
-        mainWindow.resize(330, 637)
         mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
         mainWindow.setDocumentMode(False)
         mainWindow.setDockOptions(QtGui.QMainWindow.AllowTabbedDocks |
@@ -134,7 +133,6 @@ class WeCaseWindow(QtGui.QMainWindow):
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(mainWindow)
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 315, 22))
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding,
                                        QtGui.QSizePolicy.Preferred)
         self.menubar.setSizePolicy(sizePolicy)
@@ -241,6 +239,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tweetKeywordsBlacklist = self.config.tweetsKeywordsBlacklist
         self.remindMentions = self.config.remind_mentions
         self.remindComments = self.config.remind_comments
+        self.mainWindow_geometry = self.config.mainwindow_geometry
 
     def applyConfig(self):
         try:
@@ -251,6 +250,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.timer = WTimer(self.notify_interval, self.show_notify)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
+        setGeometry(self, self.mainWindow_geometry)
 
     def setupModels(self):
         self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
@@ -381,10 +381,15 @@ class WeCaseWindow(QtGui.QMainWindow):
         # The most tricky part of MainWindow.
         return self.tabWidget.currentWidget().layout().itemAt(0).widget()
 
+    def saveConfig(self):
+        self.config.mainwindow_geometry = getGeometry(self)
+        self.config.save()
+
     def closeEvent(self, event):
         self.systray.hide()
-        self.timer.stop_event.set()
         self.hide()
+        self.timer.stop_event.set()
+        self.saveConfig()
         self.timer.join()
         # Reset uid when the thread exited.
         self.info["uid"] = None
