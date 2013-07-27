@@ -526,7 +526,7 @@ class SingleTweetWidget(QtGui.QFrame):
                          r"|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+"
                          r"(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|"
                          r"[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))")
-        SINA_URL_RE = r"(http://t.cn/.{7})"
+        SINA_URL_RE = r"(http://t.cn/\w{6,7})"
         regex = re.compile("((%s)|(%s))" % (SINA_URL_RE, COMMON_URL_RE))
         new_text = regex.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
