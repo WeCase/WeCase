@@ -217,6 +217,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.username = QtGui.QLabel(self)
         self.username.setObjectName("username")
         self.username.setAlignment(QtCore.Qt.AlignTop)
+        self.username.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
         self.verticalLayout.addWidget(self.username)
 
         self.tweetText = WTweetLabel(self)
@@ -542,7 +543,7 @@ class SingleTweetWidget(QtGui.QFrame):
         from NewpostWindow import NewpostWindow
         try:
             wecase_new = NewpostWindow(action, tweet)
-            wecase_new.exec_()
+            wecase_new.show()
         except APIError as e:
             self._handle_api_error(e)
 
