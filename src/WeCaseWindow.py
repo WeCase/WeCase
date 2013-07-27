@@ -384,6 +384,7 @@ class WeCaseWindow(QtGui.QMainWindow):
     def closeEvent(self, event):
         self.systray.hide()
         self.timer.stop_event.set()
+        self.hide()
         self.timer.join()
         # Reset uid when the thread exited.
         self.info["uid"] = None
