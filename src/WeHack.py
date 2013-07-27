@@ -49,3 +49,22 @@ def clearDir(folder):
 
 def UNUSED(var):
     return var
+
+
+def getGeometry(qWidget):
+    return {"height": qWidget.height(),
+            "width": qWidget.width(),
+            "x": qWidget.x(),
+            "y": qWidget.y()}
+
+
+def setGeometry(qWidget, geometry_dic):
+    width = geometry_dic.get("width")
+    height = geometry_dic.get("height")
+    if width and height:
+        qWidget.resize(width, height)
+
+    x = geometry_dic.get("x")
+    y = geometry_dic.get("y")
+    if x and y:
+        qWidget.move(x, y)
