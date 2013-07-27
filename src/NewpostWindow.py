@@ -25,6 +25,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     def __init__(self, action="new", tweet=None, parent=None):
         super(NewpostWindow, self).__init__(parent)
+        self.setAttribute(QtCore.Qt.WA_QuitOnClose, False)
         self.client = const.client
         self.tweet = tweet
         self.action = action
