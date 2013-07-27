@@ -72,7 +72,7 @@ class WeCaseConfig(metaclass=Singleton):
     @property
     def mainwindow_geometry(self):
         return eval(self._main_config.get("mainwindow_geometry",
-                                          '{"height": 637, "width": 330}'))
+                                          '{"height": 656, "width": 403}'))
 
     @mainwindow_geometry.setter
     def mainwindow_geometry(self, geometry_dic):
