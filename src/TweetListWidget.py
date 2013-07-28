@@ -542,8 +542,8 @@ class SingleTweetWidget(QtGui.QFrame):
     def exec_newpost_window(self, action, tweet):
         from NewpostWindow import NewpostWindow
         try:
-            wecase_new = NewpostWindow(action, tweet)
-            wecase_new.show()
+            self.wecase_new = NewpostWindow(action, tweet)
+            self.wecase_new.show()
         except APIError as e:
             self._handle_api_error(e)
 
