@@ -104,7 +104,7 @@ class WAsyncLabel(WImageLabel):
         if not self._image:
             return
         saveAction = QtGui.QAction(self)
-        saveAction.setText(self.tr("Save"))
+        saveAction.setText(self.tr("&Save"))
         saveAction.triggered.connect(self.save)
         menu = QtGui.QMenu()
         menu.addAction(saveAction)
