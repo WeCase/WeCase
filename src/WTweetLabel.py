@@ -37,6 +37,6 @@ class WTweetLabel(QtGui.QTextBrowser):
         elif "http://" in url:
             webbrowser.open(url)
         elif "mentions://" in url:
-            print("Clicked user %s" % url[11:])
+            print("Clicked user %s" % url[12:])
         elif "hashtag://" in url:
-            print("Clicked a tag %s" % url[10:])
+            print("Clicked a tag %s" % url[11:])
