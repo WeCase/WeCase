@@ -275,7 +275,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.username.setText(" " + self.tweet.author.name)
         text = QtCore.Qt.escape(self.tweet.text)
+        text = self._create_mentions(text)
         text = self._create_html_url(text)
+        text = self._create_hashtag(text)
         text = self._create_smiles(text)
         self.tweetText.setHtml(text)
         self.timer = QtCore.QTimer(self)
@@ -328,7 +330,9 @@ class SingleTweetWidget(QtGui.QFrame):
         originalItem = self.tweet.original
 
         text = QtCore.Qt.escape(originalItem.text)
+        text = self._create_mentions(text)
         text = self._create_html_url(text)
+        text = self._create_hashtag(text)
         text = self._create_smiles(text)
         try:
             textLabel.setHtml("@%s: " % originalItem.author.name + text)
@@ -538,6 +542,18 @@ class SingleTweetWidget(QtGui.QFrame):
         for name, path in faceModel.dic().items():
             text = text.replace("[%s]" % name, '<img src="%s" />' % path)
         return text
+
+    def _create_mentions(self, text):
+        MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
+        regex = re.compile(MENTIONS_RE)
+        new_text = regex.sub(r"""<a href='mentions://\1'>\1</a>""", text)
+        return new_text
+
+    def _create_hashtag(self, text):
+        HASHTAG_RE = re.compile("([#]+[a-zA-Z0-9_\u4e00-\u9fa5]+[#])")
+        regex = re.compile(HASHTAG_RE)
+        new_text = regex.sub(r"""<a href='hashtag://\1'>\1</a>""", text)
+        return new_text
 
     def exec_newpost_window(self, action, tweet):
         from NewpostWindow import NewpostWindow
