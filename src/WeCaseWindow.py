@@ -50,7 +50,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.applyConfig()
         self.download_lock = []
         self._last_reminds_count = 0
-        self._setupUserTab(self.uid(), False)
+        self._setupUserTab(self.uid(), False, True)
 
     def _setupTab(self, view):
         tab = QtGui.QWidget()
@@ -58,7 +58,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         layout.addWidget(view)
         return tab
 
-    def _setupUserTab(self, uid, switch=True):
+    def _setupUserTab(self, uid, switch=True, myself=False):
         view = TweetListWidget(self)
         timeline = TweetUserModel(self.client.statuses.user_timeline, uid, self)
         timeline.setUsersBlacklist(self.usersBlacklist)
@@ -73,6 +73,9 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._setTabIcon(tab, image)
         if switch:
             self.tabWidget.setCurrentWidget(tab)
+        if myself:
+            self.tabWidget.tabBar().setProtectTab(tab, True)
+
 
     def userClicked(self, userItem):
         self._setupUserTab(userItem.id)
@@ -87,25 +90,30 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
 
         self.tabWidget = QtGui.QTabWidget(self.centralwidget)
+        self.tabWidget.setTabBar(WTabBar(self.tabWidget))
         self.tabWidget.setTabPosition(QtGui.QTabWidget.West)
         self.tabWidget.setTabShape(QtGui.QTabWidget.Rounded)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setMovable(True)
+        self.tabWidget.tabCloseRequested.connect(self.closeTab)
 
         self.homeView = TweetListWidget()
         self.homeView.userClicked.connect(self.userClicked)
         self.homeTab = self._setupTab(self.homeView)
         self.tabWidget.addTab(self.homeTab, "")
+        self.tabWidget.tabBar().setProtectTab(self.homeTab, True)
 
         self.mentionsView = TweetListWidget()
         self.mentionsView.userClicked.connect(self.userClicked)
         self.mentionsTab = self._setupTab(self.mentionsView)
         self.tabWidget.addTab(self.mentionsTab, "")
+        self.tabWidget.tabBar().setProtectTab(self.mentionsTab, True)
 
         self.commentsView = TweetListWidget()
         self.commentsView.userClicked.connect(self.userClicked)
         self.commentsTab = self._setupTab(self.commentsView)
         self.tabWidget.addTab(self.commentsTab, "")
+        self.tabWidget.tabBar().setProtectTab(self.commentsTab, True)
 
         self.verticalLayout.addWidget(self.tabWidget)
 
@@ -168,7 +176,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(mainWindow)
-        self.action_Exit.triggered.connect(mainWindow.close)
+        self.action_Exit.triggered.connect(mainWindow.closeTab)
         self.action_About.triggered.connect(mainWindow.showAbout)
         self.action_Settings.triggered.connect(mainWindow.showSettings)
         self.action_Log_out.triggered.connect(mainWindow.logout)
@@ -228,6 +236,10 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._iconPixmap[icon.cacheKey()] = pixmap
         self.tabWidget.setTabIcon(self.tabWidget.indexOf(tab), icon)
         self.tabWidget.setIconSize(QtCore.QSize(24, 24))
+
+    def closeTab(self, index):
+        self.tabWidget.widget(index).deleteLater()
+        self.tabWidget.tabRemoved(index)
 
     def init_account(self):
         self.uid()
@@ -457,3 +469,34 @@ class NotifyBadgeDrawer():
         p.end()
 
         return pixmap
+
+
+class WTabBar(QtGui.QTabBar):
+
+    def __init__(self, parent=None):
+        super(WTabBar, self).__init__(parent)
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.contextMenu)
+        self.__protect = []
+
+    def contextMenu(self, pos):
+        if self.parent().widget(self.tabAt(pos)) in self.__protect:
+            return
+
+        closeAction = QtGui.QAction(self)
+        closeAction.setText(self.tr("&Close"))
+        closeAction.triggered.connect(
+            lambda: self.parent().tabCloseRequested.emit(self.tabAt(pos)))
+
+        menu = QtGui.QMenu()
+        menu.addAction(closeAction)
+        menu.exec(self.mapToGlobal(pos))
+
+    def setProtectTab(self, tabWidget, state):
+        if state and tabWidget not in self.__protect:
+            self.__protect.append(tabWidget)
+        elif not state:
+            self.__protect.remove(tabWidget)
+
+    def protectTab(self, tabWidget):
+        return (tabWidget in self.__protect)
