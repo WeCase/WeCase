@@ -467,6 +467,12 @@ class TweetItem(QtCore.QObject):
         elif self.type == self.COMMENT:
             self.client.comments.destroy.post(cid=self.id)
 
+    def favorite(self):
+        if self.type in [self.TWEET, self.RETWEET]:
+            self.client.favorites.create.post(id=self.id)
+        else:
+            raise TypeError
+
     def refresh(self):
         if self.type in [self.TWEET, self.RETWEET]:
             self._data = self.client.statuses.show.get(id=self.id)

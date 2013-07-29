@@ -477,7 +477,7 @@ class SingleTweetWidget(QtGui.QFrame):
     @async
     def _favorite(self):
         try:
-            self.client.favorites.create.post(id=self.tweet.id)
+            self.tweet.favorite()
             self.commonSignal.emit(lambda:
                                        self.favorite.setIcon(
                                            const.myself_path + \
