@@ -1,8 +1,11 @@
 from PyQt4 import QtCore, QtGui
 import webbrowser
+import logging
 
 
 class WTweetLabel(QtGui.QTextBrowser):
+
+    userClicked = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
         super(WTweetLabel, self).__init__(parent)
@@ -26,9 +29,7 @@ class WTweetLabel(QtGui.QTextBrowser):
         self.setMinimumHeight(size.height() + 2 * self.frameWidth())
 
     def openLink(self, url):
-        _url = url
         url = url.toString()
-        print(_url.toString(), _url.toEncoded())
 
         if not "://" in url:
             # no protocol
@@ -37,6 +38,6 @@ class WTweetLabel(QtGui.QTextBrowser):
         elif "http://" in url:
             webbrowser.open(url)
         elif "mentions://" in url:
-            print("Clicked user %s" % url[12:])
+            self.userClicked.emit(url[13:])
         elif "hashtag://" in url:
-            print("Clicked a tag %s" % url[11:])
+            logging.info("Clicked a tag %s" % url[11:])

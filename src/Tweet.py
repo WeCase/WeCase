@@ -215,6 +215,9 @@ class TweetUserModel(TweetTimelineBaseModel):
         timeline = timeline[1::]
         return timeline
 
+    def uid(self):
+        return self._uid
+
 
 class TweetCommentModel(TweetTimelineBaseModel):
 
@@ -281,6 +284,18 @@ class UserItem(QtCore.QObject):
         # Where is the thread? I don't know...
         super(UserItem, self).__init__()
         self._data = item
+        self.client = const.client
+
+        if self._data.get('id') and self._data.get('name'):
+            return
+        else:
+            self._loadCompleteInfo()
+
+    def _loadCompleteInfo(self):
+        if self._data.get('id'):
+            self._data = self.client.users.show.get(uid=self._data.get('id'))
+        elif self._data.get('name'):
+            self._data = self.client.users.show.get(screen_name=self._data.get('name'))
 
     @QtCore.pyqtProperty(int, constant=True)
     def id(self):

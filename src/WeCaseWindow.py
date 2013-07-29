@@ -21,6 +21,7 @@ from WeHack import async, setGeometry, getGeometry
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
 from WAsyncLabel import WAsyncFetcher
+import logging
 import wecase_rc
 
 
@@ -59,12 +60,23 @@ class WeCaseWindow(QtGui.QMainWindow):
         return tab
 
     def _setupUserTab(self, uid, switch=True, myself=False):
+        for i in range(self.tabWidget.count()):
+            try:
+                tab = self.tabWidget.widget(i).layout().itemAt(0).widget()
+                _uid = tab.model().uid()
+                if _uid == uid:
+                    self.tabWidget.setCurrentIndex(i)
+                    return
+            except AttributeError:
+                pass
+
         view = TweetListWidget(self)
         timeline = TweetUserModel(self.client.statuses.user_timeline, uid, self)
         timeline.setUsersBlacklist(self.usersBlacklist)
         timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         timeline.load()
         view.setModel(timeline)
+        view.userClicked.connect(self.userClicked)
         tab = self._setupTab(view)
         fetcher = WAsyncFetcher()
         f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
@@ -406,7 +418,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.timer.join()
         # Reset uid when the thread exited.
         self.info["uid"] = None
-        print("Die")
+        logging.info("Die")
 
 
 class NotifyBadgeDrawer():

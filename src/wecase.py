@@ -82,4 +82,5 @@ if __name__ == "__main__":
 
     # Hack: The easiest way to avoid exit crashes is to call os._exit()
     # before python starts collecting Qt objects.
+    logging.info("Exited")
     os._exit(exit_status)

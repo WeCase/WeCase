@@ -223,6 +223,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.tweetText = WTweetLabel(self)
         self.tweetText.setObjectName("tweetText")
         self.tweetText.setAlignment(QtCore.Qt.AlignTop)
+        self.tweetText.userClicked.connect(self._userTextClicked)
         self.verticalLayout.addWidget(self.tweetText)
 
         if self.tweet.thumbnail_pic and (not "image" in self.without):
@@ -327,6 +328,7 @@ class SingleTweetWidget(QtGui.QFrame):
         layout.setAlignment(QtCore.Qt.AlignTop)
         textLabel = WTweetLabel()
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
+        textLabel.userClicked.connect(self._userTextClicked)
         originalItem = self.tweet.original
 
         text = QtCore.Qt.escape(originalItem.text)
@@ -576,3 +578,6 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _userClicked(self):
         self.userClicked.emit(self.tweet.author)
+
+    def _userTextClicked(self, user):
+        self.userClicked.emit(UserItem({"name": user}))
