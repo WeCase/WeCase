@@ -337,7 +337,8 @@ class SingleTweetWidget(QtGui.QFrame):
         text = self._create_hashtag(text)
         text = self._create_smiles(text)
         try:
-            textLabel.setHtml("@%s: " % originalItem.author.name + text)
+            authorName = self._create_mentions("@" + originalItem.author.name)
+            textLabel.setHtml("%s: %s" % (authorName, text))
         except:
             # originalItem.text == This tweet deleted by author
             textLabel.setHtml(text)
