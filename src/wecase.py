@@ -28,16 +28,31 @@ def mkconfig():
         pass
 
 
+class ErrorWindow(QtCore.QObject):
+
+    raiseException = QtCore.pyqtSignal(str)
+
+    def __init__(self, parent=None):
+        super(ErrorWindow, self).__init__(parent)
+        self.raiseException.connect(self.showError)
+
+    @QtCore.pyqtSlot(str)
+    def showError(self, traceback):
+        QtGui.QMessageBox.critical(None, "Unknown Error", traceback)
+
+
 def my_excepthook(type, value, tback):
     # Let Qt complains about it.
     exception = "".join(traceback.format_exception(type, value, tback))
     error_info = "Oops, there is an unexpected error: \n\n" + \
                  "%s\n" % exception + \
                  "Please report it at https://github.com/WeCase/WeCase/issues"
-    QtGui.QMessageBox.critical(None, "Unknown Error", error_info)
+
+    errorWindow.raiseException.emit(error_info)
 
     # Then call the default handler
     sys.__excepthook__(type, value, tback)
+
 
 def import_warning():
     try:
@@ -56,6 +71,9 @@ if __name__ == "__main__":
     App = QtGui.QApplication(sys.argv)
     App.setApplicationName("WeCase")
 
+    # Exceptions may happen in other threads.
+    # So, use signal/slot to avoid threads' issue.
+    errorWindow = ErrorWindow()
     sys.excepthook = my_excepthook
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
