@@ -109,7 +109,8 @@ class WeCaseWindow(QtGui.QMainWindow):
         view.userClicked.connect(self.userClicked)
         view.tagClicked.connect(self.tagClicked)
         tab = self._setupTab(view)
-        self.tabWidget.addTab(tab, topic)
+        self.tabWidget.addTab(tab, "")
+        self._setTabIcon(tab, QtGui.QPixmap(const.icon("topic.jpg")))
         if switch:
             self.tabWidget.setCurrentWidget(tab)
 
