@@ -77,8 +77,9 @@ if __name__ == "__main__":
 
     # Exceptions may happen in other threads.
     # So, use signal/slot to avoid threads' issue.
-    errorWindow = ErrorWindow()
     sys.excepthook = my_excepthook
+    WeHack.workaround_excepthook_bug()
+    errorWindow = ErrorWindow()
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     # Qt's built-in string translator

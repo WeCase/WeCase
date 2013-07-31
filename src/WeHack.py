@@ -1,24 +1,26 @@
 from threading import Thread
-# HACK: Python Exception Hook doesn't work in other threads.
-# There is a workaround.
-# See: http://bugs.python.org/issue1230540
-init_old = Thread.__init__
-def init(self, *args, **kwargs):
-    init_old(self, *args, **kwargs)
-    run_old = self.run
-    def run_with_except_hook(*args, **kw):
-        try:
-            run_old(*args, **kw)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
-            sys.excepthook(*sys.exc_info())
-    self.run = run_with_except_hook
-Thread.__init__ = init
-
 import sys
 import os
 import platform
+
+
+def workaround_excepthook_bug():
+    # HACK: Python Exception Hook doesn't work in other threads.
+    # There is a workaround.
+    # See: http://bugs.python.org/issue1230540
+    init_old = Thread.__init__
+    def init(self, *args, **kwargs):
+        init_old(self, *args, **kwargs)
+        run_old = self.run
+        def run_with_except_hook(*args, **kw):
+            try:
+                run_old(*args, **kw)
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except:
+                sys.excepthook(*sys.exc_info())
+        self.run = run_with_except_hook
+    Thread.__init__ = init
 
 
 def async(func):
