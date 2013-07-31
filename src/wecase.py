@@ -14,6 +14,10 @@ import const
 import traceback
 import signal
 import logging
+import WeHack
+
+
+WeHack.UNUSED(None)
 
 
 def mkconfig():
