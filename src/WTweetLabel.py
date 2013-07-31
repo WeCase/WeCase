@@ -6,6 +6,7 @@ import logging
 class WTweetLabel(QtGui.QTextBrowser):
 
     userClicked = QtCore.pyqtSignal(str)
+    tagClicked = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
         super(WTweetLabel, self).__init__(parent)
@@ -40,4 +41,4 @@ class WTweetLabel(QtGui.QTextBrowser):
         elif "mentions://" in url:
             self.userClicked.emit(url[13:])
         elif "hashtag://" in url:
-            logging.info("Clicked a tag %s" % url[11:])
+            self.tagClicked.emit(url[11:])

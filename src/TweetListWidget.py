@@ -20,11 +20,13 @@ from Face import FaceModel
 class TweetListWidget(QtGui.QWidget):
 
     userClicked = QtCore.pyqtSignal(UserItem)
+    tagClicked = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None, without=[]):
         super(TweetListWidget, self).__init__(parent)
         self.tweetListWidget = SimpleTweetListWidget(parent, without)
         self.tweetListWidget.userClicked.connect(self.userClicked)
+        self.tweetListWidget.tagClicked.connect(self.tagClicked)
         self.setupUi()
 
     def setupUi(self):
@@ -66,6 +68,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     TOP = 1
     BOTTOM = 2
     userClicked = QtCore.pyqtSignal(UserItem)
+    tagClicked = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None, without=[]):
         super(SimpleTweetListWidget, self).__init__(parent)
@@ -109,6 +112,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
             item = self.model.get_item(index)
             widget = SingleTweetWidget(item, self.without, self)
             widget.userClicked.connect(self.userClicked)
+            widget.tagClicked.connect(self.tagClicked)
             self.layout.insertWidget(index, widget)
 
     def setupBusyIcon(self):
@@ -168,6 +172,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem)
+    tagClicked = QtCore.pyqtSignal(str)
     commonSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, tweet=None, without=[], parent=None):
@@ -224,6 +229,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.tweetText.setObjectName("tweetText")
         self.tweetText.setAlignment(QtCore.Qt.AlignTop)
         self.tweetText.userClicked.connect(self._userTextClicked)
+        self.tweetText.tagClicked.connect(self.tagClicked)
         self.verticalLayout.addWidget(self.tweetText)
 
         if self.tweet.thumbnail_pic and (not "image" in self.without):
@@ -329,6 +335,7 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel = WTweetLabel()
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         textLabel.userClicked.connect(self._userTextClicked)
+        textLabel.tagClicked.connect(self.tagClicked)
         originalItem = self.tweet.original
 
         text = QtCore.Qt.escape(originalItem.text)

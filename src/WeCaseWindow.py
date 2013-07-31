@@ -10,7 +10,7 @@ import http
 from time import sleep
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
-from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel
+from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel, TweetTopicModel
 from Notify import Notify
 from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
@@ -77,6 +77,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         timeline.load()
         view.setModel(timeline)
         view.userClicked.connect(self.userClicked)
+        view.tagClicked.connect(self.tagClicked)
         tab = self._setupTab(view)
         fetcher = WAsyncFetcher()
         f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
@@ -88,9 +89,35 @@ class WeCaseWindow(QtGui.QMainWindow):
         if myself:
             self.tabWidget.tabBar().setProtectTab(tab, True)
 
+    def _setupTopicTab(self, topic, switch=True):
+        for i in range(self.tabWidget.count()):
+            try:
+                tab = self.tabWidget.widget(i).layout().itemAt(0).widget()
+                _topic = tab.model().topic
+                if _topic == topic:
+                    self.tabWidget.setCurrentIndex(i)
+                    return
+            except AttributeError:
+                pass
+
+        view = TweetListWidget(self)
+        timeline = TweetTopicModel(self.client.search.topics, topic, self)
+        timeline.setUsersBlacklist(self.usersBlacklist)
+        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+        timeline.load()
+        view.setModel(timeline)
+        view.userClicked.connect(self.userClicked)
+        view.tagClicked.connect(self.tagClicked)
+        tab = self._setupTab(view)
+        self.tabWidget.addTab(tab, topic)
+        if switch:
+            self.tabWidget.setCurrentWidget(tab)
 
     def userClicked(self, userItem):
         self._setupUserTab(userItem.id)
+
+    def tagClicked(self, str):
+        self._setupTopicTab(str)
 
     def setupUi(self, mainWindow):
         mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
@@ -111,18 +138,21 @@ class WeCaseWindow(QtGui.QMainWindow):
 
         self.homeView = TweetListWidget()
         self.homeView.userClicked.connect(self.userClicked)
+        self.homeView.tagClicked.connect(self.tagClicked)
         self.homeTab = self._setupTab(self.homeView)
         self.tabWidget.addTab(self.homeTab, "")
         self.tabWidget.tabBar().setProtectTab(self.homeTab, True)
 
         self.mentionsView = TweetListWidget()
         self.mentionsView.userClicked.connect(self.userClicked)
+        self.mentionsView.tagClicked.connect(self.tagClicked)
         self.mentionsTab = self._setupTab(self.mentionsView)
         self.tabWidget.addTab(self.mentionsTab, "")
         self.tabWidget.tabBar().setProtectTab(self.mentionsTab, True)
 
         self.commentsView = TweetListWidget()
         self.commentsView.userClicked.connect(self.userClicked)
+        self.commentsView.tagClicked.connect(self.tagClicked)
         self.commentsTab = self._setupTab(self.commentsView)
         self.tabWidget.addTab(self.commentsTab, "")
         self.tabWidget.tabBar().setProtectTab(self.commentsTab, True)

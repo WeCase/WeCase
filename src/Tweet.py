@@ -277,6 +277,23 @@ class TweetRetweetModel(TweetTimelineBaseModel):
         return timeline
 
 
+class TweetTopicModel(TweetTimelineBaseModel):
+
+    def __init__(self, timeline, topic, parent=None):
+        super(TweetTopicModel, self).__init__(timeline, parent)
+        self.topic = topic.replace("#", "")
+
+    def timeline_get(self, page=1):
+        timeline = self.timeline.get(q=self.topic, page=page).statuses
+        return timeline
+
+    def timeline_new(self):
+        return []
+
+    def timeline_old(self):
+        return []
+
+
 class UserItem(QtCore.QObject):
     def __init__(self, item, parent=None):
         UNUSED(parent)
