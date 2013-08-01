@@ -178,6 +178,7 @@ class SingleTweetWidget(QtGui.QFrame):
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.commonSignal.connect(self.commonProcessor)
+        self._gif_list = {}
         self.tweet = tweet
         self.client = const.client
         self.without = without
@@ -336,6 +337,7 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         textLabel.userClicked.connect(self._userTextClicked)
         textLabel.tagClicked.connect(self.tagClicked)
+        self.textLabel = textLabel  # Hack: save a reference
         originalItem = self.tweet.original
 
         text = QtCore.Qt.escape(originalItem.text)
@@ -550,7 +552,10 @@ class SingleTweetWidget(QtGui.QFrame):
         faceModel = FaceModel()
         faceModel.init()
         for name, path in faceModel.dic().items():
-            text = text.replace("[%s]" % name, '<img src="%s" />' % path)
+            new_text = text.replace("[%s]" % name, '<img src="%s" />' % path)
+            if new_text != text:
+                self._create_animation(path)
+                text = new_text
         return text
 
     def _create_mentions(self, text):
@@ -564,6 +569,34 @@ class SingleTweetWidget(QtGui.QFrame):
         regex = re.compile(HASHTAG_RE)
         new_text = regex.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
         return new_text
+
+    def _create_animation(self, path):
+        movie = QtGui.QMovie(path, parent=self)
+        if path in self._gif_list.values():
+            # We added it already.
+            return
+        self._gif_list[movie] = path
+        movie.frameChanged.connect(self.drawAnimate)
+        movie.start()
+
+    def drawAnimate(self):
+        sender = self.sender()
+        if isinstance(sender, QtGui.QMovie):
+            movie = sender
+        else:
+            return
+
+        self._addSingleFrame(movie, self.tweetText)
+        if self.tweet.original:
+            self._addSingleFrame(movie, self.textLabel)
+
+    def _addSingleFrame(self, movie, textBrowser):
+        document = textBrowser.document()
+        document.addResource(QtGui.QTextDocument.ImageResource,
+                             QtCore.QUrl(self._gif_list[movie]),
+                             movie.currentPixmap())
+        # Cause a force refresh
+        textBrowser.setLineWrapColumnOrWidth(textBrowser.lineWrapColumnOrWidth())
 
     def exec_newpost_window(self, action, tweet):
         from NewpostWindow import NewpostWindow
