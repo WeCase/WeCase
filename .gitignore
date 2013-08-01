@@ -34,5 +34,8 @@ nosetests.xml
 .project
 .pydevproject
 
-#Log files
+# PyCharm
+.idea
+
+# unknown program generated log file
 src/libpeerconnection.log
