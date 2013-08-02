@@ -572,10 +572,10 @@ class SingleTweetWidget(QtGui.QFrame):
         return new_text
 
     def _create_animation(self, path):
-        movie = QtGui.QMovie(path, parent=self)
         if path in self._gif_list.values():
             # We added it already.
             return
+        movie = QtGui.QMovie(path, parent=self)
         self._gif_list[movie] = path
         movie.frameChanged.connect(self.drawAnimate)
         movie.start()
