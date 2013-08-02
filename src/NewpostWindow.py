@@ -208,6 +208,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             # user may cancel the dialog, so check again
             if self.image:
                 self.pushButton_picture.setText(self.tr("Remove the picture"))
+        self.textEdit.setFocus()
 
     def showError(self, e):
         if "Text too long" in e:
@@ -221,6 +222,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         wecase_smiley = FaceWindow()
         if wecase_smiley.exec_():
             self.textEdit.textCursor().insertText(wecase_smiley.faceName)
+        self.textEdit.setFocus()
 
     def checkChars(self):
         """Check textEdit's characters.
