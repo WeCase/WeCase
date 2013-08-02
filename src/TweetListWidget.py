@@ -79,6 +79,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def setupUi(self):
         self.layout = QtGui.QVBoxLayout(self)
         self.setLayout(self.layout)
+        self.busyMovie = const.busyMovie()
 
         #self.searchAction = QtGui.QAction(self)
         #self.searchAction.triggered.connect(self.search)
@@ -119,7 +120,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
         busyWidget = QtGui.QWidget()
         layout = QtGui.QVBoxLayout(busyWidget)
         busy = WImageLabel()
-        busy.setImage(const.myself_path + "/icon/busy.gif")
+        busy.setMovie(self.busyMovie)
         layout.addWidget(busy)
         layout.setAlignment(QtCore.Qt.AlignCenter)
         busyWidget.setLayout(layout)

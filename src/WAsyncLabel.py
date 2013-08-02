@@ -6,7 +6,7 @@ from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
 from const import cache_path as down_path
-from const import icon
+from const import busyPixmap, busyMovie
 from WeHack import async
 
 
@@ -21,8 +21,10 @@ class WAsyncLabel(WImageLabel):
 
         self.fetcher = WAsyncFetcher(self)
         self.fetcher.fetched.connect(self._setPixmap)
-        self.busyIcon = icon("busy.gif")
-        self.busyIconPixmap = QtGui.QPixmap(self.busyIcon)
+
+        busyIconPixmap = busyPixmap()
+        self.minimumImageHeight = busyIconPixmap.height()
+        self.minimumImageWidth = busyIconPixmap.width()
 
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.contextMenu)
@@ -32,7 +34,7 @@ class WAsyncLabel(WImageLabel):
 
     def setBusy(self, busy):
         if busy:
-            self.animation = QtGui.QMovie(self.busyIcon)
+            self.animation = busyMovie()
             self.animation.start()
             self.animation.frameChanged.connect(self.drawBusyIcon)
         else:
@@ -55,8 +57,8 @@ class WAsyncLabel(WImageLabel):
 
     def _setPixmap(self, path):
         _image = QtGui.QPixmap(path)
-        minimalHeight = self.busyIconPixmap.height()
-        minimalWidth = self.busyIconPixmap.width()
+        minimalHeight = self.minimumImageHeight
+        minimalWidth = self.minimumImageWidth
 
         if _image.height() < minimalHeight or _image.width() < minimalWidth:
             if _image.height() > minimalHeight:
@@ -85,7 +87,7 @@ class WAsyncLabel(WImageLabel):
         super(WAsyncLabel, self).setPixmap(image)
 
     def setPixmap(self, url):
-        super(WAsyncLabel, self).setImage(self.busyIcon)
+        super(WAsyncLabel, self).setMovie(busyMovie())
         self.start()
         if not ("http" in url):
             self._setPixmap(url)

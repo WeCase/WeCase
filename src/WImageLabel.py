@@ -8,16 +8,18 @@ class WImageLabel(QtGui.QLabel):
     def __init__(self, parent=None):
         super(WImageLabel, self).__init__(parent)
 
-    def setImage(self, path):
-        self._movie = QtGui.QMovie(path)
-        self.setMovie(self._movie)
-        self.start()
+    def setImageFile(self, path):
+        self.setMovie(QtGui.QMovie(path))
+
+    def setMovie(self, movie):
+        super(WImageLabel, self).setMovie(movie)
+        movie.start()
 
     def start(self):
-        self._movie.start()
+        self.movie().start()
 
     def stop(self):
-        self._movie.stop()
+        self.movie().stop()
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton:

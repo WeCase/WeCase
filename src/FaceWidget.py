@@ -59,7 +59,7 @@ class WSmileyWidget(QtGui.QWidget):
         self._smiley = smiley
         self.smileyLabel = WImageLabel(self)
         self.smileyLabel.setToolTip(smiley.name)
-        self.smileyLabel.setImage(smiley.path)
+        self.smileyLabel.setImageFile(smiley.path)
         self.smileyLabel.clicked.connect(self._smileyClicked)
 
     def _smileyClicked(self):

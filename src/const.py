@@ -43,3 +43,22 @@ face_path = myself_path + "ui/img/face/"
 def icon(name):
     return myself_path + "/icon/" + name
 
+
+def busyPixmap():
+    from PyQt4 import QtGui
+    global _busyPixmap
+    try:
+        return _busyPixmap
+    except NameError:
+        _busyPixmap = QtGui.QPixmap(icon("busy.gif"))
+        return _busyPixmap
+
+
+def busyMovie():
+    from PyQt4 import QtGui
+    global  _busyMovie
+    try:
+        return _busyMovie
+    except NameError:
+        _busyMovie = QtGui.QMovie(icon("busy.gif"))
+        return _busyMovie
