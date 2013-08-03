@@ -228,27 +228,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="NewpostWindow.py" line="189"/>
+        <location filename="NewpostWindow.py" line="199"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="149"/>
+        <location filename="NewpostWindow.py" line="152"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="162"/>
+        <location filename="NewpostWindow.py" line="165"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="175"/>
+        <location filename="NewpostWindow.py" line="178"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="189"/>
+        <location filename="NewpostWindow.py" line="199"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -260,47 +260,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="NewpostWindow.py" line="202"/>
         <source>Picture</source>
-        <translation>图片</translation>
+        <translation type="obsolete">图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="204"/>
+        <location filename="NewpostWindow.py" line="214"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="210"/>
+        <location filename="NewpostWindow.py" line="220"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="215"/>
+        <location filename="NewpostWindow.py" line="225"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="215"/>
+        <location filename="NewpostWindow.py" line="225"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="218"/>
+        <location filename="NewpostWindow.py" line="228"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="199"/>
+        <location filename="NewpostWindow.py" line="209"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="253"/>
+        <location filename="NewpostWindow.py" line="266"/>
         <source>Close?</source>
         <translation>关闭？</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="253"/>
+        <location filename="NewpostWindow.py" line="266"/>
         <source>All unpost text will lost.</source>
         <translation>所有未发布的文字将丢弃。</translation>
+    </message>
+    <message>
+        <location filename="NewpostWindow.py" line="191"/>
+        <source>File not found</source>
+        <translation>文件未找到</translation>
+    </message>
+    <message>
+        <location filename="NewpostWindow.py" line="191"/>
+        <source>No such file: %s</source>
+        <translation>没有这个文件: %s</translation>
+    </message>
+    <message>
+        <location filename="NewpostWindow.py" line="212"/>
+        <source>&amp;Picture</source>
+        <translation>图片(&amp;P)</translation>
     </message>
 </context>
 <context>
