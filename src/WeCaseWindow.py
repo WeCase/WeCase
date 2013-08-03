@@ -57,6 +57,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         tab = QtGui.QWidget()
         layout = QtGui.QGridLayout(tab)
         layout.addWidget(view)
+        view.setParent(tab)
         return tab
 
     def _setupUserTab(self, uid, switch=True, myself=False):
@@ -70,8 +71,9 @@ class WeCaseWindow(QtGui.QMainWindow):
             except AttributeError:
                 pass
 
-        view = TweetListWidget(self)
-        timeline = TweetUserModel(self.client.statuses.user_timeline, uid, self)
+        view = TweetListWidget()
+        timeline = TweetUserModel(self.client.statuses.user_timeline, uid,
+                                  view)
         timeline.setUsersBlacklist(self.usersBlacklist)
         timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
         timeline.load()
@@ -79,7 +81,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         view.userClicked.connect(self.userClicked)
         view.tagClicked.connect(self.tagClicked)
         tab = self._setupTab(view)
-        fetcher = WAsyncFetcher()
+        fetcher = WAsyncFetcher(view)
         f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
         self.tabWidget.addTab(tab, "")
         image = QtGui.QPixmap(f)
@@ -254,8 +256,9 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tabWidget.setIconSize(QtCore.QSize(24, 24))
 
     def closeTab(self, index):
-        self.tabWidget.widget(index).deleteLater()
-        self.tabWidget.tabRemoved(index)
+        widget = self.tabWidget.widget(index)
+        self.tabWidget.removeTab(index)
+        widget.deleteLater()
 
     def init_account(self):
         self.uid()
