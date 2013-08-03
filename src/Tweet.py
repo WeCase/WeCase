@@ -282,16 +282,22 @@ class TweetTopicModel(TweetTimelineBaseModel):
     def __init__(self, timeline, topic, parent=None):
         super(TweetTopicModel, self).__init__(timeline, parent)
         self.topic = topic.replace("#", "")
+        self.page = 1
 
-    def timeline_get(self, page=1):
-        timeline = self.timeline.get(q=self.topic, page=page).statuses
+    def timeline_get(self):
+        timeline = self.timeline.get(q=self.topic, page=self.page).statuses
         return timeline
 
     def timeline_new(self):
-        return []
+        timeline = self.timeline.get(q=self.topic, page=1).statuses[::-1]
+        for tweet in timeline:
+            if TweetItem(tweet).id == self.first_id():
+                return reversed(timeline[:timeline.index(tweet)])
+        return timeline
 
     def timeline_old(self):
-        return []
+        self.page += 1
+        return self.timeline_get()
 
 
 class UserItem(QtCore.QObject):
