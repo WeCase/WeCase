@@ -37,5 +37,8 @@ nosetests.xml
 # PyCharm
 .idea
 
+# Backups
+*.bak
+
 # unknown program generated log file
 src/libpeerconnection.log
