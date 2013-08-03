@@ -209,7 +209,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         ACCEPT_TYPE = self.tr("Images") + "(*.png *.jpg *.bmp *.gif)"
         if self.image:
             self.image = None
-            self.pushButton_picture.setText(self.tr("Picture"))
+            self.pushButton_picture.setText(self.tr("&Picture"))
         else:
             self.image = QtGui.QFileDialog.getOpenFileName(self,
                                                            self.tr("Choose a"
