@@ -389,14 +389,14 @@ class TweetItem(QtCore.QObject):
         passedSeconds = self.passedSeconds
         if passedSeconds < 0:
             return self.tr("Future!")
-        if passedSeconds < 60:
+        elif passedSeconds < 60:
             return self.tr("%.0fs ago") % passedSeconds
-        if passedSeconds < 3600:
+        elif passedSeconds < 3600:
             return self.tr("%.0fm ago") % (passedSeconds / 60)
-        if passedSeconds < 86400:
+        elif passedSeconds < 86400:
             return self.tr("%.0fh ago") % (passedSeconds / 3600)
-
-        return self.tr("%.0fd ago") % (passedSeconds / 86400)
+        else:
+            return self.tr("%.0fd ago") % (passedSeconds / 86400)
 
     @QtCore.pyqtProperty(str, constant=True)
     def timestamp(self):
