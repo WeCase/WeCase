@@ -8,6 +8,7 @@ from WImageLabel import WImageLabel
 from const import cache_path as down_path
 from const import busyPixmap, busyMovie
 from WeHack import async
+import logging
 
 
 class WAsyncLabel(WImageLabel):
@@ -166,7 +167,12 @@ class WAsyncFetcher(QtCore.QObject):
                 sleep(0.5)
                 continue
             else:
-                download()
+                try:
+                    download()
+                except Exception as e:
+                    # Issue #72, log it for further research.
+                    logging.error(str(e))
+                    return
 
     @async
     def fetch(self, url, filename=""):
