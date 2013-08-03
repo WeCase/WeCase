@@ -21,6 +21,7 @@ import const
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     image = None
     apiError = QtCore.pyqtSignal(str)
+    commonError = QtCore.pyqtSignal(str, str)
     sendSuccessful = QtCore.pyqtSignal()
 
     def __init__(self, action="new", tweet=None, parent=None):
@@ -34,7 +35,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.mention_flag = "@"
         self.notify = Notify(timeout=1)
         self._sent = False
+        self.apiError.connect(self.showException)
         self.sendSuccessful.connect(self.sent)
+        self.commonError.connect(self.showErrorMessage)
 
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
@@ -181,8 +184,15 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
         try:
             if self.image:
-                self.client.statuses.upload.post(status=text,
-                                                 pic=open(self.image, "rb"))
+                try:
+                    self.client.statuses.upload.post(status=text,
+                                                     pic=open(self.image, "rb"))
+                except FileNotFoundError:
+                    self.commonError.emit(self.tr("File not found"),
+                                          self.tr("No such file: %s")
+                                          % self.image)
+                    self.addImage()  # In fact, remove image...
+                    return
             else:
                 self.client.statuses.update.post(status=text)
 
@@ -210,13 +220,16 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 self.pushButton_picture.setText(self.tr("Remove the picture"))
         self.textEdit.setFocus()
 
-    def showError(self, e):
+    def showException(self, e):
         if "Text too long" in e:
             QtGui.QMessageBox.warning(None, self.tr("Text too long!"),
                                       self.tr("Please remove some text."))
         else:
             QtGui.QMessageBox.warning(None, self.tr("Unknown error!"), e)
         self.pushButton_send.setEnabled(True)
+
+    def showErrorMessage(self, title, text):
+        QtGui.QMessageBox.warning(self, title, text)
 
     def showSmiley(self):
         wecase_smiley = FaceWindow()
