@@ -242,11 +242,30 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.systray.setIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
         self.systray.show()
 
-    def clickedSystray(self):
+        self.visibleAction = QtGui.QAction(self)
+        self.visibleAction.setText(self.tr("&Hide"))
+        self.visibleAction.triggered.connect(self._switchVisibility)
+
+        self.sysMenu = QtGui.QMenu(self)
+        self.sysMenu.addAction(self.visibleAction)
+        self.sysMenu.addAction(self.logoutAction)
+        self.sysMenu.addAction(self.exitAction)
+
+        self.systray.setContextMenu(self.sysMenu)
+
+    def clickedSystray(self, reason):
+        if reason == QtGui.QSystemTrayIcon.Trigger:
+            self._switchVisibility()
+        elif reason == QtGui.QSystemTrayIcon.Context:
+            pass
+
+    def _switchVisibility(self):
         if self.isVisible():
             self.hide()
+            self.visibleAction.setText("&Show")
         else:
             self.show()
+            self.visibleAction.setText(self.tr("&Hide"))
 
     def _setTabIcon(self, tab, icon):
         pixmap = icon.transformed(QtGui.QTransform().rotate(90))
