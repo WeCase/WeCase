@@ -445,7 +445,7 @@ class TweetItem(QtCore.QObject):
             # datetime do not support negative numbers
             return -1
         else:
-            passedSeconds = (now_utc - create_utc).seconds
+            passedSeconds = (now_utc - create_utc).total_seconds()
             return passedSeconds
 
     def _cut_off(self, text):
