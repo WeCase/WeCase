@@ -196,7 +196,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.menubar.addAction(self.optionsMenu.menuAction())
         self.menubar.addAction(self.helpMenu.menuAction())
 
-        self.exitAction.triggered.connect(mainWindow.closeTab)
+        self.exitAction.triggered.connect(mainWindow.close)
         self.aboutAction.triggered.connect(mainWindow.showAbout)
         self.settingsAction.triggered.connect(mainWindow.showSettings)
         self.logoutAction.triggered.connect(mainWindow.logout)
