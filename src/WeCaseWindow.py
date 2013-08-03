@@ -262,7 +262,7 @@ class WeCaseWindow(QtGui.QMainWindow):
     def _switchVisibility(self):
         if self.isVisible():
             self.hide()
-            self.visibleAction.setText("&Show")
+            self.visibleAction.setText(self.tr("&Show"))
         else:
             self.show()
             self.visibleAction.setText(self.tr("&Hide"))
