@@ -156,7 +156,11 @@ class WAsyncFetcher(QtCore.QObject):
         while 1:
             if os.path.exists(down_path + filename):
                 delete_tmp()
-                self.fetched.emit(down_path + filename)
+                try:
+                    self.fetched.emit(down_path + filename)
+                except TypeError:
+                    # Garbage Collected
+                    pass
                 return down_path + filename
             elif os.path.exists(down_path + filename + ".down"):
                 sleep(0.5)
