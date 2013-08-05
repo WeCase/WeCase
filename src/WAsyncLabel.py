@@ -35,12 +35,21 @@ class WAsyncLabel(WImageLabel):
 
     def setBusy(self, busy):
         if busy:
+            # XXX: # Issue #74.
+            # What's wrong with the busyMovie()? To save the memory,
+            # We use a single busyMovie() in the whole program.
+            # If the image downloaded here, we'll stop the movie and the
+            # busyIcon will disappear. But it may start from somewhere else.
+            # The the busyIcon appear again unexpectedly.
+            # The quick fix is disconnecting the signal/slot connection
+            # when we stop the movie.
             self.animation = busyMovie()
             self.animation.start()
             self.animation.frameChanged.connect(self.drawBusyIcon)
         else:
             self.clearBusyIcon()
 
+    @QtCore.pyqtSlot()
     def drawBusyIcon(self):
         image = QtGui.QPixmap(self._image)
         icon = self.animation.currentPixmap()
@@ -54,6 +63,7 @@ class WAsyncLabel(WImageLabel):
 
     def clearBusyIcon(self):
         self.animation.stop()
+        self.animation.frameChanged.disconnect(self.drawBusyIcon)
         super(WAsyncLabel, self).setPixmap(self._image)
 
     def _setPixmap(self, path):
