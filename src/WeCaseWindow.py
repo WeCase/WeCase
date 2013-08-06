@@ -216,17 +216,27 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.refreshAction.setShortcut(QtGui.QKeySequence("F5"))
         self.pushButton_refresh.setIcon(QtGui.QIcon(const.icon("refresh.png")))
         self.pushButton_new.setIcon(QtGui.QIcon(const.icon("new.png")))
-        self.buttonWidget = QtGui.QWidget()
+        self.buttonWidget = QtGui.QWidget(self)
         self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
+        self.horizontalSpacer = QtGui.QSpacerItem(40, 20,
+                                          QtGui.QSizePolicy.Expanding,
+                                          QtGui.QSizePolicy.Minimum)
+        self.buttonLayout.addSpacerItem(self.horizontalSpacer)
         self.buttonLayout.addWidget(self.pushButton_refresh)
         self.buttonLayout.addWidget(self.pushButton_new)
-        self.menubar.setCornerWidget(self.buttonWidget)
 
         self._setTabIcon(self.homeTab, QtGui.QPixmap(const.icon("sina.png")))
         self._setTabIcon(self.mentionsTab, QtGui.QPixmap(const.icon("mentions.png")))
         self._setTabIcon(self.commentsTab, QtGui.QPixmap(const.icon("comments2.png")))
 
         self.retranslateUi(mainWindow)
+
+    def resizeEvent(self, event):
+        # This is a hack!!!
+        self.buttonWidget.resize(self.menubar.sizeHint().width(),
+                                 self.menubar.sizeHint().height())
+        self.buttonWidget.move(self.width() - self.buttonWidget.width(),
+                               self.menubar.geometry().topRight().y())
 
     def retranslateUi(self, frm_MainWindow):
         frm_MainWindow.setWindowTitle(self.tr("WeCase"))
