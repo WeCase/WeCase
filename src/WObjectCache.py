@@ -13,7 +13,6 @@ class WObjectCache(metaclass=Singleton):
         # TODO: Using LRU Cache to free memory.
         hash_key = self.__calculate_key(object, key)
         if hash_key in self.__objects.keys():
-            print(self.__objects[hash_key])
             return self.__objects[hash_key]
         obj = object(key, *args)
         self.__objects[hash_key] = obj
