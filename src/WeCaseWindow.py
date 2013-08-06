@@ -9,6 +9,7 @@
 import http
 from time import sleep
 from WTimer import WTimer
+from urllib.error import URLError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel, TweetTopicModel
 from Notify import Notify
@@ -341,7 +342,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             try:
                 reminds = self.client.remind.unread_count.get(uid=uid)
                 break
-            except http.client.BadStatusLine:
+            except (http.client.BadStatusLine, URLError):
                 sleep(0.2)
                 continue
         return reminds
