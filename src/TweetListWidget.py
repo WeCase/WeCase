@@ -14,6 +14,7 @@ from WImageLabel import WImageLabel
 import const
 from const import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
+from WObjectCache import WObjectCache
 from Face import FaceModel
 
 
@@ -585,7 +586,7 @@ class SingleTweetWidget(QtGui.QFrame):
         if path in self._gif_list.values():
             # We added it already.
             return
-        movie = QtGui.QMovie(path, parent=self)
+        movie = WObjectCache().open(QtGui.QMovie, path)
         self._gif_list[movie] = path
         movie.frameChanged.connect(self.drawAnimate)
         movie.start()

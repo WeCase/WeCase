@@ -19,6 +19,7 @@ from AboutWindow import AboutWindow
 import const
 from WeCaseConfig import WeCaseConfig
 from WeHack import async, setGeometry, getGeometry
+from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
 from WAsyncLabel import WAsyncFetcher
@@ -85,7 +86,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         fetcher = WAsyncFetcher(view)
         f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
         self.tabWidget.addTab(tab, "")
-        image = QtGui.QPixmap(f)
+        image = WObjectCache().open(QtGui.QPixmap, f)
         self._setTabIcon(tab, image)
         if switch:
             self.tabWidget.setCurrentWidget(tab)
@@ -113,7 +114,9 @@ class WeCaseWindow(QtGui.QMainWindow):
         view.tagClicked.connect(self.tagClicked)
         tab = self._setupTab(view)
         self.tabWidget.addTab(tab, "")
-        self._setTabIcon(tab, QtGui.QPixmap(const.icon("topic.jpg")))
+        self._setTabIcon(tab, WObjectCache().open(
+            QtGui.QPixmap, const.icon("topic.png")
+        ))
         if switch:
             self.tabWidget.setCurrentWidget(tab)
 
