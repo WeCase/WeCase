@@ -234,9 +234,9 @@ class WeCaseWindow(QtGui.QMainWindow):
     def resizeEvent(self, event):
         # This is a hack!!!
         self.buttonWidget.resize(self.menubar.sizeHint().width(),
-                                 self.menubar.sizeHint().height())
+                                 self.menubar.sizeHint().height() + 12)
         self.buttonWidget.move(self.width() - self.buttonWidget.width(),
-                               self.menubar.geometry().topRight().y())
+                               self.menubar.geometry().topRight().y() - 5)
 
     def retranslateUi(self, frm_MainWindow):
         frm_MainWindow.setWindowTitle(self.tr("WeCase"))
