@@ -6,6 +6,8 @@
 # License: GPL v3 or later.
 
 
+import os
+import platform
 import http
 from time import sleep
 from WTimer import WTimer
@@ -25,6 +27,9 @@ from TweetListWidget import TweetListWidget
 from WAsyncLabel import WAsyncFetcher
 import logging
 import wecase_rc
+
+
+DEBUG_GLOBAL_MENU = False
 
 
 class WeCaseWindow(QtGui.QMainWindow):
@@ -180,6 +185,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.aboutAction.setIcon(QtGui.QIcon(QtGui.QPixmap("./IMG/img/where_s_my_weibo.svg")))
         self.exitAction.setIcon(QtGui.QIcon(QtGui.QPixmap(":/IMG/img/application-exit.svg")))
         self.settingsAction.setIcon(QtGui.QIcon(QtGui.QPixmap(":/IMG/img/preferences-other.png")))
+        self.refreshAction.setIcon(QtGui.QIcon(QtGui.QPixmap(const.icon("refresh.png"))))
 
         self.menubar = QtGui.QMenuBar(mainWindow)
         self.menubar.setEnabled(True)
@@ -216,14 +222,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.refreshAction.setShortcut(QtGui.QKeySequence("F5"))
         self.pushButton_refresh.setIcon(QtGui.QIcon(const.icon("refresh.png")))
         self.pushButton_new.setIcon(QtGui.QIcon(const.icon("new.png")))
-        self.buttonWidget = QtGui.QWidget(self)
-        self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
-        self.horizontalSpacer = QtGui.QSpacerItem(40, 20,
-                                          QtGui.QSizePolicy.Expanding,
-                                          QtGui.QSizePolicy.Minimum)
-        self.buttonLayout.addSpacerItem(self.horizontalSpacer)
-        self.buttonLayout.addWidget(self.pushButton_refresh)
-        self.buttonLayout.addWidget(self.pushButton_new)
+
+        if self.isGlobalMenu():
+            self._setupToolBar()
+        else:
+            self._setupButtonWidget()
 
         self._setTabIcon(self.homeTab, QtGui.QPixmap(const.icon("sina.png")))
         self._setTabIcon(self.mentionsTab, QtGui.QPixmap(const.icon("mentions.png")))
@@ -231,8 +234,47 @@ class WeCaseWindow(QtGui.QMainWindow):
 
         self.retranslateUi(mainWindow)
 
+    def isGlobalMenu(self):
+        if "unity" in os.environ.get('DESKTOP_SESSION'):
+            if not os.environ.get("UBUNTU_MENUPROXY"):
+                return False
+            elif os.environ.get("APPMENU_DISPLAY_BOTH"):
+                return False
+            else:
+                return True
+        elif platform.system() == "Darwin":
+            return True
+        elif DEBUG_GLOBAL_MENU:
+            return True
+        return False
+
+    def _setupToolBar(self):
+        self.toolBar = QtGui.QToolBar()
+        self.toolBar.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
+        self.toolBar.addAction(self.refreshAction)
+        newAction = self.toolBar.addAction(QtGui.QIcon(
+                                               QtGui.QPixmap(
+                                                   const.icon("new.png")
+                                               )
+                                           ),
+                                           "New")
+        newAction.triggered.connect(self.pushButton_new.clicked)
+        self.addToolBar(self.toolBar)
+
+    def _setupButtonWidget(self):
+        self.buttonWidget = QtGui.QWidget(self)
+        self.buttonLayout = QtGui.QHBoxLayout(self.buttonWidget)
+        self.horizontalSpacer = QtGui.QSpacerItem(40, 20,
+                                                  QtGui.QSizePolicy.Expanding,
+                                                  QtGui.QSizePolicy.Minimum)
+        self.buttonLayout.addSpacerItem(self.horizontalSpacer)
+        self.buttonLayout.addWidget(self.pushButton_refresh)
+        self.buttonLayout.addWidget(self.pushButton_new)
+
     def resizeEvent(self, event):
         # This is a hack!!!
+        if self.isGlobalMenu():
+            return
         self.buttonWidget.resize(self.menubar.sizeHint().width(),
                                  self.menubar.sizeHint().height() + 12)
         self.buttonWidget.move(self.width() - self.buttonWidget.width(),
@@ -244,7 +286,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.helpMenu.setTitle(self.tr("&Help"))
         self.optionsMenu.setTitle(self.tr("&Options"))
         self.aboutAction.setText(self.tr("&About..."))
-        self.refreshAction.setText(self.tr("&Refresh"))
+        self.refreshAction.setText(self.tr("Refresh"))
         self.logoutAction.setText(self.tr("&Log out"))
         self.exitAction.setText(self.tr("&Exit"))
         self.settingsAction.setText(self.tr("&Settings"))
