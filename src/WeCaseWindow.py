@@ -115,7 +115,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         tab = self._setupTab(view)
         self.tabWidget.addTab(tab, "")
         self._setTabIcon(tab, WObjectCache().open(
-            QtGui.QPixmap, const.icon("topic.png")
+            QtGui.QPixmap, const.icon("topic.jpg")
         ))
         if switch:
             self.tabWidget.setCurrentWidget(tab)
