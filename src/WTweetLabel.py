@@ -5,8 +5,8 @@ import logging
 
 class WTweetLabel(QtGui.QTextBrowser):
 
-    userClicked = QtCore.pyqtSignal(str)
-    tagClicked = QtCore.pyqtSignal(str)
+    userClicked = QtCore.pyqtSignal(str, int)
+    tagClicked = QtCore.pyqtSignal(str, int)
 
     def __init__(self, parent=None):
         super(WTweetLabel, self).__init__(parent)
@@ -24,6 +24,14 @@ class WTweetLabel(QtGui.QTextBrowser):
         self.connect(self.document().documentLayout(),
                      QtCore.SIGNAL("documentSizeChanged(QSizeF)"),
                      QtCore.SLOT("adjustMinimumSize(QSizeF)"))
+        self.__mouseButton = QtCore.Qt.LeftButton
+
+    def mouseReleaseEvent(self, e):
+        self.__mouseButton = e.button()
+        if e.button() == QtCore.Qt.MiddleButton:
+            anchor = QtCore.QUrl(self.anchorAt(e.pos()))
+            self.anchorClicked.emit(anchor)
+        super(WTweetLabel, self).mouseReleaseEvent(e)
 
     @QtCore.pyqtSlot(QtCore.QSizeF)
     def adjustMinimumSize(self, size):
@@ -39,6 +47,8 @@ class WTweetLabel(QtGui.QTextBrowser):
         elif "http://" in url:
             webbrowser.open(url)
         elif "mentions://" in url:
-            self.userClicked.emit(url[13:])
+            self.userClicked.emit(url[13:], self.__mouseButton)
         elif "hashtag://" in url:
-            self.tagClicked.emit(url[11:])
+            self.tagClicked.emit(url[11:], self.__mouseButton)
+
+        self.__mouseButton = QtCore.Qt.LeftButton

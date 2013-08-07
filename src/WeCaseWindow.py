@@ -120,11 +120,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         if switch:
             self.tabWidget.setCurrentWidget(tab)
 
-    def userClicked(self, userItem):
-        self._setupUserTab(userItem.id)
+    def userClicked(self, userItem, openAtBackend):
+        self._setupUserTab(userItem.id, switch=(not openAtBackend))
 
-    def tagClicked(self, str):
-        self._setupTopicTab(str)
+    def tagClicked(self, str, openAtBackend):
+        self._setupTopicTab(str, switch=(not openAtBackend))
 
     def setupUi(self, mainWindow):
         mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))

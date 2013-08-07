@@ -14,7 +14,7 @@ import logging
 
 class WAsyncLabel(WImageLabel):
 
-    clicked = QtCore.pyqtSignal()
+    clicked = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
         super(WAsyncLabel, self).__init__(parent)
@@ -114,7 +114,9 @@ class WAsyncLabel(WImageLabel):
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton and self._image:
-            self.clicked.emit()
+            self.clicked.emit(QtCore.Qt.LeftButton)
+        elif e.button() == QtCore.Qt.MiddleButton and self._image:
+            self.clicked.emit(QtCore.Qt.MiddleButton)
 
     def contextMenu(self, pos):
         if not self._image:

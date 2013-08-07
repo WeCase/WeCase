@@ -20,8 +20,8 @@ from Face import FaceModel
 
 class TweetListWidget(QtGui.QWidget):
 
-    userClicked = QtCore.pyqtSignal(UserItem)
-    tagClicked = QtCore.pyqtSignal(str)
+    userClicked = QtCore.pyqtSignal(UserItem, bool)
+    tagClicked = QtCore.pyqtSignal(str, bool)
 
     def __init__(self, parent=None, without=[]):
         super(TweetListWidget, self).__init__(parent)
@@ -68,8 +68,8 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
     TOP = 1
     BOTTOM = 2
-    userClicked = QtCore.pyqtSignal(UserItem)
-    tagClicked = QtCore.pyqtSignal(str)
+    userClicked = QtCore.pyqtSignal(UserItem, bool)
+    tagClicked = QtCore.pyqtSignal(str, bool)
 
     def __init__(self, parent=None, without=[]):
         super(SimpleTweetListWidget, self).__init__(parent)
@@ -173,8 +173,8 @@ class SimpleTweetListWidget(QtGui.QWidget):
 class SingleTweetWidget(QtGui.QFrame):
 
     imageLoaded = QtCore.pyqtSignal()
-    userClicked = QtCore.pyqtSignal(UserItem)
-    tagClicked = QtCore.pyqtSignal(str)
+    userClicked = QtCore.pyqtSignal(UserItem, bool)
+    tagClicked = QtCore.pyqtSignal(str, bool)
     commonSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, tweet=None, without=[], parent=None):
@@ -232,7 +232,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.tweetText.setObjectName("tweetText")
         self.tweetText.setAlignment(QtCore.Qt.AlignTop)
         self.tweetText.userClicked.connect(self._userTextClicked)
-        self.tweetText.tagClicked.connect(self.tagClicked)
+        self.tweetText.tagClicked.connect(self._tagClicked)
         self.verticalLayout.addWidget(self.tweetText)
 
         if self.tweet.thumbnail_pic and (not "image" in self.without):
@@ -338,7 +338,7 @@ class SingleTweetWidget(QtGui.QFrame):
         textLabel = WTweetLabel()
         textLabel.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignTop)
         textLabel.userClicked.connect(self._userTextClicked)
-        textLabel.tagClicked.connect(self.tagClicked)
+        textLabel.tagClicked.connect(self._tagClicked)
         self.textLabel = textLabel  # Hack: save a reference
         originalItem = self.tweet.original
 
@@ -632,8 +632,20 @@ class SingleTweetWidget(QtGui.QFrame):
             QtGui.QMessageBox.warning(self, self.tr("Unknown Error"),
                                       str(exception))
 
-    def _userClicked(self):
-        self.userClicked.emit(self.tweet.author)
+    def _userClicked(self, button):
+        openAtBackend = False
+        if button == QtCore.Qt.MiddleButton:
+            openAtBackend = True
+        self.userClicked.emit(self.tweet.author, openAtBackend)
 
-    def _userTextClicked(self, user):
-        self.userClicked.emit(UserItem({"name": user}))
+    def _userTextClicked(self, user, button):
+        openAtBackend = False
+        if button == QtCore.Qt.MiddleButton:
+            openAtBackend = True
+        self.userClicked.emit(UserItem({"name": user}), openAtBackend)
+
+    def _tagClicked(self, tag, button):
+        openAtBackend = False
+        if button == QtCore.Qt.MiddleButton:
+            openAtBackend = True
+        self.tagClicked.emit(tag, openAtBackend)
