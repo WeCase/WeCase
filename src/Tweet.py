@@ -136,7 +136,8 @@ class TweetTimelineBaseModel(TweetSimpleModel):
                 # We are in another thread now, call it. UI won't freeze.
                 timeline = timeline_func()
                 break
-            except (BadStatusLine, URLError):
+            except (BadStatusLine, URLError, OSError):
+                # OSError: CRC Check Failed...
                 tprint("Retrying...")
                 continue
 
