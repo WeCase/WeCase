@@ -49,6 +49,6 @@ class WTweetLabel(QtGui.QTextBrowser):
         elif "mentions://" in url:
             self.userClicked.emit(url[13:], self.__mouseButton)
         elif "hashtag://" in url:
-            self.tagClicked.emit(url[11:], self.__mouseButton)
+            self.tagClicked.emit(url[11:].replace("#", ""), self.__mouseButton)
 
         self.__mouseButton = QtCore.Qt.LeftButton
