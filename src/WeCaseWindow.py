@@ -235,7 +235,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.retranslateUi(mainWindow)
 
     def isGlobalMenu(self):
-        if "unity" in os.environ.get('DESKTOP_SESSION'):
+        if os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
             if not os.environ.get("UBUNTU_MENUPROXY"):
                 return False
             elif os.environ.get("APPMENU_DISPLAY_BOTH"):
