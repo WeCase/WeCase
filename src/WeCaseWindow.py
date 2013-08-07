@@ -531,18 +531,32 @@ class WTabBar(QtGui.QTabBar):
         self.customContextMenuRequested.connect(self.contextMenu)
         self.__protect = []
 
+    def mouseReleaseEvent(self, e):
+        if e.button() == QtCore.Qt.MiddleButton:
+            self.closeTab(e.pos())
+
     def contextMenu(self, pos):
-        if self.parent().widget(self.tabAt(pos)) in self.__protect:
+        if self.isProtected(pos):
             return
 
         closeAction = QtGui.QAction(self)
         closeAction.setText(self.tr("&Close"))
-        closeAction.triggered.connect(
-            lambda: self.parent().tabCloseRequested.emit(self.tabAt(pos)))
+        closeAction.triggered.connect(lambda: self.closeTab(pos))
 
         menu = QtGui.QMenu()
         menu.addAction(closeAction)
         menu.exec(self.mapToGlobal(pos))
+
+    def isProtected(self, pos):
+        if self.parent().widget(self.tabAt(pos)) in self.__protect:
+            return True
+        return False
+
+    def closeTab(self, pos):
+        if self.isProtected(pos):
+            return False
+        self.parent().tabCloseRequested.emit(self.tabAt(pos))
+        return True
 
     def setProtectTab(self, tabWidget, state):
         if state and tabWidget not in self.__protect:
