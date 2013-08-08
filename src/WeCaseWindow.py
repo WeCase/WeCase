@@ -95,7 +95,8 @@ class WeCaseWindow(QtGui.QMainWindow):
     def _setupUserTab(self, uid, switch=True, myself=False):
         index = self._getSameTab("uid", uid)
         if index:
-            self.tabWidget.setCurrentIndex(index)
+            if switch:
+                self.tabWidget.setCurrentIndex(index)
             return
 
         view = TweetListWidget()
@@ -121,7 +122,8 @@ class WeCaseWindow(QtGui.QMainWindow):
     def _setupTopicTab(self, topic, switch=True):
         index = self._getSameTab("topic", topic)
         if index:
-            self.tabWidget.setCurrentIndex(index)
+            if switch:
+                self.tabWidget.setCurrentIndex(index)
             return
 
         view = TweetListWidget()
