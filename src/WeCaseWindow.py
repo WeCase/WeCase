@@ -251,6 +251,10 @@ class WeCaseWindow(QtGui.QMainWindow):
     def _setupToolBar(self):
         self.toolBar = QtGui.QToolBar()
         self.toolBar.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
+        empty = QtGui.QWidget()
+        empty.setSizePolicy(QtGui.QSizePolicy.Expanding,
+                            QtGui.QSizePolicy.Preferred)
+        self.toolBar.addWidget(empty)
         self.toolBar.addAction(self.refreshAction)
         newAction = self.toolBar.addAction(QtGui.QIcon(
                                                QtGui.QPixmap(
