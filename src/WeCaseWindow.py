@@ -118,7 +118,6 @@ class WeCaseWindow(QtGui.QMainWindow):
         fetchUserTabAvatar(self, uid)
         self.tabAvatarFetched.connect(setAvatar)
 
-
     def _setupTopicTab(self, topic, switch=True):
         index = self._getSameTab("topic", topic)
         if index:
