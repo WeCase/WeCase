@@ -39,6 +39,7 @@ class WeCaseWindow(QtGui.QMainWindow):
     timelineLoaded = QtCore.pyqtSignal(int)
     imageLoaded = QtCore.pyqtSignal(str)
     tabBadgeChanged = QtCore.pyqtSignal(int, int)
+    tabAvatarFetched = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
@@ -67,63 +68,68 @@ class WeCaseWindow(QtGui.QMainWindow):
         view.setParent(tab)
         return tab
 
-    def _setupUserTab(self, uid, switch=True, myself=False):
+    def _setupCommonTab(self, timeline, view, switch=True, protect=False):
+        self._prepareTimeline(timeline)
+        view.setModel(timeline)
+        view.userClicked.connect(self.userClicked)
+        view.tagClicked.connect(self.tagClicked)
+        tab = self._setupTab(view)
+        self.tabWidget.addTab(tab, "")
+        if switch:
+            self.tabWidget.setCurrentWidget(tab)
+        if protect:
+            self.tabWidget.tabBar().setProtectTab(tab, True)
+        return tab
+
+    def _getSameTab(self, attr, value):
         for i in range(self.tabWidget.count()):
             try:
                 tab = self.tabWidget.widget(i).layout().itemAt(0).widget()
-                _uid = tab.model().uid()
-                if _uid == uid:
-                    self.tabWidget.setCurrentIndex(i)
-                    return
-            except AttributeError:
+                _value = getattr(tab.model(), attr)()
+                if _value == value:
+                    return i
+            except AttributeError as e:
                 pass
+        return False
+
+    def _setupUserTab(self, uid, switch=True, myself=False):
+        index = self._getSameTab("uid", uid)
+        if index:
+            self.tabWidget.setCurrentIndex(index)
+            return
 
         view = TweetListWidget()
         timeline = TweetUserModel(self.client.statuses.user_timeline, uid,
                                   view)
-        timeline.setUsersBlacklist(self.usersBlacklist)
-        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        timeline.load()
-        view.setModel(timeline)
-        view.userClicked.connect(self.userClicked)
-        view.tagClicked.connect(self.tagClicked)
-        tab = self._setupTab(view)
-        fetcher = WAsyncFetcher(view)
-        f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
-        self.tabWidget.addTab(tab, "")
-        image = WObjectCache().open(QtGui.QPixmap, f)
-        self._setTabIcon(tab, image)
-        if switch:
-            self.tabWidget.setCurrentWidget(tab)
-        if myself:
-            self.tabWidget.tabBar().setProtectTab(tab, True)
+        tab = self._setupCommonTab(timeline, view, switch, myself)
+
+        @async
+        def fetchUserTabAvatar(self, uid):
+            fetcher = WAsyncFetcher()
+            f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
+            self.tabAvatarFetched.emit(f)
+
+        @QtCore.pyqtSlot(str)
+        def setAvatar(f):
+            self._setTabIcon(tab, WObjectCache().open(QtGui.QPixmap, f))
+            self.tabAvatarFetched.disconnect(setAvatar)
+
+        fetchUserTabAvatar(self, uid)
+        self.tabAvatarFetched.connect(setAvatar)
+
 
     def _setupTopicTab(self, topic, switch=True):
-        for i in range(self.tabWidget.count()):
-            try:
-                tab = self.tabWidget.widget(i).layout().itemAt(0).widget()
-                _topic = tab.model().topic
-                if _topic == topic:
-                    self.tabWidget.setCurrentIndex(i)
-                    return
-            except AttributeError:
-                pass
+        index = self._getSameTab("topic", topic)
+        if index:
+            self.tabWidget.setCurrentIndex(index)
+            return
 
-        view = TweetListWidget(self)
-        timeline = TweetTopicModel(self.client.search.topics, topic, self)
-        timeline.setUsersBlacklist(self.usersBlacklist)
-        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        timeline.load()
-        view.setModel(timeline)
-        view.userClicked.connect(self.userClicked)
-        view.tagClicked.connect(self.tagClicked)
-        tab = self._setupTab(view)
-        self.tabWidget.addTab(tab, "")
+        view = TweetListWidget()
+        timeline = TweetTopicModel(self.client.search.topics, topic, view)
+        tab = self._setupCommonTab(timeline, view, switch, protect=False)
         self._setTabIcon(tab, WObjectCache().open(
             QtGui.QPixmap, const.icon("topic.jpg")
         ))
-        if switch:
-            self.tabWidget.setCurrentWidget(tab)
 
     def userClicked(self, userItem, openAtBackend):
         self._setupUserTab(userItem.id, switch=(not openAtBackend))
@@ -330,6 +336,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tabWidget.setTabIcon(self.tabWidget.indexOf(tab), icon)
         self.tabWidget.setIconSize(QtCore.QSize(24, 24))
 
+    def _prepareTimeline(self, timeline):
+        timeline.setUsersBlacklist(self.usersBlacklist)
+        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+        timeline.load()
+
     def closeTab(self, index):
         widget = self.tabWidget.widget(index)
         self.tabWidget.removeTab(index)
@@ -361,21 +372,15 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def setupModels(self):
         self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
-        self.all_timeline.setUsersBlacklist(self.usersBlacklist)
-        self.all_timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        self.all_timeline.load()
+        self._prepareTimeline(self.all_timeline)
         self.homeView.setModel(self.all_timeline)
 
         self.mentions = TweetCommonModel(self.client.statuses.mentions, self)
-        self.mentions.setUsersBlacklist(self.usersBlacklist)
-        self.mentions.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        self.mentions.load()
+        self._prepareTimeline(self.mentions)
         self.mentionsView.setModel(self.mentions)
 
         self.comment_to_me = TweetCommentModel(self.client.comments.to_me, self)
-        self.comment_to_me.setUsersBlacklist(self.usersBlacklist)
-        self.comment_to_me.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        self.comment_to_me.load()
+        self._prepareTimeline(self.comment_to_me)
         self.commentsView.setModel(self.comment_to_me)
 
     @async
