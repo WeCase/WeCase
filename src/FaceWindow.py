@@ -7,9 +7,8 @@
 
 
 from PyQt4 import QtGui
-from Face import FaceModel, FaceItem
+from Face import FaceModel
 from FaceWindow_ui import Ui_FaceWindow
-import const
 
 
 class FaceWindow(QtGui.QDialog, Ui_FaceWindow):

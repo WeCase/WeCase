@@ -6,7 +6,7 @@
 # License: GPL v3 or later.
 
 
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 import const
 
 try:

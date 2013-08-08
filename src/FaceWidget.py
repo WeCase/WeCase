@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 
-from math import ceil
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
 

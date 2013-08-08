@@ -1,6 +1,5 @@
 from PyQt4 import QtCore, QtGui
 import webbrowser
-import logging
 
 
 class WTweetLabel(QtGui.QTextBrowser):

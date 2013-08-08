@@ -1,5 +1,4 @@
 from configparser import ConfigParser
-from WeHack import Singleton
 
 
 class WeCaseConfig():
