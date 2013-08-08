@@ -9,9 +9,12 @@ def workaround_excepthook_bug():
     # There is a workaround.
     # See: http://bugs.python.org/issue1230540
     init_old = Thread.__init__
+
+    # insert dirty hack
     def init(self, *args, **kwargs):
         init_old(self, *args, **kwargs)
         run_old = self.run
+
         def run_with_except_hook(*args, **kw):
             try:
                 run_old(*args, **kw)
@@ -19,7 +22,10 @@ def workaround_excepthook_bug():
                 raise
             except:
                 sys.excepthook(*sys.exc_info())
+
         self.run = run_with_except_hook
+
+    # Monkey patching Thread
     Thread.__init__ = init
 
 
@@ -31,6 +37,7 @@ def async(func):
 
 class Singleton(type):
     _instances = {}
+
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
@@ -66,6 +73,7 @@ def clearDir(folder):
                 os.unlink(file_path)
         except OSError:
             pass
+
 
 def UNUSED(var):
     return var

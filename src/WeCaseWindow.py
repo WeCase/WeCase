@@ -256,11 +256,7 @@ class WeCaseWindow(QtGui.QMainWindow):
                             QtGui.QSizePolicy.Preferred)
         self.toolBar.addWidget(empty)
         self.toolBar.addAction(self.refreshAction)
-        newAction = self.toolBar.addAction(QtGui.QIcon(
-                                               QtGui.QPixmap(
-                                                   const.icon("new.png")
-                                               )
-                                           ),
+        newAction = self.toolBar.addAction(QtGui.QIcon(const.icon("new.png")),
                                            "New")
         newAction.triggered.connect(self.pushButton_new.clicked)
         self.addToolBar(self.toolBar)

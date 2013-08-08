@@ -213,7 +213,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             self.image = QtGui.QFileDialog.getOpenFileName(self,
                                                            self.tr("Choose a"
-                                                           " image"),
+                                                                   " image"),
                                                            filter=ACCEPT_TYPE)
             # user may cancel the dialog, so check again
             if self.image:

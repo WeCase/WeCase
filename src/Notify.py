@@ -14,6 +14,7 @@ try:
 except ImportError:
     import nullNotify as pynotify
 
+
 class Notify(QtCore.QObject):
     image = const.myself_path + "/ui/img/WeCase 80.png"
 

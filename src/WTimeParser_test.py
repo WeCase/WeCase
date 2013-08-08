@@ -2,6 +2,7 @@ import unittest
 from datetime import datetime
 from WTimeParser import WTimeParser, tzoffset
 
+
 class WTimeParserTest(unittest.TestCase):
 
     def setUp(self):

@@ -86,7 +86,7 @@ if __name__ == "__main__":
     qt_translator = QtCore.QTranslator(App)
     qt_translator.load("qt_" + QtCore.QLocale.system().name(),
                        QtCore.QLibraryInfo.location(
-                       QtCore.QLibraryInfo.TranslationsPath))
+                           QtCore.QLibraryInfo.TranslationsPath))
     App.installTranslator(qt_translator)
 
     # WeCase's own string translator

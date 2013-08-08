@@ -50,8 +50,9 @@ def tweetLength(text):
                 continue
             elif re.search(r"^(http:\/\/)+(weibo.com|weibo.cn)", url):
                 total += (byteLen if byteLen <= TWEET_MIN else
-                          (TWEET_URL_LEN if byteLen <= TWEET_MAX
-                          else byteLen - TWEET_MAX + TWEET_URL_LEN))
+                          (TWEET_URL_LEN
+                           if byteLen <= TWEET_MAX
+                           else byteLen - TWEET_MAX + TWEET_URL_LEN))
             else:
                 total += (TWEET_URL_LEN if byteLen <= TWEET_MAX else
                           (byteLen - TWEET_MAX + TWEET_URL_LEN))

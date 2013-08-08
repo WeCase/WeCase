@@ -81,7 +81,8 @@ class SimpleTweetListWidget(QtGui.QWidget):
     def setupUi(self):
         self.layout = QtGui.QVBoxLayout(self)
         self.setLayout(self.layout)
-        self.busyMovie = const.busyMovie()
+        self.busyMovie = WObjectCache().open(QtGui.QMovie,
+                                             const.icon("busy.gif"))
 
         #self.searchAction = QtGui.QAction(self)
         #self.searchAction.triggered.connect(self.search)
@@ -547,11 +548,10 @@ class SingleTweetWidget(QtGui.QFrame):
         self.exec_newpost_window("reply", tweet)
 
     def _delete(self):
-        choice = QtGui.QMessageBox.question(
-                self, self.tr("Delete?"),
-                self.tr("You can't undo your deletion."),
-                QtGui.QMessageBox.Yes,
-                QtGui.QMessageBox.No)
+        questionDialog = QtGui.QMessageBox.question
+        choice = questionDialog(self, self.tr("Delete?"),
+                                self.tr("You can't undo your deletion."),
+                                QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
         if choice == QtGui.QMessageBox.No:
             return
 
