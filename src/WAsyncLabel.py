@@ -164,7 +164,7 @@ class WAsyncFetcher(QtCore.QObject):
                     os.rename(down_path + filename + ".down",
                               down_path + filename)
                     return
-                except (BadStatusLine, URLError):
+                except (BadStatusLine, URLError, ContentTooShortError):
                     continue
                 except OSError:
                     return
