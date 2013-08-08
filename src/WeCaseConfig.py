@@ -2,7 +2,7 @@ from configparser import ConfigParser
 from WeHack import Singleton
 
 
-class WeCaseConfig(metaclass=Singleton):
+class WeCaseConfig():
 
     def __init__(self, path, section="main"):
         self._path = path
