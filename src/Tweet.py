@@ -343,6 +343,7 @@ class TweetItem(QtCore.QObject):
         super(TweetItem, self).__init__(parent)
         self._data = data
         self.client = const.client
+        self.__isFavorite = False
 
     @QtCore.pyqtProperty(int, constant=True)
     def type(self):
@@ -449,6 +450,9 @@ class TweetItem(QtCore.QObject):
             passedSeconds = (now_utc - create_utc).total_seconds()
             return passedSeconds
 
+    def isFavorite(self):
+        return self.__isFavorite
+
     def _cut_off(self, text):
         cut_text = ""
         for char in text:
@@ -491,11 +495,21 @@ class TweetItem(QtCore.QObject):
         elif self.type == self.COMMENT:
             self.client.comments.destroy.post(cid=self.id)
 
-    def favorite(self):
-        if self.type in [self.TWEET, self.RETWEET]:
-            self.client.favorites.create.post(id=self.id)
-        else:
+    def setFavorite(self, state):
+        if self.type not in [self.TWEET, self.RETWEET]:
             raise TypeError
+
+        if state:
+            assert(not self.__isFavorite)
+            self.client.favorites.create.post(id=self.id)
+            self.__isFavorite = True
+        else:
+            assert(self.__isFavorite)
+            self.client.favorites.destroy.post(id=self.id)
+            self.__isFavorite = False
+
+    def setFavoriteForce(self, state):
+        self.__isFavorite = bool(state)
 
     def refresh(self):
         if self.type in [self.TWEET, self.RETWEET]:

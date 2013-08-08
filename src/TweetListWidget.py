@@ -1,5 +1,6 @@
 import os
 import re
+from time import sleep
 import urllib.request
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
@@ -187,6 +188,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
         self.download_lock = False
+        self.__favorite_queue = []
 
     def setupUi(self):
         self.horizontalLayout = QtGui.QHBoxLayout(self)
@@ -485,17 +487,44 @@ class SingleTweetWidget(QtGui.QFrame):
     def commonProcessor(self, object):
         object()
 
-    @async
     def _favorite(self):
-        try:
-            self.tweet.favorite()
-            self.commonSignal.emit(lambda:
-                                       self.favorite.setIcon(
-                                           const.myself_path + \
-                                           "/icon/favorites.png"))
-        except APIError as e:
-            self._e = e
-            self.commonSignal.emit(lambda: self._handle_api_error(self._e))
+        needWorker = False
+
+        if not self.__favorite_queue:
+            state = not self.tweet.isFavorite()
+            needWorker = True
+        elif not self.__favorite_queue[-1]:
+            state = True
+        else:
+            state = False
+
+        self.__favorite_queue.append(state)
+        if state:
+            self.favorite.setIcon(const.icon("favorites.png"))
+        else:
+            self.favorite.setIcon(const.icon("no_favorites.png"))
+
+        if needWorker:
+            self.__favorite_worker()
+
+    @async
+    def __favorite_worker(self):
+        while self.__favorite_queue:
+            state = self.__favorite_queue[0]
+
+            try:
+                self.tweet.setFavorite(state)
+                sleep(0.5)
+                self.__favorite_queue.pop(0)
+            except APIError as e:
+                if e.error_code == 20101:
+                    self.tweet.setFavoriteForce(True)
+                elif e.error_code == 20704:
+                    self.tweet.setFavoriteForce(True)
+                self._e = e
+                self.__favorite_queue = []
+                self.commonSignal.emit(lambda: self._handle_api_error(self._e))
+                return
 
     def _retweet(self, tweet=None):
         if not tweet:
