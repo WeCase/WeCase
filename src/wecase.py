@@ -15,6 +15,7 @@ import traceback
 import signal
 import logging
 import WeHack
+import logging
 
 
 WeHack.UNUSED(None)
@@ -47,9 +48,7 @@ class ErrorWindow(QtCore.QObject):
 
 def my_excepthook(type, value, tback):
     # Let Qt complains about it.
-    try:
-        last_error
-    except NameError:
+    if "last_error" not in globals().keys():
         global last_error
         last_error = None
 
@@ -60,6 +59,7 @@ def my_excepthook(type, value, tback):
 
     if type != last_error:
         errorWindow.raiseException.emit(error_info)
+    logging.error(error_info)
     last_error = type
 
     # Then call the default handler
