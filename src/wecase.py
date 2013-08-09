@@ -47,12 +47,20 @@ class ErrorWindow(QtCore.QObject):
 
 def my_excepthook(type, value, tback):
     # Let Qt complains about it.
+    try:
+        last_error
+    except NameError:
+        global last_error
+        last_error = None
+
     exception = "".join(traceback.format_exception(type, value, tback))
     error_info = "Oops, there is an unexpected error: \n\n" + \
                  "%s\n" % exception + \
                  "Please report it at https://github.com/WeCase/WeCase/issues"
 
-    errorWindow.raiseException.emit(error_info)
+    if type != last_error:
+        errorWindow.raiseException.emit(error_info)
+    last_error = type
 
     # Then call the default handler
     sys.__excepthook__(type, value, tback)
