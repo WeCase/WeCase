@@ -76,8 +76,21 @@ def import_warning():
             QtCore.QObject().tr("notify2 is not found. Notification will disable."))
 
 
+def setup_logger():
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s %(name)-12s %(levelname)-8s %('
+                               'message)s',
+                        datefmt='%m-%d %H:%M',
+                        filename=const.cache_path + "log")
+    console = logging.StreamHandler()
+    console.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
+
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    setup_logger()
     mkconfig()
 
     App = QtGui.QApplication(sys.argv)
