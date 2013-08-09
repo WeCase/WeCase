@@ -582,6 +582,7 @@ class WTabBar(QtGui.QTabBar):
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.MiddleButton:
             self.closeTab(e.pos())
+        super(WTabBar, self).mouseReleaseEvent(e)
 
     def contextMenu(self, pos):
         if self.isProtected(pos):
