@@ -606,7 +606,7 @@ class SingleTweetWidget(QtGui.QFrame):
         return new_text
 
     def _create_hashtag(self, text):
-        HASHTAG_RE = re.compile("([#]+[a-zA-Z0-9_\u4e00-\u9fa5]+[#])")
+        HASHTAG_RE = re.compile("([#]+[a-zA-Z0-9_\u4e00-\u9fa5\s]+[#])")
         regex = re.compile(HASHTAG_RE)
         new_text = regex.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
         return new_text
