@@ -9,7 +9,7 @@
 from WeHack import async
 from PyQt4 import QtCore, QtGui
 from weibo import APIError
-from Tweet import TweetItem, TweetUnderCommentModel, TweetRetweetModel
+from Tweet import TweetItem, UserItem, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
@@ -23,6 +23,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     apiError = QtCore.pyqtSignal(str)
     commonError = QtCore.pyqtSignal(str, str)
     sendSuccessful = QtCore.pyqtSignal()
+    userClicked = QtCore.pyqtSignal(UserItem, bool)
+    tagClicked = QtCore.pyqtSignal(str, bool)
 
     def __init__(self, action="new", tweet=None, parent=None):
         super(NewpostWindow, self).__init__(parent)
@@ -104,6 +106,8 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.commentsWidget = TweetListWidget(self, ["image", "original"])
         self.commentsWidget.setModel(self.replyModel)
         self.commentsWidget.scrollArea.setMinimumSize(20, 200)
+        self.commentsWidget.userClicked.connect(self.userClicked)
+        self.commentsWidget.tagClicked.connect(self.tagClicked)
         self.splitter.addWidget(self.commentsWidget)
         self.splitter.addWidget(self.textEdit)
 

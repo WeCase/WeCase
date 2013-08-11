@@ -482,6 +482,8 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def postTweet(self):
         self.wecase_new = NewpostWindow()
+        self.wecase_new.userClicked.connect(self.userClicked)
+        self.wecase_new.tagClicked.connect(self.tagClicked)
         self.wecase_new.show()
 
     def refresh(self):

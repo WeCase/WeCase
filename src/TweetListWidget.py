@@ -646,6 +646,8 @@ class SingleTweetWidget(QtGui.QFrame):
         from NewpostWindow import NewpostWindow
         try:
             self.wecase_new = NewpostWindow(action, tweet)
+            self.wecase_new.userClicked.connect(self.userClicked)
+            self.wecase_new.tagClicked.connect(self.tagClicked)
             self.wecase_new.show()
         except APIError as e:
             self._handle_api_error(e)
