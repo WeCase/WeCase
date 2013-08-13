@@ -336,6 +336,20 @@ class UserItem(QtCore.QObject):
     def avatar(self):
         return self._data.get('profile_image_url')
 
+    @QtCore.pyqtProperty(str, constant=True)
+    def verify_type(self):
+        typ = self._data.get("verified_type")
+        if typ == 0:
+            return "personal"
+        elif typ in [1, 2, 3, 4, 5, 6, 7]:
+            return "organization"
+        else:
+            return None
+
+    @QtCore.pyqtProperty(str, constant=True)
+    def verify_reason(self):
+        return self._data.get("verified_reason")
+
 
 class TweetItem(QtCore.QObject):
     TWEET = 0

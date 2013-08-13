@@ -11,6 +11,7 @@ from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
+from WAvatarLabel import WAvatarLabel
 from WImageLabel import WImageLabel
 import const
 from const import cache_path
@@ -198,7 +199,13 @@ class SingleTweetWidget(QtGui.QFrame):
         self.verticalLayout_2 = QtGui.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
 
-        self.avatar = WAsyncLabel(self)
+        reason = self.tweet.author.verify_reason
+        if self.tweet.author.verify_type == "personal":
+            self.avatar = WAvatarLabel(WAvatarLabel.PERSONAL_VERIFY, reason)
+        elif self.tweet.author.verify_type == "organization":
+            self.avatar = WAvatarLabel(WAvatarLabel.ORGANIZATION_VERIFY, reason)
+        else:
+            self.avatar = WAvatarLabel(WAvatarLabel.NO_VERIFY)
         self.avatar.setObjectName("avatar")
         self.avatar.setPixmap(self.tweet.author.avatar)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
