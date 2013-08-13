@@ -15,7 +15,6 @@ import traceback
 import signal
 import logging
 import WeHack
-import logging
 
 
 WeHack.UNUSED(None)
@@ -47,7 +46,6 @@ class ErrorWindow(QtCore.QObject):
 
 
 def my_excepthook(type, value, tback):
-    # Let Qt complains about it.
     if "last_error" not in globals().keys():
         global last_error
         last_error = None
@@ -58,11 +56,13 @@ def my_excepthook(type, value, tback):
                  "Please report it at https://github.com/WeCase/WeCase/issues"
 
     if type != last_error:
+        last_error = type
+        logging.error(error_info)
         errorWindow.raiseException.emit(error_info)
-    logging.error(error_info)
-    last_error = type
+    else:
+        logging.error("Same error...")
 
-    # Then call the default handler
+    # Call the default handler
     sys.__excepthook__(type, value, tback)
 
 
@@ -77,7 +77,7 @@ def import_warning():
 
 
 def setup_logger():
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging.WARNING,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %('
                                'message)s',
                         datefmt='%m-%d %H:%M',
