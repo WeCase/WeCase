@@ -20,7 +20,7 @@ from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
 from WeCaseConfig import WeCaseConfig
-from WeHack import async, setGeometry, getGeometry
+from WeHack import async, setGeometry, getGeometry, UNUSED
 from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
@@ -29,6 +29,7 @@ import logging
 import wecase_rc
 
 
+UNUSED(wecase_rc)
 DEBUG_GLOBAL_MENU = False
 
 
@@ -88,7 +89,7 @@ class WeCaseWindow(QtGui.QMainWindow):
                 _value = getattr(tab.model(), attr)()
                 if _value == value:
                     return i
-            except AttributeError as e:
+            except AttributeError:
                 pass
         return False
 
@@ -386,14 +387,23 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     @async
     def reset_remind(self):
+        typ = ""
         if self.currentTweetView() == self.homeView:
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
         elif self.currentTweetView() == self.mentionsView:
-            self.client.remind.set_count.post(type="mention_status")
+            typ = "mention_status"
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
         elif self.currentTweetView() == self.commentsView:
-            self.client.remind.set_count.post(type="cmt")
+            typ = "cmt"
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
+
+        if typ:
+            while 1:
+                try:
+                    self.client.remind.set_count.post(type=typ)
+                    break
+                except URLError:
+                    continue
 
     def get_remind(self, uid):
         """this function is used to get unread_count
