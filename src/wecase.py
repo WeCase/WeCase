@@ -42,7 +42,15 @@ class ErrorWindow(QtCore.QObject):
 
     @QtCore.pyqtSlot(str)
     def showError(self, traceback):
-        QtGui.QMessageBox.critical(None, "Unknown Error", traceback)
+        messageBox = QtGui.QMessageBox(QtGui.QMessageBox.Critical, "Unknown Error", "")
+        layout = messageBox.layout()
+        if layout:
+            textEdit = QtGui.QPlainTextEdit(traceback)
+            textEdit.setReadOnly(True)
+            textEdit.setFixedHeight(250)
+            textEdit.setFixedWidth(600)
+            layout.addWidget(textEdit, 0, 1)
+        messageBox.exec()
 
 
 def my_excepthook(type, value, tback):
@@ -51,9 +59,12 @@ def my_excepthook(type, value, tback):
         last_error = None
 
     exception = "".join(traceback.format_exception(type, value, tback))
-    error_info = "Oops, there is an unexpected error: \n\n" + \
-                 "%s\n" % exception + \
-                 "Please report it at https://github.com/WeCase/WeCase/issues"
+    error_info = QtCore.QObject().tr("Oops, there is an unexpected error:"
+                                     "\n\n"
+                                     "%s"
+                                     "\n"
+                                     "Please report it at https://github.com/WeCase/WeCase/issues"
+                                     % exception)
 
     if type != last_error:
         last_error = type
@@ -95,6 +106,7 @@ if __name__ == "__main__":
 
     App = QtGui.QApplication(sys.argv)
     App.setApplicationName("WeCase")
+    QtCore.QTextCodec.setCodecForTr(QtCore.QTextCodec. codecForName("UTF-8"))
 
     # Exceptions may happen in other threads.
     # So, use signal/slot to avoid threads' issue.
