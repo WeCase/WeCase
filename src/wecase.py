@@ -99,8 +99,8 @@ def setup_logger():
 
 
 if __name__ == "__main__":
-    setup_logger()
     mkconfig()
+    setup_logger()
 
     App = QtGui.QApplication(sys.argv)
     App.setApplicationName("WeCase")
