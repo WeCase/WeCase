@@ -676,11 +676,13 @@ class SingleTweetWidget(QtGui.QFrame):
             openAtBackend = True
         self.userClicked.emit(self.tweet.author, openAtBackend)
 
+    @async
     def _userTextClicked(self, user, button):
         openAtBackend = False
         if button == QtCore.Qt.MiddleButton:
             openAtBackend = True
-        self.userClicked.emit(UserItem({"name": user}), openAtBackend)
+        self.__userItem = UserItem({"name": user})
+        self.userClicked.emit(self.__userItem, openAtBackend)
 
     def _tagClicked(self, tag, button):
         openAtBackend = False
