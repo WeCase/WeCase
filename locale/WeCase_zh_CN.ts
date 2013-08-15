@@ -164,7 +164,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LoginWindow</name>
     <message>
-        <location filename="LoginWindow.py" line="65"/>
+        <location filename="LoginWindow.py" line="62"/>
         <source>Authorize Failed!</source>
         <translation>认证失败！</translation>
     </message>
@@ -174,12 +174,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">检查您的账号和密码！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="74"/>
+        <location filename="LoginWindow.py" line="70"/>
         <source>GO!</source>
         <translation>走起！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="115"/>
+        <location filename="LoginWindow.py" line="111"/>
         <source>Login, waiting...</source>
         <translation>登录中，请稍候……</translation>
     </message>
@@ -189,17 +189,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">检查您的账号，密码和网络连接！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="65"/>
+        <location filename="LoginWindow.py" line="62"/>
         <source>Check your account and password</source>
         <translation>检查您的账号和密码</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="70"/>
+        <location filename="LoginWindow.py" line="66"/>
         <source>Network Error</source>
         <translation>网络错误</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="70"/>
+        <location filename="LoginWindow.py" line="66"/>
         <source>Something wrong with the network, please try again.</source>
         <translation>网络有问题，请重试。</translation>
     </message>
@@ -522,27 +522,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="410"/>
+        <location filename="Tweet.py" line="400"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="412"/>
+        <location filename="Tweet.py" line="402"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="414"/>
+        <location filename="Tweet.py" line="404"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="416"/>
+        <location filename="Tweet.py" line="406"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="418"/>
+        <location filename="Tweet.py" line="408"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
@@ -563,7 +563,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WTabBar</name>
     <message>
-        <location filename="WeCaseWindow.py" line="604"/>
+        <location filename="WeCaseWindow.py" line="590"/>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
@@ -586,7 +586,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">评论(%d)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="459"/>
+        <location filename="WeCaseWindow.py" line="445"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
@@ -606,17 +606,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">评论</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="434"/>
+        <location filename="WeCaseWindow.py" line="420"/>
         <source>You have:</source>
         <translation>您有：</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="443"/>
+        <location filename="WeCaseWindow.py" line="429"/>
         <source>%d unread @ME</source>
         <translation>%d 条未读 @提醒</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="451"/>
+        <location filename="WeCaseWindow.py" line="437"/>
         <source>%d unread comment(s)</source>
         <translation>%d 条未读评论 </translation>
     </message>
@@ -636,52 +636,52 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">新微博(&amp;N)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="293"/>
+        <location filename="WeCaseWindow.py" line="290"/>
         <source>&amp;WeCase</source>
         <translation>微盒(&amp;W)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="294"/>
+        <location filename="WeCaseWindow.py" line="291"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="295"/>
+        <location filename="WeCaseWindow.py" line="292"/>
         <source>&amp;Options</source>
         <translation>选项(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="296"/>
+        <location filename="WeCaseWindow.py" line="293"/>
         <source>&amp;About...</source>
         <translation>关于(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="298"/>
+        <location filename="WeCaseWindow.py" line="295"/>
         <source>&amp;Log out</source>
         <translation>注销(&amp;L)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="299"/>
+        <location filename="WeCaseWindow.py" line="296"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="300"/>
+        <location filename="WeCaseWindow.py" line="297"/>
         <source>&amp;Settings</source>
         <translation>设置(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="332"/>
+        <location filename="WeCaseWindow.py" line="329"/>
         <source>&amp;Hide</source>
         <translation>隐藏(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="329"/>
+        <location filename="WeCaseWindow.py" line="326"/>
         <source>&amp;Show</source>
         <translation>显示(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="297"/>
+        <location filename="WeCaseWindow.py" line="294"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
@@ -900,24 +900,40 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <source>Oops, there is an unexpected error:
 
 </source>
-        <translation>苍天啊，大地啊！这个不明错误怎么就发生了呢：
+        <translation type="obsolete">苍天啊，大地啊！这个不明错误怎么就发生了呢：
 
 </translation>
     </message>
     <message>
         <location filename="wecase.py" line="62"/>
         <source>Please report it at https://github.com/WeCase/WeCase/issues</source>
-        <translation>请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
+        <translation type="obsolete">请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="82"/>
+        <location filename="wecase.py" line="81"/>
         <source>Notification disabled</source>
         <translation>通知已禁用</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="82"/>
+        <location filename="wecase.py" line="81"/>
         <source>notify2 is not found. Notification will disable.</source>
         <translation>notify2 未找到。通知将被禁用。</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="62"/>
+        <source>Please report it at https://github.com/WeCase/WeCase/issues
+
+</source>
+        <translation>请去 https://github.com/WeCase/WeCase/issues 报告该问题
+
+</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="62"/>
+        <source>Oops, there is an unexpected error,
+</source>
+        <translation>苍天啊，大地啊！这个不明错误怎么就发生了呢，
+</translation>
     </message>
 </context>
 </TS>
