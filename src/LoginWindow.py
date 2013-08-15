@@ -8,12 +8,11 @@
 
 import webbrowser
 from WeHack import async
-from weibo import APIClient
+from weibos.helper import SUCCESS, PASSWORD_ERROR, NETWORK_ERROR, UBAuthorize
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
 import const
-from TweetUtils import authorize
 from time import sleep
 from WeCaseConfig import WeCaseConfig
 
@@ -55,18 +54,15 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     def reject(self, status):
         if status in [self.NETWORK_ERROR, self.PASSWORD_ERROR] and self.err_count < 5:
-            print("Retry...")
             self.err_count += 1
             sleep(0.5)
             self.ui_authorize()
             return
         elif status == self.PASSWORD_ERROR:
-            print("PASSWORD_ERROR", self.err_count)
             QtGui.QMessageBox.critical(None, self.tr("Authorize Failed!"),
                                        self.tr("Check your account and password"))
             self.err_count = 0
         elif status == self.NETWORK_ERROR:
-            print("NETWORK_ERROR", self.err_count)
             QtGui.QMessageBox.critical(None, self.tr("Network Error"),
                                        self.tr("Something wrong with the network, please try again."))
             self.err_count = 0
@@ -123,30 +119,13 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     @async
     def authorize(self, username, password):
-        try:
-            client = APIClient(app_key=const.APP_KEY, app_secret=const.APP_SECRET,
-                               redirect_uri=const.CALLBACK_URL)
-
-            # Step 1: Get the authorize url from Sina
-            authorize_url = client.get_authorize_url()
-
-            # Step 2: Send the authorize info to Sina and get the authorize_code
-            authorize_code = authorize(authorize_url, username, password)
-            if not authorize_code:
-                self.loginReturn.emit(self.PASSWORD_ERROR)
-                return
-
-            # Step 3: Get the access token by authorize_code
-            r = client.request_access_token(authorize_code)
-
-            # Step 4: Setup the access token of SDK
-            client.set_access_token(r.access_token, r.expires_in)
-            const.client = client
+        result = UBAuthorize(username, password)
+        if result == SUCCESS:
             self.loginReturn.emit(self.SUCCESS)
-            return
-        except:
+        elif result == PASSWORD_ERROR:
+            self.loginReturn.emit(self.PASSWORD_ERROR)
+        elif result == NETWORK_ERROR:
             self.loginReturn.emit(self.NETWORK_ERROR)
-            return
 
     def setPassword(self, username):
         if username:

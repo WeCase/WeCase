@@ -7,8 +7,6 @@
 
 from PyQt4 import QtCore
 from datetime import datetime
-from http.client import BadStatusLine
-from urllib.error import URLError
 from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
@@ -129,17 +127,9 @@ class TweetTimelineBaseModel(TweetSimpleModel):
             return
         self.lock = True
 
-        while 1:
-            # try until success
-            try:
-                # timeline is just a pointer to the method.
-                # We are in another thread now, call it. UI won't freeze.
-                timeline = timeline_func()
-                break
-            except (BadStatusLine, URLError, OSError):
-                # OSError: CRC Check Failed...
-                tprint("Retrying...")
-                continue
+        # timeline is just a pointer to the method.
+        # We are in another thread now, call it. UI won't freeze.
+        timeline = timeline_func()
 
         # Timeline is not blank, but after filter(), timeline is blank.
         while timeline and (not self.filter(timeline)):

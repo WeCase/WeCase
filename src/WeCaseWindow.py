@@ -8,10 +8,7 @@
 
 import os
 import platform
-import http
-from time import sleep
 from WTimer import WTimer
-from urllib.error import URLError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel, TweetTopicModel
 from Notify import Notify
@@ -398,24 +395,13 @@ class WeCaseWindow(QtGui.QMainWindow):
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
 
         if typ:
-            while 1:
-                try:
-                    self.client.remind.set_count.post(type=typ)
-                    break
-                except URLError:
-                    continue
+            self.client.remind.set_count.post(type=typ)
 
     def get_remind(self, uid):
         """this function is used to get unread_count
         from Weibo API. uid is necessary."""
 
-        while 1:
-            try:
-                reminds = self.client.remind.unread_count.get(uid=uid)
-                break
-            except (http.client.BadStatusLine, URLError):
-                sleep(0.2)
-                continue
+        reminds = self.client.remind.unread_count.get(uid=uid)
         return reminds
 
     def uid(self):
