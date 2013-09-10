@@ -38,6 +38,6 @@ class _UBExecutable(_Executable):
         while 1:
             try:
                 return super(_UBExecutable, self).__call__(**kw)
-            except (BadStatusLine, ContentTooShortError, URLError, OSError):
-                # OSError: Bad CRC32 Checksum.
+            except (BadStatusLine, ContentTooShortError, URLError, OSError, IOError):
+                # OSError Or IOError: Bad CRC32 Checksum.
                 continue
