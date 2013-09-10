@@ -9,6 +9,8 @@ from WAsyncLabel import WAsyncLabel
 
 class WSwitchLabel(QtGui.QWidget):
 
+    clicked = QtCore.pyqtSignal()
+
     def __init__(self, parent=None):
         super(WSwitchLabel, self).__init__(parent)
         self._imagesList = []
@@ -16,22 +18,22 @@ class WSwitchLabel(QtGui.QWidget):
 
         self._layout = QtGui.QHBoxLayout(self)
 
-        leftLabel = WImageLabel(self)
-        leftLabel.setText("<-")
-        leftLabel.clicked.connect(self._last)
-        self._layout.addWidget(leftLabel)
+        self._leftLabel = WImageLabel(self)
+        self._leftLabel.setText("<-")
+        self._leftLabel.clicked.connect(self._last)
+        self._layout.addWidget(self._leftLabel)
 
         self._imageLabel = WAsyncLabel(self)
+        self._imageLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self._imageLabel.clicked.connect(self.clicked)
         self._layout.addWidget(self._imageLabel)
 
-        rightLabel = WImageLabel(self)
-        rightLabel.setText("->")
-        rightLabel.clicked.connect(self._next)
-        self._layout.addWidget(rightLabel)
+        self._rightLabel = WImageLabel(self)
+        self._rightLabel.setText("->")
+        self._rightLabel.clicked.connect(self._next)
+        self._layout.addWidget(self._rightLabel)
 
         self.setLayout(self._layout)
-
-        self.setImagesUrls(["http://ww3.sinaimg.cn/thumbnail/53761c09jw1e8gjf3u09mj20xc0akt9d.jpg", "http://ww1.sinaimg.cn/thumbnail/61add7e3jw1e8h7wxi1qvj20ad0gogmz.jpg"])
 
     def _last(self):
         currentIndex = self._imagesList.index(self._currentImage)
@@ -47,14 +49,16 @@ class WSwitchLabel(QtGui.QWidget):
         self._imagesList = urls
         self.setPixmap(self._imagesList[0])
 
+        if len(urls) == 1:
+            self._leftLabel.hide()
+            self._rightLabel.hide()
+        elif len(urls) >= 1:
+            self._leftLabel.show()
+            self._rightLabel.show()
+
     def setPixmap(self, pixmap):
         self._currentImage = pixmap
         self._imageLabel.setPixmap(pixmap)
 
-
-if __name__ == "__main__":
-
-   App = QtGui.QApplication(sys.argv)
-   main = WSwitchLabel()
-   main.show()
-   App.exec()
+    def __getattr__(self, attr):
+        return eval("self._imageLabel." + attr)

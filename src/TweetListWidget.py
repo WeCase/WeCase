@@ -13,6 +13,7 @@ from WTweetLabel import WTweetLabel
 from WAsyncLabel import WAsyncLabel
 from WAvatarLabel import WAvatarLabel
 from WImageLabel import WImageLabel
+from WSwitchLabel import WSwitchLabel
 import const
 from const import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
@@ -415,9 +416,9 @@ class SingleTweetWidget(QtGui.QFrame):
         layout = QtGui.QVBoxLayout(frame)
         layout.setObjectName("imageLayout")
 
-        self.imageLabel = WAsyncLabel(widget)
-        self.imageLabel.setPixmap(thumbnail_pic)
-        self.imageLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.imageLabel = WSwitchLabel(widget)
+        self.imageLabel.setImagesUrls(thumbnail_pic)
+        #self.imageLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.imageLabel.clicked.connect(self._showFullImage)
 
         layout.addWidget(self.imageLabel)

@@ -428,7 +428,15 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(str, constant=True)
     def thumbnail_pic(self):
-        return self._data.get('thumbnail_pic', "")
+        results = []
+
+        urls = self._data.get("pic_urls")
+        if not urls:
+            return None
+
+        for url in urls:
+            results.append(url['thumbnail_pic'])
+        return results
 
     @QtCore.pyqtProperty(str, constant=True)
     def original_pic(self):
