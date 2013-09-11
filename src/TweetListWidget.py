@@ -86,25 +86,10 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.busyMovie = WObjectCache().open(QtGui.QMovie,
                                              const.icon("busy.gif"))
 
-        #self.searchAction = QtGui.QAction(self)
-        #self.searchAction.triggered.connect(self.search)
-        #self.searchAction.setShortcut(QtGui.QKeySequence("Ctrl+F"))
-        #self.addAction(self.searchAction)
-
     def setModel(self, model):
         self.model = model
         self.model.rowsInserted.connect(self._rowsInserted)
         self.model.nothingLoaded.connect(self._hideBusyIcon)
-
-    #def search(self):
-    #    widget = self.layout.itemAt(0).widget()
-    #    if (not self.busy()) and widget.objectName() != "searchEdit":
-    #        searchEdit = QtGui.QLineEdit(self)
-    #        searchEdit.setObjectName("searchEdit")
-    #        self.layout.insertWidget(0, searchEdit)
-    #    else:
-    #        self.layout.takeAt(0)
-    #        widget.setParent(None)
 
     def _hideBusyIcon(self):
         self.setBusy(False, self.BOTTOM)
@@ -418,7 +403,6 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.imageLabel = WSwitchLabel(widget)
         self.imageLabel.setImagesUrls(thumbnail_pic)
-        #self.imageLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.imageLabel.clicked.connect(self._showFullImage)
 
         layout.addWidget(self.imageLabel)
