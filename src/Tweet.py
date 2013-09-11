@@ -442,6 +442,10 @@ class TweetItem(QtCore.QObject):
     def original_pic(self):
         return self._data.get('original_pic')
 
+    @QtCore.pyqtProperty(str, constant=True)
+    def source(self):
+        return self._data.get('source')
+
     @QtCore.pyqtProperty(int, constant=True)
     def retweets_count(self):
         return self._data.get('reposts_count', 0)

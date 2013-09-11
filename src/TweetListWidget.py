@@ -254,6 +254,10 @@ class SingleTweetWidget(QtGui.QFrame):
             self.counterHorizontalLayout.addWidget(self.delete)
 
         if not (self.tweet.type == TweetItem.COMMENT):
+            self.client = QtGui.QLabel()
+            self.client.setText(self.tr("From: %s") % self.tweet.source)
+            self.counterHorizontalLayout.addWidget(self.client)
+
             self.retweet = self._createRetweetLabel()
             self.counterHorizontalLayout.addWidget(self.retweet)
 
