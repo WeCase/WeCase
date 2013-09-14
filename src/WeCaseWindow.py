@@ -10,7 +10,7 @@ import os
 import platform
 from WTimer import WTimer
 from PyQt4 import QtCore, QtGui
-from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel, TweetTopicModel
+from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel, TweetTopicModel, TweetFilterModel
 from Notify import Notify
 from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
@@ -98,8 +98,10 @@ class WeCaseWindow(QtGui.QMainWindow):
             return
 
         view = TweetListWidget()
-        timeline = TweetUserModel(self.client.statuses.user_timeline, uid,
-                                  view)
+        _timeline = TweetUserModel(self.client.statuses.user_timeline, uid,
+                                   view)
+        timeline = TweetFilterModel(_timeline)
+        timeline.setModel(_timeline)
         tab = self._setupCommonTab(timeline, view, switch, myself)
 
         @async
@@ -370,15 +372,21 @@ class WeCaseWindow(QtGui.QMainWindow):
         setGeometry(self, self.mainWindow_geometry)
 
     def setupModels(self):
-        self.all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
+        self._all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
+        self.all_timeline = TweetFilterModel(self._all_timeline)
+        self.all_timeline.setModel(self._all_timeline)
         self._prepareTimeline(self.all_timeline)
         self.homeView.setModel(self.all_timeline)
 
-        self.mentions = TweetCommonModel(self.client.statuses.mentions, self)
+        self._mentions = TweetCommonModel(self.client.statuses.mentions, self)
+        self.mentions = TweetFilterModel(self._mentions)
+        self.mentions.setModel(self._mentions)
         self._prepareTimeline(self.mentions)
         self.mentionsView.setModel(self.mentions)
 
-        self.comment_to_me = TweetCommentModel(self.client.comments.to_me, self)
+        self._comment_to_me = TweetCommentModel(self.client.comments.to_me, self)
+        self.comment_to_me = TweetFilterModel(self._comment_to_me)
+        self.comment_to_me.setModel(self._comment_to_me)
         self._prepareTimeline(self.comment_to_me)
         self.commentsView.setModel(self.comment_to_me)
 

@@ -28,8 +28,11 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
         self.insertRow(self.rowCount(), item)
 
     def appendRows(self, items):
+        self.beginInsertRows(QtCore.QModelIndex(), self.rowCount(), self.rowCount() + len(items) - 1)
         for item in items:
-            self.appendRow(TweetItem(item))
+            self._tweets.insert(self.rowCount(), TweetItem(item))
+            self.rowInserted.emit(self.rowCount())
+        self.endInsertRows()
 
     def clear(self):
         self._tweets = []
@@ -90,32 +93,20 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         return timeline
 
     def setTweetsKeywordsBlacklist(self, blacklist):
+        print("Using setTweetsKeywordsBlacklist")
         self._tweetKeywordBlacklist = blacklist
 
     def setUsersBlacklist(self, blacklist):
+        print("Using setUserBlacklist")
         self._usersBlackList = blacklist
 
     def _inBlacklist(self, tweet):
-        if not tweet:
-            return False
-        elif self._inBlacklist(tweet.original):
-            return True
-
-        # Put all your statements at here
-        if tweet.withKeywords(self._tweetKeywordBlacklist):
-            return True
-        if tweet.author and (tweet.author.name in self._usersBlackList):
-            return True
+        print("Using _inBlacklist")
         return False
 
     def filter(self, items):
-        new_items = []
-        for item in items:
-            if self._inBlacklist(TweetItem(item)):
-                continue
-            else:
-                new_items.append(item)
-        return new_items
+        print("Using filter")
+        return items
 
     @async
     def _common_get(self, timeline_func, pos):
@@ -292,6 +283,119 @@ class TweetTopicModel(TweetTimelineBaseModel):
 
     def topic(self):
         return self._topic
+
+
+class TweetFilterModel(QtCore.QAbstractListModel):
+
+    rowInserted = QtCore.pyqtSignal(int)
+    timelineLoaded = QtCore.pyqtSignal()
+    nothingLoaded = QtCore.pyqtSignal()
+    wordWarKeywords = ["滚", "不喜", "逼", "脑残", "黑", "喷", "智", "傻", "白痴"]
+
+    def __init__(self, parent=None):
+        super(TweetFilterModel, self).__init__(parent)
+        self._model = None
+        self._appearInfo = {}
+        self._tweets = []
+
+    def model(self):
+        return self._model
+
+    def setModel(self, model):
+        self._model = model
+        self._model.timelineLoaded.connect(self.timelineLoaded)
+        self._model.nothingLoaded.connect(self.nothingLoaded)
+        self._model.rowsInserted.connect(self._rowsInserted)
+
+    def get_item(self, index):
+        return self._tweets[index]
+
+    def setTweetsKeywordsBlacklist(self, blacklist):
+        self._tweetKeywordBlacklist = blacklist
+
+    def setUsersBlacklist(self, blacklist):
+        self._usersBlackList = blacklist
+
+    def _inBlacklist(self, tweet):
+        if not tweet:
+            return False
+        elif self._inBlacklist(tweet.original):
+            return True
+
+        # Put all your statements at here
+        if tweet.withKeywords(self._tweetKeywordBlacklist):
+            return True
+        if tweet.author and (tweet.author.name in self._usersBlackList):
+            return True
+        return False
+
+    def wordWarFilter(self, items):
+        # If a same tweet retweeted more than 3 times, and
+        # there are three retweets include insulting keywords,
+        # then it is a word-war-tweet. Block it and it's retweets.
+        new_items = []
+
+        for item in items:
+            if not item.original:
+                continue
+
+            if not item.original.id in self._appearInfo:
+                self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
+            info = self._appearInfo[item.original.id]
+            info["count"] += 1
+            if item.withKeywords(self.wordWarKeywords):
+                info["wordWarKeywords"] += 1
+            self._appearInfo[item.original.id] = info
+
+        for item in items:
+            if item.original:
+                id = item.original.id
+            else:
+                id = item.id
+
+            try:
+                info = self._appearInfo[id]
+            except KeyError:
+                new_items.append(item)
+                continue
+
+            if info["count"] >= 3 and info["wordWarKeywords"] >= 3:
+                continue
+            else:
+                new_items.append(item)
+
+        return new_items
+
+    def filter(self, items):
+        new_items = []
+        for item in items:
+            if self._inBlacklist(item):
+                continue
+            else:
+                new_items.append(item)
+        return self.wordWarFilter(new_items)
+
+    def _rowsInserted(self, parent, start, end):
+        tweets = []
+        for index in range(start, end + 1):
+            item = self._model.get_item(index)
+            tweets.append(item)
+
+        tweets = self.filter(tweets)
+
+        for index, tweet in enumerate(tweets):
+            if start == 0:
+                self._tweets.insert(index, tweet)
+                self.rowInserted.emit(index)
+            else:
+                self._tweets.append(tweet)
+                self.rowInserted.emit(self.rowCount() - 1)
+
+    def rowCount(self, parent=QtCore.QModelIndex()):
+        return len(self._tweets)
+
+    def __getattr__(self, attr):
+        return eval("self._model.%s" % attr)
 
 
 class UserItem(QtCore.QObject):
