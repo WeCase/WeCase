@@ -88,19 +88,11 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
     def setModel(self, model):
         self.model = model
-        self.model.rowInserted.connect(self._rowInserted)
         self.model.rowsInserted.connect(self._rowsInserted)
         self.model.nothingLoaded.connect(self._hideBusyIcon)
 
     def _hideBusyIcon(self):
         self.setBusy(False, self.BOTTOM)
-
-    def _rowInserted(self, index):
-        item = self.model.get_item(index)
-        widget = SingleTweetWidget(item, self.without, self)
-        widget.userClicked.connect(self.userClicked)
-        widget.tagClicked.connect(self.tagClicked)
-        self.layout.insertWidget(index, widget)
 
     def _rowsInserted(self, parent, start, end):
         UNUSED(parent)  # parent is useless

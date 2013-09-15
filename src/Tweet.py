@@ -383,13 +383,18 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
         tweets = self.filter(tweets)
 
+        if start == 0:
+            row = 0
+        else:
+            row = self.rowCount()
+
+        self.beginInsertRows(QtCore.QModelIndex(), row, row + len(tweets) - 1)
         for index, tweet in enumerate(tweets):
             if start == 0:
                 self._tweets.insert(index, tweet)
-                self.rowInserted.emit(index)
             else:
                 self._tweets.append(tweet)
-                self.rowInserted.emit(self.rowCount() - 1)
+        self.endInsertRows()
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
