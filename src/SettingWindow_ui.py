@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui/SettingWindow.ui'
 #
-# Created: Thu Jun 13 21:34:01 2013
-#      by: PyQt4 UI code generator 4.10.1
+# Created: Mon Sep 16 16:46:49 2013
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
         SettingWindow.setObjectName(_fromUtf8("SettingWindow"))
-        SettingWindow.resize(371, 311)
+        SettingWindow.resize(376, 355)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -171,6 +171,9 @@ class Ui_SettingWindow(object):
         self.verticalLayout_10.addItem(spacerItem4)
         self.horizontalLayout_8.addLayout(self.verticalLayout_10)
         self.gridLayout.addLayout(self.horizontalLayout_8, 1, 0, 1, 1)
+        self.blockWordwarsCheckBox = QtGui.QCheckBox(self.tab_2)
+        self.blockWordwarsCheckBox.setObjectName(_fromUtf8("blockWordwarsCheckBox"))
+        self.gridLayout.addWidget(self.blockWordwarsCheckBox, 2, 0, 1, 1)
         self.tabWidget.addTab(self.tab_2, _fromUtf8(""))
         self.tab_3 = QtGui.QWidget()
         self.tab_3.setObjectName(_fromUtf8("tab_3"))
@@ -239,6 +242,7 @@ class Ui_SettingWindow(object):
         self.label.setText(_translate("SettingWindow", "Tweets with these keywords won\'t show:", None))
         self.btnAddKeyword.setText(_translate("SettingWindow", "Add", None))
         self.btnRemoveKeyword.setText(_translate("SettingWindow", "Remove", None))
+        self.blockWordwarsCheckBox.setText(_translate("SettingWindow", "Block Wordwars (WARNING: High False Positive Rate)", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("SettingWindow", "Filters", None))
         self.label_3.setText(_translate("SettingWindow", "Total Cache Size:", None))
         self.cacheSizeLabel.setText(_translate("SettingWindow", "Computing...", None))

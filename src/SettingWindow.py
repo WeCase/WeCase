@@ -57,6 +57,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.mentionsChk.setChecked(self.config.remind_mentions)
         self.usersBlackListWidget.addItems(self.config.usersBlacklist)
         self.tweetsKeywordsBlacklistWidget.addItems(self.config.tweetsKeywordsBlacklist)
+        self.blockWordwarsCheckBox.setChecked(self.config.blockWordwars)
 
     def _getListWidgetItemsStringList(self, listWidget):
         stringList = []
@@ -71,6 +72,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.config.remind_mentions = str(self.mentionsChk.isChecked())
         self.config.usersBlacklist = str(self._getListWidgetItemsStringList(self.usersBlackListWidget))
         self.config.tweetsKeywordsBlacklist = str(self._getListWidgetItemsStringList(self.tweetsKeywordsBlacklistWidget))
+        self.config.blockWordwars = str(self.blockWordwarsCheckBox)
         self.config.save()
 
     def addBlackUser(self):

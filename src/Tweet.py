@@ -297,6 +297,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         self._model = None
         self._appearInfo = {}
         self._tweets = []
+        self._blockWordwars = False
 
     def model(self):
         return self._model
@@ -315,6 +316,9 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
     def setUsersBlacklist(self, blacklist):
         self._usersBlackList = blacklist
+
+    def setBlockWordwars(self, state):
+        self._blockWordwars = bool(state)
 
     def _inBlacklist(self, tweet):
         if not tweet:
@@ -373,7 +377,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
                 continue
             else:
                 new_items.append(item)
-        return self.wordWarFilter(new_items)
+        return self.wordWarFilter(new_items) if self._blockWordwars else new_items
 
     def _rowsInserted(self, parent, start, end):
         tweets = []

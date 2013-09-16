@@ -340,6 +340,7 @@ class WeCaseWindow(QtGui.QMainWindow):
     def _prepareTimeline(self, timeline):
         timeline.setUsersBlacklist(self.usersBlacklist)
         timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+        timeline.setBlockWordwars(self.blockWordwars)
         timeline.load()
 
     def closeTab(self, index):
@@ -358,6 +359,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tweetKeywordsBlacklist = self.config.tweetsKeywordsBlacklist
         self.remindMentions = self.config.remind_mentions
         self.remindComments = self.config.remind_comments
+        self.blockWordwars = self.config.blockWordwars
         self.mainWindow_geometry = self.config.mainwindow_geometry
 
     def applyConfig(self):

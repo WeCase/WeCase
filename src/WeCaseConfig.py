@@ -69,6 +69,14 @@ class WeCaseConfig():
         self._main_config["tweetKeywordsBlacklist"] = str(keywords)
 
     @property
+    def blockWordwars(self):
+        return bool(self._main_config.get("blockWordwars", False))
+
+    @blockWordwars.setter
+    def blockWordwars(self, state):
+        self._main_config["blockWordwars"] = str(state)
+
+    @property
     def mainwindow_geometry(self):
         return eval(self._main_config.get("mainwindow_geometry",
                                           '{"height": 656, "width": 403}'))

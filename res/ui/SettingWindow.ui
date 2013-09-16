@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>371</width>
-    <height>311</height>
+    <width>376</width>
+    <height>355</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -334,6 +334,13 @@
           </layout>
          </item>
         </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="blockWordwarsCheckBox">
+         <property name="text">
+          <string>Block Wordwars (WARNING: High False Positive Rate)</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
