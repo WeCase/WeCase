@@ -92,22 +92,6 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         timeline = lambda: self.timeline_get(page=self.page)
         return timeline
 
-    def setTweetsKeywordsBlacklist(self, blacklist):
-        print("Using setTweetsKeywordsBlacklist")
-        self._tweetKeywordBlacklist = blacklist
-
-    def setUsersBlacklist(self, blacklist):
-        print("Using setUserBlacklist")
-        self._usersBlackList = blacklist
-
-    def _inBlacklist(self, tweet):
-        print("Using _inBlacklist")
-        return False
-
-    def filter(self, items):
-        print("Using filter")
-        return items
-
     @async
     def _common_get(self, timeline_func, pos):
         def tprint(*args):
@@ -122,18 +106,6 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         # We are in another thread now, call it. UI won't freeze.
         timeline = timeline_func()
 
-        # Timeline is not blank, but after filter(), timeline is blank.
-        while timeline and (not self.filter(timeline)):
-            # All tweets in this page are removed.
-            # Load next page.
-            if timeline_func == self.timeline_new:
-                # We are fetching new tweet, do nothing.
-                break
-
-            # We are not fetch new tweets.
-            timeline = self._load_next_page()()
-
-        timeline = self.filter(timeline)
         if not timeline:
             self.nothingLoaded.emit()
 
