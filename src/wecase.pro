@@ -11,7 +11,6 @@ SOURCES = wecase.py\
 	  WCompleteLineEdit.py\
 	  WIconLabel.py\
 	  WImageLabel.py\
-	  WRotatingLabel.py\
 	  WTimeParser.py\
 	  WTimer.py\
 	  WeHack.py\
@@ -21,7 +20,6 @@ SOURCES = wecase.py\
 FORMS = ui/AboutWindow.ui\
         ui/LoginWindow.ui\
         ui/NewpostWindow.ui\
-        ui/SettingWindow.ui\
-        ui/FaceWindow.ui
+        ui/SettingWindow.ui
 
 TRANSLATIONS = locale/WeCase_zh_CN.ts

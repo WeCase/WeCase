@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="zh_CN">
 <context>
     <name></name>
     <message>
@@ -37,7 +38,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>About_Dialog</name>
     <message>
         <location filename="ui/AboutWindow.ui" line="32"/>
@@ -117,7 +118,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <source>This is a vanilla version.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="ui/AboutWindow.ui" line="214"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -428,62 +429,72 @@ p, li { white-space: pre-wrap; }
         <translation>带有这些关键词的微博不会显示：</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="342"/>
+        <location filename="ui/SettingWindow.ui" line="349"/>
         <source>Cache</source>
         <translation>缓存</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="363"/>
+        <location filename="ui/SettingWindow.ui" line="370"/>
         <source>Total Cache Size:</source>
         <translation>缓存总大小：</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="370"/>
+        <location filename="ui/SettingWindow.ui" line="377"/>
         <source>Computing...</source>
         <translation>计算中……</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="381"/>
+        <location filename="ui/SettingWindow.ui" line="388"/>
         <source>View by File Manager</source>
         <translation>用文件管理器查看</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="388"/>
+        <location filename="ui/SettingWindow.ui" line="395"/>
         <source>Clear</source>
         <translation>清空</translation>
+    </message>
+    <message>
+        <location filename="ui/SettingWindow.ui" line="341"/>
+        <source>Block Wordwars (WARNING: High False Positive Rate)</source>
+        <translation type="unfinished">屏蔽口水战（警告：高误判率）</translation>
     </message>
 </context>
 <context>
     <name>SingleTweetWidget</name>
     <message>
-        <location filename="TweetListWidget.py" line="560"/>
+        <location filename="TweetListWidget.py" line="548"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="560"/>
+        <location filename="TweetListWidget.py" line="548"/>
         <source>You can&apos;t undo your deletion.</source>
         <translation>删除后无法恢复。</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="668"/>
+        <location filename="TweetListWidget.py" line="656"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="665"/>
+        <location filename="TweetListWidget.py" line="653"/>
         <source>This tweet have been deleted.</source>
         <translation>这条微博已被删除。</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="668"/>
+        <location filename="TweetListWidget.py" line="656"/>
         <source>This tweet have been collected already..</source>
         <translation>这条微博已经收藏过了。</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="671"/>
+        <location filename="TweetListWidget.py" line="659"/>
         <source>Unknown Error</source>
         <translation>未知错误</translation>
+    </message>
+    <message>
+        <location filename="TweetListWidget.py" line="258"/>
+        <source>From: %s</source>
+        <translation>来自: %s</translation>
     </message>
 </context>
 <context>
@@ -522,27 +533,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="400"/>
+        <location filename="Tweet.py" line="483"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="402"/>
+        <location filename="Tweet.py" line="485"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="404"/>
+        <location filename="Tweet.py" line="487"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="406"/>
+        <location filename="Tweet.py" line="489"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="408"/>
+        <location filename="Tweet.py" line="491"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
@@ -563,7 +574,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WTabBar</name>
     <message>
-        <location filename="WeCaseWindow.py" line="590"/>
+        <location filename="WeCaseWindow.py" line="600"/>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
@@ -586,7 +597,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">评论(%d)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="445"/>
+        <location filename="WeCaseWindow.py" line="455"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
@@ -606,17 +617,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">评论</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="420"/>
+        <location filename="WeCaseWindow.py" line="430"/>
         <source>You have:</source>
         <translation>您有：</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="429"/>
+        <location filename="WeCaseWindow.py" line="439"/>
         <source>%d unread @ME</source>
         <translation>%d 条未读 @提醒</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="437"/>
+        <location filename="WeCaseWindow.py" line="447"/>
         <source>%d unread comment(s)</source>
         <translation>%d 条未读评论 </translation>
     </message>
@@ -636,52 +647,52 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">新微博(&amp;N)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="290"/>
+        <location filename="WeCaseWindow.py" line="292"/>
         <source>&amp;WeCase</source>
         <translation>微盒(&amp;W)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="291"/>
+        <location filename="WeCaseWindow.py" line="293"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="292"/>
+        <location filename="WeCaseWindow.py" line="294"/>
         <source>&amp;Options</source>
         <translation>选项(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="293"/>
+        <location filename="WeCaseWindow.py" line="295"/>
         <source>&amp;About...</source>
         <translation>关于(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="295"/>
+        <location filename="WeCaseWindow.py" line="297"/>
         <source>&amp;Log out</source>
         <translation>注销(&amp;L)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="296"/>
+        <location filename="WeCaseWindow.py" line="298"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="297"/>
+        <location filename="WeCaseWindow.py" line="299"/>
         <source>&amp;Settings</source>
         <translation>设置(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="329"/>
+        <location filename="WeCaseWindow.py" line="331"/>
         <source>&amp;Hide</source>
         <translation>隐藏(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="326"/>
+        <location filename="WeCaseWindow.py" line="328"/>
         <source>&amp;Show</source>
         <translation>显示(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="294"/>
+        <location filename="WeCaseWindow.py" line="296"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
@@ -699,42 +710,42 @@ p, li { white-space: pre-wrap; }
         <translation>%i 秒</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="78"/>
+        <location filename="SettingWindow.py" line="80"/>
         <source>Input A user:</source>
         <translation>输入一个用户：</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="78"/>
+        <location filename="SettingWindow.py" line="80"/>
         <source>Please input a user</source>
         <translation>请输入一个用户</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="78"/>
+        <location filename="SettingWindow.py" line="80"/>
         <source>Username</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="92"/>
+        <location filename="SettingWindow.py" line="94"/>
         <source>Input a keyword:</source>
         <translation>输入一个关键词：</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="92"/>
+        <location filename="SettingWindow.py" line="94"/>
         <source>Please input a keyword</source>
         <translation>请输入一个关键词</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="92"/>
+        <location filename="SettingWindow.py" line="94"/>
         <source>Keyword</source>
         <translation>关键词</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="108"/>
+        <location filename="SettingWindow.py" line="110"/>
         <source>Restart</source>
         <translation>重新启动</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="108"/>
+        <location filename="SettingWindow.py" line="110"/>
         <source>Settings need to restart WeCase to take effect.</source>
         <translation>需要重新启动 WeCase 才可使设置生效。</translation>
     </message>
