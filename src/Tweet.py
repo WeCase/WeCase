@@ -87,11 +87,6 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         assert self._tweets
         return int(self._tweets[-1].id)
 
-    def _load_next_page(self):
-        self.page += 1
-        timeline = lambda: self.timeline_get(page=self.page)
-        return timeline
-
     @async
     def _common_get(self, timeline_func, pos):
         def tprint(*args):
@@ -357,15 +352,18 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             item = self._model.get_item(index)
             tweets.append(item)
 
-        tweets = self.filter(tweets)
+        filteredTweets = self.filter(tweets)
+        while start != 0 and tweets and not filteredTweets:
+            self._model.next()
+            return
 
         if start == 0:
             row = 0
         else:
             row = self.rowCount()
 
-        self.beginInsertRows(QtCore.QModelIndex(), row, row + len(tweets) - 1)
-        for index, tweet in enumerate(tweets):
+        self.beginInsertRows(QtCore.QModelIndex(), row, row + len(filteredTweets) - 1)
+        for index, tweet in enumerate(filteredTweets):
             if start == 0:
                 self._tweets.insert(index, tweet)
             else:
