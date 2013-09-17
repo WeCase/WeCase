@@ -58,6 +58,10 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.usersBlackListWidget.addItems(self.config.usersBlacklist)
         self.tweetsKeywordsBlacklistWidget.addItems(self.config.tweetsKeywordsBlacklist)
         self.blockWordwarsCheckBox.setChecked(self.config.blockWordwars)
+        self.maxRetweetsCheckBox.setChecked(self.config.maxRetweets != -1)
+        self.maxRetweetsLimitLineEdit.setText("" if self.config.maxRetweets == -1 else str(self.config.maxRetweets))
+        self.maxTweetsPerUserCheckBox.setChecked(self.config.maxTweetsPerUser != -1)
+        self.maxTweetsPerUserLimitLineEdit.setText("" if self.config.maxTweetsPerUser == -1 else str(self.config.maxTweetsPerUser))
 
     def _getListWidgetItemsStringList(self, listWidget):
         stringList = []
@@ -72,7 +76,9 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.config.remind_mentions = str(self.mentionsChk.isChecked())
         self.config.usersBlacklist = str(self._getListWidgetItemsStringList(self.usersBlackListWidget))
         self.config.tweetsKeywordsBlacklist = str(self._getListWidgetItemsStringList(self.tweetsKeywordsBlacklistWidget))
-        self.config.blockWordwars = str(self.blockWordwarsCheckBox)
+        self.config.blockWordwars = str(self.blockWordwarsCheckBox.isChecked())
+        self.config.maxRetweets = str(-1 if not self.maxRetweetsCheckBox.isChecked() else int(self.maxRetweetsLimitLineEdit.text()))
+        self.config.maxTweetsPerUser = str(-1 if not self.maxTweetsPerUserCheckBox.isChecked() else int(self.maxTweetsPerUserLimitLineEdit.text()))
         self.config.save()
 
     def addBlackUser(self):

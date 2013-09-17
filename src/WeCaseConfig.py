@@ -77,6 +77,22 @@ class WeCaseConfig():
         self._main_config["blockWordwars"] = str(state)
 
     @property
+    def maxRetweets(self):
+        return int(self._main_config.get("maxRetweets", -1))
+
+    @maxRetweets.setter
+    def maxRetweets(self, max):
+        self._main_config["maxRetweets"] = str(max)
+
+    @property
+    def maxTweetsPerUser(self):
+        return int(self._main_config.get("maxTweetsPerUser", -1))
+
+    @maxTweetsPerUser.setter
+    def maxTweetsPerUser(self, max):
+        self._main_config["maxTweetsPerUser"] = str(max)
+
+    @property
     def mainwindow_geometry(self):
         return eval(self._main_config.get("mainwindow_geometry",
                                           '{"height": 656, "width": 403}'))

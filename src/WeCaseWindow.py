@@ -360,6 +360,8 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.remindMentions = self.config.remind_mentions
         self.remindComments = self.config.remind_comments
         self.blockWordwars = self.config.blockWordwars
+        self.maxRetweets = self.config.maxRetweets
+        self.maxTweetsPerUser = self.config.maxTweetsPerUser
         self.mainWindow_geometry = self.config.mainwindow_geometry
 
     def applyConfig(self):
@@ -377,6 +379,8 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
         self.all_timeline = TweetFilterModel(self._all_timeline)
         self.all_timeline.setModel(self._all_timeline)
+        self.all_timeline.setMaxRetweets(self.maxRetweets)
+        self.all_timeline.setMaxTweetsPerUser(self.maxTweetsPerUser)
         self._prepareTimeline(self.all_timeline)
         self.homeView.setModel(self.all_timeline)
 

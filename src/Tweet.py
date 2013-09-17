@@ -263,8 +263,11 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         super(TweetFilterModel, self).__init__(parent)
         self._model = None
         self._appearInfo = {}
+        self._userInfo = {}
         self._tweets = []
         self._blockWordwars = False
+        self._maxTweetsPerUser = -1
+        self._maxRetweets = -1
 
     def model(self):
         return self._model
@@ -287,6 +290,12 @@ class TweetFilterModel(QtCore.QAbstractListModel):
     def setBlockWordwars(self, state):
         self._blockWordwars = bool(state)
 
+    def setMaxTweetsPerUser(self, max):
+        self._maxTweetsPerUser = max
+
+    def setMaxRetweets(self, max):
+        self._maxRetweets = max
+
     def _inBlacklist(self, tweet):
         if not tweet:
             return False
@@ -299,6 +308,39 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         if tweet.author and (tweet.author.name in self._usersBlackList):
             return True
         return False
+
+    def maxTweetsPerUserFilter(self, items):
+        new_items = []
+
+        for item in items:
+            if not item.author.id in self._userInfo:
+                self._userInfo[item.author.id] = 0
+
+            if self._userInfo[item.author.id] > self._maxTweetsPerUser:
+                continue
+            else:
+                self._userInfo[item.author.id] += 1
+                new_items.append(item)
+
+        return new_items
+
+    def maxRetweetsFilter(self, items):
+        new_items = []
+
+        for item in items:
+            if not item.original:
+                continue
+
+            if not item.original.id in self._appearInfo:
+                self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
+
+            if self._appearInfo[item.original.id]["count"] > self._maxRetweets:
+                continue
+            else:
+                self._appearInfo[item.original.id]["count"] += 1
+                new_items.append(item)
+
+        return new_items
 
     def wordWarFilter(self, items):
         # If a same tweet retweeted more than 3 times, and
@@ -344,7 +386,15 @@ class TweetFilterModel(QtCore.QAbstractListModel):
                 continue
             else:
                 new_items.append(item)
-        return self.wordWarFilter(new_items) if self._blockWordwars else new_items
+
+        if self._blockWordwars:
+            new_items = self.wordWarFilter(new_items)
+        if self._maxRetweets != -1:
+            new_items = self.maxRetweetsFilter(new_items)
+        if self._maxTweetsPerUser != -1:
+            new_items = self.maxTweetsPerUserFilter(new_items)
+
+        return new_items
 
     def _rowsInserted(self, parent, start, end):
         tweets = []
