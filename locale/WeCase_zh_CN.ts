@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
 <context>
     <name></name>
     <message>
@@ -38,7 +37,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
 </context>
-<context>
+<context encoding="UTF-8">
     <name>About_Dialog</name>
     <message>
         <location filename="ui/AboutWindow.ui" line="32"/>
@@ -118,7 +117,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <source>This is a vanilla version.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="ui/AboutWindow.ui" line="214"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -456,7 +455,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="ui/SettingWindow.ui" line="341"/>
         <source>Block Wordwars (WARNING: High False Positive Rate)</source>
-        <translation type="unfinished">屏蔽口水战（警告：高误判率）</translation>
+        <translation>屏蔽口水战（警告：高误判率）</translation>
     </message>
 </context>
 <context>
