@@ -175,18 +175,15 @@
       <attribute name="title">
        <string>Intro</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>WeCase is a simple, but not crude weibo client which is running on Linux desktop.
 
-
 This software is released under GPL version 3 or later. For more details, see http://www.gnu.org
 
-
 Anyone can use, modify and redistribute this software.
-
 
 This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</string>
          </property>

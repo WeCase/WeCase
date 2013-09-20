@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui/AboutWindow.ui'
 #
-# Created: Fri Aug  9 01:22:46 2013
-#      by: PyQt4 UI code generator 4.10.2
+# Created: Fri Sep 20 21:00:53 2013
+#      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -102,14 +102,14 @@ class Ui_About_Dialog(object):
         self.tabWidget.setObjectName(_fromUtf8("tabWidget"))
         self.intro = QtGui.QWidget()
         self.intro.setObjectName(_fromUtf8("intro"))
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.intro)
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.verticalLayout_6 = QtGui.QVBoxLayout(self.intro)
+        self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.label_4 = QtGui.QLabel(self.intro)
         self.label_4.setTextFormat(QtCore.Qt.PlainText)
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setWordWrap(True)
         self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.horizontalLayout_2.addWidget(self.label_4)
+        self.verticalLayout_6.addWidget(self.label_4)
         self.tabWidget.addTab(self.intro, _fromUtf8(""))
         self.contirbutor = QtGui.QWidget()
         self.contirbutor.setObjectName(_fromUtf8("contirbutor"))
@@ -296,12 +296,9 @@ class Ui_About_Dialog(object):
         self.label_2.setText(_translate("About_Dialog", "A Linux weibo client", None))
         self.label_4.setText(_translate("About_Dialog", "WeCase is a simple, but not crude weibo client which is running on Linux desktop.\n"
 "\n"
-"\n"
 "This software is released under GPL version 3 or later. For more details, see http://www.gnu.org\n"
 "\n"
-"\n"
 "Anyone can use, modify and redistribute this software.\n"
-"\n"
 "\n"
 "This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.intro), _translate("About_Dialog", "Intro", None))

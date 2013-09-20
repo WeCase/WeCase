@@ -60,17 +60,17 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation>简介</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="208"/>
+        <location filename="ui/AboutWindow.ui" line="205"/>
         <source>Contributor</source>
         <translation>贡献者</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="234"/>
+        <location filename="ui/AboutWindow.ui" line="231"/>
         <source>GPL License</source>
         <translation>GPL 许可证</translation>
     </message>
     <message>
-        <location filename="ui/AboutWindow.ui" line="416"/>
+        <location filename="ui/AboutWindow.ui" line="413"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -101,7 +101,7 @@ Anyone can use, modify and redistribute this software.
 
 
 This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
-        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+        <translation type="obsolete">微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
 
 
 该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。
@@ -118,7 +118,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="ui/AboutWindow.ui" line="214"/>
+        <location filename="ui/AboutWindow.ui" line="211"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -143,6 +143,23 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/AboutWindow.ui" line="117"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:42pt;&quot;&gt;WeCase&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:42pt;&quot;&gt;WeCase&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="ui/AboutWindow.ui" line="182"/>
+        <source>WeCase is a simple, but not crude weibo client which is running on Linux desktop.
+
+This software is released under GPL version 3 or later. For more details, see http://www.gnu.org
+
+Anyone can use, modify and redistribute this software.
+
+This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
+        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+
+该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。
+
+任何人可以自由使用、修改并再发布该软件 。
+
+软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
     </message>
 </context>
 <context>
@@ -428,27 +445,27 @@ p, li { white-space: pre-wrap; }
         <translation>带有这些关键词的微博不会显示：</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="349"/>
+        <location filename="ui/SettingWindow.ui" line="441"/>
         <source>Cache</source>
         <translation>缓存</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="370"/>
+        <location filename="ui/SettingWindow.ui" line="462"/>
         <source>Total Cache Size:</source>
         <translation>缓存总大小：</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="377"/>
+        <location filename="ui/SettingWindow.ui" line="469"/>
         <source>Computing...</source>
         <translation>计算中……</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="388"/>
+        <location filename="ui/SettingWindow.ui" line="480"/>
         <source>View by File Manager</source>
         <translation>用文件管理器查看</translation>
     </message>
     <message>
-        <location filename="ui/SettingWindow.ui" line="395"/>
+        <location filename="ui/SettingWindow.ui" line="487"/>
         <source>Clear</source>
         <translation>清空</translation>
     </message>
@@ -456,6 +473,16 @@ p, li { white-space: pre-wrap; }
         <location filename="ui/SettingWindow.ui" line="341"/>
         <source>Block Wordwars (WARNING: High False Positive Rate)</source>
         <translation>屏蔽口水战（警告：高误判率）</translation>
+    </message>
+    <message>
+        <location filename="ui/SettingWindow.ui" line="350"/>
+        <source>Block Chatting. Retweets Limit Per Tweet:</source>
+        <translation>屏蔽版聊。同一条微博的转发最多显示数：   </translation>
+    </message>
+    <message>
+        <location filename="ui/SettingWindow.ui" line="396"/>
+        <source>Block Flooding. Tweets Limit Per User:     </source>
+        <translation>屏蔽刷屏。来自同一用户的微博最多显示数：</translation>
     </message>
 </context>
 <context>
@@ -532,27 +559,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="483"/>
+        <location filename="Tweet.py" line="533"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="485"/>
+        <location filename="Tweet.py" line="535"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="487"/>
+        <location filename="Tweet.py" line="537"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="489"/>
+        <location filename="Tweet.py" line="539"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="491"/>
+        <location filename="Tweet.py" line="541"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
@@ -573,7 +600,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>WTabBar</name>
     <message>
-        <location filename="WeCaseWindow.py" line="600"/>
+        <location filename="WeCaseWindow.py" line="604"/>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
@@ -596,7 +623,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">评论(%d)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="455"/>
+        <location filename="WeCaseWindow.py" line="459"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
@@ -616,17 +643,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">评论</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="430"/>
+        <location filename="WeCaseWindow.py" line="434"/>
         <source>You have:</source>
         <translation>您有：</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="439"/>
+        <location filename="WeCaseWindow.py" line="443"/>
         <source>%d unread @ME</source>
         <translation>%d 条未读 @提醒</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="447"/>
+        <location filename="WeCaseWindow.py" line="451"/>
         <source>%d unread comment(s)</source>
         <translation>%d 条未读评论 </translation>
     </message>
@@ -709,42 +736,42 @@ p, li { white-space: pre-wrap; }
         <translation>%i 秒</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="80"/>
+        <location filename="SettingWindow.py" line="86"/>
         <source>Input A user:</source>
         <translation>输入一个用户：</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="80"/>
+        <location filename="SettingWindow.py" line="86"/>
         <source>Please input a user</source>
         <translation>请输入一个用户</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="80"/>
+        <location filename="SettingWindow.py" line="86"/>
         <source>Username</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="94"/>
+        <location filename="SettingWindow.py" line="100"/>
         <source>Input a keyword:</source>
         <translation>输入一个关键词：</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="94"/>
+        <location filename="SettingWindow.py" line="100"/>
         <source>Please input a keyword</source>
         <translation>请输入一个关键词</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="94"/>
+        <location filename="SettingWindow.py" line="100"/>
         <source>Keyword</source>
         <translation>关键词</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="110"/>
+        <location filename="SettingWindow.py" line="116"/>
         <source>Restart</source>
         <translation>重新启动</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="110"/>
+        <location filename="SettingWindow.py" line="116"/>
         <source>Settings need to restart WeCase to take effect.</source>
         <translation>需要重新启动 WeCase 才可使设置生效。</translation>
     </message>
