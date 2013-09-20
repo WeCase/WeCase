@@ -77,11 +77,19 @@ def my_excepthook(type, value, tback):
 def import_warning():
     try:
         import notify2
+        import dbus
+        from dbus.exceptions import DBusException
+        notify2.init("WeCase")
     except ImportError:
         QtGui.QMessageBox.warning(
             None,
             App.translate("main", "Notification disabled"),
-            App.translate("main", "notify2 is not found. Notification will disable."))
+            App.translate("main", "dbus-python or notify2 is not found. Notification will disable."))
+    except DBusException:
+        QtGui.QMessageBox.warning(
+            None,
+            App.translate("main", "Notification disabled"),
+            App.translate("main", "Notification Daemon not exist. Notification will disable."))
 
 
 def setup_logger():

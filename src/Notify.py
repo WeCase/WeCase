@@ -11,7 +11,9 @@ import const
 
 try:
     import notify2 as pynotify
-except ImportError:
+    from dbus.exceptions import DBusException
+    pynotify.init("WeCase")
+except (ImportError, DBusException):
     import nullNotify as pynotify
 
 

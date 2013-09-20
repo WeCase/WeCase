@@ -947,14 +947,14 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation type="obsolete">请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
     <message>
-        <location filename="wecase.py" line="81"/>
+        <location filename="wecase.py" line="89"/>
         <source>Notification disabled</source>
         <translation>通知已禁用</translation>
     </message>
     <message>
         <location filename="wecase.py" line="81"/>
         <source>notify2 is not found. Notification will disable.</source>
-        <translation>notify2 未找到。通知将被禁用。</translation>
+        <translation type="obsolete">notify2 未找到。通知将被禁用。</translation>
     </message>
     <message>
         <location filename="wecase.py" line="62"/>
@@ -971,6 +971,16 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 </source>
         <translation>苍天啊，大地啊！这个不明错误怎么就发生了呢，
 </translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="84"/>
+        <source>dbus-python or notify2 is not found. Notification will disable.</source>
+        <translation>dbus-python 或 notify2 未找到。通知将被禁用。</translation>
+    </message>
+    <message>
+        <location filename="wecase.py" line="89"/>
+        <source>Notification Daemon not exist. Notification will disable.</source>
+        <translation>通知守护进程 (Notification Daemon) 不存在。通知将禁用。</translation>
     </message>
 </context>
 </TS>
