@@ -48,6 +48,30 @@ class WFaceListWidget(QtGui.QWidget):
             self.tabWidget.addTab(tab, category)
         self.setLayout(self.layout)
 
+        self.tabWidget.tabBar().currentChanged.connect(self.turnAnimation)
+
+        self._lastTab = 0
+        self.tabWidget.tabBar().setCurrentIndex(0)
+        self.turnAnimation(0)
+
+    def turnAnimation(self, index):
+        self._turnAnimation(self._lastTab, start=False)
+        self._turnAnimation(index)
+        self._lastTab = index
+
+    def _turnAnimation(self, index, start=True):
+        tab = self.tabWidget.widget(index)
+        for index in range(tab.layout().count()):
+            widget = tab.layout().itemAt(index).widget()
+            try:
+                if start:
+                    widget.smileyLabel.start()
+                else:
+                    widget.smileyLabel.stop()
+            except AttributeError:
+                # a spacer
+                pass
+
 
 class WSmileyWidget(QtGui.QWidget):
 
@@ -58,7 +82,11 @@ class WSmileyWidget(QtGui.QWidget):
         self._smiley = smiley
         self.smileyLabel = WImageLabel(self)
         self.smileyLabel.setToolTip(smiley.name)
-        self.smileyLabel.setImageFile(smiley.path)
+        self.smileyLabel.setImageFile(smiley.path, False)
+        # HACK: Start and stop animation to let Qt Layout calculate
+        # the size of them correctly.
+        self.smileyLabel.start()
+        self.smileyLabel.stop()
         self.smileyLabel.clicked.connect(self._smileyClicked)
 
     def _smileyClicked(self):

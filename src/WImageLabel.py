@@ -8,12 +8,12 @@ class WImageLabel(QtGui.QLabel):
     def __init__(self, parent=None):
         super(WImageLabel, self).__init__(parent)
 
-    def setImageFile(self, path):
-        self.setMovie(QtGui.QMovie(path))
+    def setImageFile(self, path, start=True):
+        self.setMovie(QtGui.QMovie(path), start)
 
-    def setMovie(self, movie):
+    def setMovie(self, movie, start=True):
         super(WImageLabel, self).setMovie(movie)
-        movie.start()
+        start and movie.start()
 
     def start(self):
         self.movie().start()
