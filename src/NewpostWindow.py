@@ -25,6 +25,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     sendSuccessful = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
+    tweetRefreshed = QtCore.pyqtSignal()
 
     def __init__(self, action="new", tweet=None, parent=None):
         super(NewpostWindow, self).__init__(parent)
@@ -41,15 +42,16 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.sendSuccessful.connect(self.sent)
         self.commonError.connect(self.showErrorMessage)
 
+        if self.action not in ["new", "reply"]:
+            self._refresh()
+            self.tweetRefreshed.connect(self._create_tweetWidget)
+
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
         self.sendAction = QtGui.QAction(self)
         self.sendAction.triggered.connect(self.send)
         self.sendAction.setShortcut(QtGui.QKeySequence("Ctrl+Return"))
         self.addAction(self.sendAction)
-
-        if self.action not in ["new", "reply"]:
-            self._create_tweetWidget()
 
         self.checkChars()
         self.setupButtons()
@@ -80,10 +82,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         else:
             assert False
 
-    def _create_tweetWidget(self):
+    @async
+    def _refresh(self):
         # The read count is not a real-time value. So refresh it now.
         self.tweet.refresh()
+        self.tweetRefreshed.emit()
 
+    def _create_tweetWidget(self):
         if self.action == "comment" and self.tweet.comments_count:
             self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
             self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
