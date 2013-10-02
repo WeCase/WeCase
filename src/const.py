@@ -37,6 +37,7 @@ config_path = home_path + '/.config/wecase/config_db'
 cache_path = home_path + '/.cache/wecase/'
 myself_name = sys.argv[0].split('/')[-1]
 myself_path = os.path.dirname(os.path.realpath(__file__)) + '/'
+locale_path = myself_path + "locale/"
 face_path = myself_path + "ui/img/face/"
 
 

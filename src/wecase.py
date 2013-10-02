@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # WeCase's own string translator
     my_translator = QtCore.QTranslator(App)
     my_translator.load("WeCase_" + QtCore.QLocale.system().name(),
-                       const.myself_path + "locale")
+                       const.locale_path)
     App.installTranslator(my_translator)
 
     import_warning()
