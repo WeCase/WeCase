@@ -85,7 +85,7 @@ class FaceModel(metaclass=Singleton):
         if self.__loaded:
             return
 
-        self.__tree = ET.ElementTree(file=const.face_path + "./face.xml")
+        self.__tree = ET.ElementTree(file=const.face_path + "face.xml")
 
         for face in self.__tree.iterfind("./FACEINFO/"):
             assert face.tag == "FACE"
