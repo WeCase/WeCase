@@ -84,7 +84,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.layout = QtGui.QVBoxLayout(self)
         self.setLayout(self.layout)
         self.busyMovie = WObjectCache().open(QtGui.QMovie,
-                                             const.icon("busy.gif"))
+                                             ":/IMG/img/busy.gif")
 
     def setModel(self, model):
         self.model = model
@@ -367,12 +367,12 @@ class SingleTweetWidget(QtGui.QFrame):
         retweet = WIconLabel(widget)
         retweet.setObjectName("retweet")
         retweet.setText(str(originalItem.retweets_count))
-        retweet.setIcon(const.myself_path + "/icon/retweets.png")
+        retweet.setIcon(":/IMG/img/retweets.png")
         retweet.clicked.connect(self._original_retweet)
         counterHorizontalLayout.addWidget(retweet)
         comment = WIconLabel(widget)
         comment.setObjectName("comment")
-        comment.setIcon(const.myself_path + "/icon/comments.png")
+        comment.setIcon(":/IMG/img/comments.png")
         comment.setText(str(originalItem.comments_count))
         comment.clicked.connect(self._original_comment)
         counterHorizontalLayout.addWidget(comment)
@@ -416,7 +416,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _createFavoriteLabel(self):
         favorite = WIconLabel(self)
-        favorite.setIcon(const.myself_path + "/icon/no_favorites.png")
+        favorite.setIcon(":/IMG/img/no_favorites.png")
         favorite.clicked.connect(self._favorite)
         return favorite
 
@@ -424,14 +424,14 @@ class SingleTweetWidget(QtGui.QFrame):
         retweet = WIconLabel(self)
         retweet.setObjectName("retweet")
         retweet.setText(str(self.tweet.retweets_count))
-        retweet.setIcon(const.myself_path + "/icon/retweets.png")
+        retweet.setIcon(":/IMG/img/retweets.png")
         retweet.clicked.connect(self._retweet)
         return retweet
 
     def _createCommentLabel(self):
         comment = WIconLabel(self)
         comment.setObjectName("comment")
-        comment.setIcon(const.myself_path + "/icon/comments.png")
+        comment.setIcon(":/IMG/img/comments.png")
         comment.setText(str(self.tweet.comments_count))
         comment.clicked.connect(self._comment)
         return comment
@@ -439,14 +439,14 @@ class SingleTweetWidget(QtGui.QFrame):
     def _createReplyLabel(self):
         reply = WIconLabel(self)
         reply.setObjectName("reply")
-        reply.setIcon(const.myself_path + "/icon/retweets.png")
+        reply.setIcon(":/IMG/img/retweets.png")
         reply.clicked.connect(self._reply)
         return reply
 
     def _createDeleteLabel(self):
         delete = WIconLabel(self)
         delete.setObjectName("delete")
-        delete.setIcon(const.myself_path + "/icon/deletes.png")
+        delete.setIcon(":/IMG/img/deletes.png")
         delete.clicked.connect(self._delete)
         return delete
 
@@ -497,9 +497,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.__favorite_queue.append(state)
         if state:
-            self.favorite.setIcon(const.icon("favorites.png"))
+            self.favorite.setIcon(":/IMG/img/favorites.png")
         else:
-            self.favorite.setIcon(const.icon("no_favorites.png"))
+            self.favorite.setIcon(":/IMG/img/no_favorites.png")
 
         if needWorker:
             self.__favorite_worker()

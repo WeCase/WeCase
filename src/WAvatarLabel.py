@@ -1,6 +1,5 @@
 from PyQt4 import QtCore, QtGui
 from WAsyncLabel import WAsyncLabel
-from const import icon
 
 
 class WAvatarLabel(WAsyncLabel):
@@ -20,9 +19,9 @@ class WAvatarLabel(WAsyncLabel):
         if self.__verity_type == self.NO_VERIFY:
             return
         elif self.__verity_type == self.PERSONAL_VERIFY:
-            newPixmap = self.__draw_verify_icon(self._image, QtGui.QPixmap(icon("verify_personal.png")))
+            newPixmap = self.__draw_verify_icon(self._image, QtGui.QPixmap(":/IMG/img/verify_personal.png"))
         elif self.__verity_type == self.ORGANIZATION_VERIFY:
-            newPixmap = self.__draw_verify_icon(self._image, QtGui.QPixmap(icon("verify_organization.png")))
+            newPixmap = self.__draw_verify_icon(self._image, QtGui.QPixmap(":/IMG/img/verify_organization.png"))
         super(WAsyncLabel, self).setPixmap(newPixmap)
 
     def __draw_verify_icon(self, pixmap, verify_pixmap):

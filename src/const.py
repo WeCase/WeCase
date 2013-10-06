@@ -39,7 +39,3 @@ myself_name = sys.argv[0].split('/')[-1]
 myself_path = os.path.dirname(os.path.realpath(__file__)) + '/'
 locale_path = myself_path + "locale/"
 face_path = myself_path + "ui/img/face/"
-
-
-def icon(name):
-    return myself_path + "/icon/" + name

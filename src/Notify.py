@@ -20,7 +20,7 @@ except DBusException:
 
 
 class Notify(QtCore.QObject):
-    image = const.myself_path + "/ui/img/WeCase 80.png"
+    image = const.myself_path + "/ui/img/WeCase_80.png"
 
     def __init__(self, appname=QtCore.QObject().tr("WeCase"), timeout=5):
         super(Notify, self).__init__()

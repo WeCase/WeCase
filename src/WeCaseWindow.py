@@ -129,7 +129,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         timeline = TweetTopicModel(self.client.search.topics, topic, view)
         tab = self._setupCommonTab(timeline, view, switch, protect=False)
         self._setTabIcon(tab, WObjectCache().open(
-            QtGui.QPixmap, const.icon("topic.jpg")
+            QtGui.QPixmap, ":/IMG/img/topic.jpg"
         ))
 
     def userClicked(self, userItem, openAtBackend):
@@ -192,7 +192,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.aboutAction.setIcon(QtGui.QIcon(QtGui.QPixmap("./IMG/img/where_s_my_weibo.svg")))
         self.exitAction.setIcon(QtGui.QIcon(QtGui.QPixmap(":/IMG/img/application-exit.svg")))
         self.settingsAction.setIcon(QtGui.QIcon(QtGui.QPixmap(":/IMG/img/preferences-other.png")))
-        self.refreshAction.setIcon(QtGui.QIcon(QtGui.QPixmap(const.icon("refresh.png"))))
+        self.refreshAction.setIcon(QtGui.QIcon(QtGui.QPixmap(":/IMG/img/refresh.png")))
 
         self.menubar = QtGui.QMenuBar(mainWindow)
         self.menubar.setEnabled(True)
@@ -227,17 +227,17 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tabBadgeChanged.connect(self.drawNotifyBadge)
 
         self.refreshAction.setShortcut(QtGui.QKeySequence("F5"))
-        self.pushButton_refresh.setIcon(QtGui.QIcon(const.icon("refresh.png")))
-        self.pushButton_new.setIcon(QtGui.QIcon(const.icon("new.png")))
+        self.pushButton_refresh.setIcon(QtGui.QIcon(":/IMG/img/refresh.png"))
+        self.pushButton_new.setIcon(QtGui.QIcon(":/IMG/img/new.png"))
 
         if self.isGlobalMenu():
             self._setupToolBar()
         else:
             self._setupButtonWidget()
 
-        self._setTabIcon(self.homeTab, QtGui.QPixmap(const.icon("sina.png")))
-        self._setTabIcon(self.mentionsTab, QtGui.QPixmap(const.icon("mentions.png")))
-        self._setTabIcon(self.commentsTab, QtGui.QPixmap(const.icon("comments2.png")))
+        self._setTabIcon(self.homeTab, QtGui.QPixmap(":/IMG/img/sina.png"))
+        self._setTabIcon(self.mentionsTab, QtGui.QPixmap(":/IMG/img/mentions.png"))
+        self._setTabIcon(self.commentsTab, QtGui.QPixmap(":/IMG/img/comments2.png"))
 
         self.retranslateUi(mainWindow)
 
@@ -263,7 +263,7 @@ class WeCaseWindow(QtGui.QMainWindow):
                             QtGui.QSizePolicy.Preferred)
         self.toolBar.addWidget(empty)
         self.toolBar.addAction(self.refreshAction)
-        newAction = self.toolBar.addAction(QtGui.QIcon(const.icon("new.png")),
+        newAction = self.toolBar.addAction(QtGui.QIcon(":/IMG/img/new.png"),
                                            "New")
         newAction.triggered.connect(self.pushButton_new.clicked)
         self.addToolBar(self.toolBar)

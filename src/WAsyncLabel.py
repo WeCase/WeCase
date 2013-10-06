@@ -6,7 +6,6 @@ from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
 from const import cache_path as down_path
-from const import icon
 from WeHack import async
 from WObjectCache import WObjectCache
 import logging
@@ -24,7 +23,7 @@ class WAsyncLabel(WImageLabel):
         self.fetcher = WAsyncFetcher(self)
         self.fetcher.fetched.connect(self._setPixmap)
 
-        busyIconPixmap = WObjectCache().open(QtGui.QPixmap, icon("busy.gif"))
+        busyIconPixmap = WObjectCache().open(QtGui.QPixmap, ":/IMG/img/busy.gif")
         self.minimumImageHeight = busyIconPixmap.height()
         self.minimumImageWidth = busyIconPixmap.width()
 
@@ -44,7 +43,7 @@ class WAsyncLabel(WImageLabel):
             # The the busyIcon appear again unexpectedly.
             # The quick fix is disconnecting the signal/slot connection
             # when we stop the movie.
-            self.animation = WObjectCache().open(QtGui.QMovie, icon("busy.gif"))
+            self.animation = WObjectCache().open(QtGui.QMovie, ":/IMG/img/busy.gif")
             self.animation.start()
             self.animation.frameChanged.connect(self.drawBusyIcon)
         else:
@@ -100,7 +99,7 @@ class WAsyncLabel(WImageLabel):
 
     def setPixmap(self, url):
         super(WAsyncLabel, self).setMovie(
-            WObjectCache().open(QtGui.QMovie, icon("busy.gif"))
+            WObjectCache().open(QtGui.QMovie, ":/IMG/img/busy.gif")
         )
         self.start()
         if not ("http" in url):
