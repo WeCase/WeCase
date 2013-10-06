@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui/AboutWindow.ui'
 #
-# Created: Fri Sep 20 21:00:53 2013
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Sun Oct  6 21:32:06 2013
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -52,7 +52,7 @@ class Ui_About_Dialog(object):
         self.label_3.setMinimumSize(QtCore.QSize(96, 96))
         self.label_3.setMaximumSize(QtCore.QSize(96, 96))
         self.label_3.setText(_fromUtf8(""))
-        self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase 80.png")))
+        self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")))
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.verticalLayout_4.addWidget(self.label_3)
