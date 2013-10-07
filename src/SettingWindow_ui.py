@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/SettingWindow.ui'
+# Form implementation generated from reading ui file './ui/SettingWindow.ui'
 #
-# Created: Tue Sep 17 21:40:58 2013
-#      by: PyQt4 UI code generator 4.10.2
+# Created: Mon Oct  7 14:34:57 2013
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,16 +12,7 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_SettingWindow(object):
     def setupUi(self, SettingWindow):
@@ -262,30 +253,30 @@ class Ui_SettingWindow(object):
         QtCore.QMetaObject.connectSlotsByName(SettingWindow)
 
     def retranslateUi(self, SettingWindow):
-        SettingWindow.setWindowTitle(_translate("SettingWindow", "Settings", None))
-        self.intervalDefine.setText(_translate("SettingWindow", "Interval for notify checking", None))
-        self.intervalLabel.setText(_translate("SettingWindow", "? ms", None))
-        self.timeoutDefine.setText(_translate("SettingWindow", "Timeout for popup notify", None))
-        self.timeoutLabel.setText(_translate("SettingWindow", "? ms", None))
-        self.label_2.setText(_translate("SettingWindow", "Remind me when I have:", None))
-        self.mentionsChk.setText(_translate("SettingWindow", "@ Me", None))
-        self.commentsChk.setText(_translate("SettingWindow", "Comments", None))
-        self.label_6.setText(_translate("SettingWindow", "<html><head/><body><p align=\"center\">Commentary: </p><p align=\"center\">most debugging problems are fixed easily; <br/>identifying the location of the problem is hard.</p></body></html>", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("SettingWindow", "Notify", None))
-        self.label_5.setText(_translate("SettingWindow", "These users won\'t show in any timeline:", None))
-        self.btnAddBlackUser.setText(_translate("SettingWindow", "Add", None))
-        self.btnRemoveBlackUser.setText(_translate("SettingWindow", "Remove", None))
-        self.label.setText(_translate("SettingWindow", "Tweets with these keywords won\'t show:", None))
-        self.btnAddKeyword.setText(_translate("SettingWindow", "Add", None))
-        self.btnRemoveKeyword.setText(_translate("SettingWindow", "Remove", None))
-        self.blockWordwarsCheckBox.setText(_translate("SettingWindow", "Block Wordwars (WARNING: High False Positive Rate)", None))
-        self.maxRetweetsCheckBox.setText(_translate("SettingWindow", "Block Chatting. Retweets Limit Per Tweet:", None))
-        self.maxTweetsPerUserCheckBox.setText(_translate("SettingWindow", "Block Flooding. Tweets Limit Per User:     ", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("SettingWindow", "Filters", None))
-        self.label_3.setText(_translate("SettingWindow", "Total Cache Size:", None))
-        self.cacheSizeLabel.setText(_translate("SettingWindow", "Computing...", None))
-        self.cacheViewButton.setText(_translate("SettingWindow", "View by File Manager", None))
-        self.cacheClearButton.setText(_translate("SettingWindow", "Clear", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("SettingWindow", "Cache", None))
+        SettingWindow.setWindowTitle(QtGui.QApplication.translate("SettingWindow", "Settings", None, QtGui.QApplication.UnicodeUTF8))
+        self.intervalDefine.setText(QtGui.QApplication.translate("SettingWindow", "Interval for notify checking", None, QtGui.QApplication.UnicodeUTF8))
+        self.intervalLabel.setText(QtGui.QApplication.translate("SettingWindow", "? ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.timeoutDefine.setText(QtGui.QApplication.translate("SettingWindow", "Timeout for popup notify", None, QtGui.QApplication.UnicodeUTF8))
+        self.timeoutLabel.setText(QtGui.QApplication.translate("SettingWindow", "? ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("SettingWindow", "Remind me when I have:", None, QtGui.QApplication.UnicodeUTF8))
+        self.mentionsChk.setText(QtGui.QApplication.translate("SettingWindow", "@ Me", None, QtGui.QApplication.UnicodeUTF8))
+        self.commentsChk.setText(QtGui.QApplication.translate("SettingWindow", "Comments", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("SettingWindow", "<html><head/><body><p align=\"center\">Commentary: </p><p align=\"center\">most debugging problems are fixed easily; <br/>identifying the location of the problem is hard.</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("SettingWindow", "Notify", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("SettingWindow", "These users won\'t show in any timeline:", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnAddBlackUser.setText(QtGui.QApplication.translate("SettingWindow", "Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnRemoveBlackUser.setText(QtGui.QApplication.translate("SettingWindow", "Remove", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("SettingWindow", "Tweets with these keywords won\'t show:", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnAddKeyword.setText(QtGui.QApplication.translate("SettingWindow", "Add", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnRemoveKeyword.setText(QtGui.QApplication.translate("SettingWindow", "Remove", None, QtGui.QApplication.UnicodeUTF8))
+        self.blockWordwarsCheckBox.setText(QtGui.QApplication.translate("SettingWindow", "Block Wordwars (WARNING: High False Positive Rate)", None, QtGui.QApplication.UnicodeUTF8))
+        self.maxRetweetsCheckBox.setText(QtGui.QApplication.translate("SettingWindow", "Block Chatting. Retweets Limit Per Tweet:", None, QtGui.QApplication.UnicodeUTF8))
+        self.maxTweetsPerUserCheckBox.setText(QtGui.QApplication.translate("SettingWindow", "Block Flooding. Tweets Limit Per User:     ", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("SettingWindow", "Filters", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("SettingWindow", "Total Cache Size:", None, QtGui.QApplication.UnicodeUTF8))
+        self.cacheSizeLabel.setText(QtGui.QApplication.translate("SettingWindow", "Computing...", None, QtGui.QApplication.UnicodeUTF8))
+        self.cacheViewButton.setText(QtGui.QApplication.translate("SettingWindow", "View by File Manager", None, QtGui.QApplication.UnicodeUTF8))
+        self.cacheClearButton.setText(QtGui.QApplication.translate("SettingWindow", "Clear", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("SettingWindow", "Cache", None, QtGui.QApplication.UnicodeUTF8))
 
 import wecase_rc

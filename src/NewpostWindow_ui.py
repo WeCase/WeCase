@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/NewpostWindow.ui'
+# Form implementation generated from reading ui file './ui/NewpostWindow.ui'
 #
-# Created: Sun Aug  4 04:28:40 2013
-#      by: PyQt4 UI code generator 4.10.2
+# Created: Mon Oct  7 14:34:57 2013
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,16 +12,7 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    def _fromUtf8(s):
-        return s
-
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+    _fromUtf8 = lambda s: s
 
 class Ui_NewPostWindow(object):
     def setupUi(self, NewPostWindow):
@@ -100,15 +91,15 @@ class Ui_NewPostWindow(object):
         QtCore.QMetaObject.connectSlotsByName(NewPostWindow)
 
     def retranslateUi(self, NewPostWindow):
-        NewPostWindow.setWindowTitle(_translate("NewPostWindow", "New Message", None))
-        self.label.setText(_translate("NewPostWindow", "140", None))
-        self.label_2.setText(_translate("NewPostWindow", "Also:", None))
-        self.chk_comment.setText(_translate("NewPostWindow", "Comment", None))
-        self.chk_repost.setText(_translate("NewPostWindow", "Repost", None))
-        self.chk_comment_original.setText(_translate("NewPostWindow", "Commmet to Original", None))
-        self.pushButton_picture.setText(_translate("NewPostWindow", "&Picture", None))
-        self.pushButton_cancel.setText(_translate("NewPostWindow", "&Cancel", None))
-        self.pushButton_send.setText(_translate("NewPostWindow", "&Send", None))
-        self.pushButton.setText(_translate("NewPostWindow", "S&miley", None))
+        NewPostWindow.setWindowTitle(QtGui.QApplication.translate("NewPostWindow", "New Message", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("NewPostWindow", "140", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("NewPostWindow", "Also:", None, QtGui.QApplication.UnicodeUTF8))
+        self.chk_comment.setText(QtGui.QApplication.translate("NewPostWindow", "Comment", None, QtGui.QApplication.UnicodeUTF8))
+        self.chk_repost.setText(QtGui.QApplication.translate("NewPostWindow", "Repost", None, QtGui.QApplication.UnicodeUTF8))
+        self.chk_comment_original.setText(QtGui.QApplication.translate("NewPostWindow", "Commmet to Original", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_picture.setText(QtGui.QApplication.translate("NewPostWindow", "&Picture", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_cancel.setText(QtGui.QApplication.translate("NewPostWindow", "&Cancel", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_send.setText(QtGui.QApplication.translate("NewPostWindow", "&Send", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("NewPostWindow", "S&miley", None, QtGui.QApplication.UnicodeUTF8))
 
 from WCompleteLineEdit import WCompleteLineEdit
