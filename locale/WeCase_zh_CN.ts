@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="zh_CN">
 <context>
     <name></name>
     <message>
@@ -37,7 +38,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>About_Dialog</name>
     <message>
         <location filename="ui/AboutWindow.ui" line="32"/>
@@ -117,7 +118,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <source>This is a vanilla version.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="ui/AboutWindow.ui" line="211"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -282,27 +283,27 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="NewpostWindow.py" line="203"/>
+        <location filename="NewpostWindow.py" line="208"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="156"/>
+        <location filename="NewpostWindow.py" line="161"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="169"/>
+        <location filename="NewpostWindow.py" line="174"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="182"/>
+        <location filename="NewpostWindow.py" line="187"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="203"/>
+        <location filename="NewpostWindow.py" line="208"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -317,57 +318,57 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="218"/>
+        <location filename="NewpostWindow.py" line="223"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="224"/>
+        <location filename="NewpostWindow.py" line="229"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="229"/>
+        <location filename="NewpostWindow.py" line="234"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="229"/>
+        <location filename="NewpostWindow.py" line="234"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="232"/>
+        <location filename="NewpostWindow.py" line="237"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="213"/>
+        <location filename="NewpostWindow.py" line="218"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="270"/>
+        <location filename="NewpostWindow.py" line="275"/>
         <source>Close?</source>
         <translation>关闭？</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="270"/>
+        <location filename="NewpostWindow.py" line="275"/>
         <source>All unpost text will lost.</source>
         <translation>所有未发布的文字将丢弃。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="195"/>
+        <location filename="NewpostWindow.py" line="200"/>
         <source>File not found</source>
         <translation>文件未找到</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="195"/>
+        <location filename="NewpostWindow.py" line="200"/>
         <source>No such file: %s</source>
         <translation>没有这个文件: %s</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="216"/>
+        <location filename="NewpostWindow.py" line="221"/>
         <source>&amp;Picture</source>
         <translation>图片(&amp;P)</translation>
     </message>
@@ -587,12 +588,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>WAsyncLabel</name>
     <message>
-        <location filename="WAsyncLabel.py" line="125"/>
+        <location filename="WAsyncLabel.py" line="124"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WAsyncLabel.py" line="132"/>
+        <location filename="WAsyncLabel.py" line="131"/>
         <source>Choose a path</source>
         <translation>选择路径</translation>
     </message>
@@ -814,7 +815,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
     <message>
         <location filename="ui/LoginWindow.ui" line="51"/>
         <source>User Name:</source>
-        <translation>用户名：</translation>
+        <translation type="obsolete">用户名：</translation>
     </message>
     <message>
         <location filename="ui/LoginWindow.ui" line="61"/>
@@ -845,6 +846,11 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <location filename="ui/LoginWindow.ui" line="155"/>
         <source>&amp;New account</source>
         <translation>新账号(&amp;N)</translation>
+    </message>
+    <message>
+        <location filename="ui/LoginWindow.ui" line="51"/>
+        <source>E-mail or phone number:</source>
+        <translation type="unfinished">邮箱或手机号</translation>
     </message>
 </context>
 <context>
