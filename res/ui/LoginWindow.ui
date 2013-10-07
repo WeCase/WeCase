@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>312</width>
+    <width>447</width>
     <height>133</height>
    </rect>
   </property>
@@ -27,8 +27,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>312</width>
-    <height>133</height>
+    <width>500</width>
+    <height>160</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -48,7 +48,7 @@
          <item>
           <widget class="QLabel" name="label_username">
            <property name="text">
-            <string>User Name:</string>
+            <string>E-mail or phone number:</string>
            </property>
            <property name="buddy">
             <cstring>cmb_Users</cstring>
