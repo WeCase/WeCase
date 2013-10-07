@@ -817,32 +817,32 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation type="obsolete">用户名：</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="61"/>
+        <location filename="ui/LoginWindow.ui" line="67"/>
         <source>Password:</source>
         <translation>密码：</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="71"/>
+        <location filename="ui/LoginWindow.ui" line="77"/>
         <source>Status:</source>
         <translation>状态：</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="94"/>
+        <location filename="ui/LoginWindow.ui" line="100"/>
         <source>&amp;Remember Me</source>
         <translation>记住我(&amp;R)</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="101"/>
+        <location filename="ui/LoginWindow.ui" line="107"/>
         <source>&amp;Auto Login</source>
         <translation>自动登录(&amp;A)</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="145"/>
+        <location filename="ui/LoginWindow.ui" line="151"/>
         <source>&amp;Go!</source>
         <translation>走起(&amp;G)！</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="155"/>
+        <location filename="ui/LoginWindow.ui" line="161"/>
         <source>&amp;New account</source>
         <translation>新账号(&amp;N)</translation>
     </message>
