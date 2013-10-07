@@ -25,6 +25,7 @@ OAUTH2_PARAMETER = {'client_id': APP_KEY,
                     'state': '',
                     'ticket': '',
                     'withOfficalFlag': 0}
+MAX_IMAGE_BYTES = 5 * 1024 * 1024  # 5 MiB
 
 
 try:

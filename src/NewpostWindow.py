@@ -6,6 +6,7 @@
 # License: GPL v3 or later.
 
 
+from os.path import getsize
 from WeHack import async
 from PyQt4 import QtCore, QtGui
 from weibo import APIError
@@ -196,9 +197,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 try:
                     self.client.statuses.upload.post(status=text,
                                                      pic=open(self.image, "rb"))
+                    if getsize > const.MAX_IMAGE_BYTES:
+                        raise ValueError
                 except (OSError, IOError):
                     self.commonError.emit(self.tr("File not found"),
                                           self.tr("No such file: %s")
+                                          % self.image)
+                    self.addImage()  # In fact, remove image...
+                    return
+                except ValueError:
+                    self.commonError.emit(self.tr("Too large size"),
+                                          self.tr("This image is too large to upload: %s")
                                           % self.image)
                     self.addImage()  # In fact, remove image...
                     return
