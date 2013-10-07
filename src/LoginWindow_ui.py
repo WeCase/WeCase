@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './ui/LoginWindow.ui'
 #
-# Created: Mon Oct  7 14:34:57 2013
+# Created: Mon Oct  7 14:59:37 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -41,7 +41,6 @@ class Ui_frm_Login(object):
         self.label_username.setObjectName(_fromUtf8("label_username"))
         self.verticalLayout_2.addWidget(self.label_username)
         self.label_passwd = QtGui.QLabel(frm_Login)
-        self.label_passwd.setMaximumSize(QtCore.QSize(500, 500))
         self.label_passwd.setObjectName(_fromUtf8("label_passwd"))
         self.verticalLayout_2.addWidget(self.label_passwd)
         self.label_status = QtGui.QLabel(frm_Login)
