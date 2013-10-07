@@ -196,7 +196,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 try:
                     self.client.statuses.upload.post(status=text,
                                                      pic=open(self.image, "rb"))
-                except FileNotFoundError:
+                except (OSError, IOError):
                     self.commonError.emit(self.tr("File not found"),
                                           self.tr("No such file: %s")
                                           % self.image)
