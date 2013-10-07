@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file './ui/LoginWindow.ui'
 #
-# Created: Mon Oct  7 14:34:57 2013
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Sun Apr 14 21:55:20 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,20 +12,29 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_frm_Login(object):
     def setupUi(self, frm_Login):
         frm_Login.setObjectName(_fromUtf8("frm_Login"))
         frm_Login.setWindowModality(QtCore.Qt.WindowModal)
-        frm_Login.resize(443, 160)
+        frm_Login.resize(312, 133)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(frm_Login.sizePolicy().hasHeightForWidth())
         frm_Login.setSizePolicy(sizePolicy)
         frm_Login.setMinimumSize(QtCore.QSize(312, 133))
-        frm_Login.setMaximumSize(QtCore.QSize(443, 160))
+        frm_Login.setMaximumSize(QtCore.QSize(312, 133))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/IMG/img/WeCase.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frm_Login.setWindowIcon(icon)
@@ -41,7 +50,6 @@ class Ui_frm_Login(object):
         self.label_username.setObjectName(_fromUtf8("label_username"))
         self.verticalLayout_2.addWidget(self.label_username)
         self.label_passwd = QtGui.QLabel(frm_Login)
-        self.label_passwd.setMaximumSize(QtCore.QSize(500, 500))
         self.label_passwd.setObjectName(_fromUtf8("label_passwd"))
         self.verticalLayout_2.addWidget(self.label_passwd)
         self.label_status = QtGui.QLabel(frm_Login)
@@ -101,13 +109,13 @@ class Ui_frm_Login(object):
         frm_Login.setTabOrder(self.chk_AutoLogin, self.pushButton_new)
 
     def retranslateUi(self, frm_Login):
-        frm_Login.setWindowTitle(QtGui.QApplication.translate("frm_Login", "Log in", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_username.setText(QtGui.QApplication.translate("frm_Login", "E-mail or phone number:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_passwd.setText(QtGui.QApplication.translate("frm_Login", "Password:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_status.setText(QtGui.QApplication.translate("frm_Login", "Status:", None, QtGui.QApplication.UnicodeUTF8))
-        self.chk_Remember.setText(QtGui.QApplication.translate("frm_Login", "&Remember Me", None, QtGui.QApplication.UnicodeUTF8))
-        self.chk_AutoLogin.setText(QtGui.QApplication.translate("frm_Login", "&Auto Login", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_log.setText(QtGui.QApplication.translate("frm_Login", "&Go!", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_new.setText(QtGui.QApplication.translate("frm_Login", "&New account", None, QtGui.QApplication.UnicodeUTF8))
+        frm_Login.setWindowTitle(_translate("frm_Login", "Log in", None))
+        self.label_username.setText(_translate("frm_Login", "User Name:", None))
+        self.label_passwd.setText(_translate("frm_Login", "Password:", None))
+        self.label_status.setText(_translate("frm_Login", "Status:", None))
+        self.chk_Remember.setText(_translate("frm_Login", "&Remember Me", None))
+        self.chk_AutoLogin.setText(_translate("frm_Login", "&Auto Login", None))
+        self.pushButton_log.setText(_translate("frm_Login", "&Go!", None))
+        self.pushButton_new.setText(_translate("frm_Login", "&New account", None))
 
 import wecase_rc

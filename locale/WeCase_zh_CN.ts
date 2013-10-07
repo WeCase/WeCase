@@ -282,27 +282,27 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="NewpostWindow.py" line="208"/>
+        <location filename="NewpostWindow.py" line="203"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="161"/>
+        <location filename="NewpostWindow.py" line="156"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="174"/>
+        <location filename="NewpostWindow.py" line="169"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="187"/>
+        <location filename="NewpostWindow.py" line="182"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="208"/>
+        <location filename="NewpostWindow.py" line="203"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -317,57 +317,57 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="223"/>
+        <location filename="NewpostWindow.py" line="218"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="229"/>
+        <location filename="NewpostWindow.py" line="224"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="234"/>
+        <location filename="NewpostWindow.py" line="229"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="234"/>
+        <location filename="NewpostWindow.py" line="229"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="237"/>
+        <location filename="NewpostWindow.py" line="232"/>
         <source>Unknown error!</source>
         <translation>未知错误！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="218"/>
+        <location filename="NewpostWindow.py" line="213"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="275"/>
+        <location filename="NewpostWindow.py" line="270"/>
         <source>Close?</source>
         <translation>关闭？</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="275"/>
+        <location filename="NewpostWindow.py" line="270"/>
         <source>All unpost text will lost.</source>
         <translation>所有未发布的文字将丢弃。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="200"/>
+        <location filename="NewpostWindow.py" line="195"/>
         <source>File not found</source>
         <translation>文件未找到</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="200"/>
+        <location filename="NewpostWindow.py" line="195"/>
         <source>No such file: %s</source>
         <translation>没有这个文件: %s</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="221"/>
+        <location filename="NewpostWindow.py" line="216"/>
         <source>&amp;Picture</source>
         <translation>图片(&amp;P)</translation>
     </message>
@@ -587,12 +587,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>WAsyncLabel</name>
     <message>
-        <location filename="WAsyncLabel.py" line="124"/>
+        <location filename="WAsyncLabel.py" line="125"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WAsyncLabel.py" line="131"/>
+        <location filename="WAsyncLabel.py" line="132"/>
         <source>Choose a path</source>
         <translation>选择路径</translation>
     </message>
@@ -814,42 +814,37 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
     <message>
         <location filename="ui/LoginWindow.ui" line="51"/>
         <source>User Name:</source>
-        <translation type="obsolete">用户名：</translation>
+        <translation>用户名：</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="67"/>
+        <location filename="ui/LoginWindow.ui" line="61"/>
         <source>Password:</source>
         <translation>密码：</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="77"/>
+        <location filename="ui/LoginWindow.ui" line="71"/>
         <source>Status:</source>
         <translation>状态：</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="100"/>
+        <location filename="ui/LoginWindow.ui" line="94"/>
         <source>&amp;Remember Me</source>
         <translation>记住我(&amp;R)</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="107"/>
+        <location filename="ui/LoginWindow.ui" line="101"/>
         <source>&amp;Auto Login</source>
         <translation>自动登录(&amp;A)</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="151"/>
+        <location filename="ui/LoginWindow.ui" line="145"/>
         <source>&amp;Go!</source>
         <translation>走起(&amp;G)！</translation>
     </message>
     <message>
-        <location filename="ui/LoginWindow.ui" line="161"/>
+        <location filename="ui/LoginWindow.ui" line="155"/>
         <source>&amp;New account</source>
         <translation>新账号(&amp;N)</translation>
-    </message>
-    <message>
-        <location filename="ui/LoginWindow.ui" line="51"/>
-        <source>E-mail or phone number:</source>
-        <translation>邮箱或手机号：</translation>
     </message>
 </context>
 <context>

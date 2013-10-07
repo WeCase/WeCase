@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './ui/AboutWindow.ui'
+# Form implementation generated from reading ui file 'ui/AboutWindow.ui'
 #
-# Created: Mon Oct  7 14:34:57 2013
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Sun Oct  6 21:32:06 2013
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_About_Dialog(object):
     def setupUi(self, About_Dialog):
@@ -281,19 +290,19 @@ class Ui_About_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(About_Dialog)
 
     def retranslateUi(self, About_Dialog):
-        About_Dialog.setWindowTitle(QtGui.QApplication.translate("About_Dialog", "About", None, QtGui.QApplication.UnicodeUTF8))
-        self.distLabel.setText(QtGui.QApplication.translate("About_Dialog", "Vanilla Version", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("About_Dialog", "<html><head/><body><p><span style=\" font-size:42pt;\">WeCase</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("About_Dialog", "A Linux weibo client", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("About_Dialog", "WeCase is a simple, but not crude weibo client which is running on Linux desktop.\n"
+        About_Dialog.setWindowTitle(_translate("About_Dialog", "About", None))
+        self.distLabel.setText(_translate("About_Dialog", "Vanilla Version", None))
+        self.label.setText(_translate("About_Dialog", "<html><head/><body><p><span style=\" font-size:42pt;\">WeCase</span></p></body></html>", None))
+        self.label_2.setText(_translate("About_Dialog", "A Linux weibo client", None))
+        self.label_4.setText(_translate("About_Dialog", "WeCase is a simple, but not crude weibo client which is running on Linux desktop.\n"
 "\n"
 "This software is released under GPL version 3 or later. For more details, see http://www.gnu.org\n"
 "\n"
 "Anyone can use, modify and redistribute this software.\n"
 "\n"
-"This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.intro), QtGui.QApplication.translate("About_Dialog", "Intro", None, QtGui.QApplication.UnicodeUTF8))
-        self.contirbutorBroswer.setHtml(QtGui.QApplication.translate("About_Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.intro), _translate("About_Dialog", "Intro", None))
+        self.contirbutorBroswer.setHtml(_translate("About_Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Sans Serif\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
@@ -305,9 +314,9 @@ class Ui_About_Dialog(object):
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Contributor：</p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">TonyChyi (小骞爱开源)</p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">（More）</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.contirbutor), QtGui.QApplication.translate("About_Dialog", "Contributor", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.gpl_license), QtGui.QApplication.translate("About_Dialog", "GPL License", None, QtGui.QApplication.UnicodeUTF8))
-        self.Btn_Close.setText(QtGui.QApplication.translate("About_Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">（More）</p></body></html>", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.contirbutor), _translate("About_Dialog", "Contributor", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.gpl_license), _translate("About_Dialog", "GPL License", None))
+        self.Btn_Close.setText(_translate("About_Dialog", "Close", None))
 
 import wecase_rc
