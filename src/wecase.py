@@ -141,7 +141,6 @@ if __name__ == "__main__":
     # Cleanup code here.
     App.deleteLater()
 
-    # Hack: The easiest way to avoid exit crashes is to call os._exit()
-    # before python starts collecting Qt objects.
     logging.info("Exited")
-    os._exit(exit_status)
+    sys.excepthook = sys.__excepthook__
+    exit(exit_status)
