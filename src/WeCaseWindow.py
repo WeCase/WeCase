@@ -338,9 +338,12 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tabWidget.setIconSize(QtCore.QSize(24, 24))
 
     def _prepareTimeline(self, timeline):
-        timeline.setUsersBlacklist(self.usersBlacklist)
-        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        timeline.setBlockWordwars(self.blockWordwars)
+        try:
+            timeline.setUsersBlacklist(self.usersBlacklist)
+            timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+            timeline.setBlockWordwars(self.blockWordwars)
+        except AttributeError:
+            pass
         timeline.load()
 
     def closeTab(self, index):
