@@ -224,7 +224,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.image = None
 
     def addImage(self):
-        ACCEPT_TYPE = self.tr("Images") + "(*.png *.jpg *.bmp *.gif)"
+        ACCEPT_TYPE = self.tr("Images") + "(*.png *.jpg *.jpeg *.bmp *.gif)"
         if self.image:
             self.image = None
             self.pushButton_picture.setText(self.tr("&Picture"))
