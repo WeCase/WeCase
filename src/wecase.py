@@ -10,7 +10,7 @@ import sys
 import os
 from PyQt4 import QtCore, QtGui
 from LoginWindow import LoginWindow
-import const
+import path
 import traceback
 import signal
 import logging
@@ -22,12 +22,12 @@ WeHack.UNUSED(None)
 
 def mkconfig():
     try:
-        os.makedirs(const.config_path.replace("/config_db", ""))
+        os.makedirs(path.config_path.replace("/config_db", ""))
     except OSError:
         pass
 
     try:
-        os.makedirs(const.cache_path)
+        os.makedirs(path.cache_path)
     except OSError:
         pass
 
@@ -97,7 +97,7 @@ def setup_logger():
                         format='%(asctime)s %(name)-12s %(levelname)-8s %('
                                'message)s',
                         datefmt='%m-%d %H:%M',
-                        filename=const.cache_path + "log")
+                        filename=path.cache_path + "log")
     console = logging.StreamHandler()
     console.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # WeCase's own string translator
     my_translator = QtCore.QTranslator(App)
     my_translator.load("WeCase_" + QtCore.QLocale.system().name(),
-                       const.locale_path)
+                       path.locale_path)
     App.installTranslator(my_translator)
 
     import_warning()

@@ -5,7 +5,7 @@ from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
-from const import cache_path as down_path
+from path import cache_path as down_path
 from WeHack import async
 from WObjectCache import WObjectCache
 import logging

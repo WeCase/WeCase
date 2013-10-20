@@ -16,6 +16,7 @@ from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
+import path
 from WeCaseConfig import WeCaseConfig
 from WeHack import async, setGeometry, getGeometry, UNUSED
 from WObjectCache import WObjectCache
@@ -355,7 +356,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.uid()
 
     def loadConfig(self):
-        self.config = WeCaseConfig(const.config_path)
+        self.config = WeCaseConfig(path.config_path)
         self.notify_interval = self.config.notify_interval
         self.notify_timeout = self.config.notify_timeout
         self.usersBlacklist = self.config.usersBlacklist

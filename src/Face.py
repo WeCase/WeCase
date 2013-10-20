@@ -5,9 +5,7 @@
 # Copyright: GPL v3 or later.
 
 
-import sys
-import os
-import const
+import path
 from WeHack import Singleton
 from collections import OrderedDict
 try:
@@ -15,9 +13,6 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 from PyQt4 import QtCore
-
-myself_name = sys.argv[0].split('/')[-1]
-myself_path = os.path.abspath(sys.argv[0]).replace(myself_name, "")
 
 
 class FaceItem():
@@ -31,7 +26,7 @@ class FaceItem():
 
     @property
     def path(self):
-        return const.face_path + self.__xml_node[0].text
+        return path.face_path + self.__xml_node[0].text
 
     @property
     def category(self):
@@ -85,7 +80,7 @@ class FaceModel(metaclass=Singleton):
         if self.__loaded:
             return
 
-        self.__tree = ET.ElementTree(file=const.face_path + "face.xml")
+        self.__tree = ET.ElementTree(file=path.face_path + "face.xml")
 
         for face in self.__tree.iterfind("./FACEINFO/"):
             assert face.tag == "FACE"

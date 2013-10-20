@@ -15,7 +15,7 @@ from WAvatarLabel import WAvatarLabel
 from WImageLabel import WImageLabel
 from WSwitchLabel import WSwitchLabel
 import const
-from const import cache_path
+from path import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
 from WObjectCache import WObjectCache
 from Face import FaceModel

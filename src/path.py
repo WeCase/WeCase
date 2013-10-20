@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This file defined runtime paths.
+# Copyright (C) 2013 Tom Li
+# License: GPL v3 or later.
+
+
+import sys
+import os
+
+
+try:
+    # Users can define different $HOME.
+    home_path = os.environ['HOME']
+except KeyError:
+    home_path = os.path.expanduser("~/")
+
+config_path = home_path + '/.config/wecase/config_db'
+cache_path = home_path + '/.cache/wecase/'
+myself_name = sys.argv[0].split('/')[-1]
+myself_path = os.path.dirname(os.path.realpath(__file__)) + '/'
+locale_path = myself_path + "locale/"
+face_path = myself_path + "ui/img/face/"
