@@ -7,13 +7,15 @@
 
 
 import sys
+sys.path.append("@PYTHONDIR@")
+
 import os
 from PyQt4 import QtCore, QtGui
-from LoginWindow import LoginWindow
-import path
 import traceback
 import signal
 import logging
+import path
+from LoginWindow import LoginWindow
 import WeHack
 
 
