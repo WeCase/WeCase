@@ -227,8 +227,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 bin_SCRIPTS = path wecase.py
-CLEANFILES = $(path)
-EXTRA_DIST = path.py.in wecase.py.in
+CLEANFILES = $(path) path.py wecase.py
 NAME = WeCase
 do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 				  -e 's,[@]LOCALEDIR[@],$(localedir)/$(NAME),g' \

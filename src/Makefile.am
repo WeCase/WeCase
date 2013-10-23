@@ -1,6 +1,5 @@
 bin_SCRIPTS = path wecase.py
-CLEANFILES = $(path)
-EXTRA_DIST = path.py.in wecase.py.in
+CLEANFILES = $(path) path.py wecase.py
 
 NAME = WeCase
 
