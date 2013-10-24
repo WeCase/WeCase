@@ -8,7 +8,7 @@
 
 from PyQt4 import QtCore, QtGui
 from SettingWindow_ui import Ui_SettingWindow
-import const
+import path
 from WeHack import async, start, getDirSize, clearDir
 from WeCaseConfig import WeCaseConfig
 
@@ -32,7 +32,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.cacheSizeLabel.setText(self.getHumanReadableCacheSize())
 
     def getHumanReadableCacheSize(self):
-        raw_bytes = getDirSize(const.cache_path)
+        raw_bytes = getDirSize(path.cache_path)
         megabytes_str = "%.1f MiB" % (raw_bytes / 1000000)
         return megabytes_str
 
@@ -47,7 +47,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.timeoutLabel.setText(self.tr("%i sec") % sliderValue)
 
     def loadConfig(self):
-        self.config = WeCaseConfig(const.config_path)
+        self.config = WeCaseConfig(path.config_path)
 
         self.intervalSlider.setValue(self.config.notify_interval)
         self.setIntervalText(self.intervalSlider.value())
@@ -123,9 +123,9 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
 
     @async
     def clearCache(self):
-        clearDir(const.cache_path)
+        clearDir(path.cache_path)
         self.needRestart = True
         self.cacheCleared.emit()
 
     def viewCache(self):
-        start(const.cache_path)
+        start(path.cache_path)
