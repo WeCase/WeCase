@@ -4,6 +4,7 @@ AC_INIT([WeCase], [0.06-beta4])
 AM_INIT_AUTOMAKE
 AM_PATH_PYTHON([3.2])
 AC_PYTHON_MODULE([PyQt4])
+AC_PYTHON_MODULE([weibo])
 
 AC_CONFIG_FILES([Makefile src/Makefile])
 

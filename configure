@@ -2608,6 +2608,27 @@ $as_echo "no" >&6; }
     fi
 
 
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking python module: weibo" >&5
+$as_echo_n "checking python module: weibo... " >&6; }
+    python3 -c "import weibo" 2> /dev/null
+    if test $? -eq 0;
+    then
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+        eval HAVE_PYMOD_WEIBO=yes
+    else
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+        eval HAVE_PYMOD_WEIBO=no
+        #
+        if test -n ""
+        then
+            as_fn_error $? "failed to find required module weibo" "$LINENO" 5
+            exit 1
+        fi
+    fi
+
+
 ac_config_files="$ac_config_files Makefile src/Makefile"
 
 
