@@ -14,7 +14,7 @@ from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
 import path
 from time import sleep
-from WeCaseConfig import WeCaseConfig
+from WConfigParser import WConfigParser
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
@@ -96,7 +96,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.login()
 
     def loadConfig(self):
-        self.login_config = WeCaseConfig(path.config_path, "login")
+        self.login_config = WConfigParser(path.myself_path + "WMetaConfig",
+                                          path.config_path, "login")
         self.passwd = self.login_config.passwd
         self.last_login = self.login_config.last_login
         self.auto_login = self.login_config.auto_login and self.allow_auto_login

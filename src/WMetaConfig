@@ -1,0 +1,62 @@
+section = main
+name = notify_interval
+type = int
+default = 30
+
+section = main
+name = notify_timeout
+type = int
+default = 5
+
+section = main
+name = remind_comments
+type = bool
+default = True
+
+section = main
+name = remind_mentions
+type = bool
+default = True
+
+section = main
+name = usersBlacklist
+type = list
+default = []
+
+section = main
+name = tweetKeywordsBlacklist
+alias = tweetsKeywordsBlacklist
+type = list
+default = []
+
+section = main
+name = blockWordwars
+type = bool
+default = False
+
+section = main
+name = maxRetweets
+alias = maxTweetsPerUser
+type = int
+default = -1
+
+section = main
+name = mainwindow_geometry
+type = dict
+default = {"height": 656, "width": 403}
+
+section = login
+name = passwd
+type = dict
+default = {}
+
+section = login
+name = last_login
+type = str
+default = 
+
+section = login
+name = auto_login
+type = bool
+default = False
+

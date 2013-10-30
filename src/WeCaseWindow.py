@@ -17,7 +17,7 @@ from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
 import path
-from WeCaseConfig import WeCaseConfig
+from WConfigParser import WConfigParser
 from WeHack import async, setGeometry, getGeometry, UNUSED
 from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
@@ -356,7 +356,8 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.uid()
 
     def loadConfig(self):
-        self.config = WeCaseConfig(path.config_path)
+        self.config = WConfigParser(path.myself_path + "WMetaConfig",
+                                    path.config_path, "main")
         self.notify_interval = self.config.notify_interval
         self.notify_timeout = self.config.notify_timeout
         self.usersBlacklist = self.config.usersBlacklist

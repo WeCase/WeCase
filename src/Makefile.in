@@ -116,7 +116,8 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(WeCasedir)" \
-	"$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(langdir)"
+	"$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(langdir)" \
+	"$(DESTDIR)$(metaconfdir)"
 SCRIPTS = $(bin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -141,7 +142,7 @@ am__py_compile = PYTHON=$(PYTHON) $(SHELL) $(py_compile)
 am__pep3147_tweak = \
   sed -e 's|\.py$$||' -e 's|[^/]*$$|__pycache__/&.*.py|'
 py_compile = $(top_srcdir)/py-compile
-DATA = $(lang_DATA)
+DATA = $(lang_DATA) $(metaconf_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
@@ -259,7 +260,6 @@ WeCase_PYTHON = path.py \
 				WAsyncLabel.py \
 				WAvatarLabel.py \
 				WCompleteLineEdit.py \
-				WeCaseConfig.py \
 				wecase_rc.py \
 				WeCaseWindow.py \
 				WeHack.py \
@@ -271,7 +271,8 @@ WeCase_PYTHON = path.py \
 				WTimeParser.py \
 				WTimeParser_test.py \
 				WTimer.py \
-				WTweetLabel.py
+				WTweetLabel.py \
+				WConfigParser.py
 
 Weibosdir = $(pythondir)/WeCase/weibos
 Weibos_PYTHON = weibos/client.py \
@@ -280,6 +281,8 @@ Weibos_PYTHON = weibos/client.py \
 
 langdir = $(localedir)/WeCase
 lang_DATA = locale/WeCase_zh_CN.qm
+metaconfdir = $(pythondir)/WeCase/
+metaconf_DATA = WMetaConfig
 all: all-am
 
 .SUFFIXES:
@@ -465,6 +468,27 @@ uninstall-langDATA:
 	@list='$(lang_DATA)'; test -n "$(langdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(langdir)'; $(am__uninstall_files_from_dir)
+install-metaconfDATA: $(metaconf_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(metaconf_DATA)'; test -n "$(metaconfdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(metaconfdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(metaconfdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(metaconfdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(metaconfdir)" || exit $$?; \
+	done
+
+uninstall-metaconfDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(metaconf_DATA)'; test -n "$(metaconfdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(metaconfdir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
 
 ctags CTAGS:
@@ -506,7 +530,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(langdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(langdir)" "$(DESTDIR)$(metaconfdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -561,7 +585,7 @@ info: info-am
 info-am:
 
 install-data-am: install-WeCasePYTHON install-WeibosPYTHON \
-	install-langDATA
+	install-langDATA install-metaconfDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-am
@@ -607,7 +631,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
-	uninstall-binSCRIPTS uninstall-langDATA
+	uninstall-binSCRIPTS uninstall-langDATA uninstall-metaconfDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 .MAKE: install-am install-data-am install-strip uninstall-am
@@ -619,13 +643,13 @@ uninstall-am: uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
 	install-data install-data-am install-data-hook install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-langDATA \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags-am \
-	uninstall uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
-	uninstall-am uninstall-binSCRIPTS uninstall-hook \
-	uninstall-langDATA
+	install-man install-metaconfDATA install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am tags-am uninstall uninstall-WeCasePYTHON \
+	uninstall-WeibosPYTHON uninstall-am uninstall-binSCRIPTS \
+	uninstall-hook uninstall-langDATA uninstall-metaconfDATA
 
 
 path: path.py.in Makefile

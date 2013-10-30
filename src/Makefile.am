@@ -37,7 +37,6 @@ WeCase_PYTHON = path.py \
 				WAsyncLabel.py \
 				WAvatarLabel.py \
 				WCompleteLineEdit.py \
-				WeCaseConfig.py \
 				wecase_rc.py \
 				WeCaseWindow.py \
 				WeHack.py \
@@ -49,7 +48,8 @@ WeCase_PYTHON = path.py \
 				WTimeParser.py \
 				WTimeParser_test.py \
 				WTimer.py \
-				WTweetLabel.py
+				WTweetLabel.py \
+				WConfigParser.py
 
 
 Weibosdir = $(pythondir)/WeCase/weibos
@@ -61,6 +61,9 @@ Weibos_PYTHON = weibos/client.py \
 
 langdir = $(localedir)/WeCase
 lang_DATA = locale/WeCase_zh_CN.qm
+
+metaconfdir = $(pythondir)/WeCase/
+metaconf_DATA = WMetaConfig
 
 install-data-hook:
 	cp -R $(srcdir)/ui/img/face $(datadir)/face

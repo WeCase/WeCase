@@ -9,8 +9,8 @@
 from PyQt4 import QtCore, QtGui
 from SettingWindow_ui import Ui_SettingWindow
 import path
+from WConfigParser import WConfigParser
 from WeHack import async, start, getDirSize, clearDir
-from WeCaseConfig import WeCaseConfig
 
 
 class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
@@ -47,7 +47,8 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.timeoutLabel.setText(self.tr("%i sec") % sliderValue)
 
     def loadConfig(self):
-        self.config = WeCaseConfig(path.config_path)
+        self.config = WConfigParser(path.myself_path + "WMetaConfig",
+                                    path.config_path, "main")
 
         self.intervalSlider.setValue(self.config.notify_interval)
         self.setIntervalText(self.intervalSlider.value())
