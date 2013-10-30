@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
-UI_PATH = "./ui"
+UI_PATH = "../res/ui"
 
 
 def is_ui(filename):

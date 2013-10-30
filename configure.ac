@@ -6,6 +6,6 @@ AM_PATH_PYTHON([3.2])
 AC_PYTHON_MODULE([PyQt4])
 AC_PYTHON_MODULE([weibo])
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile locale/Makefile res/Makefile])
 
 AC_OUTPUT
