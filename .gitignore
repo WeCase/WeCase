@@ -45,3 +45,7 @@ src/libpeerconnection.log
 
 # Autotools
 autom4te.cache
+
+# Vim
+*.swp
+*~
