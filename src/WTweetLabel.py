@@ -39,7 +39,10 @@ class WTweetLabel(QtGui.QTextBrowser):
     def openLink(self, url):
         url = url.toString()
 
-        if not "://" in url:
+        if not url:
+            # not a link
+            pass
+        elif not "://" in url:
             # no protocol
             url = "http://" + url
             webbrowser.open(url)
