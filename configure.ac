@@ -1,4 +1,6 @@
-AC_CONFIG_MACRO_DIRS([m4])
+#AC_CONFIG_MACRO_DIRS([m4])
+m4_include([m4/AC_PYTHON_MODULE.m4])
+
 AC_INIT([WeCase], [0.06-beta4])
 
 AM_INIT_AUTOMAKE
