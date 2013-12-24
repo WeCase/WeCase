@@ -80,6 +80,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         super(LoginWindow, self).setupUi(widget)
         self.show()
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
+        self.cmb_Users.lineEdit().setPlaceholderText(self.tr("ID/Email/Phone"))
         self.cmb_Users.addItem(self.last_login)
 
         for username in list(self.passwd.keys()):

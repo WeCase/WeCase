@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'LoginWindow.ui'
 #
-# Created: Mon Oct  7 15:15:45 2013
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Tue Dec 24 12:53:07 2013
+#      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_frm_Login(object):
     def setupUi(self, frm_Login):
@@ -100,13 +109,13 @@ class Ui_frm_Login(object):
         frm_Login.setTabOrder(self.chk_AutoLogin, self.pushButton_new)
 
     def retranslateUi(self, frm_Login):
-        frm_Login.setWindowTitle(QtGui.QApplication.translate("frm_Login", "Log in", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_username.setText(QtGui.QApplication.translate("frm_Login", "E-mail or phone number:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_passwd.setText(QtGui.QApplication.translate("frm_Login", "Password:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_status.setText(QtGui.QApplication.translate("frm_Login", "Status:", None, QtGui.QApplication.UnicodeUTF8))
-        self.chk_Remember.setText(QtGui.QApplication.translate("frm_Login", "&Remember Me", None, QtGui.QApplication.UnicodeUTF8))
-        self.chk_AutoLogin.setText(QtGui.QApplication.translate("frm_Login", "&Auto Login", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_log.setText(QtGui.QApplication.translate("frm_Login", "&Go!", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_new.setText(QtGui.QApplication.translate("frm_Login", "&New account", None, QtGui.QApplication.UnicodeUTF8))
+        frm_Login.setWindowTitle(_translate("frm_Login", "Log in", None))
+        self.label_username.setText(_translate("frm_Login", "Name:", None))
+        self.label_passwd.setText(_translate("frm_Login", "Password:", None))
+        self.label_status.setText(_translate("frm_Login", "Status:", None))
+        self.chk_Remember.setText(_translate("frm_Login", "&Remember Me", None))
+        self.chk_AutoLogin.setText(_translate("frm_Login", "&Auto Login", None))
+        self.pushButton_log.setText(_translate("frm_Login", "&Go!", None))
+        self.pushButton_new.setText(_translate("frm_Login", "&New account", None))
 
 import wecase_rc
