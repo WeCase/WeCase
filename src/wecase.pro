@@ -1,4 +1,4 @@
-SOURCES = wecase.py\
+SOURCES = wecase.py.in\
 	  AboutWindow.py\
           Face.py\
 	  FaceWidget.py\
@@ -17,9 +17,9 @@ SOURCES = wecase.py\
           WeCaseWindow.py\
           LoginWindow.py
 
-FORMS = ui/AboutWindow.ui\
-        ui/LoginWindow.ui\
-        ui/NewpostWindow.ui\
-        ui/SettingWindow.ui
+FORMS = ../res/ui/AboutWindow.ui\
+        ../res/ui/LoginWindow.ui\
+        ../res/ui/NewpostWindow.ui\
+        ../res/ui/SettingWindow.ui
 
-TRANSLATIONS = locale/WeCase_zh_CN.ts
+TRANSLATIONS = ../locale/WeCase_zh_CN.ts
