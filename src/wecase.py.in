@@ -145,4 +145,6 @@ if __name__ == "__main__":
 
     logging.info("Exited")
     sys.excepthook = sys.__excepthook__
-    exit(exit_status)
+
+    # Hack for Issue 50.
+    os._exit(exit_status)
