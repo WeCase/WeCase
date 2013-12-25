@@ -15,6 +15,8 @@
 
 @SET_MAKE@
 
+# HACK: only zh_CN available now
+
 VPATH = @srcdir@
 am__make_dryrun = \
   { \
@@ -177,6 +179,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+generate_qm = lrelease -compress -nounfinished -removeidentical
 langdir = $(localedir)/WeCase
 lang_DATA = WeCase_zh_CN.qm
 all: all-am
@@ -386,6 +389,9 @@ uninstall-am: uninstall-langDATA
 	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
 	uninstall-am uninstall-langDATA
 
+
+WeCase_zh_CN.qm:
+	$(generate_qm) $(srcdir)/WeCase_zh_CN.ts -qm ./WeCase_zh_CN.qm
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

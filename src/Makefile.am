@@ -1,5 +1,5 @@
-bin_SCRIPTS = path wecase.py
-CLEANFILES = $(path) path.py wecase.py
+bin_SCRIPTS = wecase.py
+CLEANFILES = path.py wecase.py
 
 NAME = WeCase
 
@@ -8,8 +8,10 @@ do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 				  -e 's,[@]PACKAGE[@],$(name),g' \
 			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g'
 
-path: path.py.in Makefile
+path.py: path.py.in Makefile
 	$(do_substitution) < $(srcdir)/path.py.in > path.py
+
+wecase.py: wecase.py.in Makefile
 	$(do_substitution) < $(srcdir)/wecase.py.in > wecase.py
 
 WeCasedir = $(pythondir)/WeCase

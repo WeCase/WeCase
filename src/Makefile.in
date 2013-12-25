@@ -183,8 +183,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-bin_SCRIPTS = path wecase.py
-CLEANFILES = $(path) path.py wecase.py
+bin_SCRIPTS = wecase.py
+CLEANFILES = path.py wecase.py
 NAME = WeCase
 do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 				  -e 's,[@]LOCALEDIR[@],$(localedir)/$(NAME),g' \
@@ -561,8 +561,10 @@ uninstall-am: uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
 	uninstall-binSCRIPTS uninstall-metaconfDATA
 
 
-path: path.py.in Makefile
+path.py: path.py.in Makefile
 	$(do_substitution) < $(srcdir)/path.py.in > path.py
+
+wecase.py: wecase.py.in Makefile
 	$(do_substitution) < $(srcdir)/wecase.py.in > wecase.py
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
