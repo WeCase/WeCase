@@ -14,24 +14,25 @@ path.py: path.py.in Makefile
 wecase.py: wecase.py.in Makefile
 	$(do_substitution) < $(srcdir)/wecase.py.in > wecase.py
 
+ui:
+	pyuic4 $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
+	pyuic4 $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
+	pyuic4 $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
+	pyuic4 $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
+	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+
 WeCasedir = $(pythondir)/WeCase
 WeCase_PYTHON = path.py \
 				AboutWindow.py \
-				AboutWindow_ui.py \
 				const.py \
 				Face.py \
 				FaceWidget.py \
 				FaceWindow.py \
-				FaceWindow_ui.py \
 				LoginWindow.py \
-				LoginWindow_ui.py \
-				make.py \
 				NewpostWindow.py \
-				NewpostWindow_ui.py \
 				Notify.py \
 				nullNotify.py \
 				SettingWindow.py \
-				SettingWindow_ui.py \
 				TweetListWidget.py \
 				Tweet.py \
 				TweetUtils.py \
@@ -39,7 +40,6 @@ WeCase_PYTHON = path.py \
 				WAsyncLabel.py \
 				WAvatarLabel.py \
 				WCompleteLineEdit.py \
-				wecase_rc.py \
 				WeCaseWindow.py \
 				WeHack.py \
 				WeRuntimeInfo.py \
@@ -51,7 +51,13 @@ WeCase_PYTHON = path.py \
 				WTimeParser_test.py \
 				WTimer.py \
 				WTweetLabel.py \
-				WConfigParser.py
+				WConfigParser.py \
+				ui # generator \
+				AboutWindow_ui.py \
+				LoginWindow_ui.py \
+				NewpostWindow_ui.py \
+				SettingWindow_ui.py \
+				wecase_rc.py
 
 
 Weibosdir = $(pythondir)/WeCase/weibos
