@@ -222,7 +222,7 @@ WeCase_PYTHON = path.py \
 				WTimer.py \
 				WTweetLabel.py \
 				WConfigParser.py \
-				ui # generator \
+				ui \
 				AboutWindow_ui.py \
 				LoginWindow_ui.py \
 				NewpostWindow_ui.py \
