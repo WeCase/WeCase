@@ -48,7 +48,7 @@
          <item>
           <widget class="QLabel" name="label_username">
            <property name="text">
-            <string>Name:</string>
+            <string>Account:</string>
            </property>
            <property name="buddy">
             <cstring>cmb_Users</cstring>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="zh_CN">
 <context>
     <name></name>
     <message>
@@ -37,7 +38,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>About_Dialog</name>
     <message>
         <location filename="../res/ui/AboutWindow.ui" line="32"/>
@@ -117,7 +118,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <source>This is a vanilla version.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../res/ui/AboutWindow.ui" line="211"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -173,9 +174,9 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>FaceWindow</name>
     <message>
-        <location filename="ui/FaceWindow.ui" line="14"/>
+        <location filename="FaceWindow.py" line="26"/>
         <source>Choose a smiley</source>
-        <translation type="obsolete">选择一个表情</translation>
+        <translation>选择一个表情</translation>
     </message>
 </context>
 <context>
@@ -869,7 +870,12 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
     <message>
         <location filename="../res/ui/LoginWindow.ui" line="51"/>
         <source>Name:</source>
-        <translation>名称：</translation>
+        <translation type="obsolete">名称：</translation>
+    </message>
+    <message>
+        <location filename="../res/ui/LoginWindow.ui" line="51"/>
+        <source>Account:</source>
+        <translation>账号：</translation>
     </message>
 </context>
 <context>
