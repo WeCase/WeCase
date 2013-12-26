@@ -49,38 +49,48 @@ Note: Some distributions use different packages names, or do not contain `python
 
 注意：不同的发行版可能使用不同的软件包名称，或者在软件库中找不到 `python-notify2`。我们将会创建这些依赖的 `.rpm` 以及 `.deb` 包，在此之前，请从 PIP 安装。
 
-Installation Guide 安装指南
+Installation Guide
 -----
-1. Install the dependencies for WeCase.
 
-   安装 WeCase 所需要的依赖。
+### Installing by Package Manager
 
-2. Get the source code.
+#### Arch Linux
 
-   获取源代码。
+```
+yaourt -S wecase
+```
 
-   `git clone --recursive git://github.com/WeCase/WeCase.git`
+#### Fedora (18, 19)
 
-3. `cd WeCase`
+```
+sudo su -c "wget -O- http://download.opensuse.org/repositories/home:/biergaizi/Fedora_$(rpm -E %fedora)/home:biergaizi.repo > /etc/yum.repos.d/wecase.repo"
+sudo yum install WeCase
+```
 
-4. Install SDK
+#### Gentoo
 
-   安装 SDK 
-   
-   `cd sdk; sudo python3 setup.py install; cd ..`
+```
+layman -a gentoo-zh
+emerge net-misc/WeCase
+```
 
-5. Build and Install
+### Build from Source
 
-   构建并安装 WeCase
+```
+git clone --recursive git://github.com/WeCase/WeCase.git
 
-   ```
-   mkdir build;
-   cd build
-   ../configure
-   make
-   sudo make install
-   ```
+# SDK Installation
+cd WeCase/sdk
+sudo python3 setup.py install
+cd ..
 
-6. Run WeCase
+# Build and Install
+mkdir build
+cd build
+../configure
+make
+sudo make install
 
-   `wecase`
+# Run
+wecase
+```
