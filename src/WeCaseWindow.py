@@ -28,7 +28,6 @@ import wecase_rc
 
 
 UNUSED(wecase_rc)
-DEBUG_GLOBAL_MENU = False
 
 
 class WeCaseWindow(QtGui.QMainWindow):
@@ -243,7 +242,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.retranslateUi(mainWindow)
 
     def isGlobalMenu(self):
-        if os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
+        if os.environ.get("TOOLBAR") == "1":
+            return True
+        elif os.environ.get("TOOLBAR") == "0":
+            return False
+        elif os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
             if not os.environ.get("UBUNTU_MENUPROXY"):
                 return False
             elif os.environ.get("APPMENU_DISPLAY_BOTH"):
@@ -251,8 +254,6 @@ class WeCaseWindow(QtGui.QMainWindow):
             else:
                 return True
         elif platform.system() == "Darwin":
-            return True
-        elif DEBUG_GLOBAL_MENU:
             return True
         return False
 
