@@ -23,10 +23,14 @@ class WConfigParser():
         super(WConfigParser, self).__setattr__("loaded", True)
 
     def __parse__(self, schema):
-        schema = open(schema)
+        with open(schema) as schema_file:
+            schema = schema_file.readlines()
 
         config_item = deepcopy(self.ITEM)
+
+        lineno = 0
         for line in schema:
+            lineno += 1
             if line.strip() == "":
                 if config_item:
                     self._options.append(config_item)
@@ -41,7 +45,12 @@ class WConfigParser():
                 config_item[name] = value
             except KeyError:
                 print("Invaild line: %s" % line, file=stderr)
-        schema.close()
+
+            if lineno == len(schema):
+                if config_item:
+                    self._options.append(config_item)
+                    config_item = deepcopy(self.ITEM)
+                continue
 
     def _get_option(self, name):
         for i in self._options:
