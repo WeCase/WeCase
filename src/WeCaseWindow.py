@@ -374,7 +374,7 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def applyConfig(self):
         try:
-            self.timer.stop_event.set()
+            self.timer.stop()
         except AttributeError:
             pass
 
@@ -521,9 +521,8 @@ class WeCaseWindow(QtGui.QMainWindow):
     def closeEvent(self, event):
         self.systray.hide()
         self.hide()
-        self.timer.stop_event.set()
         self.saveConfig()
-        self.timer.join()
+        self.timer.stop(True)
         # Reset uid when the thread exited.
         self.info["uid"] = None
         logging.info("Die")
