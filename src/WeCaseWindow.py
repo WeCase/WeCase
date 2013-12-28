@@ -253,6 +253,8 @@ class WeCaseWindow(QtGui.QMainWindow):
                 return False
             else:
                 return True
+        elif os.environ.get("DESKTOP_SESSION") == "kde-plasma" and platform.linux_distribution()[0] == "Ubuntu":
+            return True
         elif platform.system() == "Darwin":
             return True
         return False
