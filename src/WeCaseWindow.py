@@ -378,7 +378,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         except AttributeError:
             pass
 
-        self.timer = WTimer(self.notify_interval, self.show_notify)
+        self.timer = WTimer(self.show_notify, self.notify_interval)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
         setGeometry(self, self.mainWindow_geometry)
