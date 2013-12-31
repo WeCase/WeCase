@@ -308,6 +308,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _update_time(self):
         try:
+            if not self.time.toolTip():
+                self.time.setToolTip(self.tweet.timestamp)
+
             if self.tweet.type != TweetItem.COMMENT:
                 self.time.setText("<a href='%s'>%s</a>" %
                                   (self.tweet.url, self.tweet.time))
