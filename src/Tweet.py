@@ -116,13 +116,19 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         self._common_get(timeline, -1)
 
     def new(self):
-        timeline = self.timeline_new
-        self._common_get(timeline, 0)
-        self.timelineLoaded.emit()
+        if self._tweets:
+            timeline = self.timeline_new
+            self._common_get(timeline, 0)
+            self.timelineLoaded.emit()
+        else:
+            self.load()
 
     def next(self):
-        timeline = self.timeline_old
-        self._common_get(timeline, -1)
+        if self._tweets:
+            timeline = self.timeline_old
+            self._common_get(timeline, -1)
+        else:
+            self.load()
 
 
 class TweetCommonModel(TweetTimelineBaseModel):
