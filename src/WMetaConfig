@@ -59,4 +59,3 @@ section = login
 name = auto_login
 type = bool
 default = False
-

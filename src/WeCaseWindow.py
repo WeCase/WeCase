@@ -28,7 +28,6 @@ import wecase_rc
 
 
 UNUSED(wecase_rc)
-DEBUG_GLOBAL_MENU = False
 
 
 class WeCaseWindow(QtGui.QMainWindow):
@@ -243,16 +242,20 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.retranslateUi(mainWindow)
 
     def isGlobalMenu(self):
-        if os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
+        if os.environ.get("TOOLBAR") == "1":
+            return True
+        elif os.environ.get("TOOLBAR") == "0":
+            return False
+        elif os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
             if not os.environ.get("UBUNTU_MENUPROXY"):
                 return False
             elif os.environ.get("APPMENU_DISPLAY_BOTH"):
                 return False
             else:
                 return True
-        elif platform.system() == "Darwin":
+        elif os.environ.get("DESKTOP_SESSION") == "kde-plasma" and platform.linux_distribution()[0] == "Ubuntu":
             return True
-        elif DEBUG_GLOBAL_MENU:
+        elif platform.system() == "Darwin":
             return True
         return False
 
@@ -371,11 +374,11 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def applyConfig(self):
         try:
-            self.timer.stop_event.set()
+            self.timer.stop()
         except AttributeError:
             pass
 
-        self.timer = WTimer(self.notify_interval, self.show_notify)
+        self.timer = WTimer(self.show_notify, self.notify_interval)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
         setGeometry(self, self.mainWindow_geometry)
@@ -518,9 +521,8 @@ class WeCaseWindow(QtGui.QMainWindow):
     def closeEvent(self, event):
         self.systray.hide()
         self.hide()
-        self.timer.stop_event.set()
         self.saveConfig()
-        self.timer.join()
+        self.timer.stop(True)
         # Reset uid when the thread exited.
         self.info["uid"] = None
         logging.info("Die")
