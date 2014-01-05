@@ -245,6 +245,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._setTabIcon(self.homeTab, QtGui.QPixmap(":/IMG/img/sina.png"))
         self._setTabIcon(self.mentionsTab, QtGui.QPixmap(":/IMG/img/mentions.png"))
         self._setTabIcon(self.commentsTab, QtGui.QPixmap(":/IMG/img/comments2.png"))
+        self._setTabIcon(self.commentsMentionsTab, QtGui.QPixmap(":/IMG/img/application-exit.svg"))
 
         self.retranslateUi(mainWindow)
 
