@@ -45,7 +45,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._iconPixmap = {}
         self.setupUi(self)
         self._setupSysTray()
-        self.tweetViews = [self.homeView, self.mentionsView, self.commentsView]
+        self.tweetViews = [self.homeView, self.mentionsView, self.commentsView, self.commentsMentionsTab]
         self.info = WeRuntimeInfo()
         self.client = const.client
         self.loadConfig()
@@ -175,6 +175,13 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.commentsTab = self._setupTab(self.commentsView)
         self.tabWidget.addTab(self.commentsTab, "")
         self.tabWidget.tabBar().setProtectTab(self.commentsTab, True)
+
+        self.commentsMentionsView = TweetListWidget()
+        self.commentsMentionsView.userClicked.connect(self.userClicked)
+        self.commentsMentionsView.tagClicked.connect(self.tagClicked)
+        self.commentsMentionsTab = self._setupTab(self.commentsMentionsView)
+        self.tabWidget.addTab(self.commentsMentionsTab, "")
+        self.tabWidget.tabBar().setProtectTab(self.commentsMentionsTab, True)
 
         self.verticalLayout.addWidget(self.tabWidget)
 
@@ -404,6 +411,12 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._prepareTimeline(self.comment_to_me)
         self.commentsView.setModel(self.comment_to_me)
 
+        self._comment_mentions = TweetCommentModel(self.client.comments.mentions, self)
+        self.comment_mentions = TweetFilterModel(self._comment_mentions)
+        self.comment_mentions.setModel(self._comment_mentions)
+        self._prepareTimeline(self.comment_mentions)
+        self.commentsMentionsView.setModel(self.comment_mentions)
+
     @async
     def reset_remind(self):
         typ = ""
@@ -414,6 +427,9 @@ class WeCaseWindow(QtGui.QMainWindow):
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
         elif self.currentTweetView() == self.commentsView:
             typ = "cmt"
+            self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
+        elif self.currentTweetView() == self.commentsMentionsView:
+            typ = "mention_cmt"
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
 
         if typ:
@@ -462,6 +478,14 @@ class WeCaseWindow(QtGui.QMainWindow):
             reminds_count += 1
         else:
             self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsTab), 0)
+
+        if reminds["mention_cmt"] and self.remindMentions:
+            msg += self.tr("%d unread @ME comment(s)") % reminds["mention_cmt"] + "\n"
+            self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsMentionsTab),
+                                      reminds["mention_cmt"])
+            reminds_count += 1
+        else:
+            self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsMentionsTab), 0)
 
         if reminds_count and reminds_count != self._last_reminds_count:
             self.notify.showMessage(self.tr("WeCase"), msg)
