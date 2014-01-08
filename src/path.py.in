@@ -22,3 +22,4 @@ myself_name = sys.argv[0].split('/')[-1]
 myself_path = os.path.dirname(os.path.realpath(__file__)) + '/'
 locale_path = "@LOCALEDIR@/"
 face_path = "@DATADIR@/@PACKAGE@/face/"
+icon_path = "@DATADIR@/icons/hicolor/96x96/apps/wecase.png"

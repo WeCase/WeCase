@@ -1,18 +1,24 @@
-bin_SCRIPTS = wecase.py
-CLEANFILES = path.py wecase.py
+bin_SCRIPTS = wecase
+libexec_SCRIPTS = wecase.py
+CLEANFILES = path.py wecase wecase.py
 
 NAME = WeCase
 
 do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 				  -e 's,[@]LOCALEDIR[@],$(localedir)/$(NAME),g' \
 				  -e 's,[@]PACKAGE[@],$(name),g' \
-			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g'
+			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g' \
+				  -e 's,[@]LIBEXECDIR[@],$(libexecdir),g'
 
 path.py: path.py.in Makefile
 	$(do_substitution) < $(srcdir)/path.py.in > path.py
 
 wecase.py: wecase.py.in Makefile
 	$(do_substitution) < $(srcdir)/wecase.py.in > wecase.py
+
+wecase: wecase.in Makefile
+	$(do_substitution) < $(srcdir)/wecase.in > wecase
+	chmod +x wecase
 
 ui:
 	pyuic4 $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
