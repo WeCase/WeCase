@@ -32,4 +32,7 @@ class Notify(QtCore.QObject):
     def showMessage(self, title, text):
         self.n.update(title, text, self.image)
         self.n.set_timeout(self.timeout * 1000)
-        self.n.show()
+        try:
+            self.n.show()
+        except DBusException:
+            pass
