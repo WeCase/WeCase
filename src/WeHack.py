@@ -50,6 +50,8 @@ def start(filename):
         os.system('xdg-open "%s" > /dev/null' % filename)
     elif platform.system() == "Darwin":
         os.system('open "%s"' % filename)
+    elif platform.system().startswith("CYGWIN"):
+        os.system('cygstart "%s"' % filename)
     elif platform.system() == "Windows":
         os.system('start "" "%s"' % filename)
     else:
