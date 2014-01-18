@@ -565,16 +565,20 @@ class TweetItem(QtCore.QObject):
         else:
             return None
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @QtCore.pyqtProperty(list, constant=True)
     def thumbnail_pic(self):
         results = []
 
         urls = self._data.get("pic_urls")
-        if not urls:
-            return None
+        fallback = self._data.get("thumbnail_pic")
 
-        for url in urls:
-            results.append(url['thumbnail_pic'])
+        if urls:
+            for url in urls:
+                results.append(url['thumbnail_pic'])
+        elif fallback:  # Issue 101
+            results.append(fallback)
+        else:
+            return None
         return results
 
     @QtCore.pyqtProperty(str, constant=True)
