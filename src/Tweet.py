@@ -567,19 +567,27 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(list, constant=True)
     def thumbnail_pic(self):
+        # Checkout Issue #101.
         results = []
 
-        urls = self._data.get("pic_urls")
-        fallback = self._data.get("thumbnail_pic")
-
-        if urls:
-            for url in urls:
+        pic_urls = self._data.get("pic_urls")
+        if pic_urls:
+            for url in pic_urls:
                 results.append(url['thumbnail_pic'])
-        elif fallback:  # Issue 101
-            results.append(fallback)
-        else:
-            return None
-        return results
+            return results
+
+        pic_ids = self._data.get("pic_ids")
+        if pic_ids:
+            for id in pic_ids:
+                results.append("http://ww1.sinaimg.cn/thumbnail/%s" % id)
+            return results
+
+        pic_fallback = self._data.get("thumbnail_pic")
+        if pic_fallback:
+            results.append(results)
+            return results
+
+        return None
 
     @QtCore.pyqtProperty(str, constant=True)
     def original_pic(self):
