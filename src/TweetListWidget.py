@@ -10,7 +10,6 @@ from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
-from WAsyncLabel import WAsyncLabel
 from WAvatarLabel import WAvatarLabel
 from WImageLabel import WImageLabel
 from WSwitchLabel import WSwitchLabel
