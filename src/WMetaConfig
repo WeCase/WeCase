@@ -30,6 +30,11 @@ type = list
 default = []
 
 section = main
+name = wordWarKeywords
+type = list
+default = []
+
+section = main
 name = blockWordwars
 type = bool
 default = False

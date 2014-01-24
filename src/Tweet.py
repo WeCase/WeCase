@@ -263,7 +263,6 @@ class TweetFilterModel(QtCore.QAbstractListModel):
     rowInserted = QtCore.pyqtSignal(int)
     timelineLoaded = QtCore.pyqtSignal()
     nothingLoaded = QtCore.pyqtSignal()
-    wordWarKeywords = ["滚", "不喜", "逼", "脑残", "黑", "喷", "智", "傻", "白痴"]
 
     def __init__(self, parent=None):
         super(TweetFilterModel, self).__init__(parent)
@@ -271,6 +270,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         self._appearInfo = {}
         self._userInfo = {}
         self._tweets = []
+        self._wordWarKeywords = []
         self._blockWordwars = False
         self._maxTweetsPerUser = -1
         self._maxRetweets = -1
@@ -289,6 +289,9 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
     def setTweetsKeywordsBlacklist(self, blacklist):
         self._tweetKeywordBlacklist = blacklist
+
+    def setWordWarKeywords(self, blacklist):
+        self._wordWarKeywords = blacklist
 
     def setUsersBlacklist(self, blacklist):
         self._usersBlackList = blacklist

@@ -353,6 +353,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         try:
             timeline.setUsersBlacklist(self.usersBlacklist)
             timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+            timeline.setWordWarKeywords(self.wordWarKeywords)
             timeline.setBlockWordwars(self.blockWordwars)
         except AttributeError:
             pass
@@ -375,6 +376,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tweetKeywordsBlacklist = self.config.tweetsKeywordsBlacklist
         self.remindMentions = self.config.remind_mentions
         self.remindComments = self.config.remind_comments
+        self.wordWarKeywords = self.config.wordWarKeywords
         self.blockWordwars = self.config.blockWordwars
         self.maxRetweets = self.config.maxRetweets
         self.maxTweetsPerUser = self.config.maxTweetsPerUser
@@ -395,9 +397,12 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
         self.all_timeline = TweetFilterModel(self._all_timeline)
         self.all_timeline.setModel(self._all_timeline)
+        self._prepareTimeline(self.all_timeline)
+
+        # extra rules
         self.all_timeline.setMaxRetweets(self.maxRetweets)
         self.all_timeline.setMaxTweetsPerUser(self.maxTweetsPerUser)
-        self._prepareTimeline(self.all_timeline)
+
         self.homeView.setModel(self.all_timeline)
 
         self._mentions = TweetCommonModel(self.client.statuses.mentions, self)
