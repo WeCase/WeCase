@@ -13,14 +13,13 @@ class WConfigParser():
     }
 
     def __init__(self, schema, config, section=""):
-        super(WConfigParser, self).__setattr__("loaded", False)
         self._section = section
         self._config_path = config
         self._options = []
         self._config = ConfigParser()
         self._config.read(config)
         self.__parse__(schema)
-        super(WConfigParser, self).__setattr__("loaded", True)
+        self.__setattr__impl = self.__setattr__postload
 
     def __parse__(self, schema):
         with open(schema) as schema_file:
@@ -57,13 +56,18 @@ class WConfigParser():
             if i["name"] == name or i["alias"] == name:
                 return i
 
+    def __setattr__preload(self, attr, value):
+        super(WConfigParser, self).__setattr__(attr, value)
+
+    def __setattr__postload(self, attr, value):
+        if not self._config.has_section(self._section):
+            self._config[self._section] = {}
+        self._config[self._section][attr] = str(value)
+
+    __setattr__impl = __setattr__preload
+
     def __setattr__(self, attr, value):
-        if not self.loaded:
-            super(WConfigParser, self).__setattr__(attr, value)
-        else:
-            if not self._config.has_section(self._section):
-                self._config[self._section] = {}
-            self._config[self._section][attr] = str(value)
+        self.__setattr__impl(attr, value)
 
     def __getattr__(self, attr):
         option = self._get_option(attr)
