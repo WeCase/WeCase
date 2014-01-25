@@ -225,6 +225,7 @@ WeCase_PYTHON = path.py \
 				WTimer.py \
 				WTweetLabel.py \
 				WConfigParser.py \
+				FilterTable.py \
 				ui \
 				AboutWindow_ui.py \
 				LoginWindow_ui.py \

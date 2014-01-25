@@ -15,7 +15,9 @@ SOURCES = wecase.py.in\
 	  WTimer.py\
 	  WeHack.py\
           WeCaseWindow.py\
-          LoginWindow.py
+          LoginWindow.py \
+          FilterTable.py
+
 
 FORMS = ../res/ui/AboutWindow.ui\
         ../res/ui/LoginWindow.ui\
