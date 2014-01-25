@@ -62,6 +62,13 @@ class WConfigParser():
     def __setattr__postload(self, attr, value):
         if not self._config.has_section(self._section):
             self._config[self._section] = {}
+        try:
+            # convert alias to realname
+            option = self._get_option(attr)
+            attr = option["name"]
+        except Exception as e:
+            print(e)
+            pass
         self._config[self._section][attr] = str(value)
 
     __setattr__impl = __setattr__preload
@@ -71,6 +78,8 @@ class WConfigParser():
 
     def __getattr__(self, attr):
         option = self._get_option(attr)
+        attr = option["name"]  # convert alias to realname
+
         if not option:
             raise AttributeError("WConfigParser object has no attribute '%s'" % attr)
 
