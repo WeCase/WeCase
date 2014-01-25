@@ -50,3 +50,5 @@ class _UBExecutable(_Executable):
                 # note: May caused by bugs on Sina's server
                 if e.error_code in self.UNREASONABLE_ERRORS:
                     continue
+                else:
+                    raise
