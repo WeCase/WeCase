@@ -66,8 +66,7 @@ class WConfigParser():
             # convert alias to realname
             option = self._get_option(attr)
             attr = option["name"]
-        except Exception as e:
-            print(e)
+        except Exception:
             pass
         self._config[self._section][attr] = str(value)
 
