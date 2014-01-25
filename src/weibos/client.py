@@ -32,7 +32,7 @@ class _UBCallable(_Callable):
 class _UBExecutable(_Executable):
 
     # if you find out more, add the error code to the tuple
-    UNREASONABLE_ERRORS = (21321)
+    UNREASONABLE_ERRORS = (21321, )
 
     def __init__(self, *args, **kwargs):
         super(_UBExecutable, self).__init__(*args, **kwargs)
