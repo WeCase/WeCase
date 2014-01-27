@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 for py in `whereis -b python | sed 's/^python: //'`
 do
