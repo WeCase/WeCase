@@ -365,7 +365,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
             info = self._appearInfo[item.original.id]
             info["count"] += 1
-            if item.withKeywords(self.wordWarKeywords):
+            if item.withKeywords(self._wordWarKeywords):
                 info["wordWarKeywords"] += 1
             self._appearInfo[item.original.id] = info
 
