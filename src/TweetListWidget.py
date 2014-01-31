@@ -18,6 +18,7 @@ from path import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
 from WObjectCache import WObjectCache
 from Face import FaceModel
+from WeiboErrorHandler import APIErrorWindow
 
 
 class TweetListWidget(QtGui.QWidget):
@@ -168,6 +169,7 @@ class SingleTweetWidget(QtGui.QFrame):
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.commonSignal.connect(self.commonProcessor)
+        self.errorWindow = APIErrorWindow(self)
         self._gif_list = {}
         self.tweet = tweet
         self.client = const.client
@@ -522,7 +524,7 @@ class SingleTweetWidget(QtGui.QFrame):
                     self.tweet.setFavoriteForce(True)
                 self._e = e
                 self.__favorite_queue = []
-                self.commonSignal.emit(lambda: self._handle_api_error(self._e))
+                self.commonSignal.emit(lambda: self.errorWindow.raiseException.emit(self._e))
                 return
 
     def _retweet(self, tweet=None):
@@ -556,7 +558,7 @@ class SingleTweetWidget(QtGui.QFrame):
         try:
             self.tweet.delete()
         except APIError as e:
-            self._handle_api_error(e)
+            self.errorWindow.raiseException.emit(e)
         self.timer.stop()
         self.hide()
 
@@ -648,18 +650,7 @@ class SingleTweetWidget(QtGui.QFrame):
             self.wecase_new.tagClicked.connect(self.tagClicked)
             self.wecase_new.show()
         except APIError as e:
-            self._handle_api_error(e)
-
-    def _handle_api_error(self, exception):
-        if exception.error_code == 20101:
-            QtGui.QMessageBox.information(self, self.tr("Error"),
-                                          self.tr("This tweet have been deleted."))
-        elif exception.error_code == 20704:
-            QtGui.QMessageBox.information(self, self.tr("Error"),
-                                          self.tr("This tweet have been collected already.."))
-        else:
-            QtGui.QMessageBox.warning(self, self.tr("Unknown Error"),
-                                      str(exception))
+            self.errorWindow.raiseException.emit(e)
 
     def _userClicked(self, button):
         openAtBackend = False
@@ -672,7 +663,12 @@ class SingleTweetWidget(QtGui.QFrame):
         openAtBackend = False
         if button == QtCore.Qt.MiddleButton:
             openAtBackend = True
-        self.__userItem = UserItem({"name": user})
+
+        try:
+            self.__userItem = UserItem({"name": user})
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
+            return
         self.userClicked.emit(self.__userItem, openAtBackend)
 
     def _tagClicked(self, tag, button):

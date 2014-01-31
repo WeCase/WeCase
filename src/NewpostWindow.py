@@ -16,6 +16,7 @@ from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
 from FaceWindow import FaceWindow
 from TweetListWidget import TweetListWidget, SingleTweetWidget
+from WeiboErrorHandler import APIErrorWindow
 import const
 
 
@@ -42,6 +43,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.apiError.connect(self.showException)
         self.sendSuccessful.connect(self.sent)
         self.commonError.connect(self.showErrorMessage)
+        self.errorWindow = APIErrorWindow(self)
 
         if self.action not in ["new", "reply"]:
             self._refresh()
@@ -157,7 +159,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.tweet.retweet(text, comment, comment_ori)
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
         self.notify.showMessage(self.tr("WeCase"), self.tr("Retweet Success!"))
         self.sendSuccessful.emit()
@@ -170,7 +172,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.tweet.comment(text, comment_ori, retweet)
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
         self.notify.showMessage(self.tr("WeCase"), self.tr("Comment Success!"))
         self.sendSuccessful.emit()
@@ -183,7 +185,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.tweet.reply(text, comment_ori, retweet)
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
         self.notify.showMessage(self.tr("WeCase"), self.tr("Reply Success!"))
         self.sendSuccessful.emit()
@@ -218,7 +220,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                     self.tr("Tweet Success!"))
             self.sendSuccessful.emit()
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
 
         self.image = None
@@ -239,11 +241,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.setFocus()
 
     def showException(self, e):
-        if "Text too long" in e:
+        if "Text too long" in str(e):
             QtGui.QMessageBox.warning(None, self.tr("Text too long!"),
                                       self.tr("Please remove some text."))
         else:
-            QtGui.QMessageBox.warning(None, self.tr("Unknown error!"), e)
+            self.errorWindow.raiseException.emit(e)
         self.pushButton_send.setEnabled(True)
 
     def showErrorMessage(self, title, text):

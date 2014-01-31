@@ -23,6 +23,8 @@ from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
 from WAsyncLabel import WAsyncFetcher
+from weibo import APIError
+from WeiboErrorHandler import APIErrorWindow
 import logging
 import wecase_rc
 
@@ -41,6 +43,7 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
+        self.errorWindow = APIErrorWindow(self)
         self.setAttribute(QtCore.Qt.WA_QuitOnClose, True)
         self._iconPixmap = {}
         self.setupUi(self)
@@ -133,10 +136,16 @@ class WeCaseWindow(QtGui.QMainWindow):
         ))
 
     def userClicked(self, userItem, openAtBackend):
-        self._setupUserTab(userItem.id, switch=(not openAtBackend))
+        try:
+            self._setupUserTab(userItem.id, switch=(not openAtBackend))
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
 
     def tagClicked(self, str, openAtBackend):
-        self._setupTopicTab(str, switch=(not openAtBackend))
+        try:
+            self._setupTopicTab(str, switch=(not openAtBackend))
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
 
     def setupUi(self, mainWindow):
         mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))

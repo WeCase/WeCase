@@ -16,7 +16,8 @@ SOURCES = wecase.py.in\
 	  WeHack.py\
           WeCaseWindow.py\
           LoginWindow.py \
-          FilterTable.py
+          FilterTable.py \
+          WeiboErrorHandler.py
 
 
 FORMS = ../res/ui/AboutWindow.ui\

@@ -59,6 +59,7 @@ WeCase_PYTHON = path.py \
 				WTweetLabel.py \
 				WConfigParser.py \
 				FilterTable.py \
+				WeiboErrorHandler.py \
 				ui \
 				AboutWindow_ui.py \
 				LoginWindow_ui.py \
