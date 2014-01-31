@@ -1,19 +1,19 @@
 SOURCES = wecase.py.in\
-	  AboutWindow.py\
+          AboutWindow.py\
           Face.py\
-	  FaceWidget.py\
-	  FaceWindow.py\
+          FaceWidget.py\
+          FaceWindow.py\
           Tweet.py\
           NewpostWindow.py\
-	  SettingWindow.py\
-	  TweetListWidget.py\
-	  WAsyncLabel.py\
-	  WCompleteLineEdit.py\
-	  WIconLabel.py\
-	  WImageLabel.py\
-	  WTimeParser.py\
-	  WTimer.py\
-	  WeHack.py\
+          SettingWindow.py\
+          TweetListWidget.py\
+          WAsyncLabel.py\
+          WCompleteLineEdit.py\
+          WIconLabel.py\
+          WImageLabel.py\
+          WTimeParser.py\
+          WTimer.py\
+          WeHack.py\
           WeCaseWindow.py\
           LoginWindow.py \
           FilterTable.py \
