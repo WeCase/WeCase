@@ -1,4 +1,4 @@
-bin_SCRIPTS = wecase
+sbin_SCRIPTS = wecase
 libexec_SCRIPTS = wecase.py
 CLEANFILES = path.py wecase wecase.py
 
