@@ -12,7 +12,6 @@ from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
 from TweetUtils import tweetLength
 import const
-import logging
 
 
 class TweetSimpleModel(QtCore.QAbstractListModel):
@@ -89,10 +88,6 @@ class TweetTimelineBaseModel(TweetSimpleModel):
 
     @async
     def _common_get(self, timeline_func, pos):
-        def tprint(*args):
-            import threading
-            logging.debug(threading.current_thread().name + " " + "".join(*args))
-
         if self.lock:
             return
         self.lock = True
