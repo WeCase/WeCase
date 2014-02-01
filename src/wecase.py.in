@@ -62,7 +62,7 @@ def my_excepthook(type, value, tback):
 
     exception = "".join(traceback.format_exception(type, value, tback))
     error_info = (App.translate("main", "Oops, there is an unexpected error,\n") +
-                  App.translate("main", "Please report it at https://github.com/WeCase/WeCase/issues\n\n") +
+                  App.translate("main", "Please report it to <http://bugs.wecase.org/>\n\n") +
                   "%s" % exception)
 
     if type != last_error:
