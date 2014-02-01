@@ -1,4 +1,4 @@
-from weibo import APIClient, APIError, _Callable, _Executable
+from weibo3 import APIClient, APIError, _Callable, _Executable
 from http.client import BadStatusLine
 from urllib.error import URLError, ContentTooShortError
 

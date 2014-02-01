@@ -5,7 +5,7 @@ import urllib.request
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
 from WeHack import async, start, UNUSED
-from weibo import APIError
+from weibo3 import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel

@@ -23,7 +23,7 @@ from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
 from WAsyncLabel import WAsyncFetcher
-from weibo import APIError
+from weibo3 import APIError
 from WeiboErrorHandler import APIErrorWindow
 import logging
 import wecase_rc
