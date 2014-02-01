@@ -23,5 +23,6 @@
     <file>../img/preferences-other.png</file>
     <file>../img/no_favorites.png</file>
     <file>../img/WeCase.svg</file>
+    <file>../img/mentions_comments.svg</file>
   </qresource>
 </RCC>
