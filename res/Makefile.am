@@ -11,7 +11,8 @@ desktopdir = $(datadir)/applications
 desktop_DATA = wecase.desktop
 
 install-data-local:
-	cp -R $(srcdir)/img/face $(datadir)/face
+	mkdir -p $(DESTDIR)$(pkgdatadir)/faces
+	cp -R $(srcdir)/img/face/* $(DESTDIR)$(pkgdatadir)/faces
 
 uninstall-local:
-	rm -rf $(datadir)/face
+	rm -rf $(DESTDIR)$(pkgdatadir)/faces

@@ -6,7 +6,7 @@ NAME = WeCase
 
 do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 				  -e 's,[@]LOCALEDIR[@],$(localedir)/$(NAME),g' \
-				  -e 's,[@]PACKAGE[@],$(name),g' \
+				  -e 's,[@]PACKAGE[@],$(PACKAGE),g' \
 			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g' \
 				  -e 's,[@]LIBEXECDIR[@],$(libexecdir),g'
 

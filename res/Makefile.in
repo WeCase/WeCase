@@ -420,10 +420,11 @@ wecase.desktop: wecase.desktop.in Makefile
 	chmod +x wecase.desktop
 
 install-data-local:
-	cp -R $(srcdir)/img/face $(datadir)/face
+	mkdir -p $(DESTDIR)$(pkgdatadir)/faces
+	cp -R $(srcdir)/img/face/* $(DESTDIR)$(pkgdatadir)/faces
 
 uninstall-local:
-	rm -rf $(datadir)/face
+	rm -rf $(DESTDIR)$(pkgdatadir)/faces
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
