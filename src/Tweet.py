@@ -239,7 +239,7 @@ class TweetTopicModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(q=self._topic, page=1).statuses[::-1]
+        timeline = self.timeline.get(q=self._topic, page=1).statuses
         for tweet in timeline:
             if TweetItem(tweet).id == self.first_id():
                 return list(reversed(timeline[:timeline.index(tweet)]))
