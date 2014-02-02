@@ -2,6 +2,7 @@ from threading import Thread
 import sys
 import os
 import platform
+import webbrowser
 
 
 def workaround_excepthook_bug():
@@ -98,3 +99,15 @@ def setGeometry(qWidget, geometry_dic):
     y = geometry_dic.get("y")
     if x and y:
         qWidget.move(x, y)
+
+
+def openLink(link):
+    if not link:
+        # not a link
+        pass
+    elif not "://" in link:
+        # no protocol
+        link = "http://" + link
+        webbrowser.open(link)
+    elif "http://" in link:
+        webbrowser.open(link)

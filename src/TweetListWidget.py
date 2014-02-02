@@ -4,7 +4,7 @@ from time import sleep
 import urllib.request
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
-from WeHack import async, start, UNUSED
+from WeHack import async, start, UNUSED, openLink
 from weibo3 import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
@@ -257,6 +257,7 @@ class SingleTweetWidget(QtGui.QFrame):
         if not (self.tweet.type == TweetItem.COMMENT):
             self.client = QtGui.QLabel()
             self.client.setText(self.tr("From: %s") % self.tweet.source)
+            self.client.linkActivated.connect(lambda link: openLink(link.toString()))
             self.counterHorizontalLayout.addWidget(self.client)
 
             self.retweet = self._createRetweetLabel()
