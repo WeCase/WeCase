@@ -161,11 +161,9 @@ class SingleTweetWidget(QtGui.QFrame):
     imageLoaded = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
-    commonSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
-        self.commonSignal.connect(self.commonProcessor)
         self.errorWindow = APIErrorWindow(self)
         self._gif_list = {}
         self.tweet = tweet
@@ -461,6 +459,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
         def open_pic(localfile):
             start(localfile)
+            self.download_lock = False
+            self.imageLabel.setBusy(False)
+            self.imageLoaded.emit()
 
         if self.download_lock:
             return
@@ -471,15 +472,8 @@ class SingleTweetWidget(QtGui.QFrame):
                                              "large")  # A simple trick ... ^_^
         self.fetcher.addTask(original_pic, open_pic)
 
-        self.download_lock = False
-        self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
-        self.imageLoaded.emit()
-
     def _showFullImage(self):
         self.fetch_open_original_pic(self.imageLabel.url())
-
-    def commonProcessor(self, object):
-        object()
 
     def _favorite(self):
         needWorker = False
