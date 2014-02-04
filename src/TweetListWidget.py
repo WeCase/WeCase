@@ -1,9 +1,5 @@
-import os
 import re
 from time import sleep
-import urllib.request
-from urllib.error import URLError, ContentTooShortError
-from http.client import BadStatusLine
 from WeHack import async, start, UNUSED, openLink
 from weibo3 import APIError
 from PyQt4 import QtCore, QtGui
@@ -17,6 +13,7 @@ import const
 from path import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
 from WObjectCache import WObjectCache
+from AsyncFetcher import AsyncFetcher
 from Face import FaceModel
 from WeiboErrorHandler import APIErrorWindow
 
@@ -176,6 +173,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.without = without
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
+        self.fetcher = AsyncFetcher(cache_path)
         self.download_lock = False
         self.__favorite_queue = []
 
@@ -455,12 +453,14 @@ class SingleTweetWidget(QtGui.QFrame):
         delete.clicked.connect(self._delete)
         return delete
 
-    @async
     def fetch_open_original_pic(self, thumbnail_pic):
         """Fetch and open original pic from thumbnail pic url.
            Pictures will stored in cache directory. If we already have a same
            name in cache directory, just open it. If we don't, then download it
            first."""
+
+        def open_pic(localfile):
+            start(localfile)
 
         if self.download_lock:
             return
@@ -469,18 +469,10 @@ class SingleTweetWidget(QtGui.QFrame):
         self.commonSignal.emit(lambda: self.imageLabel.setBusy(True))
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
-        localfile = cache_path + original_pic.split("/")[-1]
-        if not os.path.exists(localfile):
-            while True:
-                try:
-                    urllib.request.urlretrieve(original_pic, localfile)
-                    break
-                except (BadStatusLine, URLError, ContentTooShortError):
-                    continue
+        self.fetcher.addTask(original_pic, open_pic)
 
         self.download_lock = False
         self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
-        start(localfile)
         self.imageLoaded.emit()
 
     def _showFullImage(self):
