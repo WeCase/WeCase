@@ -2,9 +2,10 @@ from PyQt4 import QtCore
 from urllib.request import urlretrieve
 from urllib.error import URLError, ContentTooShortError
 from http.client import BadStatusLine
-from WeHack import async
+from WeHack import async, SingletonDecorator
 from threading import Event
 import os
+from time import sleep
 
 
 class SignalSender(QtCore.QObject):
@@ -24,14 +25,14 @@ class SignalSender(QtCore.QObject):
         self.fetched.disconnect(target)
 
 
-class AsyncFetcher(QtCore.QObject):
+class _AsyncFetcher(QtCore.QObject):
 
     DO_NOT_HAVE = 0
     DOWNLOADED = 1
     DOWNLOADING = 2
 
     def __init__(self, path, parent=None):
-        super(AsyncFetcher, self).__init__(parent)
+        super(_AsyncFetcher, self).__init__(parent)
         self.path = path
         self._signals = {}
         self._modified = Event()
@@ -48,6 +49,7 @@ class AsyncFetcher(QtCore.QObject):
                 urlretrieve(url, filepath)
                 break
             except (BadStatusLine, ContentTooShortError, URLError):
+                sleep(1)
                 continue
 
         self._modified.wait()
@@ -72,10 +74,10 @@ class AsyncFetcher(QtCore.QObject):
             self._signals[filepath] = [signal]
 
     def _process_callbacks(self, filepath):
-        signals = self._signals.get(filepath, [])
+        signals = self._signals[filepath]
         for signal in signals:
             signal.emit(filepath)
-            signals.remove(signal)
+        self._signals[filepath] = []
 
     def addTask(self, url, callback):
         filename = self._formattedFilename(url)
@@ -84,17 +86,16 @@ class AsyncFetcher(QtCore.QObject):
         self._modified.clear()
 
         state = self._get_state(filepath)
+        self._add_callback(filepath, callback)
         if state == self.DO_NOT_HAVE:
-            self._add_callback(filepath, callback)
             self._download(url, filepath)
         elif state == self.DOWNLOADING:
-            self._add_callback(filepath, callback)
             pass
         elif state == self.DOWNLOADED:
-            self._modified.set()  # don't let callback delays the event
-            callback(filepath)
-            return
+            self._process_callbacks(filepath)
         else:
             assert False, "Downloaded but downloading now?"
 
         self._modified.set()
+
+AsyncFetcher = SingletonDecorator(_AsyncFetcher)

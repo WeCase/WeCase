@@ -45,6 +45,18 @@ class Singleton(type):
         return cls._instances[cls]
 
 
+class SingletonDecorator():
+
+    def __init__(self, cls):
+        self.cls = cls
+        self.instance = None
+
+    def __call__(self, *args, **kwargs):
+        if self.instance is None:
+            self.instance = self.cls(*args, **kwargs)
+        return self.instance
+
+
 @async
 def start(filename):
     if platform.system() == "Linux":
