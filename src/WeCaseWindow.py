@@ -22,7 +22,7 @@ from WeHack import async, setGeometry, getGeometry, UNUSED
 from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
-from WAsyncLabel import WAsyncFetcher
+from AsyncFetcher import AsyncFetcher
 from weibo3 import APIError
 from WeiboErrorHandler import APIErrorWindow
 import logging
@@ -107,19 +107,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         timeline.setModel(_timeline)
         tab = self._setupCommonTab(timeline, view, switch, myself)
 
-        @async
-        def fetchUserTabAvatar(self, uid):
-            fetcher = WAsyncFetcher()
-            f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
-            self.tabAvatarFetched.emit(f)
-
-        @QtCore.pyqtSlot(str)
         def setAvatar(f):
             self._setTabIcon(tab, WObjectCache().open(QtGui.QPixmap, f))
-            self.tabAvatarFetched.disconnect(setAvatar)
 
-        fetchUserTabAvatar(self, uid)
-        self.tabAvatarFetched.connect(setAvatar)
+        fetcher = AsyncFetcher(path.cache_path)
+        fetcher.addTask(self.client.users.show.get(uid=uid)["profile_image_url"], setAvatar)
 
     def _setupTopicTab(self, topic, switch=True):
         index = self._getSameTab("topic", topic)
