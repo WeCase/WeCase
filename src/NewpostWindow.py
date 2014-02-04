@@ -22,7 +22,7 @@ import const
 
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     image = None
-    apiError = QtCore.pyqtSignal(str)
+    apiError = QtCore.pyqtSignal(Exception)
     commonError = QtCore.pyqtSignal(str, str)
     sendSuccessful = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
