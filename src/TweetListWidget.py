@@ -467,7 +467,7 @@ class SingleTweetWidget(QtGui.QFrame):
             return
 
         self.download_lock = True
-        self.commonSignal.emit(lambda: self.imageLabel.setBusy(True))
+        self.imageLabel.setBusy(True)
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
         self.fetcher.addTask(original_pic, open_pic)
