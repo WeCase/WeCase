@@ -7,13 +7,15 @@
 
 
 import sys
+sys.path.append("@PYTHONDIR@")
+
 import os
 from PyQt4 import QtCore, QtGui
-from LoginWindow import LoginWindow
-import const
 import traceback
 import signal
 import logging
+import path
+from LoginWindow import LoginWindow
 import WeHack
 
 
@@ -22,12 +24,12 @@ WeHack.UNUSED(None)
 
 def mkconfig():
     try:
-        os.makedirs(const.config_path.replace("/config_db", ""))
+        os.makedirs(path.config_path.replace("/config_db", ""))
     except OSError:
         pass
 
     try:
-        os.makedirs(const.cache_path)
+        os.makedirs(path.cache_path)
     except OSError:
         pass
 
@@ -60,7 +62,7 @@ def my_excepthook(type, value, tback):
 
     exception = "".join(traceback.format_exception(type, value, tback))
     error_info = (App.translate("main", "Oops, there is an unexpected error,\n") +
-                  App.translate("main", "Please report it at https://github.com/WeCase/WeCase/issues\n\n") +
+                  App.translate("main", "Please report it to <http://bugs.wecase.org/>\n\n") +
                   "%s" % exception)
 
     if type != last_error:
@@ -93,11 +95,11 @@ def import_warning():
 
 
 def setup_logger():
-    logging.basicConfig(level=logging.WARNING,
+    logging.basicConfig(level=logging.ERROR,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %('
                                'message)s',
                         datefmt='%m-%d %H:%M',
-                        filename=const.cache_path + "log")
+                        filename=path.cache_path + "log")
     console = logging.StreamHandler()
     console.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
@@ -130,7 +132,7 @@ if __name__ == "__main__":
     # WeCase's own string translator
     my_translator = QtCore.QTranslator(App)
     my_translator.load("WeCase_" + QtCore.QLocale.system().name(),
-                       const.locale_path)
+                       path.locale_path)
     App.installTranslator(my_translator)
 
     import_warning()
@@ -141,7 +143,8 @@ if __name__ == "__main__":
     # Cleanup code here.
     App.deleteLater()
 
-    # Hack: The easiest way to avoid exit crashes is to call os._exit()
-    # before python starts collecting Qt objects.
     logging.info("Exited")
+    sys.excepthook = sys.__excepthook__
+
+    # Hack for Issue 50.
     os._exit(exit_status)

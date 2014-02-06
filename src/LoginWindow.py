@@ -12,15 +12,19 @@ from weibos.helper import SUCCESS, PASSWORD_ERROR, NETWORK_ERROR, UBAuthorize
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
-import const
+import path
 from time import sleep
-from WeCaseConfig import WeCaseConfig
+from WConfigParser import WConfigParser
+from LoginInfo import LoginInfo
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
-    SUCCESS = 0
-    PASSWORD_ERROR = 1
-    NETWORK_ERROR = 2
+
+    SUCCESS = SUCCESS
+    PASSWORD_ERROR = PASSWORD_ERROR
+    NETWORK_ERROR = NETWORK_ERROR
+    LOGIN_ALREADY = 10
+
     loginReturn = QtCore.pyqtSignal(int)
 
     def __init__(self, allow_auto_login=True, parent=None):
@@ -48,12 +52,13 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         wecase_main = WeCaseWindow()
         wecase_main.show()
         # Maybe users will logout, so reset the status
+        LoginInfo().add_account(self.username)
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
         self.done(True)
 
     def reject(self, status):
-        if status in [self.NETWORK_ERROR, self.PASSWORD_ERROR] and self.err_count < 5:
+        if status in (self.NETWORK_ERROR, self.PASSWORD_ERROR) and self.err_count < 5:
             self.err_count += 1
             sleep(0.5)
             self.ui_authorize()
@@ -66,6 +71,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             QtGui.QMessageBox.critical(None, self.tr("Network Error"),
                                        self.tr("Something wrong with the network, please try again."))
             self.err_count = 0
+        elif status == self.LOGIN_ALREADY:
+            QtGui.QMessageBox.critical(None, self.tr("Already Logged in"),
+                                       self.tr("This account is already logged in."))
 
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
@@ -80,6 +88,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         super(LoginWindow, self).setupUi(widget)
         self.show()
         self.txt_Password.setEchoMode(QtGui.QLineEdit.Password)
+        self.cmb_Users.lineEdit().setPlaceholderText(self.tr("ID/Email/Phone"))
         self.cmb_Users.addItem(self.last_login)
 
         for username in list(self.passwd.keys()):
@@ -96,7 +105,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.login()
 
     def loadConfig(self):
-        self.login_config = WeCaseConfig(const.config_path, "login")
+        self.login_config = WConfigParser(path.myself_path + "WMetaConfig",
+                                          path.config_path, "login")
         self.passwd = self.login_config.passwd
         self.last_login = self.login_config.last_login
         self.auto_login = self.login_config.auto_login and self.allow_auto_login
@@ -119,6 +129,10 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     @async
     def authorize(self, username, password):
+        if username in LoginInfo().accounts:
+            self.loginReturn.emit(self.LOGIN_ALREADY)
+            return
+
         result = UBAuthorize(username, password)
         if result == SUCCESS:
             self.loginReturn.emit(self.SUCCESS)

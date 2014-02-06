@@ -6,26 +6,29 @@
 # License: GPL v3 or later.
 
 
+from os.path import getsize
 from WeHack import async
 from PyQt4 import QtCore, QtGui
-from weibo import APIError
+from weibo3 import APIError
 from Tweet import TweetItem, UserItem, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength
 from NewpostWindow_ui import Ui_NewPostWindow
 from FaceWindow import FaceWindow
 from TweetListWidget import TweetListWidget, SingleTweetWidget
+from WeiboErrorHandler import APIErrorWindow
 import const
 
 
 class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     image = None
-    apiError = QtCore.pyqtSignal(str)
+    apiError = QtCore.pyqtSignal(Exception)
     commonError = QtCore.pyqtSignal(str, str)
     sendSuccessful = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
     tweetRefreshed = QtCore.pyqtSignal()
+    tweetRejected = QtCore.pyqtSignal()
 
     def __init__(self, action="new", tweet=None, parent=None):
         super(NewpostWindow, self).__init__(parent)
@@ -41,10 +44,12 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.apiError.connect(self.showException)
         self.sendSuccessful.connect(self.sent)
         self.commonError.connect(self.showErrorMessage)
+        self.errorWindow = APIErrorWindow(self)
 
         if self.action not in ["new", "reply"]:
-            self._refresh()
             self.tweetRefreshed.connect(self._create_tweetWidget)
+            self.tweetRejected.connect(lambda: self.pushButton_send.setEnabled(False))
+            self._refresh()
 
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
@@ -85,7 +90,12 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     @async
     def _refresh(self):
         # The read count is not a real-time value. So refresh it now.
-        self.tweet.refresh()
+        try:
+            self.tweet.refresh()
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
+            self.tweetRejected.emit()
+            return
         self.tweetRefreshed.emit()
 
     def _create_tweetWidget(self):
@@ -156,7 +166,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.tweet.retweet(text, comment, comment_ori)
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
         self.notify.showMessage(self.tr("WeCase"), self.tr("Retweet Success!"))
         self.sendSuccessful.emit()
@@ -169,7 +179,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.tweet.comment(text, comment_ori, retweet)
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
         self.notify.showMessage(self.tr("WeCase"), self.tr("Comment Success!"))
         self.sendSuccessful.emit()
@@ -182,7 +192,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             self.tweet.reply(text, comment_ori, retweet)
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
         self.notify.showMessage(self.tr("WeCase"), self.tr("Reply Success!"))
         self.sendSuccessful.emit()
@@ -196,9 +206,17 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 try:
                     self.client.statuses.upload.post(status=text,
                                                      pic=open(self.image, "rb"))
-                except FileNotFoundError:
+                    if getsize(self.image) > const.MAX_IMAGE_BYTES:
+                        raise ValueError
+                except (OSError, IOError):
                     self.commonError.emit(self.tr("File not found"),
                                           self.tr("No such file: %s")
+                                          % self.image)
+                    self.addImage()  # In fact, remove image...
+                    return
+                except ValueError:
+                    self.commonError.emit(self.tr("Too large size"),
+                                          self.tr("This image is too large to upload: %s")
                                           % self.image)
                     self.addImage()  # In fact, remove image...
                     return
@@ -209,13 +227,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                                     self.tr("Tweet Success!"))
             self.sendSuccessful.emit()
         except APIError as e:
-            self.apiError.emit(str(e))
+            self.apiError.emit(e)
             return
 
         self.image = None
 
     def addImage(self):
-        ACCEPT_TYPE = self.tr("Images") + "(*.png *.jpg *.bmp *.gif)"
+        ACCEPT_TYPE = self.tr("Images") + "(*.png *.jpg *.jpeg *.bmp *.gif)"
         if self.image:
             self.image = None
             self.pushButton_picture.setText(self.tr("&Picture"))
@@ -230,11 +248,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.textEdit.setFocus()
 
     def showException(self, e):
-        if "Text too long" in e:
+        if "Text too long" in str(e):
             QtGui.QMessageBox.warning(None, self.tr("Text too long!"),
                                       self.tr("Please remove some text."))
         else:
-            QtGui.QMessageBox.warning(None, self.tr("Unknown error!"), e)
+            self.errorWindow.raiseException.emit(e)
         self.pushButton_send.setEnabled(True)
 
     def showErrorMessage(self, title, text):

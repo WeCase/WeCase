@@ -1,5 +1,5 @@
 from PyQt4 import QtCore, QtGui
-import webbrowser
+from WeHack import openLink
 
 
 class WTweetLabel(QtGui.QTextBrowser):
@@ -39,15 +39,12 @@ class WTweetLabel(QtGui.QTextBrowser):
     def openLink(self, url):
         url = url.toString()
 
-        if not "://" in url:
-            # no protocol
-            url = "http://" + url
-            webbrowser.open(url)
-        elif "http://" in url:
-            webbrowser.open(url)
-        elif "mentions://" in url:
+        if "mentions://" in url:
             self.userClicked.emit(url[13:], self.__mouseButton)
         elif "hashtag://" in url:
             self.tagClicked.emit(url[11:].replace("#", ""), self.__mouseButton)
+        else:
+            # common web link
+            openLink(url)
 
         self.__mouseButton = QtCore.Qt.LeftButton

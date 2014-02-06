@@ -1,14 +1,9 @@
-import os
-from time import sleep
-import urllib.request
-from urllib.error import URLError, ContentTooShortError
-from http.client import BadStatusLine
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
-from const import cache_path as down_path
-from WeHack import async
+from path import cache_path as down_path
 from WObjectCache import WObjectCache
-import logging
+from AsyncFetcher import AsyncFetcher
+from WeRuntimeInfo import WeRuntimeInfo
 
 
 class WAsyncLabel(WImageLabel):
@@ -20,8 +15,7 @@ class WAsyncLabel(WImageLabel):
         self._url = ""
         self._image = None
 
-        self.fetcher = WAsyncFetcher(self)
-        self.fetcher.fetched.connect(self._setPixmap)
+        self.fetcher = AsyncFetcher("".join((down_path, str(WeRuntimeInfo()["uid"]))))
 
         busyIconPixmap = WObjectCache().open(QtGui.QPixmap, ":/IMG/img/busy.gif")
         self.minimumImageHeight = busyIconPixmap.height()
@@ -109,7 +103,7 @@ class WAsyncLabel(WImageLabel):
         self._fetch()
 
     def _fetch(self):
-        self.fetcher.fetch(self._url)
+        self.fetcher.addTask(self._url, self.setPixmap)
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton and self._image:
@@ -131,63 +125,3 @@ class WAsyncLabel(WImageLabel):
         file = QtGui.QFileDialog.getOpenFileName(self,
                                                  self.tr("Choose a path"))
         self._image.save(file)
-
-
-class WAsyncFetcher(QtCore.QObject):
-
-    fetched = QtCore.pyqtSignal(str)
-
-    def __init__(self, parent=None):
-        super(WAsyncFetcher, self).__init__(parent)
-
-    @staticmethod
-    def _formattedFilename(url):
-        return "%s_%s" % (url.split('/')[-2],
-                          url.split('/')[-1])
-
-    def down(self, url, filename=""):
-        if not filename:
-            filename = self._formattedFilename(url)
-
-        def delete_tmp():
-            try:
-                os.remove(down_path + filename + ".down")
-                return True
-            except OSError:
-                return False
-
-        def download():
-            while 1:
-                try:
-                    urllib.request.urlretrieve(url, down_path + filename + ".down")
-                    os.rename(down_path + filename + ".down",
-                              down_path + filename)
-                    return
-                except (BadStatusLine, URLError, ContentTooShortError):
-                    continue
-                except OSError:
-                    return
-
-        while 1:
-            if os.path.exists(down_path + filename):
-                delete_tmp()
-                try:
-                    self.fetched.emit(down_path + filename)
-                except TypeError:
-                    # Garbage Collected
-                    pass
-                return down_path + filename
-            elif os.path.exists(down_path + filename + ".down"):
-                sleep(0.5)
-                continue
-            else:
-                try:
-                    download()
-                except Exception as e:
-                    # Issue #72, log it for further research.
-                    logging.error(str(e))
-                    return
-
-    @async
-    def fetch(self, url, filename=""):
-        self.down(url, filename)

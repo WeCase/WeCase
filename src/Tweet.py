@@ -12,7 +12,6 @@ from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
 from TweetUtils import tweetLength
 import const
-import logging
 
 
 class TweetSimpleModel(QtCore.QAbstractListModel):
@@ -89,10 +88,6 @@ class TweetTimelineBaseModel(TweetSimpleModel):
 
     @async
     def _common_get(self, timeline_func, pos):
-        def tprint(*args):
-            import threading
-            logging.debug(threading.current_thread().name + " " + "".join(*args))
-
         if self.lock:
             return
         self.lock = True
@@ -116,13 +111,19 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         self._common_get(timeline, -1)
 
     def new(self):
-        timeline = self.timeline_new
-        self._common_get(timeline, 0)
-        self.timelineLoaded.emit()
+        if self._tweets:
+            timeline = self.timeline_new
+            self._common_get(timeline, 0)
+            self.timelineLoaded.emit()
+        else:
+            self.load()
 
     def next(self):
-        timeline = self.timeline_old
-        self._common_get(timeline, -1)
+        if self._tweets:
+            timeline = self.timeline_old
+            self._common_get(timeline, -1)
+        else:
+            self.load()
 
 
 class TweetCommonModel(TweetTimelineBaseModel):
@@ -238,10 +239,10 @@ class TweetTopicModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(q=self._topic, page=1).statuses[::-1]
+        timeline = self.timeline.get(q=self._topic, page=1).statuses
         for tweet in timeline:
             if TweetItem(tweet).id == self.first_id():
-                return reversed(timeline[:timeline.index(tweet)])
+                return list(reversed(timeline[:timeline.index(tweet)]))
         return timeline
 
     def timeline_old(self):
@@ -257,7 +258,6 @@ class TweetFilterModel(QtCore.QAbstractListModel):
     rowInserted = QtCore.pyqtSignal(int)
     timelineLoaded = QtCore.pyqtSignal()
     nothingLoaded = QtCore.pyqtSignal()
-    wordWarKeywords = ["滚", "不喜", "逼", "脑残", "黑", "喷", "智", "傻", "白痴"]
 
     def __init__(self, parent=None):
         super(TweetFilterModel, self).__init__(parent)
@@ -265,6 +265,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         self._appearInfo = {}
         self._userInfo = {}
         self._tweets = []
+        self._wordWarKeywords = []
         self._blockWordwars = False
         self._maxTweetsPerUser = -1
         self._maxRetweets = -1
@@ -283,6 +284,9 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
     def setTweetsKeywordsBlacklist(self, blacklist):
         self._tweetKeywordBlacklist = blacklist
+
+    def setWordWarKeywords(self, blacklist):
+        self._wordWarKeywords = blacklist
 
     def setUsersBlacklist(self, blacklist):
         self._usersBlackList = blacklist
@@ -356,7 +360,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
             info = self._appearInfo[item.original.id]
             info["count"] += 1
-            if item.withKeywords(self.wordWarKeywords):
+            if item.withKeywords(self._wordWarKeywords):
                 info["wordWarKeywords"] += 1
             self._appearInfo[item.original.id] = info
 
@@ -559,17 +563,29 @@ class TweetItem(QtCore.QObject):
         else:
             return None
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @QtCore.pyqtProperty(list, constant=True)
     def thumbnail_pic(self):
+        # Checkout Issue #101.
         results = []
 
-        urls = self._data.get("pic_urls")
-        if not urls:
-            return None
+        pic_urls = self._data.get("pic_urls")
+        if pic_urls:
+            for url in pic_urls:
+                results.append(url['thumbnail_pic'])
+            return results
 
-        for url in urls:
-            results.append(url['thumbnail_pic'])
-        return results
+        pic_ids = self._data.get("pic_ids")
+        if pic_ids:
+            for id in pic_ids:
+                results.append("http://ww1.sinaimg.cn/thumbnail/%s" % id)
+            return results
+
+        pic_fallback = self._data.get("thumbnail_pic")
+        if pic_fallback:
+            results.append(results)
+            return results
+
+        return None
 
     @QtCore.pyqtProperty(str, constant=True)
     def original_pic(self):

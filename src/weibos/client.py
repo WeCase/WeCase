@@ -1,4 +1,4 @@
-from weibo import APIClient, _Callable, _Executable
+from weibo3 import APIClient, APIError, _Callable, _Executable
 from http.client import BadStatusLine
 from urllib.error import URLError, ContentTooShortError
 
@@ -31,6 +31,9 @@ class _UBCallable(_Callable):
 
 class _UBExecutable(_Executable):
 
+    # if you find out more, add the error code to the tuple
+    UNREASONABLE_ERRORS = (21321, )
+
     def __init__(self, *args, **kwargs):
         super(_UBExecutable, self).__init__(*args, **kwargs)
 
@@ -39,5 +42,13 @@ class _UBExecutable(_Executable):
             try:
                 return super(_UBExecutable, self).__call__(**kw)
             except (BadStatusLine, ContentTooShortError, URLError, OSError, IOError):
-                # OSError Or IOError: Bad CRC32 Checksum.
+                # these are common networking problems:
+                # note: OSError/IOError = Bad CRC32 Checksum
                 continue
+            except APIError as e:
+                # these are unreasonable API Errors:
+                # note: May caused by bugs on Sina's server
+                if e.error_code in self.UNREASONABLE_ERRORS:
+                    continue
+                else:
+                    raise

@@ -2,6 +2,7 @@ from threading import Thread
 import sys
 import os
 import platform
+import webbrowser
 
 
 def workaround_excepthook_bug():
@@ -44,16 +45,63 @@ class Singleton(type):
         return cls._instances[cls]
 
 
+class SingletonDecorator():
+
+    def __init__(self, cls):
+        self.cls = cls
+        self.instance = None
+
+    def __call__(self, *args, **kwargs):
+        if self.instance is None:
+            self.instance = self.cls(*args, **kwargs)
+        return self.instance
+
+
 @async
 def start(filename):
     if platform.system() == "Linux":
         os.system('xdg-open "%s" > /dev/null' % filename)
     elif platform.system() == "Darwin":
         os.system('open "%s"' % filename)
+    elif platform.system().startswith("CYGWIN"):
+        os.system('cygstart "%s"' % filename)
     elif platform.system() == "Windows":
         os.system('start "" "%s"' % filename)
     else:
         assert False
+
+
+def pid_running(pid):
+    if platform.system() == "Windows":
+        return _windows_pid_running(pid)
+    else:
+        try:
+            return _unix_pid_running(pid)
+        except Exception:
+            assert False, "Unsupported platform."
+
+
+def _windows_pid_running(pid):
+    import ctypes
+    kernel32 = ctypes.windll.kernel32
+    SYNCHRONIZE = 0x100000
+
+    process = kernel32.OpenProcess(SYNCHRONIZE, 0, pid)
+    if process:
+        kernel32.CloseHandle(process)
+        return True
+    else:
+        return False
+
+
+def _unix_pid_running(pid):
+    try:
+        # pretend to kill it
+        os.kill(pid, 0)
+    except OSError as e:
+        # we don't have the permission to kill it, confirms the pid is exist.
+        return e.errno == os.errno.EPERM
+    return True
 
 
 def getDirSize(path):
@@ -96,3 +144,15 @@ def setGeometry(qWidget, geometry_dic):
     y = geometry_dic.get("y")
     if x and y:
         qWidget.move(x, y)
+
+
+def openLink(link):
+    if not link:
+        # not a link
+        pass
+    elif not "://" in link:
+        # no protocol
+        link = "http://" + link
+        webbrowser.open(link)
+    elif "http://" in link:
+        webbrowser.open(link)

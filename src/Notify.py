@@ -7,7 +7,7 @@
 
 
 from PyQt4 import QtCore
-import const
+import path
 
 try:
     import notify2 as pynotify
@@ -20,7 +20,7 @@ except DBusException:
 
 
 class Notify(QtCore.QObject):
-    image = const.myself_path + "/ui/img/WeCase_80.png"
+    image = path.icon_path
 
     def __init__(self, appname=QtCore.QObject().tr("WeCase"), timeout=5):
         super(Notify, self).__init__()
@@ -30,6 +30,10 @@ class Notify(QtCore.QObject):
         self.n = pynotify.Notification(appname)
 
     def showMessage(self, title, text):
-        self.n.update(title, text, self.image)
-        self.n.set_timeout(self.timeout * 1000)
-        self.n.show()
+        try:
+            self.n.update(title, text, self.image)
+            self.n.set_timeout(self.timeout * 1000)
+            self.n.show()
+        except DBusException:
+            return False
+        return True

@@ -1,24 +1,21 @@
-import os
 import re
 from time import sleep
-import urllib.request
-from urllib.error import URLError, ContentTooShortError
-from http.client import BadStatusLine
-from WeHack import async, start, UNUSED
-from weibo import APIError
+from WeHack import async, start, UNUSED, openLink
+from weibo3 import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel
 from WTweetLabel import WTweetLabel
-from WAsyncLabel import WAsyncLabel
 from WAvatarLabel import WAvatarLabel
 from WImageLabel import WImageLabel
 from WSwitchLabel import WSwitchLabel
 import const
-from const import cache_path
+from path import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
 from WObjectCache import WObjectCache
+from AsyncFetcher import AsyncFetcher
 from Face import FaceModel
+from WeiboErrorHandler import APIErrorWindow
 
 
 class TweetListWidget(QtGui.QWidget):
@@ -164,17 +161,17 @@ class SingleTweetWidget(QtGui.QFrame):
     imageLoaded = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
-    commonSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
-        self.commonSignal.connect(self.commonProcessor)
+        self.errorWindow = APIErrorWindow(self)
         self._gif_list = {}
         self.tweet = tweet
         self.client = const.client
         self.without = without
         self.setObjectName("SingleTweetWidget")
         self.setupUi()
+        self.fetcher = AsyncFetcher("".join((cache_path, str(WeRuntimeInfo()["uid"]))))
         self.download_lock = False
         self.__favorite_queue = []
 
@@ -256,6 +253,7 @@ class SingleTweetWidget(QtGui.QFrame):
         if not (self.tweet.type == TweetItem.COMMENT):
             self.client = QtGui.QLabel()
             self.client.setText(self.tr("From: %s") % self.tweet.source)
+            self.client.linkActivated.connect(lambda link: openLink(link))
             self.counterHorizontalLayout.addWidget(self.client)
 
             self.retweet = self._createRetweetLabel()
@@ -308,6 +306,9 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _update_time(self):
         try:
+            if not self.time.toolTip():
+                self.time.setToolTip(self.tweet.timestamp)
+
             if self.tweet.type != TweetItem.COMMENT:
                 self.time.setText("<a href='%s'>%s</a>" %
                                   (self.tweet.url, self.tweet.time))
@@ -450,39 +451,29 @@ class SingleTweetWidget(QtGui.QFrame):
         delete.clicked.connect(self._delete)
         return delete
 
-    @async
     def fetch_open_original_pic(self, thumbnail_pic):
         """Fetch and open original pic from thumbnail pic url.
            Pictures will stored in cache directory. If we already have a same
            name in cache directory, just open it. If we don't, then download it
            first."""
 
+        def open_pic(localfile):
+            start(localfile)
+            self.download_lock = False
+            self.imageLabel.setBusy(False)
+            self.imageLoaded.emit()
+
         if self.download_lock:
             return
 
         self.download_lock = True
-        self.commonSignal.emit(lambda: self.imageLabel.setBusy(True))
+        self.imageLabel.setBusy(True)
         original_pic = thumbnail_pic.replace("thumbnail",
                                              "large")  # A simple trick ... ^_^
-        localfile = cache_path + original_pic.split("/")[-1]
-        if not os.path.exists(localfile):
-            while True:
-                try:
-                    urllib.request.urlretrieve(original_pic, localfile)
-                    break
-                except (BadStatusLine, URLError, ContentTooShortError):
-                    continue
-
-        self.download_lock = False
-        self.commonSignal.emit(lambda: self.imageLabel.setBusy(False))
-        start(localfile)
-        self.imageLoaded.emit()
+        self.fetcher.addTask(original_pic, open_pic)
 
     def _showFullImage(self):
         self.fetch_open_original_pic(self.imageLabel.url())
-
-    def commonProcessor(self, object):
-        object()
 
     def _favorite(self):
         needWorker = False
@@ -520,7 +511,7 @@ class SingleTweetWidget(QtGui.QFrame):
                     self.tweet.setFavoriteForce(True)
                 self._e = e
                 self.__favorite_queue = []
-                self.commonSignal.emit(lambda: self._handle_api_error(self._e))
+                self.commonSignal.emit(lambda: self.errorWindow.raiseException.emit(self._e))
                 return
 
     def _retweet(self, tweet=None):
@@ -554,7 +545,7 @@ class SingleTweetWidget(QtGui.QFrame):
         try:
             self.tweet.delete()
         except APIError as e:
-            self._handle_api_error(e)
+            self.errorWindow.raiseException.emit(e)
         self.timer.stop()
         self.hide()
 
@@ -646,18 +637,7 @@ class SingleTweetWidget(QtGui.QFrame):
             self.wecase_new.tagClicked.connect(self.tagClicked)
             self.wecase_new.show()
         except APIError as e:
-            self._handle_api_error(e)
-
-    def _handle_api_error(self, exception):
-        if exception.error_code == 20101:
-            QtGui.QMessageBox.information(self, self.tr("Error"),
-                                          self.tr("This tweet have been deleted."))
-        elif exception.error_code == 20704:
-            QtGui.QMessageBox.information(self, self.tr("Error"),
-                                          self.tr("This tweet have been collected already.."))
-        else:
-            QtGui.QMessageBox.warning(self, self.tr("Unknown Error"),
-                                      str(exception))
+            self.errorWindow.raiseException.emit(e)
 
     def _userClicked(self, button):
         openAtBackend = False
@@ -670,7 +650,12 @@ class SingleTweetWidget(QtGui.QFrame):
         openAtBackend = False
         if button == QtCore.Qt.MiddleButton:
             openAtBackend = True
-        self.__userItem = UserItem({"name": user})
+
+        try:
+            self.__userItem = UserItem({"name": user})
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
+            return
         self.userClicked.emit(self.__userItem, openAtBackend)
 
     def _tagClicked(self, tag, button):

@@ -40,5 +40,12 @@ nosetests.xml
 # Backups
 *.bak
 
-# unknown program generated log file
+# Chrome generated log file
 src/libpeerconnection.log
+
+# Autotools
+autom4te.cache
+
+# Vim
+*.swp
+*~

@@ -3,25 +3,26 @@
     <file>LICENSE</file>
   </qresource>
   <qresource prefix="IMG">
-    <file>img/application-exit.svg</file>
-    <file>img/avatar.jpg</file>
-    <file>img/busy.gif</file>
-    <file>img/busy.png</file>
-    <file>img/comments.png</file>
-    <file>img/comments2.png</file>
-    <file>img/deletes.png</file>
-    <file>img/favorites.png</file>
-    <file>img/mentions.png</file>
-    <file>img/new.png</file>
-    <file>img/refresh.png</file>
-    <file>img/retweets.png</file>
-    <file>img/sina.png</file>
-    <file>img/topic.jpg</file>
-    <file>img/verify_organization.png</file>
-    <file>img/verify_personal.png</file>
-    <file>img/where_s_my_weibo.svg</file>
-    <file>img/preferences-other.png</file>
-    <file>img/no_favorites.png</file>
-    <file>img/WeCase.svg</file>
+    <file>../img/application-exit.svg</file>
+    <file>../img/avatar.jpg</file>
+    <file>../img/busy.gif</file>
+    <file>../img/busy.png</file>
+    <file>../img/comments.png</file>
+    <file>../img/comments2.png</file>
+    <file>../img/deletes.png</file>
+    <file>../img/favorites.png</file>
+    <file>../img/mentions.png</file>
+    <file>../img/new.png</file>
+    <file>../img/refresh.png</file>
+    <file>../img/retweets.png</file>
+    <file>../img/sina.png</file>
+    <file>../img/topic.jpg</file>
+    <file>../img/verify_organization.png</file>
+    <file>../img/verify_personal.png</file>
+    <file>../img/where_s_my_weibo.svg</file>
+    <file>../img/preferences-other.png</file>
+    <file>../img/no_favorites.png</file>
+    <file>../img/WeCase.svg</file>
+    <file>../img/mentions_comments.svg</file>
   </qresource>
 </RCC>

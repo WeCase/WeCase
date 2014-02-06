@@ -7,18 +7,23 @@
 # License: GPL v3 or later.
 
 
-import threading
+from threading import Thread, Event
 
 
-class WTimer(threading.Thread):
-    def __init__(self, sleep_time, run_function):
+class WTimer(Thread):
+
+    def __init__(self, run_function, sleep_time):
         super(WTimer, self).__init__()
         self.sleep_time = sleep_time
         self.run_function = run_function
-        # 外部需要停止该线程时触发事件
-        self.stop_event = threading.Event()
+        self._stop_event = Event()
 
     def run(self):
-        while not self.stop_event.is_set():
-            self.stop_event.wait(self.sleep_time)
+        while not self._stop_event.is_set():
+            self._stop_event.wait(self.sleep_time)
             self.run_function()
+
+    def stop(self, join=False):
+        self._stop_event.set()
+        if join:
+            self.join()

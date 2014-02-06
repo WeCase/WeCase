@@ -1,0 +1,16 @@
+#!/bin/bash
+
+for py in `whereis -b python | sed 's/^python: //'`
+do
+    version=`$py -V 2>&1`
+    if [[ "$version" == *"Python 3"* ]]; then
+        python3=$py
+        break
+    fi
+done
+
+if [ "$python3" == "" ]; then
+    exit 1;
+fi
+
+exec $python3 @LIBEXECDIR@/wecase.py

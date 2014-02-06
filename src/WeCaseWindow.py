@@ -16,18 +16,20 @@ from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
-from WeCaseConfig import WeCaseConfig
+import path
+from WConfigParser import WConfigParser
 from WeHack import async, setGeometry, getGeometry, UNUSED
 from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
-from WAsyncLabel import WAsyncFetcher
+from AsyncFetcher import AsyncFetcher
+from weibo3 import APIError
+from WeiboErrorHandler import APIErrorWindow
 import logging
 import wecase_rc
 
 
 UNUSED(wecase_rc)
-DEBUG_GLOBAL_MENU = False
 
 
 class WeCaseWindow(QtGui.QMainWindow):
@@ -41,11 +43,12 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def __init__(self, parent=None):
         super(WeCaseWindow, self).__init__(parent)
+        self.errorWindow = APIErrorWindow(self)
         self.setAttribute(QtCore.Qt.WA_QuitOnClose, True)
         self._iconPixmap = {}
         self.setupUi(self)
         self._setupSysTray()
-        self.tweetViews = [self.homeView, self.mentionsView, self.commentsView]
+        self.tweetViews = [self.homeView, self.mentionsView, self.commentsView, self.commentsMentionsTab]
         self.info = WeRuntimeInfo()
         self.client = const.client
         self.loadConfig()
@@ -104,19 +107,11 @@ class WeCaseWindow(QtGui.QMainWindow):
         timeline.setModel(_timeline)
         tab = self._setupCommonTab(timeline, view, switch, myself)
 
-        @async
-        def fetchUserTabAvatar(self, uid):
-            fetcher = WAsyncFetcher()
-            f = fetcher.down(self.client.users.show.get(uid=uid)["profile_image_url"])
-            self.tabAvatarFetched.emit(f)
-
-        @QtCore.pyqtSlot(str)
         def setAvatar(f):
             self._setTabIcon(tab, WObjectCache().open(QtGui.QPixmap, f))
-            self.tabAvatarFetched.disconnect(setAvatar)
 
-        fetchUserTabAvatar(self, uid)
-        self.tabAvatarFetched.connect(setAvatar)
+        fetcher = AsyncFetcher("".join((path.cache_path, str(self.info["uid"]))))
+        fetcher.addTask(self.client.users.show.get(uid=uid)["profile_image_url"], setAvatar)
 
     def _setupTopicTab(self, topic, switch=True):
         index = self._getSameTab("topic", topic)
@@ -133,10 +128,16 @@ class WeCaseWindow(QtGui.QMainWindow):
         ))
 
     def userClicked(self, userItem, openAtBackend):
-        self._setupUserTab(userItem.id, switch=(not openAtBackend))
+        try:
+            self._setupUserTab(userItem.id, switch=(not openAtBackend))
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
 
     def tagClicked(self, str, openAtBackend):
-        self._setupTopicTab(str, switch=(not openAtBackend))
+        try:
+            self._setupTopicTab(str, switch=(not openAtBackend))
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
 
     def setupUi(self, mainWindow):
         mainWindow.setWindowIcon(QtGui.QIcon(":/IMG/img/WeCase.svg"))
@@ -175,6 +176,13 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.commentsTab = self._setupTab(self.commentsView)
         self.tabWidget.addTab(self.commentsTab, "")
         self.tabWidget.tabBar().setProtectTab(self.commentsTab, True)
+
+        self.commentsMentionsView = TweetListWidget()
+        self.commentsMentionsView.userClicked.connect(self.userClicked)
+        self.commentsMentionsView.tagClicked.connect(self.tagClicked)
+        self.commentsMentionsTab = self._setupTab(self.commentsMentionsView)
+        self.tabWidget.addTab(self.commentsMentionsTab, "")
+        self.tabWidget.tabBar().setProtectTab(self.commentsMentionsTab, True)
 
         self.verticalLayout.addWidget(self.tabWidget)
 
@@ -238,20 +246,25 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._setTabIcon(self.homeTab, QtGui.QPixmap(":/IMG/img/sina.png"))
         self._setTabIcon(self.mentionsTab, QtGui.QPixmap(":/IMG/img/mentions.png"))
         self._setTabIcon(self.commentsTab, QtGui.QPixmap(":/IMG/img/comments2.png"))
+        self._setTabIcon(self.commentsMentionsTab, QtGui.QPixmap(":/IMG/img/mentions_comments.svg"))
 
         self.retranslateUi(mainWindow)
 
     def isGlobalMenu(self):
-        if os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
+        if os.environ.get("TOOLBAR") == "1":
+            return True
+        elif os.environ.get("TOOLBAR") == "0":
+            return False
+        elif os.environ.get('DESKTOP_SESSION') in ["ubuntu", "ubuntu-2d"]:
             if not os.environ.get("UBUNTU_MENUPROXY"):
                 return False
             elif os.environ.get("APPMENU_DISPLAY_BOTH"):
                 return False
             else:
                 return True
-        elif platform.system() == "Darwin":
+        elif os.environ.get("DESKTOP_SESSION") == "kde-plasma" and platform.linux_distribution()[0] == "Ubuntu":
             return True
-        elif DEBUG_GLOBAL_MENU:
+        elif platform.system() == "Darwin":
             return True
         return False
 
@@ -338,9 +351,13 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.tabWidget.setIconSize(QtCore.QSize(24, 24))
 
     def _prepareTimeline(self, timeline):
-        timeline.setUsersBlacklist(self.usersBlacklist)
-        timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
-        timeline.setBlockWordwars(self.blockWordwars)
+        try:
+            timeline.setUsersBlacklist(self.usersBlacklist)
+            timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
+            timeline.setWordWarKeywords(self.wordWarKeywords)
+            timeline.setBlockWordwars(self.blockWordwars)
+        except AttributeError:
+            pass
         timeline.load()
 
     def closeTab(self, index):
@@ -352,13 +369,15 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.uid()
 
     def loadConfig(self):
-        self.config = WeCaseConfig(const.config_path)
+        self.config = WConfigParser(path.myself_path + "WMetaConfig",
+                                    path.config_path, "main")
         self.notify_interval = self.config.notify_interval
         self.notify_timeout = self.config.notify_timeout
         self.usersBlacklist = self.config.usersBlacklist
         self.tweetKeywordsBlacklist = self.config.tweetsKeywordsBlacklist
         self.remindMentions = self.config.remind_mentions
         self.remindComments = self.config.remind_comments
+        self.wordWarKeywords = self.config.wordWarKeywords
         self.blockWordwars = self.config.blockWordwars
         self.maxRetweets = self.config.maxRetweets
         self.maxTweetsPerUser = self.config.maxTweetsPerUser
@@ -366,11 +385,11 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def applyConfig(self):
         try:
-            self.timer.stop_event.set()
+            self.timer.stop()
         except AttributeError:
             pass
 
-        self.timer = WTimer(self.notify_interval, self.show_notify)
+        self.timer = WTimer(self.show_notify, self.notify_interval)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
         setGeometry(self, self.mainWindow_geometry)
@@ -379,9 +398,12 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
         self.all_timeline = TweetFilterModel(self._all_timeline)
         self.all_timeline.setModel(self._all_timeline)
+        self._prepareTimeline(self.all_timeline)
+
+        # extra rules
         self.all_timeline.setMaxRetweets(self.maxRetweets)
         self.all_timeline.setMaxTweetsPerUser(self.maxTweetsPerUser)
-        self._prepareTimeline(self.all_timeline)
+
         self.homeView.setModel(self.all_timeline)
 
         self._mentions = TweetCommonModel(self.client.statuses.mentions, self)
@@ -396,6 +418,12 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._prepareTimeline(self.comment_to_me)
         self.commentsView.setModel(self.comment_to_me)
 
+        self._comment_mentions = TweetCommentModel(self.client.comments.mentions, self)
+        self.comment_mentions = TweetFilterModel(self._comment_mentions)
+        self.comment_mentions.setModel(self._comment_mentions)
+        self._prepareTimeline(self.comment_mentions)
+        self.commentsMentionsView.setModel(self.comment_mentions)
+
     @async
     def reset_remind(self):
         typ = ""
@@ -406,6 +434,9 @@ class WeCaseWindow(QtGui.QMainWindow):
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
         elif self.currentTweetView() == self.commentsView:
             typ = "cmt"
+            self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
+        elif self.currentTweetView() == self.commentsMentionsView:
+            typ = "mention_cmt"
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
 
         if typ:
@@ -454,6 +485,14 @@ class WeCaseWindow(QtGui.QMainWindow):
             reminds_count += 1
         else:
             self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsTab), 0)
+
+        if reminds["mention_cmt"] and self.remindMentions:
+            msg += self.tr("%d unread @ME comment(s)") % reminds["mention_cmt"] + "\n"
+            self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsMentionsTab),
+                                      reminds["mention_cmt"])
+            reminds_count += 1
+        else:
+            self.tabBadgeChanged.emit(self.tabWidget.indexOf(self.commentsMentionsTab), 0)
 
         if reminds_count and reminds_count != self._last_reminds_count:
             self.notify.showMessage(self.tr("WeCase"), msg)
@@ -513,9 +552,8 @@ class WeCaseWindow(QtGui.QMainWindow):
     def closeEvent(self, event):
         self.systray.hide()
         self.hide()
-        self.timer.stop_event.set()
         self.saveConfig()
-        self.timer.join()
+        self.timer.stop(True)
         # Reset uid when the thread exited.
         self.info["uid"] = None
         logging.info("Die")

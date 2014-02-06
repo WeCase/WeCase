@@ -9,7 +9,7 @@ Linux下的新浪微博客户端
 
 This project is under heavy development.
 
-这个项目处在开发状态。
+这个项目处在努力开发状态。
 
 IRC Channel IRC频道
 ------
@@ -34,7 +34,7 @@ Development Guide 开发指南
 ------
 Everyone should follow the [Development Guide](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97). Please read it carefully.
 
-所有人都应遵守[开发指南](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97)。请务必仔细阅读
+所有人都应遵守[开发指南](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97)。请务必仔细阅读。
 
 Dependencies 依赖
 -----
@@ -47,28 +47,50 @@ Dependencies 依赖
 
 Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
 
-注意：不同的发行版可能使用不同的软件包名称，或者在软件库中找不到`python-notify2`。我们将会创建这些依赖的`.rpm`以及`.deb`包，在此之前，请使用PIP安装
+注意：不同的发行版可能使用不同的软件包名称，或者在软件库中找不到 `python-notify2`。我们将会创建这些依赖的 `.rpm` 以及 `.deb` 包，在此之前，请从 PIP 安装。
 
-Installation Guide 安装指南
+Installation Guide
 -----
-1. Install the dependencies for WeCase.
 
-   安装WeCase所需要的依赖。
+### Installing by Package Manager
 
-2. Get the source code `git clone git://github.com/WeCase/WeCase.git`
+#### Arch Linux
 
-   `git clone git://github.com/WeCase/WeCase.git`得到源码
+```
+yaourt -S wecase
+```
 
-3. `cd WeCase`
+#### Fedora (18, 19)
 
-4. Get the sdk `git submodule init; git submodule update`
+```
+sudo su -c "wget -O- http://download.opensuse.org/repositories/home:/biergaizi/Fedora_$(rpm -E %fedora)/home:biergaizi.repo > /etc/yum.repos.d/wecase.repo"
+sudo yum install WeCase
+```
 
-   取得sdk`git submodule init; git submodule update`
+#### Gentoo
 
-5. Install SDK `cd sdk; sudo python3 setup.py install`
+```
+layman -a gentoo-zh
+emerge net-misc/WeCase
+```
 
-   安装sdk`cd sdk; sudo python3 setup.py install`
+### Build from Source
 
-6. Run `python3 ./src/wecase.py` in root directory of the source code.
+```
+git clone --recursive git://github.com/WeCase/WeCase.git
 
-   在源码的根目录下运行`python3 ./src/wecase.py`
+# SDK Installation
+cd WeCase/sdk
+sudo python3 setup.py install
+cd ..
+
+# Build and Install
+mkdir build
+cd build
+../configure
+make
+sudo make install
+
+# Run
+wecase
+```

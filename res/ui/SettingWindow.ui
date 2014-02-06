@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>423</height>
+    <width>367</width>
+    <height>317</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,7 +33,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -205,18 +205,11 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="10,0">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>These users won't show in any timeline:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="usersBlackListWidget"/>
+            <widget class="FilterTable" name="filterTable" native="true"/>
            </item>
           </layout>
          </item>
@@ -236,14 +229,14 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="btnAddBlackUser">
+            <widget class="QPushButton" name="addRuleButton">
              <property name="text">
               <string>Add</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnRemoveBlackUser">
+            <widget class="QPushButton" name="removeRuleButton">
              <property name="text">
               <string>Remove</string>
              </property>
@@ -251,75 +244,6 @@
            </item>
            <item>
             <spacer name="verticalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_9">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Tweets with these keywords won't show:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="tweetsKeywordsBlacklistWidget">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_10">
-           <item>
-            <spacer name="verticalSpacer_5">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnAddKeyword">
-             <property name="text">
-              <string>Add</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btnRemoveKeyword">
-             <property name="text">
-              <string>Remove</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_6">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
              </property>
@@ -516,6 +440,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FilterTable</class>
+   <extends>QWidget</extends>
+   <header>FilterTable</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="wecase.qrc"/>
  </resources>
@@ -581,70 +513,6 @@
     <hint type="destinationlabel">
      <x>31</x>
      <y>152</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnAddBlackUser</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingWindow</receiver>
-   <slot>addBlackUser()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>318</x>
-     <y>67</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>185</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnRemoveBlackUser</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingWindow</receiver>
-   <slot>removeBlackUser()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>318</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>185</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnAddKeyword</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingWindow</receiver>
-   <slot>addKeyword()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>318</x>
-     <y>171</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>185</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnRemoveKeyword</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingWindow</receiver>
-   <slot>removeKeyword()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>318</x>
-     <y>198</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>185</x>
-     <y>138</y>
     </hint>
    </hints>
   </connection>
