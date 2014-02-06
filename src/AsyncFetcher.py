@@ -33,6 +33,12 @@ class _AsyncFetcher(QtCore.QObject):
 
     def __init__(self, path, parent=None):
         super(_AsyncFetcher, self).__init__(parent)
+
+        if path[-1] != "/":
+            path += "/"
+        if not os.path.exists(path):
+                os.makedirs(path)
+
         self.path = path
         self._signals = {}
         self._modified = Event()
