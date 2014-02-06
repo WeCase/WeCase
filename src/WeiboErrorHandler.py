@@ -16,6 +16,7 @@ class APIErrorWindow(QtCore.QObject):
             20006: self.tr("Image is too large."),
             20012: self.tr("Text is too long."),
             20016: self.tr("Your send too many tweets in a short time."),
+            20019: self.tr("Don't send reperted tweet."),
             20018: self.tr("Your tweet contains illegal website."),
             20020: self.tr("Your tweet contains ads."),
             20021: self.tr("Your tweet contains illegal text."),
