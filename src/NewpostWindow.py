@@ -28,6 +28,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
     tweetRefreshed = QtCore.pyqtSignal()
+    tweetRejected = QtCore.pyqtSignal()
 
     def __init__(self, action="new", tweet=None, parent=None):
         super(NewpostWindow, self).__init__(parent)
@@ -46,8 +47,9 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         self.errorWindow = APIErrorWindow(self)
 
         if self.action not in ["new", "reply"]:
-            self._refresh()
             self.tweetRefreshed.connect(self._create_tweetWidget)
+            self.tweetRejected.connect(lambda: self.pushButton_send.setEnabled(False))
+            self._refresh()
 
     def setupUi(self, widget):
         super(NewpostWindow, self).setupUi(widget)
@@ -92,6 +94,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.tweet.refresh()
         except APIError as e:
             self.errorWindow.raiseException.emit(e)
+            self.tweetRejected.emit()
             return
         self.tweetRefreshed.emit()
 
