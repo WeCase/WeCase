@@ -40,7 +40,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
     <message>
         <location filename="WeiboErrorHandler.py" line="33"/>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="obsolete">错误</translation>
     </message>
 </context>
 <context>
@@ -76,39 +76,44 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation>你在短时间内发送了太多微博。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="19"/>
+        <location filename="WeiboErrorHandler.py" line="20"/>
         <source>Your tweet contains illegal website.</source>
         <translation>微博包含非法网站。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="20"/>
+        <location filename="WeiboErrorHandler.py" line="21"/>
         <source>Your tweet contains ads.</source>
         <translation>微博包含广告。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="21"/>
+        <location filename="WeiboErrorHandler.py" line="22"/>
         <source>Your tweet contains illegal text.</source>
         <translation>微博包含非法文字。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="22"/>
+        <location filename="WeiboErrorHandler.py" line="23"/>
         <source>Your IP address is in the blacklist.</source>
         <translation>你的 IP 地址在黑名单中。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="23"/>
+        <location filename="WeiboErrorHandler.py" line="24"/>
         <source>Send successful, but your tweet won&apos;t display immediately, please wait for a minute.</source>
         <translation>发送成功，但微博不会立刻显示，请等待约一分钟。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="24"/>
+        <location filename="WeiboErrorHandler.py" line="25"/>
         <source>The tweet does not exist.</source>
         <translation>微博不存在。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="25"/>
+        <location filename="WeiboErrorHandler.py" line="26"/>
         <source>Don&apos;t send reperted tweet.</source>
         <translation>请勿发送重复微博。</translation>
+    </message>
+    <message>
+        <location filename="WeiboErrorHandler.py" line="34"/>
+        <source>Error</source>
+        <translation>错误</translation>
     </message>
 </context>
 <context>
@@ -293,7 +298,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>LoginWindow</name>
     <message>
-        <location filename="LoginWindow.py" line="62"/>
+        <location filename="LoginWindow.py" line="67"/>
         <source>Authorize Failed!</source>
         <translation>认证失败！</translation>
     </message>
@@ -303,12 +308,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">检查您的账号和密码！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="70"/>
+        <location filename="LoginWindow.py" line="78"/>
         <source>GO!</source>
         <translation>走起！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="113"/>
+        <location filename="LoginWindow.py" line="121"/>
         <source>Login, waiting...</source>
         <translation>登录中，请稍候……</translation>
     </message>
@@ -318,24 +323,34 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">检查您的账号，密码和网络连接！</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="62"/>
+        <location filename="LoginWindow.py" line="67"/>
         <source>Check your account and password</source>
         <translation>检查您的账号和密码</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="66"/>
+        <location filename="LoginWindow.py" line="71"/>
         <source>Network Error</source>
         <translation>网络错误</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="66"/>
+        <location filename="LoginWindow.py" line="71"/>
         <source>Something wrong with the network, please try again.</source>
         <translation>网络有问题，请重试。</translation>
     </message>
     <message>
-        <location filename="LoginWindow.py" line="83"/>
+        <location filename="LoginWindow.py" line="91"/>
         <source>ID/Email/Phone</source>
         <translation>账号/邮箱/手机</translation>
+    </message>
+    <message>
+        <location filename="LoginWindow.py" line="75"/>
+        <source>Already Logged in</source>
+        <translation>已经登录了</translation>
+    </message>
+    <message>
+        <location filename="LoginWindow.py" line="75"/>
+        <source>This account is already logged in.</source>
+        <translation>这个账号已经登录了。</translation>
     </message>
 </context>
 <context>
@@ -399,27 +414,27 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>NewpostWindow</name>
     <message>
-        <location filename="NewpostWindow.py" line="217"/>
+        <location filename="NewpostWindow.py" line="226"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="162"/>
+        <location filename="NewpostWindow.py" line="171"/>
         <source>Retweet Success!</source>
         <translation>转发成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="175"/>
+        <location filename="NewpostWindow.py" line="184"/>
         <source>Comment Success!</source>
         <translation>评论成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="188"/>
+        <location filename="NewpostWindow.py" line="197"/>
         <source>Reply Success!</source>
         <translation>回复成功！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="217"/>
+        <location filename="NewpostWindow.py" line="226"/>
         <source>Tweet Success!</source>
         <translation>发送成功！</translation>
     </message>
@@ -434,67 +449,67 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="232"/>
+        <location filename="NewpostWindow.py" line="241"/>
         <source>Choose a image</source>
         <translation>选择一张图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="238"/>
+        <location filename="NewpostWindow.py" line="247"/>
         <source>Remove the picture</source>
         <translation>移除图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="243"/>
+        <location filename="NewpostWindow.py" line="252"/>
         <source>Text too long!</source>
         <translation>内容过长！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="243"/>
+        <location filename="NewpostWindow.py" line="252"/>
         <source>Please remove some text.</source>
         <translation>请删除一些文字。</translation>
     </message>
     <message>
         <location filename="NewpostWindow.py" line="246"/>
         <source>Unknown error!</source>
-        <translation>未知错误！</translation>
+        <translation type="obsolete">未知错误！</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="227"/>
+        <location filename="NewpostWindow.py" line="236"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="284"/>
+        <location filename="NewpostWindow.py" line="293"/>
         <source>Close?</source>
         <translation>关闭？</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="284"/>
+        <location filename="NewpostWindow.py" line="293"/>
         <source>All unpost text will lost.</source>
         <translation>所有未发布的文字将丢弃。</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="203"/>
+        <location filename="NewpostWindow.py" line="212"/>
         <source>File not found</source>
         <translation>文件未找到</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="203"/>
+        <location filename="NewpostWindow.py" line="212"/>
         <source>No such file: %s</source>
         <translation>没有这个文件: %s</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="230"/>
+        <location filename="NewpostWindow.py" line="239"/>
         <source>&amp;Picture</source>
         <translation>图片(&amp;P)</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="209"/>
+        <location filename="NewpostWindow.py" line="218"/>
         <source>Too large size</source>
         <translation>文件太大</translation>
     </message>
     <message>
-        <location filename="NewpostWindow.py" line="209"/>
+        <location filename="NewpostWindow.py" line="218"/>
         <source>This image is too large to upload: %s</source>
         <translation>这张图片太大，无法上传: %s</translation>
     </message>
@@ -615,12 +630,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>SingleTweetWidget</name>
     <message>
-        <location filename="TweetListWidget.py" line="552"/>
+        <location filename="TweetListWidget.py" line="539"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="552"/>
+        <location filename="TweetListWidget.py" line="539"/>
         <source>You can&apos;t undo your deletion.</source>
         <translation>删除后无法恢复。</translation>
     </message>
@@ -645,7 +660,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">未知错误</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="259"/>
+        <location filename="TweetListWidget.py" line="255"/>
         <source>From: %s</source>
         <translation>来自: %s</translation>
     </message>
@@ -686,27 +701,27 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="542"/>
+        <location filename="Tweet.py" line="537"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="544"/>
+        <location filename="Tweet.py" line="539"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="546"/>
+        <location filename="Tweet.py" line="541"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="548"/>
+        <location filename="Tweet.py" line="543"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="550"/>
+        <location filename="Tweet.py" line="545"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
@@ -714,12 +729,12 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>WAsyncLabel</name>
     <message>
-        <location filename="WAsyncLabel.py" line="124"/>
+        <location filename="WAsyncLabel.py" line="118"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WAsyncLabel.py" line="131"/>
+        <location filename="WAsyncLabel.py" line="125"/>
         <source>Choose a path</source>
         <translation>选择路径</translation>
     </message>
@@ -727,7 +742,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 <context>
     <name>WTabBar</name>
     <message>
-        <location filename="WeCaseWindow.py" line="650"/>
+        <location filename="WeCaseWindow.py" line="642"/>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
@@ -750,7 +765,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">评论(%d)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="506"/>
+        <location filename="WeCaseWindow.py" line="498"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
@@ -770,17 +785,17 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">评论</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="473"/>
+        <location filename="WeCaseWindow.py" line="465"/>
         <source>You have:</source>
         <translation>您有：</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="482"/>
+        <location filename="WeCaseWindow.py" line="474"/>
         <source>%d unread @ME</source>
         <translation>%d 条未读 @提醒</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="490"/>
+        <location filename="WeCaseWindow.py" line="482"/>
         <source>%d unread comment(s)</source>
         <translation>%d 条未读评论 </translation>
     </message>
@@ -800,57 +815,57 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">新微博(&amp;N)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="313"/>
+        <location filename="WeCaseWindow.py" line="305"/>
         <source>&amp;WeCase</source>
         <translation>微盒(&amp;W)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="314"/>
+        <location filename="WeCaseWindow.py" line="306"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="315"/>
+        <location filename="WeCaseWindow.py" line="307"/>
         <source>&amp;Options</source>
         <translation>选项(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="316"/>
+        <location filename="WeCaseWindow.py" line="308"/>
         <source>&amp;About...</source>
         <translation>关于(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="318"/>
+        <location filename="WeCaseWindow.py" line="310"/>
         <source>&amp;Log out</source>
         <translation>注销(&amp;L)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="319"/>
+        <location filename="WeCaseWindow.py" line="311"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="320"/>
+        <location filename="WeCaseWindow.py" line="312"/>
         <source>&amp;Settings</source>
         <translation>设置(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="352"/>
+        <location filename="WeCaseWindow.py" line="344"/>
         <source>&amp;Hide</source>
         <translation>隐藏(&amp;H)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="349"/>
+        <location filename="WeCaseWindow.py" line="341"/>
         <source>&amp;Show</source>
         <translation>显示(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="317"/>
+        <location filename="WeCaseWindow.py" line="309"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="498"/>
+        <location filename="WeCaseWindow.py" line="490"/>
         <source>%d unread @ME comment(s)</source>
         <translation>%d 条未读 @评论提醒</translation>
     </message>
@@ -1108,7 +1123,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <source>Please report it at https://github.com/WeCase/WeCase/issues
 
 </source>
-        <translation>请去 https://github.com/WeCase/WeCase/issues 报告该问题
+        <translation type="obsolete">请去 https://github.com/WeCase/WeCase/issues 报告该问题
 
 </translation>
     </message>
@@ -1128,6 +1143,13 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <location filename="wecase.py.in" line="91"/>
         <source>Notification Daemon not exist. Notification will disable.</source>
         <translation>通知守护进程 (Notification Daemon) 不存在。通知将禁用。</translation>
+    </message>
+    <message>
+        <location filename="wecase.py.in" line="64"/>
+        <source>Please report it to &lt;http://bugs.wecase.org/&gt;
+
+</source>
+        <translation>请去 &lt;http://bugs.wecase.org/&gt; 报告该问题</translation>
     </message>
 </context>
 </TS>
