@@ -88,7 +88,11 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     @async
     def _refresh(self):
         # The read count is not a real-time value. So refresh it now.
-        self.tweet.refresh()
+        try:
+            self.tweet.refresh()
+        except APIError as e:
+            self.errorWindow.raiseException.emit(e)
+            return
         self.tweetRefreshed.emit()
 
     def _create_tweetWidget(self):
