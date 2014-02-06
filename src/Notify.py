@@ -30,9 +30,10 @@ class Notify(QtCore.QObject):
         self.n = pynotify.Notification(appname)
 
     def showMessage(self, title, text):
-        self.n.update(title, text, self.image)
-        self.n.set_timeout(self.timeout * 1000)
         try:
+            self.n.update(title, text, self.image)
+            self.n.set_timeout(self.timeout * 1000)
             self.n.show()
         except DBusException:
-            pass
+            return False
+        return True
