@@ -31,15 +31,15 @@
   <property name="windowTitle">
    <string>About</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" rowspan="2" colspan="2">
+    <widget class="QWidget" name="widget_2" native="true"/>
+   </item>
+   <item row="1" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,2,2,1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QWidget" name="widget_2" native="true"/>
-       </item>
-       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label_3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -70,37 +70,7 @@
          </property>
         </widget>
        </item>
-       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-        <widget class="QLabel" name="distLabel">
-         <property name="text">
-          <string>Vanilla Version</string>
-         </property>
-        </widget>
-       </item>
        <item>
-        <widget class="QWidget" name="widget" native="true"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,2,2,0">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>35</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QLabel" name="label">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -127,34 +97,35 @@
          </property>
         </widget>
        </item>
-       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-        <widget class="QLabel" name="label_2">
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="distLabel">
          <property name="text">
-          <string>A Linux weibo client</string>
+          <string>Provided: %s</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="versionLabel">
+         <property name="text">
+          <string>Version: %s</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
     </layout>
    </item>
-   <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+   <item row="2" column="0" colspan="2">
+    <widget class="QWidget" name="widget" native="true"/>
+   </item>
+   <item row="3" column="1">
     <widget class="QTabWidget" name="tabWidget">
      <property name="minimumSize">
       <size>
@@ -177,24 +148,33 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="descriptionLabel">
          <property name="text">
           <string>WeCase is a simple, but not crude weibo client which is running on Linux desktop.
 
-This software is released under GPL version 3 or later. For more details, see http://www.gnu.org
+This software is released under GPL version 3 or later. For more details, see http://www.gnu.org, anyone can use, modify and redistribute this software.
 
-Anyone can use, modify and redistribute this software.
+This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.
 
-This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</string>
+Report WeCase bugs to %s</string>
          </property>
          <property name="textFormat">
           <enum>Qt::PlainText</enum>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>false</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
@@ -389,7 +369,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
    </item>
-   <item>
+   <item row="4" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">

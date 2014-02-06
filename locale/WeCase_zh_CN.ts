@@ -117,6 +117,14 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
     </message>
 </context>
 <context>
+    <name>AboutWindow</name>
+    <message>
+        <location filename="AboutWindow.py" line="24"/>
+        <source>Vanilla Version</source>
+        <translation>上游原版</translation>
+    </message>
+</context>
+<context>
     <name>About_Dialog</name>
     <message>
         <location filename="../res/ui/AboutWindow.ui" line="32"/>
@@ -131,25 +139,25 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
     <message>
         <location filename="../res/ui/AboutWindow.ui" line="133"/>
         <source>A Linux weibo client</source>
-        <translation>一款 Linux 微博客户端</translation>
+        <translation type="obsolete">一款 Linux 微博客户端</translation>
     </message>
     <message>
-        <location filename="../res/ui/AboutWindow.ui" line="176"/>
+        <location filename="../res/ui/AboutWindow.ui" line="147"/>
         <source>Intro</source>
         <translation>简介</translation>
     </message>
     <message>
-        <location filename="../res/ui/AboutWindow.ui" line="205"/>
+        <location filename="../res/ui/AboutWindow.ui" line="185"/>
         <source>Contributor</source>
         <translation>贡献者</translation>
     </message>
     <message>
-        <location filename="../res/ui/AboutWindow.ui" line="231"/>
+        <location filename="../res/ui/AboutWindow.ui" line="211"/>
         <source>GPL License</source>
         <translation>GPL 许可证</translation>
     </message>
     <message>
-        <location filename="../res/ui/AboutWindow.ui" line="413"/>
+        <location filename="../res/ui/AboutWindow.ui" line="393"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -197,7 +205,7 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
     <message utf8="true">
-        <location filename="../res/ui/AboutWindow.ui" line="211"/>
+        <location filename="../res/ui/AboutWindow.ui" line="191"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -216,10 +224,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../res/ui/AboutWindow.ui" line="76"/>
         <source>Vanilla Version</source>
-        <translation>上游原版</translation>
+        <translation type="obsolete">上游原版</translation>
     </message>
     <message>
-        <location filename="../res/ui/AboutWindow.ui" line="117"/>
+        <location filename="../res/ui/AboutWindow.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:42pt;&quot;&gt;WeCase&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:42pt;&quot;&gt;WeCase&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -232,7 +240,7 @@ This software is released under GPL version 3 or later. For more details, see ht
 Anyone can use, modify and redistribute this software.
 
 This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
-        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+        <translation type="obsolete">微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
 
 该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。
 
@@ -240,11 +248,38 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
 
 软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。 </translation>
     </message>
+    <message>
+        <location filename="../res/ui/AboutWindow.ui" line="107"/>
+        <source>Provided: %s</source>
+        <translation>提供: %s</translation>
+    </message>
+    <message>
+        <location filename="../res/ui/AboutWindow.ui" line="114"/>
+        <source>Version: %s</source>
+        <translation>版本: %s</translation>
+    </message>
+    <message>
+        <location filename="../res/ui/AboutWindow.ui" line="153"/>
+        <source>WeCase is a simple, but not crude weibo client which is running on Linux desktop.
+
+This software is released under GPL version 3 or later. For more details, see http://www.gnu.org, anyone can use, modify and redistribute this software.
+
+This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.
+
+Report WeCase bugs to %s</source>
+        <translation>微盒 (WeCase) 是一个运行在 Linux 桌面下，设计简而不减的微博客户端。
+
+该软件在 GPL v3 或更高版本许可证下发布，访问 http://www.gnu.org 获得更多细节。任何人可以自由使用、修改并再发布该软件。
+
+软件按&quot;原样&quot;提供，没有任何明示或暗示的保证。
+
+请向 %s 报告 WeCase 的 Bug </translation>
+    </message>
 </context>
 <context>
     <name>ErrorWindow</name>
     <message>
-        <location filename="wecase.py.in" line="47"/>
+        <location filename="wecase.py.in" line="48"/>
         <source>Unknown Error</source>
         <translation>未知错误</translation>
     </message>
@@ -1109,7 +1144,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation type="obsolete">请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="91"/>
+        <location filename="wecase.py.in" line="92"/>
         <source>Notification disabled</source>
         <translation>通知已禁用</translation>
     </message>
@@ -1128,28 +1163,37 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 </translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="64"/>
+        <location filename="wecase.py.in" line="65"/>
         <source>Oops, there is an unexpected error,
 </source>
         <translation>苍天啊，大地啊！这个不明错误怎么就发生了呢，
 </translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="86"/>
+        <location filename="wecase.py.in" line="87"/>
         <source>dbus-python or notify2 is not found. Notification will disable.</source>
         <translation>dbus-python 或 notify2 未找到。通知将被禁用。</translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="91"/>
+        <location filename="wecase.py.in" line="92"/>
         <source>Notification Daemon not exist. Notification will disable.</source>
         <translation>通知守护进程 (Notification Daemon) 不存在。通知将禁用。</translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="64"/>
+        <location filename="wecase.py.in" line="65"/>
         <source>Please report it to &lt;http://bugs.wecase.org/&gt;
 
 </source>
-        <translation>请去 &lt;http://bugs.wecase.org/&gt; 报告该问题</translation>
+        <translation type="obsolete">请去 &lt;http://bugs.wecase.org/&gt; 报告该问题</translation>
+    </message>
+    <message>
+        <location filename="wecase.py.in" line="66"/>
+        <source>Please report it to %s
+
+</source>
+        <translation>请去 %s 报告该问题
+
+</translation>
     </message>
 </context>
 </TS>

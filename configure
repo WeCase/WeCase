@@ -583,6 +583,9 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+REPORT_BUGS_TO
+DEFAULTPROVIDER
+PKGPROVIDER
 pkgpyexecdir
 pyexecdir
 pkgpythondir
@@ -656,6 +659,8 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
+with_pkgprovider
+with_bugurl
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1270,6 +1275,14 @@ if test -n "$ac_init_help"; then
      short | recursive ) echo "Configuration of WeCase 0.06-beta4:";;
    esac
   cat <<\_ACEOF
+
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-pkgprovider=ORGANIZATION
+                          Use ORGANIZATION in the provider string in place of
+                          "WeCase Developers"
+  --with-bugurl=URL       Direct users to URL to report a bug
 
 Some influential environment variables:
   PYTHON      the Python interpreter
@@ -2515,6 +2528,51 @@ if test $HAVE_PYMOD_NOTIFY2 = "no"; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Could not find Python module notify2" >&5
 $as_echo "$as_me: WARNING: Could not find Python module notify2" >&2;}
 fi
+
+
+
+# Check whether --with-pkgprovider was given.
+if test "${with_pkgprovider+set}" = set; then :
+  withval=$with_pkgprovider; case "$withval" in
+      yes) as_fn_error $? "package provider not specified" "$LINENO" 5 ;;
+      no)  PKGPROVIDER= ;;
+      *)   PKGPROVIDER="$withval" ;;
+     esac
+else
+  PKGPROVIDER="WeCase Developers"
+    DEFAULTPROVIDER="WeCase Developers"
+
+fi
+
+
+
+
+
+
+# Check whether --with-bugurl was given.
+if test "${with_bugurl+set}" = set; then :
+  withval=$with_bugurl; case "$withval" in
+      yes) as_fn_error $? "bug URL not specified" "$LINENO" 5 ;;
+      no)  BUGURL=
+           ;;
+      *)   BUGURL="$withval"
+           ;;
+     esac
+else
+  BUGURL="http://bugs.wecase.org/"
+
+fi
+
+  case ${BUGURL} in
+  "")
+    REPORT_BUGS_TO=
+    ;;
+  *)
+    REPORT_BUGS_TO="<$BUGURL>"
+    ;;
+  esac;
+
+
 
 ac_config_files="$ac_config_files Makefile src/Makefile locale/Makefile res/Makefile"
 

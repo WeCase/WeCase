@@ -1,6 +1,18 @@
 bin_SCRIPTS = wecase
 libexec_SCRIPTS = wecase.py
-CLEANFILES = path.py wecase wecase.py
+CLEANFILES = wecase \
+			 path.py \
+			 version.py \
+			 wecase.py \
+			 AboutWindow_ui.py \
+			 LoginWindow_ui.py \
+			 NewpostWindow_ui.py \
+			 SettingWindow_ui.py \
+			 wecase_rc.py
+
+PKGPROVIDER = @PKGPROVIDER@
+DEFAULTPROVIDER = @DEFAULTPROVIDER@
+BUGURL = \"@REPORT_BUGS_TO@\"
 
 NAME = WeCase
 
@@ -12,6 +24,13 @@ do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 
 path.py: path.py.in Makefile
 	$(do_substitution) < $(srcdir)/path.py.in > path.py
+
+version.py: version.py.in Makefile
+	sed -e 's,[@]PKGVERSION[@],$(PACKAGE_VERSION),g' \
+		-e 's,[@]PKGPROVIDER[@],$(PKGPROVIDER),g' \
+		-e 's,[@]DEFAULTPROVIDER[@],$(DEFAULTPROVIDER),g' \
+		-e 's,[@]BUGURL[@],$(BUGURL),g' \
+		$(srcdir)/version.py.in > version.py
 
 wecase.py: wecase.py.in Makefile
 	$(do_substitution) < $(srcdir)/wecase.py.in > wecase.py
@@ -70,6 +89,7 @@ WeCase_PYTHON = path.py \
 				FilterTable.py \
 				WeiboErrorHandler.py \
 				LoginInfo.py \
+				version.py \
 				AboutWindow_ui.py \
 				LoginWindow_ui.py \
 				NewpostWindow_ui.py \
