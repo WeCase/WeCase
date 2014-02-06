@@ -189,7 +189,16 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 bin_SCRIPTS = wecase
 libexec_SCRIPTS = wecase.py
-CLEANFILES = path.py wecase wecase.py
+CLEANFILES = wecase \
+			 path.py \
+			 version.py \
+			 wecase.py \
+			 AboutWindow_ui.py \
+			 LoginWindow_ui.py \
+			 NewpostWindow_ui.py \
+			 SettingWindow_ui.py \
+			 wecase_rc.py
+
 BUGURL = \"@REPORT_BUGS_TO@\"
 NAME = WeCase
 do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \

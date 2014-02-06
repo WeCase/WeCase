@@ -1,6 +1,15 @@
 bin_SCRIPTS = wecase
 libexec_SCRIPTS = wecase.py
-CLEANFILES = path.py wecase wecase.py
+CLEANFILES = wecase \
+			 path.py \
+			 version.py \
+			 wecase.py \
+			 AboutWindow_ui.py \
+			 LoginWindow_ui.py \
+			 NewpostWindow_ui.py \
+			 SettingWindow_ui.py \
+			 wecase_rc.py
+
 PKGPROVIDER = @PKGPROVIDER@
 DEFAULTPROVIDER = @DEFAULTPROVIDER@
 BUGURL = \"@REPORT_BUGS_TO@\"

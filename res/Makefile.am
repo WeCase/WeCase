@@ -1,3 +1,5 @@
+CLEANFILES = wecase.desktop
+
 do_substitution = sed -e 's,[@]BINDIR[@],$(bindir),g'
 
 wecase.desktop: wecase.desktop.in Makefile

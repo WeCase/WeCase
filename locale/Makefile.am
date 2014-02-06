@@ -1,5 +1,7 @@
 # HACK: only zh_CN available now
 
+CLEANFILES = WeCase_zh_CN.qm
+
 generate_qm = lrelease -compress -nounfinished -removeidentical
 
 WeCase_zh_CN.qm:
