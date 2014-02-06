@@ -15,6 +15,7 @@ import traceback
 import signal
 import logging
 import path
+import version
 from LoginWindow import LoginWindow
 import WeHack
 
@@ -61,9 +62,9 @@ def my_excepthook(type, value, tback):
         last_error = None
 
     exception = "".join(traceback.format_exception(type, value, tback))
-    error_info = (App.translate("main", "Oops, there is an unexpected error,\n") +
-                  App.translate("main", "Please report it to <http://bugs.wecase.org/>\n\n") +
-                  "%s" % exception)
+    line1 = App.translate("main", "Oops, there is an unexpected error,\n")
+    line2 = App.translate("main", "Please report it to %s\n\n")
+    error_info = (line1 + line2 % version.bug_report_url + "%s" % exception)
 
     if type != last_error:
         last_error = type
