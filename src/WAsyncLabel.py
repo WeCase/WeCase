@@ -3,6 +3,7 @@ from WImageLabel import WImageLabel
 from path import cache_path as down_path
 from WObjectCache import WObjectCache
 from AsyncFetcher import AsyncFetcher
+from WeRuntimeInfo import WeRuntimeInfo
 
 
 class WAsyncLabel(WImageLabel):
@@ -14,7 +15,7 @@ class WAsyncLabel(WImageLabel):
         self._url = ""
         self._image = None
 
-        self.fetcher = AsyncFetcher(down_path)
+        self.fetcher = AsyncFetcher("".join((down_path, str(WeRuntimeInfo()["uid"]))))
 
         busyIconPixmap = WObjectCache().open(QtGui.QPixmap, ":/IMG/img/busy.gif")
         self.minimumImageHeight = busyIconPixmap.height()

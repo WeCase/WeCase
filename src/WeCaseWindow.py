@@ -110,7 +110,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         def setAvatar(f):
             self._setTabIcon(tab, WObjectCache().open(QtGui.QPixmap, f))
 
-        fetcher = AsyncFetcher(path.cache_path)
+        fetcher = AsyncFetcher("".join((path.cache_path, str(self.info["uid"]))))
         fetcher.addTask(self.client.users.show.get(uid=uid)["profile_image_url"], setAvatar)
 
     def _setupTopicTab(self, topic, switch=True):
