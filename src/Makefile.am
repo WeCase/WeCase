@@ -69,6 +69,7 @@ WeCase_PYTHON = path.py \
 				WConfigParser.py \
 				FilterTable.py \
 				WeiboErrorHandler.py \
+				LoginInfo.py \
 				AboutWindow_ui.py \
 				LoginWindow_ui.py \
 				NewpostWindow_ui.py \

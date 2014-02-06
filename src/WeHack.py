@@ -71,6 +71,39 @@ def start(filename):
         assert False
 
 
+def pid_running(pid):
+    if platform.system() == "Windows":
+        return _windows_pid_running(pid)
+    else:
+        try:
+            return _unix_pid_running(pid)
+        except Exception:
+            assert False, "Unsupported platform."
+
+
+def _windows_pid_running(pid):
+    import ctypes
+    kernel32 = ctypes.windll.kernel32
+    SYNCHRONIZE = 0x100000
+
+    process = kernel32.OpenProcess(SYNCHRONIZE, 0, pid)
+    if process:
+        kernel32.CloseHandle(process)
+        return True
+    else:
+        return False
+
+
+def _unix_pid_running(pid):
+    try:
+        # pretend to kill it
+        os.kill(pid, 0)
+    except OSError as e:
+        # we don't have the permission to kill it, confirms the pid is exist.
+        return e.errno == os.errno.EPERM
+    return True
+
+
 def getDirSize(path):
     total_size = 0
     for dirpath, dirnames, filenames in os.walk(path):

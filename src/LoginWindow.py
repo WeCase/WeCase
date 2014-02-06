@@ -15,12 +15,16 @@ from WeCaseWindow import WeCaseWindow
 import path
 from time import sleep
 from WConfigParser import WConfigParser
+from LoginInfo import LoginInfo
 
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
-    SUCCESS = 0
-    PASSWORD_ERROR = 1
-    NETWORK_ERROR = 2
+
+    SUCCESS = SUCCESS
+    PASSWORD_ERROR = PASSWORD_ERROR
+    NETWORK_ERROR = NETWORK_ERROR
+    LOGIN_ALREADY = 10
+
     loginReturn = QtCore.pyqtSignal(int)
 
     def __init__(self, allow_auto_login=True, parent=None):
@@ -48,12 +52,13 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         wecase_main = WeCaseWindow()
         wecase_main.show()
         # Maybe users will logout, so reset the status
+        LoginInfo().add_account(self.username)
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
         self.done(True)
 
     def reject(self, status):
-        if status in [self.NETWORK_ERROR, self.PASSWORD_ERROR] and self.err_count < 5:
+        if status in (self.NETWORK_ERROR, self.PASSWORD_ERROR) and self.err_count < 5:
             self.err_count += 1
             sleep(0.5)
             self.ui_authorize()
@@ -66,6 +71,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             QtGui.QMessageBox.critical(None, self.tr("Network Error"),
                                        self.tr("Something wrong with the network, please try again."))
             self.err_count = 0
+        elif status == self.LOGIN_ALREADY:
+            QtGui.QMessageBox.critical(None, self.tr("Already Logged in"),
+                                       self.tr("This account is already logged in."))
 
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
@@ -121,6 +129,10 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     @async
     def authorize(self, username, password):
+        if username in LoginInfo().accounts:
+            self.loginReturn.emit(self.LOGIN_ALREADY)
+            return
+
         result = UBAuthorize(username, password)
         if result == SUCCESS:
             self.loginReturn.emit(self.SUCCESS)
