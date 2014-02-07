@@ -9,6 +9,7 @@ from WTweetLabel import WTweetLabel
 from WAvatarLabel import WAvatarLabel
 from WImageLabel import WImageLabel
 from WSwitchLabel import WSwitchLabel
+from SimpleLabel import SimpleLabel
 import const
 from path import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
@@ -200,14 +201,13 @@ class SingleTweetWidget(QtGui.QFrame):
         self.avatar.clicked.connect(self._userClicked)
         self.verticalLayout_2.addWidget(self.avatar)
 
-        self.time = QtGui.QLabel(self)
+        self.time = SimpleLabel()
         self.time.setObjectName("time")
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.time.sizePolicy().hasHeightForWidth())
         self.time.setSizePolicy(sizePolicy)
-        self.time.setOpenExternalLinks(True)
         self.verticalLayout_2.addWidget(self.time)
         self.verticalLayout_2.setAlignment(QtCore.Qt.AlignTop)
 
