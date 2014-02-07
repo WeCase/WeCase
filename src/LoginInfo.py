@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This model implemented a LoginInfo() class to
+#           avoid login a account more than once.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
+
+
 from sys import argv
 import os
 import tempfile

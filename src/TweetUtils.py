@@ -3,7 +3,7 @@
 
 # WeCase -- This model implemented a bug-for-bug compatible
 #           strings' length counter with Sina's
-# Copyright (C) 2013 Tom Li
+# Copyright (C) 2013, 2014 The WeCase Developers.
 # License: GPL v3 or later.
 
 

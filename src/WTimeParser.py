@@ -2,8 +2,8 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This model implemented a dateutil-compatible parser
-#           for Sina's time format
-# Copyright (C) 2013 Tom Li
+#           for Sina's time format.
+# Copyright (C) 2013, 2014 The WeCase Developers.
 # License: GPL v3 or later.
 
 

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-# WeCase -- Linux Sina Weibo Client, Since 4th, Feb, 2013.
-#           This file implemented a very simple QLabel-like label.
+# WeCase -- This file implemented a very simple QLabel-like label.
 #
 #           The label designed as the time label in SingleTweetWidget,
 #           which needs to create many instance and update very often.
@@ -13,7 +12,8 @@
 #
 #           DO NOT FOLLOW THIS PRACTICE in your code or IN THE OTHER PARTS
 #           OF WeCase. FOREVER!
-# Copyright: GPL v3 or later.
+# Copyright: (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
 
 
 from PyQt4 import QtCore, QtGui

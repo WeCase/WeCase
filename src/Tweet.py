@@ -2,7 +2,8 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This model implemented Model and Item for tweets
-# Copyright: GPL v3 or later.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
 
 
 from PyQt4 import QtCore

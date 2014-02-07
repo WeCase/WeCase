@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This file implemented the most widgets for viewing tweets.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
+
+
 import re
 from time import sleep
 from WeHack import async, start, UNUSED, openLink

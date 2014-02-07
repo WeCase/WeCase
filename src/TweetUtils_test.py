@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This file implemented the unit tests for TweetUtils.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
+
+
 import unittest
 from TweetUtils import tweetLength, get_mid
 
