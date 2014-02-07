@@ -1,0 +1,45 @@
+This NEWS file records noteworthy changes, very tersely.
+The changes before 0.06-beta4 are not recorded.
+
+See the git log and release notes for detailed information.
+
+  Copyright (C) 2013, 2014 WeCase Developers.
+
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+Version 0.06-beta4 (10 February 2014):
+* GNU Autotools.
+* The resources files will be generated on build time, no longer 
+  to bundle them.
+* Install the resources to the right directories, respecting
+  the LSB and FreeDesktop standards.
+* Supporting to view the tweets with multiple images.
+* Supporting to view comments which are mentioned "me".
+* About Window shows the version number defined by Autotools.
+* Packagers are able to set custom Bug Trackers URL and the provider
+  on configuration time.
+* Enhancement for the filter.
+* Handling more API exceptions, improved the stability.
+* More async operations, more smooth user interface.
+* Reducing the CPU usage of faces animation.
+* Showing the sources (clients) of a tweet sent from.
+* Handling more DBus exceptions, improving the stability of notification.
+* New config file parser.
+* Adjusted directories' layouts, no more annoying symlinks.
+* Showing the original timestamp on the tooltip.
+* Reworking the download management, improved the stability.
+* Fixing the behaviour when launches the multiple instances of the program.
+* Bugfixes:
+    . Creating the necessary directories correctly 
+      when the first time launching (#77).
+    . Improved the robust of opening full images (#78).
+    . Using the correct sRGB profile for icons (#79).
+    . Handling the hashtag correctly (#81).
+    . A empty web page will be opened when clicking the
+      text without any URL (#97).
+    . Trying to fetch new tweets if no tweets at present
+      cause an assertion error (#98).
+    . Workaround the undefined API behaviour of images (#101).
+    . Cygwin related fix (#103).
