@@ -13,4 +13,4 @@ if [ "$python3" == "" ]; then
     exit 1;
 fi
 
-exec $python3 @LIBEXECDIR@/wecase.py
+exec $python3 @LIBEXECDIR@/wecase.py wecase
