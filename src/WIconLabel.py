@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-# WeCase -- Linux Sina Weibo Client, Since 4th, Feb, 2013.
-#           This file implemented a label with a icon.
-# Copyright: GPL v3 or later.
+# WeCase -- This file implemented a label with a icon.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
 
 
 from PyQt4 import QtCore, QtGui

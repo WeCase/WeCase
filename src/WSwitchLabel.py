@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This file implemented a label allowing to switch
+#           from multiple images.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
 
 
-import sys
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
 from WAsyncLabel import WAsyncLabel

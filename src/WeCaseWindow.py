@@ -2,7 +2,7 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This file implemented WeCaseWindow, the mainWindow of WeCase.
-# Copyright (C) 2013 Tom Li
+# Copyright (C) 2013, 2014 The WeCase Developers.
 # License: GPL v3 or later.
 
 

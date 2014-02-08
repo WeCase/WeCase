@@ -71,6 +71,7 @@ WeCase_PYTHON = path.py \
 				TweetUtils.py \
 				TweetUtils_test.py \
 				AsyncFetcher.py \
+				SimpleLabel.py \
 				WAsyncLabel.py \
 				WAvatarLabel.py \
 				WCompleteLineEdit.py \

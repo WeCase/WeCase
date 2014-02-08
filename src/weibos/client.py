@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This file implemented a wrapper of sinaweibopy3
+#           with enhanced error handling.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
+
+
 from weibo3 import APIClient, APIError, _Callable, _Executable
 from http.client import BadStatusLine
 from urllib.error import URLError, ContentTooShortError

@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+# WeCase -- This file implemented
+#           "The Hackable Utils Library" - many useful small functions.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
+
+
 from threading import Thread
 import sys
 import os

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-# WeCase -- Linux Sina Weibo Client, Since 4th, Feb, 2013.
-#           This is the main file of WeCase.
-# Copyright: GPL v3 or later.
+# WeCase -- Linux Sina Weibo Client, since Feb 4th, 2013.
+#           This is the entry point of WeCase.
+# Copyright (C) 2013, 2014 The WeCase Developers.
+# License: GPL v3 or later.
 
 
 import sys
