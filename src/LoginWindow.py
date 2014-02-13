@@ -142,7 +142,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.loginReturn.emit(self.NETWORK_ERROR)
 
     def setPassword(self, username):
-        if username:
+        if username in self.passwd.keys():
             self.txt_Password.setText(self.passwd[username])
 
     @QtCore.pyqtSlot(bool)
