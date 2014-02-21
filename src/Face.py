@@ -19,19 +19,19 @@ from PyQt4 import QtCore
 class FaceItem():
     def __init__(self, xml_node):
         super(FaceItem, self).__init__()
-        self.__xml_node = xml_node
+        self._xml_node = xml_node
 
     @property
     def name(self):
-        return self.__xml_node.get("tip")
+        return self._xml_node.get("tip")
 
     @property
     def path(self):
-        return path.face_path + self.__xml_node[0].text
+        return path.face_path + self._xml_node[0].text
 
     @property
     def category(self):
-        return self.__xml_node[0].text.split("/")[0]
+        return self._xml_node[0].text.split("/")[0]
 
 
 class FaceModel(metaclass=Singleton):
