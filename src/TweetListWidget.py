@@ -586,11 +586,10 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _create_smiles(self, text):
         faceModel = FaceModel()
-        faceModel.init()
-        for name, path in faceModel.dic().items():
-            new_text = text.replace("[%s]" % name, '<img src="%s" />' % path)
+        for face in faceModel.all_faces():
+            new_text = text.replace("[%s]" % face.name, '<img src="%s" />' % face.path)
             if new_text != text:
-                self._create_animation(path)
+                self._create_animation(face.path)
                 text = new_text
         return text
 

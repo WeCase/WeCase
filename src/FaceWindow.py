@@ -27,7 +27,6 @@ class FaceWindow(QtGui.QDialog):
 
     def setupModels(self):
         self.faceModel = FaceModel(self)
-        self.faceModel.init()
         self.faceView.setModel(self.faceModel)
         self.faceView.smileyClicked.connect(self.returnSmileyName)
 
