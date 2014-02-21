@@ -46,7 +46,7 @@ class FaceModel(metaclass=Singleton):
 
             if category != face.category:
                 category = face.category
-                self._faces[category] = {}
+                self._faces[category] = OrderedDict()
             else:
                 self._faces[category][face.name] = face
 
