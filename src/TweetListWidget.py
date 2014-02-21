@@ -640,7 +640,7 @@ class SingleTweetWidget(QtGui.QFrame):
                              QtCore.QUrl(self._gif_list[movie]),
                              movie.currentPixmap())
         # Cause a force refresh
-        textBrowser.setLineWrapColumnOrWidth(textBrowser.lineWrapColumnOrWidth())
+        textBrowser.repaint()
 
     def exec_newpost_window(self, action, tweet):
         from NewpostWindow import NewpostWindow
