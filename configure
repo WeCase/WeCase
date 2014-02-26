@@ -586,6 +586,9 @@ LIBOBJS
 REPORT_BUGS_TO
 DEFAULTPROVIDER
 PKGPROVIDER
+LRELEASE_CHECK
+PYRCC4_CHECK
+PYUIC4_CHECK
 pkgpyexecdir
 pyexecdir
 pkgpythondir
@@ -2527,6 +2530,129 @@ $as_echo "no" >&6; }
 if test $HAVE_PYMOD_NOTIFY2 = "no"; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Could not find Python module notify2" >&5
 $as_echo "$as_me: WARNING: Could not find Python module notify2" >&2;}
+fi
+
+# Extract the first word of "pyuic4", so it can be a program name with args.
+set dummy pyuic4; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_PYUIC4_CHECK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$PYUIC4_CHECK"; then
+  ac_cv_prog_PYUIC4_CHECK="$PYUIC4_CHECK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_PYUIC4_CHECK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+PYUIC4_CHECK=$ac_cv_prog_PYUIC4_CHECK
+if test -n "$PYUIC4_CHECK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PYUIC4_CHECK" >&5
+$as_echo "$PYUIC4_CHECK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+if test x"$PYUIC4_CHECK" != x"yes" ; then
+    as_fn_error $? "Could not find pyuic4. Please install the development tools of PyQt4." "$LINENO" 5
+fi
+
+# Extract the first word of "pyrcc4", so it can be a program name with args.
+set dummy pyrcc4; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_PYRCC4_CHECK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$PYRCC4_CHECK"; then
+  ac_cv_prog_PYRCC4_CHECK="$PYRCC4_CHECK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_PYRCC4_CHECK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+PYRCC4_CHECK=$ac_cv_prog_PYRCC4_CHECK
+if test -n "$PYRCC4_CHECK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PYRCC4_CHECK" >&5
+$as_echo "$PYRCC4_CHECK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+if test x"$PYRCC4_CHECK" != x"yes" ; then
+    as_fn_error $? "Could not find pyrcc4. Please install the development tools of PyQt4." "$LINENO" 5
+fi
+
+# Extract the first word of "lrelease", so it can be a program name with args.
+set dummy lrelease; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_LRELEASE_CHECK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$LRELEASE_CHECK"; then
+  ac_cv_prog_LRELEASE_CHECK="$LRELEASE_CHECK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_LRELEASE_CHECK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+LRELEASE_CHECK=$ac_cv_prog_LRELEASE_CHECK
+if test -n "$LRELEASE_CHECK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $LRELEASE_CHECK" >&5
+$as_echo "$LRELEASE_CHECK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+if test x"$LRELEASE_CHECK" != x"yes" ; then
+    as_fn_error $? "Could not find lrelease. Please install the development tools of Qt4." "$LINENO" 5
 fi
 
 

@@ -22,6 +22,21 @@ if test $HAVE_PYMOD_NOTIFY2 = "no"; then
     AC_MSG_WARN(Could not find Python module notify2, notification is unavaliable.)
 fi
 
+AC_CHECK_PROG(PYUIC4_CHECK, pyuic4, yes)
+if test x"$PYUIC4_CHECK" != x"yes" ; then
+    AC_MSG_ERROR([Could not find pyuic4. Please install the development tools of PyQt4.])
+fi
+
+AC_CHECK_PROG(PYRCC4_CHECK, pyrcc4, yes)
+if test x"$PYRCC4_CHECK" != x"yes" ; then
+    AC_MSG_ERROR([Could not find pyrcc4. Please install the development tools of PyQt4.])
+fi
+
+AC_CHECK_PROG(LRELEASE_CHECK, lrelease, yes)
+if test x"$LRELEASE_CHECK" != x"yes" ; then
+    AC_MSG_ERROR([Could not find lrelease. Please install the development tools of Qt4.])
+fi
+
 ACX_PKGPROVIDER([WeCase Developers])
 ACX_BUGURL([http://bugs.wecase.org/])
 
