@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
-    <height>317</height>
+    <width>372</width>
+    <height>335</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -263,6 +263,13 @@
         <widget class="QCheckBox" name="blockWordwarsCheckBox">
          <property name="text">
           <string>Block Wordwars (WARNING: High False Positive Rate)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="regexCheckbox">
+         <property name="text">
+          <string>Regard Keywords as Python Regular Expression</string>
          </property>
         </widget>
        </item>
