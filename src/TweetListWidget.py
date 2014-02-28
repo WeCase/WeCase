@@ -564,7 +564,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self._comment(self.tweet.original)
 
     def _create_html_url(self, text):
-        SINA_URL_RE = r"(http://t.cn/\w{6,7})"
+        SINA_URL_RE = r"(http://t.cn/\w{5,7})"
         regex = re.compile(SINA_URL_RE)
         new_text = regex.sub(r"""<a href='\1'>\1</a>""", text)
         return new_text
