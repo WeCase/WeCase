@@ -11,6 +11,7 @@ import sys
 sys.path.append("@PYTHONDIR@")
 
 import os
+import sip
 from PyQt4 import QtCore, QtGui
 import traceback
 import signal
@@ -113,6 +114,9 @@ if __name__ == "__main__":
     mkconfig()
     setup_logger()
 
+    # Issue 50. Disable automatic destruction of C/C++.
+    sip.setdestroyonexit(False)
+
     App = QtGui.QApplication(sys.argv)
     App.setApplicationName("WeCase")
     QtCore.QTextCodec.setCodecForTr(QtCore.QTextCodec. codecForName("UTF-8"))
@@ -148,5 +152,4 @@ if __name__ == "__main__":
     logging.info("Exited")
     sys.excepthook = sys.__excepthook__
 
-    # Hack for Issue 50.
-    os._exit(exit_status)
+    os.exit(exit_status)
