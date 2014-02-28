@@ -19,18 +19,27 @@ class FaceItem():
     def __init__(self, xml_node):
         super(FaceItem, self).__init__()
         self._xml_node = xml_node
+        self._name = ""
+        self._path = ""
+        self._category = ""
 
     @property
     def name(self):
-        return self._xml_node.get("tip")
+        if not self._name:
+            self._name = self._xml_node.get("tip")
+        return self._name
 
     @property
     def path(self):
-        return path.face_path + self._xml_node[0].text
+        if not self._path:
+            self._path = "%s%s" % (path.face_path, self._xml_node[0].text)
+        return self._path
 
     @property
     def category(self):
-        return self._xml_node[0].text.split("/")[0]
+        if not self._category:
+            self._category = self._xml_node[0].text.split("/")[0]
+        return self._category
 
 
 class FaceModel(metaclass=Singleton):
@@ -53,16 +62,24 @@ class FaceModel(metaclass=Singleton):
         size = tree.find("./WNDCONFIG/Align")
         self._col, self._row = int(size.get("Col")), int(size.get("Row"))
 
+        self._all_faces_cache = []
+
     def categories(self):
         return self._faces.keys()
 
     def faces_by_category(self, category):
         return iter(self._faces[category].values())
 
+    def _cached_all_faces(self):
+        for face in self._all_faces_cache:
+            yield face
+
     def all_faces(self):
         for faces in self._faces.values():
             for face in faces.values():
+                self._all_faces_cache.append(face)
                 yield face
+        self.all_faces = self._cached_all_faces
 
     def grid_size(self):
         return self._col, self._row

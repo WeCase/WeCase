@@ -615,12 +615,6 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _addSingleFrame(self, movie, textBrowser):
         document = textBrowser.document()
-
-        # free up the current image
-        document.addResource(QtGui.QTextDocument.ImageResource,
-                             QtCore.QUrl(self._gif_list[movie]),
-                             "")
-
         document.addResource(QtGui.QTextDocument.ImageResource,
                              QtCore.QUrl(self._gif_list[movie]),
                              movie.currentPixmap())
