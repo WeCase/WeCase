@@ -602,7 +602,7 @@ class SingleTweetWidget(QtGui.QFrame):
             return
 
         self._addSingleFrame(movie, self.tweetText)
-        if self.tweet.original:
+        if self.tweet.original and (not "original" in self.without):
             self._addSingleFrame(movie, self.textLabel)
 
     def _addSingleFrame(self, movie, textBrowser):
