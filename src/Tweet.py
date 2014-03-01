@@ -560,6 +560,11 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(QtCore.QObject, constant=True)
     def original(self):
+        try:
+            return self._original
+        except AttributeError:
+            pass
+
         if self.type == self.RETWEET:
             self._original = TweetItem(self._data.get('retweeted_status'))
             return self._original
