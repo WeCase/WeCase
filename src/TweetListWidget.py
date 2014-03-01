@@ -174,7 +174,6 @@ class SingleTweetWidget(QtGui.QFrame):
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.errorWindow = APIErrorWindow(self)
-        self._gif_list = {}
         self.tweet = tweet
         self.client = const.client
         self.without = without
@@ -591,11 +590,7 @@ class SingleTweetWidget(QtGui.QFrame):
         return new_text
 
     def _create_animation(self, path):
-        if path in self._gif_list.values():
-            # We added it already.
-            return
         movie = WObjectCache().open(QtGui.QMovie, path)
-        self._gif_list[movie] = path
         movie.frameChanged.connect(self.drawAnimate)
         movie.start()
 
@@ -613,7 +608,7 @@ class SingleTweetWidget(QtGui.QFrame):
     def _addSingleFrame(self, movie, textBrowser):
         document = textBrowser.document()
         document.addResource(QtGui.QTextDocument.ImageResource,
-                             QtCore.QUrl(self._gif_list[movie]),
+                             QtCore.QUrl(movie.fileName()),
                              movie.currentPixmap())
         # Cause a force refresh
         textBrowser.update()
