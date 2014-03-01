@@ -607,11 +607,8 @@ class SingleTweetWidget(QtGui.QFrame):
             return
 
         self._addSingleFrame(movie, self.tweetText)
-        if self.tweet.type == TweetItem.RETWEET:
-            try:
-                self._addSingleFrame(movie, self.textLabel)
-            except AttributeError:
-                pass
+        if self.tweet.original:
+            self._addSingleFrame(movie, self.textLabel)
 
     def _addSingleFrame(self, movie, textBrowser):
         document = textBrowser.document()
