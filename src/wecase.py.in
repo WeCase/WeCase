@@ -115,7 +115,12 @@ if __name__ == "__main__":
     setup_logger()
 
     # Issue 50. Disable automatic destruction of C/C++.
-    sip.setdestroyonexit(False)
+    try:
+        sip.setdestroyonexit(False)
+        safe_to_exit = True
+    except AttributeError:
+        logging.warn("Old SIP detect.")
+        safe_to_exit = False
 
     App = QtGui.QApplication(sys.argv)
     App.setApplicationName("WeCase")
@@ -152,4 +157,7 @@ if __name__ == "__main__":
     logging.info("Exited")
     sys.excepthook = sys.__excepthook__
 
-    exit(exit_status)
+    if safe_to_exit:
+        exit(exit_status)
+    else:
+        os._exit(exit_status)
