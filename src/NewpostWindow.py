@@ -204,10 +204,10 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
         try:
             if self.image:
                 try:
-                    self.client.statuses.upload.post(status=text,
-                                                     pic=open(self.image, "rb"))
                     if getsize(self.image) > const.MAX_IMAGE_BYTES:
                         raise ValueError
+                    with open(self.image, "rb") as image:
+                        self.client.statuses.upload.post(status=text, pic=image)
                 except (OSError, IOError):
                     self.commonError.emit(self.tr("File not found"),
                                           self.tr("No such file: %s")
