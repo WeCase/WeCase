@@ -42,3 +42,17 @@ AC_DEFUN([ACX_BUGURL],[
   esac;
   AC_SUBST(REPORT_BUGS_TO)
 ])
+
+
+AC_DEFUN([ACX_GIT_COMMIT_SHA1],[
+    AC_MSG_CHECKING(for Git commit SHA1)
+    GIT_COMMIT_SHA1=$(git rev-parse --short HEAD 2> /dev/null)
+    if test $? -eq 0;
+    then
+        :
+    else
+        GIT_COMMIT_SHA1="unknown"
+    fi
+    AC_MSG_RESULT($GIT_COMMIT_SHA1)
+    AC_SUBST(GIT_COMMIT_SHA1)
+])

@@ -586,6 +586,7 @@ LIBOBJS
 REPORT_BUGS_TO
 DEFAULTPROVIDER
 PKGPROVIDER
+GIT_COMMIT_SHA1
 LRELEASE_CHECK
 PYRCC4_CHECK
 PYUIC4_CHECK
@@ -2654,6 +2655,20 @@ fi
 if test x"$LRELEASE_CHECK" != x"yes" ; then
     as_fn_error $? "Could not find lrelease. Please install the development tools of Qt4." "$LINENO" 5
 fi
+
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Git commit SHA1" >&5
+$as_echo_n "checking for Git commit SHA1... " >&6; }
+    GIT_COMMIT_SHA1=$(git rev-parse --short HEAD 2> /dev/null)
+    if test $? -eq 0;
+    then
+        :
+    else
+        GIT_COMMIT_SHA1="unknown"
+    fi
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $GIT_COMMIT_SHA1" >&5
+$as_echo "$GIT_COMMIT_SHA1" >&6; }
+
 
 
 
