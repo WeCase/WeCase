@@ -115,6 +115,7 @@ DEFS = @DEFS@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+GIT_COMMIT_SHA1 = @GIT_COMMIT_SHA1@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -626,7 +627,7 @@ path.py: path.py.in Makefile
 	$(do_substitution) < $(srcdir)/path.py.in > path.py
 
 version.py: version.py.in Makefile
-	sed -e 's,[@]PKGVERSION[@],$(PACKAGE_VERSION),g' \
+	sed -e 's,[@]PKGVERSION[@],$(PACKAGE_VERSION)-$(GIT_COMMIT_SHA1),g' \
 		-e 's,[@]PKGPROVIDER[@],$(PKGPROVIDER),g' \
 		-e 's,[@]DEFAULTPROVIDER[@],$(DEFAULTPROVIDER),g' \
 		-e 's,[@]BUGURL[@],$(BUGURL),g' \

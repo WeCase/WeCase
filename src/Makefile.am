@@ -13,6 +13,7 @@ CLEANFILES = wecase \
 PKGPROVIDER = @PKGPROVIDER@
 DEFAULTPROVIDER = @DEFAULTPROVIDER@
 BUGURL = \"@REPORT_BUGS_TO@\"
+GIT_COMMIT_SHA1 = @GIT_COMMIT_SHA1@
 
 NAME = WeCase
 
@@ -26,7 +27,7 @@ path.py: path.py.in Makefile
 	$(do_substitution) < $(srcdir)/path.py.in > path.py
 
 version.py: version.py.in Makefile
-	sed -e 's,[@]PKGVERSION[@],$(PACKAGE_VERSION),g' \
+	sed -e 's,[@]PKGVERSION[@],$(PACKAGE_VERSION)-$(GIT_COMMIT_SHA1),g' \
 		-e 's,[@]PKGPROVIDER[@],$(PKGPROVIDER),g' \
 		-e 's,[@]DEFAULTPROVIDER[@],$(DEFAULTPROVIDER),g' \
 		-e 's,[@]BUGURL[@],$(BUGURL),g' \

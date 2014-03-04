@@ -37,6 +37,7 @@ if test x"$LRELEASE_CHECK" != x"yes" ; then
     AC_MSG_ERROR([Could not find lrelease. Please install the development tools of Qt4.])
 fi
 
+ACX_GIT_COMMIT_SHA1()
 ACX_PKGPROVIDER([WeCase Developers])
 ACX_BUGURL([http://bugs.wecase.org/])
 
