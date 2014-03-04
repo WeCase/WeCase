@@ -53,6 +53,17 @@ AC_DEFUN([ACX_GIT_COMMIT_SHA1],[
     else
         GIT_COMMIT_SHA1="unknown"
     fi
+
+    git ls-files --other --error-unmatch . >/dev/null 2>&1
+    status=$?
+    if test "$status" = 0; then
+        GIT_COMMIT_SHA1="${GIT_COMMIT_SHA1}-dirty"
+    elif test "$status" = 1; then
+        :
+    else
+        :
+    fi
+
     AC_MSG_RESULT($GIT_COMMIT_SHA1)
     AC_SUBST(GIT_COMMIT_SHA1)
 ])
