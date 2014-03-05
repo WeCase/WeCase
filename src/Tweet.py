@@ -216,7 +216,11 @@ class TweetRetweetModel(TweetTimelineBaseModel):
         self.id = id
 
     def timeline_get(self, page=1):
-        timeline = self.timeline.get(id=self.id, page=page).reposts
+        try:
+            timeline = self.timeline.get(id=self.id, page=page).reposts
+        except AttributeError:
+            # Issue 115: So the censorship, fuck you!
+            timeline = []
         return timeline
 
     def timeline_new(self):
