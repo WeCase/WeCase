@@ -171,7 +171,7 @@ class SingleTweetWidget(QtGui.QFrame):
     tagClicked = QtCore.pyqtSignal(str, bool)
 
     MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
-    SINA_URL_RE = r"(http://t.cn/\w{5,7})"
+    SINA_URL_RE = re.compile(r"(http://t.cn/\w{5,7})")
     HASHTAG_RE = re.compile("(#.*?#)")
 
     def __init__(self, tweet=None, without=[], parent=None):
