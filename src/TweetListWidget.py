@@ -167,7 +167,6 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
 class SingleTweetWidget(QtGui.QFrame):
 
-    imageLoaded = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
@@ -468,7 +467,6 @@ class SingleTweetWidget(QtGui.QFrame):
             start(localfile)
             self.download_lock = False
             self.imageLabel.setBusy(False)
-            self.imageLoaded.emit()
 
         if self.download_lock:
             return
