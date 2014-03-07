@@ -170,6 +170,10 @@ class SingleTweetWidget(QtGui.QFrame):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
+    MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
+    SINA_URL_RE = r"(http://t.cn/\w{5,7})"
+    HASHTAG_RE = re.compile("(#.*?#)")
+
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.errorWindow = APIErrorWindow(self)
@@ -561,10 +565,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self._comment(self.tweet.original)
 
     def _create_html_url(self, text):
-        SINA_URL_RE = r"(http://t.cn/\w{5,7})"
-        regex = re.compile(SINA_URL_RE)
-        new_text = regex.sub(r"""<a href='\1'>\1</a>""", text)
-        return new_text
+        return self.SINA_URL_RE.sub(r"""<a href='\1'>\1</a>""", text)
 
     def _create_smiles(self, text):
         faceModel = FaceModel()
@@ -576,16 +577,10 @@ class SingleTweetWidget(QtGui.QFrame):
         return text
 
     def _create_mentions(self, text):
-        MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
-        regex = re.compile(MENTIONS_RE)
-        new_text = regex.sub(r"""<a href='mentions:///\1'>\1</a>""", text)
-        return new_text
+        return self.MENTIONS_RE.sub(r"""<a href='mentions:///\1'>\1</a>""", text)
 
     def _create_hashtag(self, text):
-        HASHTAG_RE = re.compile("(#.*?#)")
-        regex = re.compile(HASHTAG_RE)
-        new_text = regex.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
-        return new_text
+        return self.HASHTAG_RE.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
 
     def _create_animation(self, path):
         movie = WObjectCache().open(QtGui.QMovie, path)
