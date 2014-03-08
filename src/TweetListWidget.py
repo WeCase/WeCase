@@ -316,6 +316,11 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _update_time(self):
         try:
+            if not self.time.visibleRegion() and self.timer.isActive():
+                # Skip update only when timer is active, insure
+                # at least run once time.
+                return
+
             if not self.time.toolTip():
                 self.time.setToolTip(self.tweet.timestamp)
 
