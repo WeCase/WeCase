@@ -589,10 +589,11 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def drawAnimate(self):
         sender = self.sender()
-        if isinstance(sender, QtGui.QMovie):
-            movie = sender
-        else:
+
+        if (not isinstance(sender, QtGui.QMovie)) or (not self.tweetText.visibleRegion()):
             return
+
+        movie = sender
 
         self._addSingleFrame(movie, self.tweetText)
         if self.tweet.original and (not "original" in self.without):
