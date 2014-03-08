@@ -9,6 +9,34 @@ See the git log and release notes for detailed information.
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+Version 0.06-beta5 (08 March 2014):
+* More checking when configure.
+* Improved bug notice information.
+* Refactored FaceModel.
+* Using lazy-loading to improve the performance under some situations.
+* Repaint the animation using update(), save the CPU time.
+* No longer repaint animation, or update time when they aren't visible,
+  save much CPU time.
+* A better fix for segmentation fault on exit.
+* Initial support filter tweets by Python Regular Expression.
+* Minor code cleanup.
+* Bugfixes:
+    . Fixed the KeyError when changing username after entered the
+      password (#107).
+    . Fixed the regression of the cache clear (#109).
+    . Fixed the cut-off text problem of About window under some
+      desktop environment (#112).
+    . Fixed build error on ArchLinux (#113).
+    . Fixed the exception when view the retweets under censorship (#115).
+    . Fixed the size checking of the image.
+    . Closing the file properly after the image have been uploaded,
+      a long-term bug.
+    . Fixed the animation of the smiles in the original tweet of a comment,
+      a long-term bug.
+    . Changed the minimum length of Sina URL's key to 5.
+      Mostly, the key of a Sina Short URL, encoded with 6 to 7 chars. But,
+      some older URL are encoded in 5 chars.
+
 Version 0.06-beta4 (10 February 2014):
 * GNU Autotools.
 * The resources files will be generated on build time, no longer 
