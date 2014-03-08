@@ -356,6 +356,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             timeline.setTweetsKeywordsBlacklist(self.tweetKeywordsBlacklist)
             timeline.setWordWarKeywords(self.wordWarKeywords)
             timeline.setBlockWordwars(self.blockWordwars)
+            timeline.setKeywordsAsRegexs(self.keywordsAsRegex)
         except AttributeError:
             pass
         timeline.load()
@@ -382,6 +383,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.maxRetweets = self.config.maxRetweets
         self.maxTweetsPerUser = self.config.maxTweetsPerUser
         self.mainWindow_geometry = self.config.mainwindow_geometry
+        self.keywordsAsRegex = self.config.keywordsAsRegex
 
     def applyConfig(self):
         try:

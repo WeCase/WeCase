@@ -10,80 +10,76 @@ import path
 from WeHack import Singleton
 from collections import OrderedDict
 try:
-    import xml.etree.cElementTree as ET
+    from xml.etree.cElementTree import ElementTree
 except ImportError:
-    import xml.etree.ElementTree as ET
-from PyQt4 import QtCore
+    from xml.etree.ElementTree import ElementTree
 
 
 class FaceItem():
     def __init__(self, xml_node):
         super(FaceItem, self).__init__()
-        self.__xml_node = xml_node
+        self._xml_node = xml_node
+        self._name = ""
+        self._path = ""
+        self._category = ""
 
     @property
     def name(self):
-        return self.__xml_node.get("tip")
+        if not self._name:
+            self._name = self._xml_node.get("tip")
+        return self._name
 
     @property
     def path(self):
-        return path.face_path + self.__xml_node[0].text
+        if not self._path:
+            self._path = "%s%s" % (path.face_path, self._xml_node[0].text)
+        return self._path
 
     @property
     def category(self):
-        return self.__xml_node[0].text.split("/")[0]
+        if not self._category:
+            self._category = self._xml_node[0].text.split("/")[0]
+        return self._category
 
 
 class FaceModel(metaclass=Singleton):
-    nameRole = QtCore.Qt.UserRole + 1
-    pathRole = QtCore.Qt.UserRole + 2
 
     def __init__(self):
-        super(FaceModel, self).__init__()
-        self.faces = []
-        self.__loaded = False
-
-    def appendRow(self, item):
-        self.insertRow(self.rowCount(), item)
-
-    def insertRow(self, row, item):
-        self.faces.insert(row, item)
-
-    def items(self):
-        faces = OrderedDict()
+        self._faces = OrderedDict()
+        tree = ElementTree(file=path.face_path + "face.xml")
 
         category = ""
-        for face in self.faces:
+        for face in tree.iterfind("./FACEINFO/"):
+            assert face.tag == "FACE"
+            face = FaceItem(face)
+
             if category != face.category:
                 category = face.category
-                faces[category] = []
+                self._faces[category] = OrderedDict()
             else:
-                faces[category].append(face)
+                self._faces[category][face.name] = face
 
-        return faces
+        size = tree.find("./WNDCONFIG/Align")
+        self._col, self._row = int(size.get("Col")), int(size.get("Row"))
 
-    def dic(self):
-        dic = {}
-        for face in self.faces:
-            dic[face.name] = face.path
-        return dic
+        self._all_faces_cache = []
 
-    def rowCount(self, parent=QtCore.QModelIndex()):
-        return len(self.faces)
+    def categories(self):
+        return self._faces.keys()
 
-    def gridSize(self):
-        size = self.__tree.find("./WNDCONFIG/Align")
-        width = int(size.get("Col"))
-        height = int(size.get("Row"))
-        return QtCore.QSize(width, height)
+    def faces_by_category(self, category):
+        return iter(self._faces[category].values())
 
-    def init(self):
-        if self.__loaded:
-            return
+    def _cached_all_faces(self):
+        for face in self._all_faces_cache:
+            yield face
 
-        self.__tree = ET.ElementTree(file=path.face_path + "face.xml")
+    def all_faces(self):
+        for faces in self._faces.values():
+            for face in faces.values():
+                self._all_faces_cache.append(face)
+                yield face
+        self.all_faces = self._cached_all_faces
 
-        for face in self.__tree.iterfind("./FACEINFO/"):
-            assert face.tag == "FACE"
-            self.appendRow(FaceItem(face))
-        self.__loaded = True
+    def grid_size(self):
+        return self._col, self._row

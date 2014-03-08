@@ -586,6 +586,10 @@ LIBOBJS
 REPORT_BUGS_TO
 DEFAULTPROVIDER
 PKGPROVIDER
+GIT_COMMIT_SHA1
+LRELEASE
+PYRCC4_CHECK
+PYUIC4_CHECK
 pkgpyexecdir
 pyexecdir
 pkgpythondir
@@ -2528,6 +2532,146 @@ if test $HAVE_PYMOD_NOTIFY2 = "no"; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Could not find Python module notify2" >&5
 $as_echo "$as_me: WARNING: Could not find Python module notify2" >&2;}
 fi
+
+# Extract the first word of "pyuic4", so it can be a program name with args.
+set dummy pyuic4; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_PYUIC4_CHECK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$PYUIC4_CHECK"; then
+  ac_cv_prog_PYUIC4_CHECK="$PYUIC4_CHECK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_PYUIC4_CHECK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+PYUIC4_CHECK=$ac_cv_prog_PYUIC4_CHECK
+if test -n "$PYUIC4_CHECK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PYUIC4_CHECK" >&5
+$as_echo "$PYUIC4_CHECK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+if test x"$PYUIC4_CHECK" != x"yes" ; then
+    as_fn_error $? "Could not find pyuic4. Please install the development tools of PyQt4." "$LINENO" 5
+fi
+
+# Extract the first word of "pyrcc4", so it can be a program name with args.
+set dummy pyrcc4; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_PYRCC4_CHECK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$PYRCC4_CHECK"; then
+  ac_cv_prog_PYRCC4_CHECK="$PYRCC4_CHECK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_PYRCC4_CHECK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+PYRCC4_CHECK=$ac_cv_prog_PYRCC4_CHECK
+if test -n "$PYRCC4_CHECK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PYRCC4_CHECK" >&5
+$as_echo "$PYRCC4_CHECK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+if test x"$PYRCC4_CHECK" != x"yes" ; then
+    as_fn_error $? "Could not find pyrcc4. Please install the development tools of PyQt4." "$LINENO" 5
+fi
+
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for lrelease" >&5
+$as_echo_n "checking for lrelease... " >&6; }
+
+    lrelease > /dev/null 2>&1
+    if test "$?" != 127; then
+        LRELEASE="lrelease"
+    fi
+
+    lrelease-qt4 > /dev/null 2>&1
+    if test "$?" != 127; then
+        LRELEASE="lrelease-qt4"
+    else
+        if test "$LRELEASE" != "lrelease"; then
+            as_fn_error $? "Could not find lrelease. Please install the development tools of Qt4." "$LINENO" 5
+        fi
+    fi
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $LRELEASE" >&5
+$as_echo "$LRELEASE" >&6; }
+
+
+
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Git commit SHA1" >&5
+$as_echo_n "checking for Git commit SHA1... " >&6; }
+    GIT_COMMIT_SHA1=$(git rev-parse --short HEAD 2> /dev/null)
+    if test $? -eq 0;
+    then
+        :
+    else
+        GIT_COMMIT_SHA1="unknown"
+        broken_git="true"
+    fi
+
+    if test "$broken_git" != "true"; then
+        git_version=$(git version | cut -d' ' -f3)
+        major_version=$(echo $git_version | cut -d'.' -f1)
+        minor_version=$(echo $git_version | cut -d'.' -f2)
+        bugfix_version=$(echo $git_version | cut -d'.' -f3)
+
+        if test "$major_version" -le 1 || test "$minor_version" -le 7 || test "$bugfix_version" -le 2; then
+            # pretty old git...
+            submodule_syntax="--ignore-submodules=dirty"
+        else
+            submodule_syntax=""
+        fi
+
+        git_status=$(git status -s ${submodule_syntax} 2> /dev/null | tail -n1)
+        if test -n "$git_status"; then
+            GIT_COMMIT_SHA1="${GIT_COMMIT_SHA1}-dirty"
+        fi
+    fi
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $GIT_COMMIT_SHA1" >&5
+$as_echo "$GIT_COMMIT_SHA1" >&6; }
+
 
 
 

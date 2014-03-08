@@ -46,72 +46,72 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 <context>
     <name>APIErrorWindow</name>
     <message>
-        <location filename="WeiboErrorHandler.py" line="13"/>
+        <location filename="WeiboErrorHandler.py" line="21"/>
         <source>This tweet have been deleted.</source>
         <translation>这条微博已被删除。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="14"/>
+        <location filename="WeiboErrorHandler.py" line="22"/>
         <source>This tweet have been collected already.</source>
         <translation>这条微博已经收藏过了。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="15"/>
+        <location filename="WeiboErrorHandler.py" line="23"/>
         <source>User doesn&apos;t exists.</source>
         <translation>用户不存在。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="16"/>
+        <location filename="WeiboErrorHandler.py" line="24"/>
         <source>Image is too large.</source>
         <translation>图片太大。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="17"/>
+        <location filename="WeiboErrorHandler.py" line="25"/>
         <source>Text is too long.</source>
         <translation>内容过长。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="18"/>
+        <location filename="WeiboErrorHandler.py" line="26"/>
         <source>Your send too many tweets in a short time.</source>
         <translation>你在短时间内发送了太多微博。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="20"/>
+        <location filename="WeiboErrorHandler.py" line="28"/>
         <source>Your tweet contains illegal website.</source>
         <translation>微博包含非法网站。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="21"/>
+        <location filename="WeiboErrorHandler.py" line="29"/>
         <source>Your tweet contains ads.</source>
         <translation>微博包含广告。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="22"/>
+        <location filename="WeiboErrorHandler.py" line="30"/>
         <source>Your tweet contains illegal text.</source>
         <translation>微博包含非法文字。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="23"/>
+        <location filename="WeiboErrorHandler.py" line="31"/>
         <source>Your IP address is in the blacklist.</source>
         <translation>你的 IP 地址在黑名单中。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="24"/>
+        <location filename="WeiboErrorHandler.py" line="32"/>
         <source>Send successful, but your tweet won&apos;t display immediately, please wait for a minute.</source>
         <translation>发送成功，但微博不会立刻显示，请等待约一分钟。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="25"/>
+        <location filename="WeiboErrorHandler.py" line="33"/>
         <source>The tweet does not exist.</source>
         <translation>微博不存在。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="26"/>
+        <location filename="WeiboErrorHandler.py" line="34"/>
         <source>Don&apos;t send reperted tweet.</source>
         <translation>请勿发送重复微博。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="34"/>
+        <location filename="WeiboErrorHandler.py" line="42"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -204,23 +204,6 @@ This software is provided AS IS, and comes with ABSOLUTE NO WARRANTY.</source>
         <source>This is a vanilla version.</source>
         <translation type="obsolete">这是一份上游原版。</translation>
     </message>
-    <message utf8="true">
-        <location filename="../res/ui/AboutWindow.ui" line="191"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Organizer：&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Garfield550 (加菲猫550)&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Development Leader：&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tom Li (Biergaizi, 比尔盖子) &amp;lt;biergaizi2009@gmail.com&amp;gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Contributor：&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;TonyChyi (小骞爱开源)&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;（More）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../res/ui/AboutWindow.ui" line="76"/>
         <source>Vanilla Version</source>
@@ -275,11 +258,28 @@ Report WeCase bugs to %s</source>
 
 请向 %s 报告 WeCase 的 Bug </translation>
     </message>
+    <message utf8="true">
+        <location filename="../res/ui/AboutWindow.ui" line="191"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Organizer：&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Garfield550 (加菲猫550)&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Development Leader：&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Tom Li (Biergaizi, 比尔盖子) &amp;lt;biergaizi2009@gmail.com&amp;gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Contributor：&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;TonyChyi (小骞爱开源)&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;（More）&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ErrorWindow</name>
     <message>
-        <location filename="wecase.py.in" line="48"/>
+        <location filename="wecase.py.in" line="49"/>
         <source>Unknown Error</source>
         <translation>未知错误</translation>
     </message>
@@ -295,37 +295,37 @@ Report WeCase bugs to %s</source>
 <context>
     <name>FilterTableModel</name>
     <message>
-        <location filename="FilterTable.py" line="168"/>
+        <location filename="FilterTable.py" line="176"/>
         <source>Keyword</source>
         <translation>关键词</translation>
     </message>
     <message>
-        <location filename="FilterTable.py" line="162"/>
+        <location filename="FilterTable.py" line="170"/>
         <source>Block</source>
         <translation>屏蔽</translation>
     </message>
     <message>
-        <location filename="FilterTable.py" line="168"/>
+        <location filename="FilterTable.py" line="176"/>
         <source>Word War</source>
         <translation>口水战</translation>
     </message>
     <message>
-        <location filename="FilterTable.py" line="162"/>
+        <location filename="FilterTable.py" line="170"/>
         <source>User</source>
         <translation>用户</translation>
     </message>
     <message>
-        <location filename="FilterTable.py" line="84"/>
+        <location filename="FilterTable.py" line="92"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="FilterTable.py" line="84"/>
+        <location filename="FilterTable.py" line="92"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="FilterTable.py" line="84"/>
+        <location filename="FilterTable.py" line="92"/>
         <source>Action</source>
         <translation>操作</translation>
     </message>
@@ -622,27 +622,27 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">带有这些关键词的微博不会显示：</translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="365"/>
+        <location filename="../res/ui/SettingWindow.ui" line="372"/>
         <source>Cache</source>
         <translation>缓存</translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="386"/>
+        <location filename="../res/ui/SettingWindow.ui" line="393"/>
         <source>Total Cache Size:</source>
         <translation>缓存总大小：</translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="393"/>
+        <location filename="../res/ui/SettingWindow.ui" line="400"/>
         <source>Computing...</source>
         <translation>计算中……</translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="404"/>
+        <location filename="../res/ui/SettingWindow.ui" line="411"/>
         <source>View by File Manager</source>
         <translation>用文件管理器查看</translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="411"/>
+        <location filename="../res/ui/SettingWindow.ui" line="418"/>
         <source>Clear</source>
         <translation>清空</translation>
     </message>
@@ -652,25 +652,30 @@ Report WeCase bugs to %s</source>
         <translation>屏蔽口水战（警告：高误判率）</translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="274"/>
+        <location filename="../res/ui/SettingWindow.ui" line="281"/>
         <source>Block Chatting. Retweets Limit Per Tweet:</source>
         <translation>屏蔽版聊。同一条微博的转发最多显示数：   </translation>
     </message>
     <message>
-        <location filename="../res/ui/SettingWindow.ui" line="320"/>
+        <location filename="../res/ui/SettingWindow.ui" line="327"/>
         <source>Block Flooding. Tweets Limit Per User:     </source>
         <translation>屏蔽刷屏。来自同一用户的微博最多显示数：</translation>
+    </message>
+    <message>
+        <location filename="../res/ui/SettingWindow.ui" line="272"/>
+        <source>Regard Keywords as Python Regular Expression</source>
+        <translation>将关键词视作 Python 正则表达式</translation>
     </message>
 </context>
 <context>
     <name>SingleTweetWidget</name>
     <message>
-        <location filename="TweetListWidget.py" line="539"/>
+        <location filename="TweetListWidget.py" line="547"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="539"/>
+        <location filename="TweetListWidget.py" line="547"/>
         <source>You can&apos;t undo your deletion.</source>
         <translation>删除后无法恢复。</translation>
     </message>
@@ -695,7 +700,7 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">未知错误</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="255"/>
+        <location filename="TweetListWidget.py" line="263"/>
         <source>From: %s</source>
         <translation>来自: %s</translation>
     </message>
@@ -736,27 +741,27 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="537"/>
+        <location filename="Tweet.py" line="543"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="539"/>
+        <location filename="Tweet.py" line="545"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="541"/>
+        <location filename="Tweet.py" line="547"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="543"/>
+        <location filename="Tweet.py" line="549"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="545"/>
+        <location filename="Tweet.py" line="551"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
@@ -764,12 +769,12 @@ Report WeCase bugs to %s</source>
 <context>
     <name>WAsyncLabel</name>
     <message>
-        <location filename="WAsyncLabel.py" line="118"/>
+        <location filename="WAsyncLabel.py" line="126"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="WAsyncLabel.py" line="125"/>
+        <location filename="WAsyncLabel.py" line="133"/>
         <source>Choose a path</source>
         <translation>选择路径</translation>
     </message>
@@ -777,7 +782,7 @@ Report WeCase bugs to %s</source>
 <context>
     <name>WTabBar</name>
     <message>
-        <location filename="WeCaseWindow.py" line="642"/>
+        <location filename="WeCaseWindow.py" line="644"/>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
@@ -800,7 +805,7 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">评论(%d)</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="498"/>
+        <location filename="WeCaseWindow.py" line="500"/>
         <source>WeCase</source>
         <translation>微盒</translation>
     </message>
@@ -820,17 +825,17 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">评论</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="465"/>
+        <location filename="WeCaseWindow.py" line="467"/>
         <source>You have:</source>
         <translation>您有：</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="474"/>
+        <location filename="WeCaseWindow.py" line="476"/>
         <source>%d unread @ME</source>
         <translation>%d 条未读 @提醒</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="482"/>
+        <location filename="WeCaseWindow.py" line="484"/>
         <source>%d unread comment(s)</source>
         <translation>%d 条未读评论 </translation>
     </message>
@@ -900,7 +905,7 @@ Report WeCase bugs to %s</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="WeCaseWindow.py" line="490"/>
+        <location filename="WeCaseWindow.py" line="492"/>
         <source>%d unread @ME comment(s)</source>
         <translation>%d 条未读 @评论提醒</translation>
     </message>
@@ -948,12 +953,12 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">关键词</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="106"/>
+        <location filename="SettingWindow.py" line="108"/>
         <source>Restart</source>
         <translation>重新启动</translation>
     </message>
     <message>
-        <location filename="SettingWindow.py" line="106"/>
+        <location filename="SettingWindow.py" line="108"/>
         <source>Settings need to restart WeCase to take effect.</source>
         <translation>需要重新启动 WeCase 才可使设置生效。</translation>
     </message>
@@ -1144,7 +1149,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation type="obsolete">请去 https://github.com/WeCase/WeCase/issues 报告该问题</translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="92"/>
+        <location filename="wecase.py.in" line="93"/>
         <source>Notification disabled</source>
         <translation>通知已禁用</translation>
     </message>
@@ -1163,19 +1168,19 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
 </translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="65"/>
+        <location filename="wecase.py.in" line="66"/>
         <source>Oops, there is an unexpected error,
 </source>
         <translation>苍天啊，大地啊！这个不明错误怎么就发生了呢，
 </translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="87"/>
+        <location filename="wecase.py.in" line="88"/>
         <source>dbus-python or notify2 is not found. Notification will disable.</source>
         <translation>dbus-python 或 notify2 未找到。通知将被禁用。</translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="92"/>
+        <location filename="wecase.py.in" line="93"/>
         <source>Notification Daemon not exist. Notification will disable.</source>
         <translation>通知守护进程 (Notification Daemon) 不存在。通知将禁用。</translation>
     </message>
@@ -1187,7 +1192,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation type="obsolete">请去 &lt;http://bugs.wecase.org/&gt; 报告该问题</translation>
     </message>
     <message>
-        <location filename="wecase.py.in" line="66"/>
+        <location filename="wecase.py.in" line="67"/>
         <source>Please report it to %s
 
 </source>

@@ -128,6 +128,12 @@ def clearDir(folder):
         try:
             if os.path.isfile(file_path):
                 os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                try:
+                    clearDir(file_path)
+                except RuntimeError:
+                    # but WHO creating dirs with more than sys.getrecursionlimit() subdirs?
+                    return
         except OSError:
             pass
 

@@ -86,6 +86,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.maxRetweetsLimitLineEdit.setText("" if self.config.maxRetweets == -1 else str(self.config.maxRetweets))
         self.maxTweetsPerUserCheckBox.setChecked(self.config.maxTweetsPerUser != -1)
         self.maxTweetsPerUserLimitLineEdit.setText("" if self.config.maxTweetsPerUser == -1 else str(self.config.maxTweetsPerUser))
+        self.regexCheckbox.setChecked(self.config.keywordsAsRegex)
 
     def saveConfig(self):
         self.config.notify_interval = str(self.intervalSlider.value())
@@ -98,6 +99,7 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.config.blockWordwars = str(self.blockWordwarsCheckBox.isChecked())
         self.config.maxRetweets = str(-1 if not self.maxRetweetsCheckBox.isChecked() else int(self.maxRetweetsLimitLineEdit.text()))
         self.config.maxTweetsPerUser = str(-1 if not self.maxTweetsPerUserCheckBox.isChecked() else int(self.maxTweetsPerUserLimitLineEdit.text()))
+        self.config.keywordsAsRegex = str(self.regexCheckbox.isChecked())
         self.config.save()
 
     def accept(self):

@@ -11,6 +11,7 @@ import sys
 sys.path.append("@PYTHONDIR@")
 
 import os
+import sip
 from PyQt4 import QtCore, QtGui
 import traceback
 import signal
@@ -64,8 +65,11 @@ def my_excepthook(type, value, tback):
 
     exception = "".join(traceback.format_exception(type, value, tback))
     line1 = App.translate("main", "Oops, there is an unexpected error,\n")
-    line2 = App.translate("main", "Please report it to %s\n\n")
-    error_info = (line1 + line2 % version.bug_report_url + "%s" % exception)
+    line2 = App.translate("main", "Please report it to %s\n")
+    line3 = App.translate("main", "------------[ cut here ]------------\n\n")
+    line4 = App.translate("main", "Version: WeCase %s\n\n")
+    last_line = App.translate("main", "---[ end trace %s ]---")
+    error_info = (line1 + line2 % version.bug_report_url + line3 + line4 % version.pkgversion + "%s" % exception + last_line % hex(id(value)))
 
     if type != last_error:
         last_error = type
@@ -113,6 +117,14 @@ if __name__ == "__main__":
     mkconfig()
     setup_logger()
 
+    # Issue 50. Disable automatic destruction of C/C++.
+    try:
+        sip.setdestroyonexit(False)
+        safe_to_exit = True
+    except AttributeError:
+        logging.warn("Old SIP detect.")
+        safe_to_exit = False
+
     App = QtGui.QApplication(sys.argv)
     App.setApplicationName("WeCase")
     QtCore.QTextCodec.setCodecForTr(QtCore.QTextCodec. codecForName("UTF-8"))
@@ -148,5 +160,7 @@ if __name__ == "__main__":
     logging.info("Exited")
     sys.excepthook = sys.__excepthook__
 
-    # Hack for Issue 50.
-    os._exit(exit_status)
+    if safe_to_exit:
+        exit(exit_status)
+    else:
+        os._exit(exit_status)

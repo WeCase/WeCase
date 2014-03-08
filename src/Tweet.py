@@ -12,6 +12,7 @@ from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
 from TweetUtils import tweetLength
+import re
 import const
 
 
@@ -215,7 +216,11 @@ class TweetRetweetModel(TweetTimelineBaseModel):
         self.id = id
 
     def timeline_get(self, page=1):
-        timeline = self.timeline.get(id=self.id, page=page).reposts
+        try:
+            timeline = self.timeline.get(id=self.id, page=page).reposts
+        except AttributeError:
+            # Issue 115: So the censorship, fuck you!
+            timeline = []
         return timeline
 
     def timeline_new(self):
@@ -270,6 +275,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         self._blockWordwars = False
         self._maxTweetsPerUser = -1
         self._maxRetweets = -1
+        self._keywordsAsRegexs = False
 
     def model(self):
         return self._model
@@ -282,6 +288,9 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
     def get_item(self, index):
         return self._tweets[index]
+
+    def setKeywordsAsRegexs(self, state):
+        self._keywordsAsRegexs = bool(state)
 
     def setTweetsKeywordsBlacklist(self, blacklist):
         self._tweetKeywordBlacklist = blacklist
@@ -308,7 +317,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             return True
 
         # Put all your statements at here
-        if tweet.withKeywords(self._tweetKeywordBlacklist):
+        if tweet.withKeywords(self._tweetKeywordBlacklist, self._keywordsAsRegexs):
             return True
         if tweet.author and (tweet.author.name in self._usersBlackList):
             return True
@@ -361,7 +370,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
             info = self._appearInfo[item.original.id]
             info["count"] += 1
-            if item.withKeywords(self._wordWarKeywords):
+            if item.withKeywords(self._wordWarKeywords, self._keywordsAsRegexs):
                 info["wordWarKeywords"] += 1
             self._appearInfo[item.original.id] = info
 
@@ -555,6 +564,11 @@ class TweetItem(QtCore.QObject):
 
     @QtCore.pyqtProperty(QtCore.QObject, constant=True)
     def original(self):
+        try:
+            return self._original
+        except AttributeError:
+            pass
+
         if self.type == self.RETWEET:
             self._original = TweetItem(self._data.get('retweeted_status'))
             return self._original
@@ -684,14 +698,43 @@ class TweetItem(QtCore.QObject):
         if self.type in [self.TWEET, self.RETWEET]:
             self._data = self.client.statuses.show.get(id=self.id)
 
-    def withKeyword(self, keyword):
+    def _withKeyword(self, keyword):
         if keyword in self.text:
             return True
         else:
             return False
 
-    def withKeywords(self, keywords):
+    def _withKeywords(self, keywords):
         for keyword in keywords:
-            if self.withKeyword(keyword):
+            if self._withKeyword(keyword):
                 return True
         return False
+
+    def _withRegex(self, pattern):
+        try:
+            result = re.match(pattern, self.text)
+        except (ValueError, TypeError):
+            return False
+
+        if result:
+            return True
+        else:
+            return False
+
+    def _withRegexs(self, patterns):
+        for pattern in patterns:
+            if self._withRegex(pattern):
+                return True
+        return False
+
+    def withKeyword(self, pattern, regex=False):
+        if regex:
+            return self._withRegex(pattern)
+        else:
+            return self._withKeyword(pattern)
+
+    def withKeywords(self, patterns, regex=False):
+        if regex:
+            return self._withRegexs(patterns)
+        else:
+            return self._withKeywords(patterns)

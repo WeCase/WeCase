@@ -46,6 +46,11 @@ type = int
 default = -1
 
 section = main
+name = keywordsAsRegex
+type = bool
+default = False
+
+section = main
 name = mainwindow_geometry
 type = dict
 default = {"height": 656, "width": 403}

@@ -26,20 +26,17 @@ class WFaceListWidget(QtGui.QWidget):
         tab = QtGui.QWidget()
         tab.setLayout(layout)
 
-        col = self._model.gridSize().width()
-        row = self._model.gridSize().height()
-        index = 0
+        col, row = self._model.grid_size()
 
         for i in range(row):
             for j in range(col):
                 try:
-                    face = faces[index]
+                    face = next(faces)
                     widget = WSmileyWidget(face)
                     widget.smileyClicked.connect(self.smileyClicked)
-                except IndexError:
+                except StopIteration:
                     widget = QtGui.QWidget()
                 layout.addWidget(widget, i, j)
-                index += 1
         return tab
 
     def _setupUi(self):
@@ -47,8 +44,8 @@ class WFaceListWidget(QtGui.QWidget):
         self.tabWidget = QtGui.QTabWidget()
         self.layout.addWidget(self.tabWidget)
 
-        faces = self._model.items()
-        for category, faces in faces.items():
+        for category in self._model.categories():
+            faces = self._model.faces_by_category(category)
             tab = self._setupTabWidget(faces)
             self.tabWidget.addTab(tab, category)
         self.setLayout(self.layout)

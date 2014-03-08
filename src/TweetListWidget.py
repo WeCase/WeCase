@@ -167,14 +167,16 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
 class SingleTweetWidget(QtGui.QFrame):
 
-    imageLoaded = QtCore.pyqtSignal()
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
+
+    MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
+    SINA_URL_RE = re.compile(r"(http://t.cn/\w{5,7})")
+    HASHTAG_RE = re.compile("(#.*?#)")
 
     def __init__(self, tweet=None, without=[], parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.errorWindow = APIErrorWindow(self)
-        self._gif_list = {}
         self.tweet = tweet
         self.client = const.client
         self.without = without
@@ -314,6 +316,11 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _update_time(self):
         try:
+            if not self.time.visibleRegion() and self.timer.isActive():
+                # Skip update only when timer is active, insure
+                # at least run once time.
+                return
+
             if not self.time.toolTip():
                 self.time.setToolTip(self.tweet.timestamp)
 
@@ -469,7 +476,6 @@ class SingleTweetWidget(QtGui.QFrame):
             start(localfile)
             self.download_lock = False
             self.imageLabel.setBusy(False)
-            self.imageLoaded.emit()
 
         if self.download_lock:
             return
@@ -564,78 +570,47 @@ class SingleTweetWidget(QtGui.QFrame):
         self._comment(self.tweet.original)
 
     def _create_html_url(self, text):
-        COMMON_URL_RE = (
-            r"(?:(http|https)://"
-            r"(?:(?:(?:(?:(?:[a-zA-Z\d](?:(?:[a-zA-Z\d]|-)*[a-zA-Z\d])?)\."
-            r")*(?:[a-zA-Z](?:(?:[a-zA-Z\d]|-)*[a-zA-Z\d])?))|(?:(?:\d+)(?:\.(?:\d+)"
-            r"){3}))(?::(?:\d+))?)(?:/(?:(?:(?:(?:[a-zA-Z\d$\-_.+!*'(),]|(?:%[a-fA-F"
-            r"\d]{2}))|[;:@&=])*)(?:/(?:(?:(?:[a-zA-Z\d$\-_.+!*'(),]|(?:%[a-fA-F\d]{"
-            r"2}))|[;:@&=])*))*)(?:\?(?:(?:(?:[a-zA-Z\d$\-_.+!*'(),]|(?:%[a-fA-F\d]{"
-            r"2}))|[;:@&=])*))?)?)|(?:ftp://(?:(?:(?:(?:(?:[a-zA-Z\d$\-_.+!*'(),]|(?"
-            r":%[a-fA-F\d]{2}))|[;?&=])*)(?::(?:(?:(?:[a-zA-Z\d$\-_.+!*'(),]|(?:%[a-"
-            r"fA-F\d]{2}))|[;?&=])*))?@)?(?:(?:(?:(?:(?:[a-zA-Z\d](?:(?:[a-zA-Z\d]|-"
-            r")*[a-zA-Z\d])?)\.)*(?:[a-zA-Z](?:(?:[a-zA-Z\d]|-)*[a-zA-Z\d])?))|(?:(?"
-            r":\d+)(?:\.(?:\d+)){3}))(?::(?:\d+))?))(?:/(?:(?:(?:(?:[a-zA-Z\d$\-_.+!"
-            r"*'(),]|(?:%[a-fA-F\d]{2}))|[?:@&=])*)(?:/(?:(?:(?:[a-zA-Z\d$\-_.+!*'()"
-            r",]|(?:%[a-fA-F\d]{2}))|[?:@&=])*))*)(?:;type=[AIDaid])?)?)"
-        )
-        SINA_URL_RE = r"(http://t.cn/\w{6,7})"
-        regex = re.compile("((%s)|(%s))" % (SINA_URL_RE, COMMON_URL_RE))
-        new_text = regex.sub(r"""<a href='\1'>\1</a>""", text)
-        return new_text
+        return self.SINA_URL_RE.sub(r"""<a href='\1'>\1</a>""", text)
 
     def _create_smiles(self, text):
         faceModel = FaceModel()
-        faceModel.init()
-        for name, path in faceModel.dic().items():
-            new_text = text.replace("[%s]" % name, '<img src="%s" />' % path)
+        for face in faceModel.all_faces():
+            new_text = text.replace("[%s]" % face.name, '<img src="%s" />' % face.path)
             if new_text != text:
-                self._create_animation(path)
+                self._create_animation(face.path)
                 text = new_text
         return text
 
     def _create_mentions(self, text):
-        MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
-        regex = re.compile(MENTIONS_RE)
-        new_text = regex.sub(r"""<a href='mentions:///\1'>\1</a>""", text)
-        return new_text
+        return self.MENTIONS_RE.sub(r"""<a href='mentions:///\1'>\1</a>""", text)
 
     def _create_hashtag(self, text):
-        HASHTAG_RE = re.compile("(#.*?#)")
-        regex = re.compile(HASHTAG_RE)
-        new_text = regex.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
-        return new_text
+        return self.HASHTAG_RE.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
 
     def _create_animation(self, path):
-        if path in self._gif_list.values():
-            # We added it already.
-            return
         movie = WObjectCache().open(QtGui.QMovie, path)
-        self._gif_list[movie] = path
         movie.frameChanged.connect(self.drawAnimate)
         movie.start()
 
     def drawAnimate(self):
         sender = self.sender()
-        if isinstance(sender, QtGui.QMovie):
-            movie = sender
-        else:
+
+        if (not isinstance(sender, QtGui.QMovie)) or (not self.tweetText.visibleRegion()):
             return
 
+        movie = sender
+
         self._addSingleFrame(movie, self.tweetText)
-        if self.tweet.type == TweetItem.RETWEET:
-            try:
-                self._addSingleFrame(movie, self.textLabel)
-            except AttributeError:
-                pass
+        if self.tweet.original and (not "original" in self.without):
+            self._addSingleFrame(movie, self.textLabel)
 
     def _addSingleFrame(self, movie, textBrowser):
         document = textBrowser.document()
         document.addResource(QtGui.QTextDocument.ImageResource,
-                             QtCore.QUrl(self._gif_list[movie]),
+                             QtCore.QUrl(movie.fileName()),
                              movie.currentPixmap())
         # Cause a force refresh
-        textBrowser.setLineWrapColumnOrWidth(textBrowser.lineWrapColumnOrWidth())
+        textBrowser.update()
 
     def exec_newpost_window(self, action, tweet):
         from NewpostWindow import NewpostWindow
