@@ -32,10 +32,7 @@ if test x"$PYRCC4_CHECK" != x"yes" ; then
     AC_MSG_ERROR([Could not find pyrcc4. Please install the development tools of PyQt4.])
 fi
 
-AC_CHECK_PROG(LRELEASE_CHECK, lrelease, yes)
-if test x"$LRELEASE_CHECK" != x"yes" ; then
-    AC_MSG_ERROR([Could not find lrelease. Please install the development tools of Qt4.])
-fi
+ACX_CHECK_LRELEASE()
 
 ACX_GIT_COMMIT_SHA1()
 ACX_PKGPROVIDER([WeCase Developers])

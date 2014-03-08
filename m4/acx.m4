@@ -52,18 +52,50 @@ AC_DEFUN([ACX_GIT_COMMIT_SHA1],[
         :
     else
         GIT_COMMIT_SHA1="unknown"
+        broken_git="true"
     fi
 
-    git ls-files --other --error-unmatch --exclude-standard . >/dev/null 2>&1
-    status=$?
-    if test "$status" = 0; then
-        GIT_COMMIT_SHA1="${GIT_COMMIT_SHA1}-dirty"
-    elif test "$status" = 1; then
-        :
-    else
-        :
+    if test "$broken_git" != "true"; then
+        git_version=$(git version | cut -d' ' -f3)
+        major_version=$(echo $git_version | cut -d'.' -f1)
+        minor_version=$(echo $git_version | cut -d'.' -f2)
+        bugfix_version=$(echo $git_version | cut -d'.' -f3)
+
+        if test "$major_version" -le 1 || test "$minor_version" -le 7 || test "$bugfix_version" -le 2; then
+            # pretty old git...
+            submodule_syntax="--ignore-submodules=dirty"
+        else
+            submodule_syntax=""
+        fi
+
+        git_status=$(git status -s ${submodule_syntax} 2> /dev/null | tail -n1)
+        if test -n "$git_status"; then
+            GIT_COMMIT_SHA1="${GIT_COMMIT_SHA1}-dirty"
+        fi
     fi
 
     AC_MSG_RESULT($GIT_COMMIT_SHA1)
     AC_SUBST(GIT_COMMIT_SHA1)
+])
+
+
+AC_DEFUN([ACX_CHECK_LRELEASE],[
+    AC_MSG_CHECKING(for lrelease)
+
+    lrelease > /dev/null 2>&1
+    if test "$?" != 127; then
+        LRELEASE="lrelease"
+    fi
+
+    lrelease-qt4 > /dev/null 2>&1
+    if test "$?" != 127; then
+        LRELEASE="lrelease-qt4"
+    else
+        if test "$LRELEASE" != "lrelease"; then
+            AC_MSG_ERROR([Could not find lrelease. Please install the development tools of Qt4.])
+        fi
+    fi
+
+    AC_MSG_RESULT($LRELEASE)
+    AC_SUBST(LRELEASE)
 ])
