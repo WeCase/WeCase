@@ -525,7 +525,7 @@ class SingleTweetWidget(QtGui.QFrame):
                     self.tweet.setFavoriteForce(True)
                 self._e = e
                 self.__favorite_queue = []
-                self.commonSignal.emit(lambda: self.errorWindow.raiseException.emit(self._e))
+                self.errorWindow.raiseException.emit(self._e)
                 return
 
     def _retweet(self, tweet=None):
