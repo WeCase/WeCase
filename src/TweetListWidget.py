@@ -589,7 +589,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _create_animation(self, path):
         movie = WObjectCache().open(QtGui.QMovie, path)
-        movie.frameChanged.connect(self.drawAnimate)
+        movie.frameChanged.connect(self.drawAnimate, QtCore.Qt.UniqueConnection)
         movie.start()
 
     def drawAnimate(self):
