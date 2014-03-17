@@ -70,6 +70,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
+        self._nomore = False
 
     def timeline_get(self):
         raise NotImplementedError
@@ -99,6 +100,8 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         timeline = timeline_func()
 
         if not timeline:
+            if pos == -1:
+                self._nomore = True
             self.nothingLoaded.emit()
 
         if pos == -1:
@@ -121,7 +124,9 @@ class TweetTimelineBaseModel(TweetSimpleModel):
             self.load()
 
     def next(self):
-        if self._tweets:
+        if self._nomore:
+            self.nothingLoaded.emit()
+        elif self._tweets:
             timeline = self.timeline_old
             self._common_get(timeline, -1)
         else:
