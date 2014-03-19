@@ -62,7 +62,7 @@ class _AsyncFetcher(QtCore.QObject):
             try:
                 urlretrieve(url, filepath)
                 break
-            except (BadStatusLine, ContentTooShortError, URLError):
+            except (BadStatusLine, ContentTooShortError, URLError, OSError):
                 sleep(1)
                 continue
 
