@@ -25,6 +25,7 @@ from TweetListWidget import TweetListWidget
 from AsyncFetcher import AsyncFetcher
 from weibo3 import APIError
 from WeiboErrorHandler import APIErrorWindow
+from LoginInfo import LoginInfo
 import logging
 import wecase_rc
 
@@ -41,8 +42,12 @@ class WeCaseWindow(QtGui.QMainWindow):
     tabBadgeChanged = QtCore.pyqtSignal(int, int)
     tabAvatarFetched = QtCore.pyqtSignal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, username, parent=None):
         super(WeCaseWindow, self).__init__(parent)
+
+        self.username = username
+        LoginInfo().add_account(self.username)
+
         self.errorWindow = APIErrorWindow(self)
         self.setAttribute(QtCore.Qt.WA_QuitOnClose, True)
         self._iconPixmap = {}
@@ -558,6 +563,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.timer.stop(True)
         # Reset uid when the thread exited.
         self.info["uid"] = None
+        LoginInfo().remove_account(self.username)
         logging.info("Die")
 
 

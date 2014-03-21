@@ -40,3 +40,15 @@ class LoginInfo():
     def add_account(self, account):
         with self._open() as f:
             f.write("%s %d\n" % (account, os.getpid()))
+
+    def remove_account(self, account):
+        with open(self._path, "r") as f:
+            lines = f.readlines()
+        with open(self._path, "w") as f:
+            for line in lines:
+                line = line[:-1]  # \n
+                account, pid = line.split(" ")[0:2]
+                pid = int(pid)
+                if pid == os.getpid():
+                    continue
+                f.write("%s %d\n" % (account, pid))
