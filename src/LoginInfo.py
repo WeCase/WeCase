@@ -20,35 +20,34 @@ class LoginInfo():
         self._path = "/".join((tempfile.gettempdir(), self.FILENAME))
 
     def _open(self):
-        # a+ in Python has a different behavior from POSIX (the man page of fopen),
-        # initial file position for reading is at EOF instead of BOF.
-        return open(self._path, "a+")
-
-    @property
-    def accounts(self):
-        accounts = []
-
-        with self._open() as f:
+        with open(self._path, "a+") as f:
             f.seek(0)
-            for line in f:
-                line = line[:-1]  # \n
-                account, pid = line.split(" ")[0:2]
-                if pid_running(int(pid)):
-                    accounts.append(account)
-        return accounts
-
-    def add_account(self, account):
-        with self._open() as f:
-            f.write("%s %d\n" % (account, os.getpid()))
-
-    def remove_account(self, account):
-        with open(self._path, "r") as f:
             lines = f.readlines()
+
         with open(self._path, "w") as f:
             for line in lines:
                 line = line[:-1]  # \n
                 account, pid = line.split(" ")[0:2]
                 pid = int(pid)
-                if pid == os.getpid():
-                    continue
-                f.write("%s %d\n" % (account, pid))
+
+                if pid_running(pid):
+                    yield f, account, pid
+
+    @property
+    def accounts(self):
+        accounts = []
+
+        for f, account, pid in self._open():
+            f.write("%s %d\n" % (account, pid))
+            accounts.append(account)
+        return accounts
+
+    def add_account(self, account):
+        with open(self._path, "a+") as f:
+            f.write("%s %d\n" % (account, os.getpid()))
+
+    def remove_account(self, account_to_remove):
+        for f, account, pid in self._open():
+            if account == account_to_remove:
+                continue
+            f.write("%s %d\n" % (account, pid))
