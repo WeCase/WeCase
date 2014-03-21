@@ -32,7 +32,7 @@ class LoginInfo():
             f.seek(0)
             for line in f:
                 line = line[:-1]  # \n
-                account, pid = line.split(" ")
+                account, pid = line.split(" ")[0:2]
                 if pid_running(int(pid)):
                     accounts.append(account)
         return accounts
