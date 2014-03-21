@@ -7,7 +7,6 @@
 # License: GPL v3 or later.
 
 
-from sys import argv
 import os
 import tempfile
 from WeHack import pid_running
@@ -33,11 +32,11 @@ class LoginInfo():
             f.seek(0)
             for line in f:
                 line = line[:-1]  # \n
-                account, pid, argv1 = line.split(" ")
-                if pid_running(int(pid)) and argv1 == argv[1]:
+                account, pid = line.split(" ")
+                if pid_running(int(pid)):
                     accounts.append(account)
         return accounts
 
     def add_account(self, account):
         with self._open() as f:
-            f.write("%s %d %s\n" % (account, os.getpid(), argv[1]))
+            f.write("%s %d\n" % (account, os.getpid()))
