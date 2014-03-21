@@ -14,6 +14,7 @@ from WeHack import async, SingletonDecorator
 from threading import Event
 import os
 from time import sleep
+import logging
 
 
 class SignalSender(QtCore.QObject):
@@ -43,6 +44,7 @@ class _AsyncFetcher(QtCore.QObject):
         super(_AsyncFetcher, self).__init__(parent)
 
         if path[-1] != "/":
+            # fix the non-standard path.
             path += "/"
         if not os.path.exists(path):
             os.makedirs(path)
@@ -63,6 +65,7 @@ class _AsyncFetcher(QtCore.QObject):
                 urlretrieve(url, filepath)
                 break
             except (BadStatusLine, ContentTooShortError, URLError, OSError):
+                logging.warning("Downloading %s failed, retry..." % url)
                 sleep(1)
                 continue
 
