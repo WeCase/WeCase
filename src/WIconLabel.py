@@ -7,6 +7,7 @@
 
 
 from PyQt4 import QtCore, QtGui
+from WObjectCache import WObjectCache
 
 
 class WIconLabel(QtGui.QWidget):
@@ -15,11 +16,12 @@ class WIconLabel(QtGui.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._icon = QtGui.QPixmap()
+        self._icon = None
         self._text = None
 
     def setIcon(self, icon):
-        self._icon.load(icon)
+        if self._icon is None:
+            self._icon = WObjectCache().open(QtGui.QPixmap, icon)
         self.update()
 
     def setText(self, text):
@@ -30,15 +32,18 @@ class WIconLabel(QtGui.QWidget):
 
     def paintEvent(self, e):
         painter = QtGui.QPainter(self)
-        painter.drawPixmap(0, 0, self._icon)
+        if self._icon:
+            painter.drawPixmap(0, 0, self._icon)
         if self._text:
             painter.drawStaticText(self._icon.width(), 0, self._text)
 
     def sizeHint(self):
         if self._text:
             return QtCore.QSize(self._icon.width() + self._text.size().width(), self._icon.height())
-        else:
+        elif self._icon:
             return self._icon.size()
+        else:
+            return QtCore.QSize(0, 0)
 
     def mouseReleaseEvent(self, e):
         self.clicked.emit()
