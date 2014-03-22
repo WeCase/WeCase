@@ -20,8 +20,7 @@ class WIconLabel(QtGui.QWidget):
         self._text = None
 
     def setIcon(self, icon):
-        if self._icon is None:
-            self._icon = WObjectCache().open(QtGui.QPixmap, icon)
+        self._icon = WObjectCache().open(QtGui.QPixmap, icon)
         self.update()
 
     def setText(self, text):
