@@ -32,7 +32,7 @@ class TweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, parent=None, without=[]):
+    def __init__(self, parent=None, without=()):
         super(TweetListWidget, self).__init__(parent)
         self.tweetListWidget = SimpleTweetListWidget(parent, without)
         self.tweetListWidget.userClicked.connect(self.userClicked)
@@ -80,7 +80,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, parent=None, without=[]):
+    def __init__(self, parent=None, without=()):
         super(SimpleTweetListWidget, self).__init__(parent)
         self.client = const.client
         self.without = without
@@ -174,7 +174,7 @@ class SingleTweetWidget(QtGui.QFrame):
     SINA_URL_RE = re.compile(r"(http://t.cn/\w{5,7})")
     HASHTAG_RE = re.compile("(#.*?#)")
 
-    def __init__(self, tweet=None, without=[], parent=None):
+    def __init__(self, tweet=None, without=(), parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.errorWindow = APIErrorWindow(self)
         self.tweet = tweet
