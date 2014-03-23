@@ -17,15 +17,23 @@ class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
         super(AboutWindow, self).__init__(parent)
         self.setupUi(self)
 
+    def _setPkgProvider(self):
+        if version.pkgprovider == version.default_provider:
+            vanilla = self.tr("Vanilla Version")
+            self.distLabel.setText(vanilla)
+        else:
+            disttext = version.pkgprovider
+            self.distLabel.setText(self.distLabel.text() % disttext)
+
+    def _setVersionLabel(self):
+        self.versionLabel.setText(self.versionLabel.text() % version.pkgversion)
+
+    def _setDescriptionLabel(self):
+        self.descriptionLabel.setText(self.descriptionLabel.text() % version.bug_report_url)
+
     def setupUi(self, widget):
         super().setupUi(widget)
 
-        if version.pkgprovider == version.default_provider:
-            vanilla = self.tr("Vanilla Version")
-            widget.distLabel.setText(vanilla)
-        else:
-            disttext = version.pkgprovider
-            widget.distLabel.setText(widget.distLabel.text() % disttext)
-
-        widget.versionLabel.setText(widget.versionLabel.text() % version.pkgversion)
-        widget.descriptionLabel.setText(widget.descriptionLabel.text() % version.bug_report_url)
+        self._setPkgProvider()
+        self._setVersionLabel()
+        self._setDescriptionLabel()
