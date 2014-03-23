@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
 <context>
     <name></name>
     <message>
@@ -129,7 +128,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation>上游原版</translation>
     </message>
 </context>
-<context>
+<context encoding="UTF-8">
     <name>About_Dialog</name>
     <message>
         <location filename="../res/ui/AboutWindow.ui" line="32"/>
@@ -263,7 +262,7 @@ Report WeCase bugs to %s</source>
 
 请向 %s 报告 WeCase 的 Bug </translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../res/ui/AboutWindow.ui" line="191"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1212,25 +1211,6 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation>请去 %s 报告该问题
 
 </translation>
-    </message>
-    <message>
-        <location filename="wecase.py.in" line="69"/>
-        <source>------------[ cut here ]------------
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wecase.py.in" line="70"/>
-        <source>Version: WeCase %s
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wecase.py.in" line="71"/>
-        <source>---[ end trace %s ]---</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
