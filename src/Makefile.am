@@ -8,7 +8,8 @@ CLEANFILES = wecase \
 			 LoginWindow_ui.py \
 			 NewpostWindow_ui.py \
 			 SettingWindow_ui.py \
-			 wecase_rc.py
+			 wecase_rc.py \
+			 AUTHORS
 
 PKGPROVIDER = @PKGPROVIDER@
 DEFAULTPROVIDER = @DEFAULTPROVIDER@
@@ -54,6 +55,9 @@ SettingWindow_ui.py:
 
 wecase_rc.py:
 	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+
+AUTHORS:
+	cp $(srcdir)/../AUTHORS ./
 
 WeCasedir = $(pythondir)/WeCase
 WeCase_PYTHON = path.py \
@@ -107,3 +111,6 @@ Weibos_PYTHON = weibos/client.py \
 
 metaconfdir = $(pythondir)/WeCase/
 metaconf_DATA = WMetaConfig
+
+authorsdir = $(pythondir)/WeCase/
+authors_DATA = AUTHORS
