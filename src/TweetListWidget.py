@@ -169,6 +169,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
+    deleteReturn = QtCore.pyqtSignal(bool)
 
     MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
     SINA_URL_RE = re.compile(r"(http://t.cn/\w{5,7})")
@@ -549,6 +550,16 @@ class SingleTweetWidget(QtGui.QFrame):
         self.exec_newpost_window("reply", tweet)
 
     def _delete(self):
+
+        @async
+        def do_delete():
+            try:
+                self.tweet.delete()
+                self.deleteReturn.emit(True)
+            except APIError as e:
+                self.errorWindow.raiseException.emit(e)
+                self.deleteReturn.emit(False)
+
         questionDialog = QtGui.QMessageBox.question
         choice = questionDialog(self, self.tr("Delete?"),
                                 self.tr("You can't undo your deletion."),
@@ -556,10 +567,11 @@ class SingleTweetWidget(QtGui.QFrame):
         if choice == QtGui.QMessageBox.No:
             return
 
-        try:
-            self.tweet.delete()
-        except APIError as e:
-            self.errorWindow.raiseException.emit(e)
+        self.deleteReturn.connect(lambda state: state and self.remove())
+        do_delete()
+
+    def remove(self):
+        # not really remove myself.
         self.timer.stop()
         self.hide()
 
