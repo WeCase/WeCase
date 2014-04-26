@@ -32,7 +32,7 @@ class TweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, parent=None, without=[]):
+    def __init__(self, parent=None, without=()):
         super(TweetListWidget, self).__init__(parent)
         self.tweetListWidget = SimpleTweetListWidget(parent, without)
         self.tweetListWidget.userClicked.connect(self.userClicked)
@@ -80,7 +80,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, parent=None, without=[]):
+    def __init__(self, parent=None, without=()):
         super(SimpleTweetListWidget, self).__init__(parent)
         self.client = const.client
         self.without = without
@@ -169,12 +169,13 @@ class SingleTweetWidget(QtGui.QFrame):
 
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
+    deleteReturn = QtCore.pyqtSignal(bool)
 
     MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
     SINA_URL_RE = re.compile(r"(http://t.cn/\w{5,7})")
     HASHTAG_RE = re.compile("(#.*?#)")
 
-    def __init__(self, tweet=None, without=[], parent=None):
+    def __init__(self, tweet=None, without=(), parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.errorWindow = APIErrorWindow(self)
         self.tweet = tweet
@@ -525,7 +526,7 @@ class SingleTweetWidget(QtGui.QFrame):
                     self.tweet.setFavoriteForce(True)
                 self._e = e
                 self.__favorite_queue = []
-                self.commonSignal.emit(lambda: self.errorWindow.raiseException.emit(self._e))
+                self.errorWindow.raiseException.emit(self._e)
                 return
 
     def _retweet(self, tweet=None):
@@ -549,6 +550,16 @@ class SingleTweetWidget(QtGui.QFrame):
         self.exec_newpost_window("reply", tweet)
 
     def _delete(self):
+
+        @async
+        def do_delete():
+            try:
+                self.tweet.delete()
+                self.deleteReturn.emit(True)
+            except APIError as e:
+                self.errorWindow.raiseException.emit(e)
+                self.deleteReturn.emit(False)
+
         questionDialog = QtGui.QMessageBox.question
         choice = questionDialog(self, self.tr("Delete?"),
                                 self.tr("You can't undo your deletion."),
@@ -556,10 +567,11 @@ class SingleTweetWidget(QtGui.QFrame):
         if choice == QtGui.QMessageBox.No:
             return
 
-        try:
-            self.tweet.delete()
-        except APIError as e:
-            self.errorWindow.raiseException.emit(e)
+        self.deleteReturn.connect(lambda state: state and self.remove())
+        do_delete()
+
+    def remove(self):
+        # not really remove myself.
         self.timer.stop()
         self.hide()
 
@@ -589,7 +601,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _create_animation(self, path):
         movie = WObjectCache().open(QtGui.QMovie, path)
-        movie.frameChanged.connect(self.drawAnimate)
+        movie.frameChanged.connect(self.drawAnimate, QtCore.Qt.UniqueConnection)
         movie.start()
 
     def drawAnimate(self):

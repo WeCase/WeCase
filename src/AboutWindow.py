@@ -8,6 +8,7 @@
 
 from PyQt4 import QtGui
 import version
+import path
 from AboutWindow_ui import Ui_About_Dialog
 
 
@@ -17,15 +18,30 @@ class AboutWindow(QtGui.QDialog, Ui_About_Dialog):
         super(AboutWindow, self).__init__(parent)
         self.setupUi(self)
 
+    def _setPkgProvider(self):
+        if version.pkgprovider == version.default_provider:
+            vanilla = self.tr("Vanilla Version")
+            self.distLabel.setText(vanilla)
+        else:
+            disttext = version.pkgprovider
+            self.distLabel.setText(self.distLabel.text() % disttext)
+
+    def _setVersionLabel(self):
+        self.versionLabel.setText(self.versionLabel.text() % version.pkgversion)
+
+    def _setDescriptionLabel(self):
+        self.descriptionLabel.setText(self.descriptionLabel.text() % version.bug_report_url)
+
+    def _setContirbutorBrowser(self):
+        with open(path.myself_path + "AUTHORS", "r") as f:
+            contirbutors = f.read()
+        contirbutors = contirbutors.replace("\n", "<br />")
+        self.contirbutorBrowser.setHtml("<center>%s</center>" % contirbutors)
+
     def setupUi(self, widget):
         super().setupUi(widget)
 
-        if version.pkgprovider == version.default_provider:
-            vanilla = self.tr("Vanilla Version")
-            widget.distLabel.setText(vanilla)
-        else:
-            disttext = version.pkgprovider
-            widget.distLabel.setText(widget.distLabel.text() % disttext)
-
-        widget.versionLabel.setText(widget.versionLabel.text() % version.pkgversion)
-        widget.descriptionLabel.setText(widget.descriptionLabel.text() % version.bug_report_url)
+        self._setPkgProvider()
+        self._setVersionLabel()
+        self._setDescriptionLabel()
+        self._setContirbutorBrowser()

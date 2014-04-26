@@ -37,7 +37,7 @@ class WAsyncLabel(WImageLabel):
 
     def setBusy(self, busy):
         if busy:
-            # XXX: # Issue #74.
+            # Hack: #74.
             # What's wrong with the busyMovie()? To save the memory,
             # We use a single busyMovie() in the whole program.
             # If the image downloaded here, we'll stop the movie and the

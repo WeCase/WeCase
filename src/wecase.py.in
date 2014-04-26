@@ -66,9 +66,9 @@ def my_excepthook(type, value, tback):
     exception = "".join(traceback.format_exception(type, value, tback))
     line1 = App.translate("main", "Oops, there is an unexpected error,\n")
     line2 = App.translate("main", "Please report it to %s\n")
-    line3 = App.translate("main", "------------[ cut here ]------------\n\n")
-    line4 = App.translate("main", "Version: WeCase %s\n\n")
-    last_line = App.translate("main", "---[ end trace %s ]---")
+    line3 = "------------[ cut here ]------------\n\n"
+    line4 = "Version: WeCase %s\n\n"
+    last_line = "---[ end trace %s ]---"
     error_info = (line1 + line2 % version.bug_report_url + line3 + line4 % version.pkgversion + "%s" % exception + last_line % hex(id(value)))
 
     if type != last_error:
@@ -101,7 +101,14 @@ def import_warning():
 
 
 def setup_logger():
-    logging.basicConfig(level=logging.ERROR,
+    loglevel = str(os.getenv("WECASELOG")).upper()
+    if loglevel in ("WARNING", "WARN"):
+        loglevel = logging.WARN
+    elif loglevel in ("DEBUG", "VERBOSE"):
+        loglevel = logging.DEBUG
+    else:
+        loglevel = logging.ERROR
+    logging.basicConfig(level=loglevel,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %('
                                'message)s',
                         datefmt='%m-%d %H:%M',

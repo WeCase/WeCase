@@ -20,6 +20,7 @@ class APIErrorWindow(QtCore.QObject):
         self.ERRORS = {
             20101: self.tr("This tweet have been deleted."),
             20704: self.tr("This tweet have been collected already."),
+            20705: self.tr("This tweet doesn't in your collection."),
             20003: self.tr("User doesn't exists."),
             20006: self.tr("Image is too large."),
             20012: self.tr("Text is too long."),
