@@ -42,6 +42,8 @@ class _UBExecutable(_Executable):
 
     # if you find out more, add the error code to the tuple
     UNREASONABLE_ERRORS = (
+        10003,  # Remote service error
+        10011,  # RPC error
         21321,  # Applications over the unaudited use restrictions
         20007,  # Does multipart has image?
     )
