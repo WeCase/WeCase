@@ -152,7 +152,6 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
 
     def __init__(self, parent):
         super(WCompleteLineEdit, self).__init__(parent)
-        self._needComplete = False
         self.callback = None
         self.setAcceptRichText(False)  # 禁用富文本，微博很穷的
 
@@ -171,11 +170,9 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
         return original_text[:pos] + new_text + self.separator
 
     def needComplete(self):
-        if not self.selectedText():
-            self._needComplete = False
-        elif self.selectedText()[-1] == self.mentionFlag:
-            self._needComplete = True
-        elif self.selectedText()[-1] == self.separator:
-            self._needComplete = False
-
-        return self._needComplete
+        for char in reversed(self.selectedText()):
+            if char == self.separator:
+                return False
+            elif char == self.mentionFlag:
+                return True
+        return False
