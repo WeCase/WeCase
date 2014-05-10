@@ -169,12 +169,10 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
 
     def needComplete(self):
         if not self.selectedText():
-            return False
+            self._needComplete = False
         elif self.selectedText()[-1] == self.mentionFlag:
             self._needComplete = True
-            return self._needComplete
         elif self.selectedText()[-1] == self.separator:
             self._needComplete = False
-            return self._needComplete
-        else:
-            return self._needComplete
+
+        return self._needComplete
