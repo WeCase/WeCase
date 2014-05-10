@@ -162,9 +162,12 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
         self.fetchListFinished.emit(result)
 
     def getNewText(self, original_text, new_text):
+        # find the last one self.mentionFlag
+        pos = -1
         for index, value in enumerate(original_text):
             if value == self.mentionFlag:
                 pos = index
+        assert pos != -1, "Cannot find self.mentionFlag."
         return original_text[:pos] + new_text + self.separator
 
     def needComplete(self):
