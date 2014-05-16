@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="zh_CN">
 <context>
     <name></name>
     <message>
@@ -110,7 +111,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation>请勿发送重复微博。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="43"/>
+        <location filename="WeiboErrorHandler.py" line="45"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -118,6 +119,11 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <location filename="WeiboErrorHandler.py" line="23"/>
         <source>This tweet doesn&apos;t in your collection.</source>
         <translation>你没有收藏这条微博。</translation>
+    </message>
+    <message>
+        <location filename="WeiboErrorHandler.py" line="36"/>
+        <source>The API was banned by Sina. I can&apos;t fetch any timeline except yours.</source>
+        <translation>此 API 已被新浪屏蔽。除了你自己的，我不能获得任何其它时间线。</translation>
     </message>
 </context>
 <context>
@@ -657,12 +663,12 @@ Report WeCase bugs to %s</source>
 <context>
     <name>SingleTweetWidget</name>
     <message>
-        <location filename="TweetListWidget.py" line="553"/>
+        <location filename="TweetListWidget.py" line="569"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="553"/>
+        <location filename="TweetListWidget.py" line="569"/>
         <source>You can&apos;t undo your deletion.</source>
         <translation>删除后无法恢复。</translation>
     </message>
@@ -687,7 +693,7 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">未知错误</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="265"/>
+        <location filename="TweetListWidget.py" line="271"/>
         <source>From: %s</source>
         <translation>来自: %s</translation>
     </message>
@@ -728,27 +734,27 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">%.0f 天前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="552"/>
+        <location filename="Tweet.py" line="558"/>
         <source>Future!</source>
         <translation>穿越！</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="554"/>
+        <location filename="Tweet.py" line="560"/>
         <source>%.0fs ago</source>
         <translation>%.0f 秒前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="556"/>
+        <location filename="Tweet.py" line="562"/>
         <source>%.0fm ago</source>
         <translation>%.0f 分前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="558"/>
+        <location filename="Tweet.py" line="564"/>
         <source>%.0fh ago</source>
         <translation>%.0f 小时前</translation>
     </message>
     <message>
-        <location filename="Tweet.py" line="560"/>
+        <location filename="Tweet.py" line="566"/>
         <source>%.0fd ago</source>
         <translation>%.0f 天前</translation>
     </message>
