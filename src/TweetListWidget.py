@@ -96,6 +96,11 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.model = model
         self.model.rowsInserted.connect(self._rowsInserted)
         self.model.nothingLoaded.connect(self._hideBusyIcon)
+        self.model.apiException.connect(self._apiException)
+
+    def _apiException(self, exception):
+        window = APIErrorWindow()
+        window.raiseException.emit(exception)
 
     def _hideBusyIcon(self):
         self.setBusy(False, self.BOTTOM)
@@ -239,11 +244,11 @@ class SingleTweetWidget(QtGui.QFrame):
         self.tweetText.tagClicked.connect(self._tagClicked)
         self.verticalLayout.addWidget(self.tweetText)
 
-        if self.tweet.thumbnail_pic and (not "image" in self.without):
+        if self.tweet.thumbnail_pic and ("image" not in self.without):
             self.imageWidget = self._createImageLabel(self.tweet.thumbnail_pic)
             self.verticalLayout.addWidget(self.imageWidget)
 
-        if self.tweet.original and (not "original" in self.without):
+        if self.tweet.original and ("original" not in self.without):
             self.originalLabel = self._createOriginalLabel()
             self.verticalLayout.addWidget(self.originalLabel)
 
@@ -613,7 +618,7 @@ class SingleTweetWidget(QtGui.QFrame):
         movie = sender
 
         self._addSingleFrame(movie, self.tweetText)
-        if self.tweet.original and (not "original" in self.without):
+        if self.tweet.original and ("original" not in self.without):
             self._addSingleFrame(movie, self.textLabel)
 
     def _addSingleFrame(self, movie, textBrowser):
