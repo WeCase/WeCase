@@ -33,7 +33,8 @@ class APIErrorWindow(QtCore.QObject):
             20032: self.tr("Send successful, but your tweet won't display immediately, please wait for a minute."),
             20101: self.tr("The tweet does not exist."),
             20111: self.tr("Don't send reperted tweet."),
-            21335: self.tr("The API was banned by Sina. I can't fetch any timeline except yours.")
+            21335: self.tr("The API was banned by Sina. I can't fetch any timeline except yours."),
+            21411: self.tr("Sina only returns 200 tweets for a single timeline")
         }
 
     @QtCore.pyqtSlot(Exception)
