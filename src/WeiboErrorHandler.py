@@ -39,7 +39,7 @@ class APIErrorWindow(QtCore.QObject):
     @QtCore.pyqtSlot(Exception)
     def showAPIException(self, exception):
         try:
-            error_message = self.ERRORS[exception.error_code]
+            error_message = self.ERRORS[int(exception.error_code)]
         except KeyError:
-            error_message = "%d: %s" % (exception.error_code, exception.error)
+            error_message = "%d: %s" % (int(exception.error_code), exception.error)
         QtGui.QMessageBox.warning(None, self.tr("Error"), error_message)
