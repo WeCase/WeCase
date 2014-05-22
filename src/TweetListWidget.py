@@ -187,7 +187,10 @@ class SingleTweetWidget(QtGui.QFrame):
         self.client = const.client
         self.without = without
         self.setObjectName("SingleTweetWidget")
-        self.setupUi()
+        try:
+            self.setupUi()
+        except RuntimeError:
+            return
         self.fetcher = AsyncFetcher("".join((cache_path, str(WeRuntimeInfo()["uid"]))))
         self.download_lock = False
         self.__favorite_queue = []
