@@ -1,13 +1,19 @@
 #!/bin/bash
 
-for py in `whereis -b python | sed 's/^python: //'`
-do
-    version=`$py -V 2>&1`
-    if [[ "$version" == *"Python 3"* ]]; then
-        python3=$py
-        break
-    fi
-done
+python3 -c "exit(0)" 2> /dev/null
+
+if [ "$?" == "0" ]; then
+    python3="python3"
+else
+    for py in `whereis -b python | sed 's/^python: //'`
+    do
+        version=`$py -V 2>&1`
+        if [[ "$version" == *"Python 3"* ]]; then
+            python3=$py
+            break
+        fi
+    done
+fi
 
 if [ "$python3" == "" ]; then
     exit 1;
