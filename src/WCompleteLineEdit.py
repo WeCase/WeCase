@@ -149,6 +149,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
 class WCompleteLineEdit(WAbstractCompleteLineEdit):
     mentionFlag = "@"
     separator = " "
+    endComplete = [":"]
 
     def __init__(self, parent):
         super(WCompleteLineEdit, self).__init__(parent)
@@ -171,7 +172,7 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
 
     def needComplete(self):
         for char in reversed(self.selectedText()):
-            if char == self.separator:
+            if char == self.separator or char in self.endComplete:
                 return False
             elif char == self.mentionFlag:
                 return True
