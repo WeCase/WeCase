@@ -12,6 +12,7 @@ from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
 from TweetUtils import tweetLength
+from weibo3 import APIError
 import re
 import const
 
@@ -65,11 +66,13 @@ class TweetTimelineBaseModel(TweetSimpleModel):
 
     timelineLoaded = QtCore.pyqtSignal()
     nothingLoaded = QtCore.pyqtSignal()
+    apiException = QtCore.pyqtSignal(Exception)
 
     def __init__(self, timeline=None, parent=None):
         super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
+        self._nomore = False
 
     def timeline_get(self):
         raise NotImplementedError
@@ -96,9 +99,15 @@ class TweetTimelineBaseModel(TweetSimpleModel):
 
         # timeline is just a pointer to the method.
         # We are in another thread now, call it. UI won't freeze.
-        timeline = timeline_func()
+        try:
+            timeline = timeline_func()
+        except APIError as e:
+            timeline = []
+            self.apiException.emit(e)
 
         if not timeline:
+            if pos == -1:
+                self._nomore = True
             self.nothingLoaded.emit()
 
         if pos == -1:
@@ -121,7 +130,9 @@ class TweetTimelineBaseModel(TweetSimpleModel):
             self.load()
 
     def next(self):
-        if self._tweets:
+        if self._nomore:
+            self.nothingLoaded.emit()
+        elif self._tweets:
             timeline = self.timeline_old
             self._common_get(timeline, -1)
         else:

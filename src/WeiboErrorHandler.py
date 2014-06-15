@@ -20,6 +20,7 @@ class APIErrorWindow(QtCore.QObject):
         self.ERRORS = {
             20101: self.tr("This tweet have been deleted."),
             20704: self.tr("This tweet have been collected already."),
+            20705: self.tr("This tweet doesn't in your collection."),
             20003: self.tr("User doesn't exists."),
             20006: self.tr("Image is too large."),
             20012: self.tr("Text is too long."),
@@ -31,12 +32,15 @@ class APIErrorWindow(QtCore.QObject):
             20022: self.tr("Your IP address is in the blacklist."),
             20032: self.tr("Send successful, but your tweet won't display immediately, please wait for a minute."),
             20101: self.tr("The tweet does not exist."),
-            20111: self.tr("Don't send reperted tweet.")}
+            20111: self.tr("Don't send reperted tweet."),
+            21335: self.tr("The API was banned by Sina. I can't fetch any timeline except yours."),
+            21411: self.tr("Sina only returns 200 tweets for a single timeline")
+        }
 
     @QtCore.pyqtSlot(Exception)
     def showAPIException(self, exception):
         try:
-            error_message = self.ERRORS[exception.error_code]
+            error_message = self.ERRORS[int(exception.error_code)]
         except KeyError:
-            error_message = "%d: %s" % (exception.error_code, exception.error)
+            error_message = "%d: %s" % (int(exception.error_code), exception.error)
         QtGui.QMessageBox.warning(None, self.tr("Error"), error_message)

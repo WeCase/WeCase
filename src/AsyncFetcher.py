@@ -14,6 +14,7 @@ from WeHack import async, SingletonDecorator
 from threading import Event
 import os
 from time import sleep
+import logging
 
 
 class SignalSender(QtCore.QObject):
@@ -43,13 +44,14 @@ class _AsyncFetcher(QtCore.QObject):
         super(_AsyncFetcher, self).__init__(parent)
 
         if path[-1] != "/":
+            # fix the non-standard path.
             path += "/"
         if not os.path.exists(path):
-                os.makedirs(path)
+            os.makedirs(path)
 
         self.path = path
         self._signals = {}
-        self._modified = Event()
+        self._got_state = Event()
 
     @staticmethod
     def _formattedFilename(url):
@@ -62,11 +64,12 @@ class _AsyncFetcher(QtCore.QObject):
             try:
                 urlretrieve(url, filepath)
                 break
-            except (BadStatusLine, ContentTooShortError, URLError):
+            except (BadStatusLine, ContentTooShortError, URLError, OSError):
+                logging.warning("Downloading %s failed, retry..." % url)
                 sleep(1)
                 continue
 
-        self._modified.wait()
+        self._got_state.wait()
         self._process_callbacks(filepath)
 
     def _get_state(self, filepath):
@@ -95,9 +98,9 @@ class _AsyncFetcher(QtCore.QObject):
 
     def addTask(self, url, callback):
         filename = self._formattedFilename(url)
-        filepath = "".join((self.path, filename))
+        filepath = "%s%s" % (self.path, filename)
 
-        self._modified.clear()
+        self._got_state.clear()
 
         state = self._get_state(filepath)
         self._add_callback(filepath, callback)
@@ -110,6 +113,6 @@ class _AsyncFetcher(QtCore.QObject):
         else:
             assert False, "Downloaded but downloading now?"
 
-        self._modified.set()
+        self._got_state.set()
 
 AsyncFetcher = SingletonDecorator(_AsyncFetcher)

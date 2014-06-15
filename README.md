@@ -94,3 +94,7 @@ sudo make install
 # Run
 wecase
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/WeCase/wecase/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

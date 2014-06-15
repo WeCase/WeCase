@@ -32,7 +32,7 @@ class TweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, parent=None, without=[]):
+    def __init__(self, parent=None, without=()):
         super(TweetListWidget, self).__init__(parent)
         self.tweetListWidget = SimpleTweetListWidget(parent, without)
         self.tweetListWidget.userClicked.connect(self.userClicked)
@@ -80,7 +80,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    def __init__(self, parent=None, without=[]):
+    def __init__(self, parent=None, without=()):
         super(SimpleTweetListWidget, self).__init__(parent)
         self.client = const.client
         self.without = without
@@ -96,6 +96,11 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.model = model
         self.model.rowsInserted.connect(self._rowsInserted)
         self.model.nothingLoaded.connect(self._hideBusyIcon)
+        self.model.apiException.connect(self._apiException)
+
+    def _apiException(self, exception):
+        window = APIErrorWindow()
+        window.raiseException.emit(exception)
 
     def _hideBusyIcon(self):
         self.setBusy(False, self.BOTTOM)
@@ -169,19 +174,23 @@ class SingleTweetWidget(QtGui.QFrame):
 
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
+    deleteReturn = QtCore.pyqtSignal(bool)
 
     MENTIONS_RE = re.compile('(@[-a-zA-Z0-9_\u4e00-\u9fa5]+)')
-    SINA_URL_RE = re.compile(r"(http://t.cn/\w{5,7})")
+    SINA_URL_RE = re.compile(r"(http://t.cn/[a-zA-Z0-9]{5,7})")
     HASHTAG_RE = re.compile("(#.*?#)")
 
-    def __init__(self, tweet=None, without=[], parent=None):
+    def __init__(self, tweet=None, without=(), parent=None):
         super(SingleTweetWidget, self).__init__(parent)
         self.errorWindow = APIErrorWindow(self)
         self.tweet = tweet
         self.client = const.client
         self.without = without
         self.setObjectName("SingleTweetWidget")
-        self.setupUi()
+        try:
+            self.setupUi()
+        except RuntimeError:
+            return
         self.fetcher = AsyncFetcher("".join((cache_path, str(WeRuntimeInfo()["uid"]))))
         self.download_lock = False
         self.__favorite_queue = []
@@ -238,11 +247,11 @@ class SingleTweetWidget(QtGui.QFrame):
         self.tweetText.tagClicked.connect(self._tagClicked)
         self.verticalLayout.addWidget(self.tweetText)
 
-        if self.tweet.thumbnail_pic and (not "image" in self.without):
+        if self.tweet.thumbnail_pic and ("image" not in self.without):
             self.imageWidget = self._createImageLabel(self.tweet.thumbnail_pic)
             self.verticalLayout.addWidget(self.imageWidget)
 
-        if self.tweet.original and (not "original" in self.without):
+        if self.tweet.original and ("original" not in self.without):
             self.originalLabel = self._createOriginalLabel()
             self.verticalLayout.addWidget(self.originalLabel)
 
@@ -549,6 +558,16 @@ class SingleTweetWidget(QtGui.QFrame):
         self.exec_newpost_window("reply", tweet)
 
     def _delete(self):
+
+        @async
+        def do_delete():
+            try:
+                self.tweet.delete()
+                self.deleteReturn.emit(True)
+            except APIError as e:
+                self.errorWindow.raiseException.emit(e)
+                self.deleteReturn.emit(False)
+
         questionDialog = QtGui.QMessageBox.question
         choice = questionDialog(self, self.tr("Delete?"),
                                 self.tr("You can't undo your deletion."),
@@ -556,10 +575,11 @@ class SingleTweetWidget(QtGui.QFrame):
         if choice == QtGui.QMessageBox.No:
             return
 
-        try:
-            self.tweet.delete()
-        except APIError as e:
-            self.errorWindow.raiseException.emit(e)
+        self.deleteReturn.connect(lambda state: state and self.remove())
+        do_delete()
+
+    def remove(self):
+        # not really remove myself.
         self.timer.stop()
         self.hide()
 
@@ -589,7 +609,7 @@ class SingleTweetWidget(QtGui.QFrame):
 
     def _create_animation(self, path):
         movie = WObjectCache().open(QtGui.QMovie, path)
-        movie.frameChanged.connect(self.drawAnimate)
+        movie.frameChanged.connect(self.drawAnimate, QtCore.Qt.UniqueConnection)
         movie.start()
 
     def drawAnimate(self):
@@ -601,7 +621,7 @@ class SingleTweetWidget(QtGui.QFrame):
         movie = sender
 
         self._addSingleFrame(movie, self.tweetText)
-        if self.tweet.original and (not "original" in self.without):
+        if self.tweet.original and ("original" not in self.without):
             self._addSingleFrame(movie, self.textLabel)
 
     def _addSingleFrame(self, movie, textBrowser):

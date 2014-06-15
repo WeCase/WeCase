@@ -149,10 +149,10 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
 class WCompleteLineEdit(WAbstractCompleteLineEdit):
     mentionFlag = "@"
     separator = " "
+    endComplete = [":"]
 
     def __init__(self, parent):
         super(WCompleteLineEdit, self).__init__(parent)
-        self._needComplete = False
         self.callback = None
         self.setAcceptRichText(False)  # 禁用富文本，微博很穷的
 
@@ -162,19 +162,18 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
         self.fetchListFinished.emit(result)
 
     def getNewText(self, original_text, new_text):
+        # find the last one self.mentionFlag
+        pos = -1
         for index, value in enumerate(original_text):
             if value == self.mentionFlag:
                 pos = index
+        assert pos != -1, "Cannot find self.mentionFlag."
         return original_text[:pos] + new_text + self.separator
 
     def needComplete(self):
-        if not self.selectedText():
-            return False
-        elif self.selectedText()[-1] == self.mentionFlag:
-            self._needComplete = True
-            return self._needComplete
-        elif self.selectedText()[-1] == self.separator:
-            self._needComplete = False
-            return self._needComplete
-        else:
-            return self._needComplete
+        for char in reversed(self.selectedText()):
+            if char == self.separator or char in self.endComplete:
+                return False
+            elif char == self.mentionFlag:
+                return True
+        return False

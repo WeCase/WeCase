@@ -49,10 +49,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             # emit when we reject() the window.
             self.saveConfig()
             self.setParent(None)
-        wecase_main = WeCaseWindow()
+        wecase_main = WeCaseWindow(self.username)
         wecase_main.show()
         # Maybe users will logout, so reset the status
-        LoginInfo().add_account(self.username)
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
         self.done(True)

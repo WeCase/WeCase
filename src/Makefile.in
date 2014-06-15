@@ -52,7 +52,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = src
 DIST_COMMON = $(WeCase_PYTHON) $(Weibos_PYTHON) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+	$(srcdir)/Makefile.in AUTHORS
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/AC_PYTHON_MODULE.m4 \
 	$(top_srcdir)/m4/acx.m4 $(top_srcdir)/configure.ac
@@ -90,7 +90,7 @@ am__uninstall_files_from_dir = { \
   }
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" \
 	"$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" \
-	"$(DESTDIR)$(metaconfdir)"
+	"$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"
 SCRIPTS = $(bin_SCRIPTS) $(libexec_SCRIPTS)
 SOURCES =
 DIST_SOURCES =
@@ -101,7 +101,7 @@ am__can_run_installinfo = \
   esac
 am__py_compile = PYTHON=$(PYTHON) $(SHELL) $(py_compile)
 py_compile = $(top_srcdir)/py-compile
-DATA = $(metaconf_DATA)
+DATA = $(authors_DATA) $(metaconf_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -201,7 +201,8 @@ CLEANFILES = wecase \
 			 LoginWindow_ui.py \
 			 NewpostWindow_ui.py \
 			 SettingWindow_ui.py \
-			 wecase_rc.py
+			 wecase_rc.py \
+			 AUTHORS
 
 BUGURL = \"@REPORT_BUGS_TO@\"
 NAME = WeCase
@@ -261,6 +262,8 @@ Weibos_PYTHON = weibos/client.py \
 
 metaconfdir = $(pythondir)/WeCase/
 metaconf_DATA = WMetaConfig
+authorsdir = $(pythondir)/WeCase/
+authors_DATA = AUTHORS
 all: all-am
 
 .SUFFIXES:
@@ -440,6 +443,27 @@ uninstall-WeibosPYTHON:
 	  $(am__uninstall_files_from_dir) || st=$$?; \
 	done; \
 	exit $$st
+install-authorsDATA: $(authors_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(authors_DATA)'; test -n "$(authorsdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(authorsdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(authorsdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(authorsdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(authorsdir)" || exit $$?; \
+	done
+
+uninstall-authorsDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(authors_DATA)'; test -n "$(authorsdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(authorsdir)'; $(am__uninstall_files_from_dir)
 install-metaconfDATA: $(metaconf_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(metaconf_DATA)'; test -n "$(metaconfdir)" || list=; \
@@ -502,7 +526,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(metaconfdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -557,7 +581,7 @@ info: info-am
 info-am:
 
 install-data-am: install-WeCasePYTHON install-WeibosPYTHON \
-	install-metaconfDATA
+	install-authorsDATA install-metaconfDATA
 
 install-dvi: install-dvi-am
 
@@ -602,25 +626,25 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
-	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
-	uninstall-metaconfDATA
+	uninstall-authorsDATA uninstall-binSCRIPTS \
+	uninstall-libexecSCRIPTS uninstall-metaconfDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
 	install install-WeCasePYTHON install-WeibosPYTHON install-am \
-	install-binSCRIPTS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libexecSCRIPTS install-man install-metaconfDATA \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	install-authorsDATA install-binSCRIPTS install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-libexecSCRIPTS install-man \
+	install-metaconfDATA install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
 	uninstall-WeCasePYTHON uninstall-WeibosPYTHON uninstall-am \
-	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
-	uninstall-metaconfDATA
+	uninstall-authorsDATA uninstall-binSCRIPTS \
+	uninstall-libexecSCRIPTS uninstall-metaconfDATA
 
 
 path.py: path.py.in Makefile
@@ -654,6 +678,9 @@ SettingWindow_ui.py:
 
 wecase_rc.py:
 	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+
+AUTHORS:
+	cp $(srcdir)/../AUTHORS ./
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
