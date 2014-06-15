@@ -10,7 +10,9 @@
 import sys
 sys.path.append("..")
 from weibos.client import UBClient
+from WConfigParser import WConfigParser
 import const
+import path
 
 
 SUCCESS = 1
@@ -18,10 +20,18 @@ PASSWORD_ERROR = -1
 NETWORK_ERROR = -2
 
 
+def _auth_info():
+    login_config = WConfigParser(path.myself_path + "WMetaConfig",
+                                 path.config_path, "login")
+    key = login_config.app_key or const.APP_KEY
+    secret = login_config.app_secret or const.APP_SECRET
+    callback = login_config.redirect_uri or const.CALLBACK_URL
+    return key, secret, callback
+
+
 def UBAuthorize(username, password):
-    client = UBClient(app_key=const.APP_KEY,
-                      app_secret=const.APP_SECRET,
-                      redirect_uri=const.CALLBACK_URL)
+    key, secret, callback = _auth_info()
+    client = UBClient(app_key=key, app_secret=secret, redirect_uri=callback)
 
     try:
         # Step 1: Get the authorize url from Sina
@@ -53,8 +63,14 @@ def _authorize(authorize_url, username, password):
     import socket
 
     oauth2 = const.OAUTH2_PARAMETER
+    key, secret, callback = _auth_info()
+
+    oauth2["client_id"] = key
+    oauth2["redirect_uri"] = callback
+
     oauth2['userId'] = username
     oauth2['passwd'] = password
+
     postdata = urllib.parse.urlencode(oauth2)
 
     conn = http.client.HTTPSConnection('api.weibo.com')

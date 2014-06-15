@@ -2,7 +2,7 @@
 m4_include([m4/AC_PYTHON_MODULE.m4])
 m4_include([m4/acx.m4])
 
-AC_INIT([WeCase], [0.06-beta5])
+AC_INIT([WeCase], [0.06-beta6])
 
 AM_INIT_AUTOMAKE
 AM_PATH_PYTHON([3.2],, AC_MSG_ERROR(Could not find Python >= 3.2.))
