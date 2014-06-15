@@ -69,3 +69,18 @@ section = login
 name = auto_login
 type = bool
 default = False
+
+section = login
+name = app_key
+type = str
+default =
+
+section = login
+name = app_secret
+type = str
+default =
+
+section = login
+name = redirect_uri
+type = str
+default =
