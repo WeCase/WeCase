@@ -111,7 +111,7 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <translation>请勿发送重复微博。</translation>
     </message>
     <message>
-        <location filename="WeiboErrorHandler.py" line="45"/>
+        <location filename="WeiboErrorHandler.py" line="46"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -124,6 +124,11 @@ Please report it at https://github.com/WeCase/WeCase/issues</source>
         <location filename="WeiboErrorHandler.py" line="36"/>
         <source>The API was banned by Sina. I can&apos;t fetch any timeline except yours.</source>
         <translation>此 API 已被新浪屏蔽。除了你自己的，我不能获得任何其它时间线。</translation>
+    </message>
+    <message>
+        <location filename="WeiboErrorHandler.py" line="37"/>
+        <source>Sina only returns 200 tweets for a single timeline</source>
+        <translation>新浪对于同一时间线最多返回 200 条微博</translation>
     </message>
 </context>
 <context>
@@ -663,12 +668,12 @@ Report WeCase bugs to %s</source>
 <context>
     <name>SingleTweetWidget</name>
     <message>
-        <location filename="TweetListWidget.py" line="569"/>
+        <location filename="TweetListWidget.py" line="572"/>
         <source>Delete?</source>
         <translation>删除？</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="569"/>
+        <location filename="TweetListWidget.py" line="572"/>
         <source>You can&apos;t undo your deletion.</source>
         <translation>删除后无法恢复。</translation>
     </message>
@@ -693,7 +698,7 @@ Report WeCase bugs to %s</source>
         <translation type="obsolete">未知错误</translation>
     </message>
     <message>
-        <location filename="TweetListWidget.py" line="271"/>
+        <location filename="TweetListWidget.py" line="274"/>
         <source>From: %s</source>
         <translation>来自: %s</translation>
     </message>
