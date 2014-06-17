@@ -23,6 +23,10 @@ class FaceItem():
         self._path = ""
         self._category = ""
 
+        # it shouldn't change very often
+        # just hardcoded here instead of read from the XML file.
+        self.height = self.width = 22
+
     @property
     def name(self):
         if not self._name:

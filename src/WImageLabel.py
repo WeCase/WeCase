@@ -15,19 +15,25 @@ class WImageLabel(QtGui.QLabel):
 
     def __init__(self, parent=None):
         super(WImageLabel, self).__init__(parent)
+        self._image = None
 
-    def setImageFile(self, path, start=True):
-        self.setMovie(QtGui.QMovie(path), start)
+    def setImageFile(self, path, width=-1, height=-1):
+        self._image = path
 
-    def setMovie(self, movie, start=True):
-        super(WImageLabel, self).setMovie(movie)
-        start and movie.start()
+        size = QtCore.QSize(width, height)
+        if size.isValid():
+            self.sizeHint = lambda: size
 
     def start(self):
+        if self.movie():
+            self._image = self.movie().fileName()
+        else:
+            self.setMovie(QtGui.QMovie(self._image))
         self.movie().start()
 
     def stop(self):
         self.movie().stop()
+        self.setMovie(None)  # free memory
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton:
