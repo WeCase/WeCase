@@ -1,56 +1,17 @@
-WeCase
+[WeCase](http://wecase.org)
 ======
 
-Description 概述
-------
-The Linux Sina Weibo Client
-
-Linux下的新浪微博客户端
-
-This project is under heavy development.
-
-这个项目处在努力开发状态。
-
-IRC Channel IRC频道
-------
-
-###使用IRC客户端
-
-加入irc.freenode.net的#wecase频道
-
-###使用浏览器
-
-点击[#wecase](https://kiwiirc.com/client/irc.freenode.net/wecase)在线加入IRC频道
-
-订阅邮件列表
------
-
-发送空邮件到 **wecase+subscribe@googlegroups.com**
-
-或者点击[这里](https://groups.google.com/forum/?hl=zh-CN&fromgroups#!forum/wecase)加入
+![WeCase](https://raw.githubusercontent.com/WeCase/WeCase/master/res/wecase.png)
 
 
-Development Guide 开发指南
-------
-Everyone should follow the [Development Guide](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97). Please read it carefully.
+A Sina Weibo Client Focusing on Linux.
+---------------------------------------
+The goal of WeCase, is becoming a simple, but not crude Sina Weibo client.
 
-所有人都应遵守[开发指南](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97)。请务必仔细阅读。
+This project is under heavy development, we are far away from the goal now.
 
-Dependencies 依赖
------
-1. Python 3 
-2. PyQt4 (python3-pyqt, python3-qt4)
-
-3. Optional 可选
-
-   Python-notify2 (python3-notify2)
-
-Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
-
-注意：不同的发行版可能使用不同的软件包名称，或者在软件库中找不到 `python-notify2`。我们将会创建这些依赖的 `.rpm` 以及 `.deb` 包，在此之前，请从 PIP 安装。
-
-Installation Guide
------
+Installation
+------------
 
 ### Installing by Package Manager
 
@@ -60,7 +21,7 @@ Installation Guide
 yaourt -S wecase
 ```
 
-#### Fedora (18, 19)
+#### Fedora (18, 19 only)
 
 ```
 sudo su -c "wget -O- http://download.opensuse.org/repositories/home:/biergaizi/Fedora_$(rpm -E %fedora)/home:biergaizi.repo > /etc/yum.repos.d/wecase.repo"
@@ -76,6 +37,19 @@ emerge net-misc/WeCase
 
 ### Build from Source
 
+#### Dependencies
+-----
+1. Python 3
+2. PyQt4 (python3-pyqt, python3-qt4)
+3. Python-notify2 (aka. python3-notify2, optional dependency)
+4. Development tools for PyQt / Qt (packages names are very different on different distributions)
+5. make
+6. automake
+
+Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
+
+#### Build and Install from Source
+
 ```
 git clone --recursive git://github.com/WeCase/WeCase.git
 
@@ -85,6 +59,7 @@ sudo python3 setup.py install
 cd ..
 
 # Build and Install
+./bootstrap.sh
 mkdir build
 cd build
 ../configure
@@ -95,6 +70,20 @@ sudo make install
 wecase
 ```
 
+Contact & Discuss
+---------
+
+### IRC Channel
+
+[#wecase](https://kiwiirc.com/client/irc.freenode.net/wecase) @ Freenode
+
+### Mailing List
+
+To join the mailing list, click [here](https://groups.google.com/forum/?hl=zh-CN&fromgroups#!forum/wecase),
+or send an empty mail to **wecase+subscribe@googlegroups.com**.
+
+Development Guide
+------
+Everyone should follow the [Development Guide](https://github.com/WeCase/WeCase/wiki/WeCase-%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97). Please read it carefully.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/WeCase/wecase/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

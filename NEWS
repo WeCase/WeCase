@@ -9,6 +9,28 @@ See the git log and release notes for detailed information.
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+Version 0.06-beta6 (18 June 2014):
+* Handling more API exceptions, improved the stability.
+* More async operations, more smooth user interface.
+* Updated smilies / faces.
+* Vectorized Logo.
+* Allow to specify custom app_key, app_secret and redirect_uri in
+  the config file.
+* WImageLabel won't open too many images simultaneously.
+* Improvements for the auto-completion.
+* Reworking on duplicate-login detection, fixed many bugs / false-positives.
+* Enhancements for AboutWindow, now it displays the AUTHORS from the source
+  tree instead of the hardcoded text.
+* A simpler reimplementation of WIconWidget, save the memory.
+* Unique signal/slot connection for drawAnimate(), save some CPU time.
+* Don't request more tweets if it reaches the end of a timeline.
+* Bugfixes:
+    . Fixed an exception when deleting the deleted tweets (#116).
+    . Fixed a error raises after deleting some text in auto-completion (#123).
+    . Sina blocked statuses/user_timeline.json, instead of an exception,
+      tell the user what happened (#119).
+    . Run WeCase with the system-preferred Python interpreter. (#122).
+
 Version 0.06-beta5 (08 March 2014):
 * More checking when configure.
 * Improved bug notice information.
