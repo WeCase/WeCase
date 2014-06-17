@@ -1,7 +1,7 @@
 [WeCase](http://wecase.org)
 ======
 
-![WeCase](https://raw.githubusercontent.com/WeCase/WeCase/master/res/img/WeCase.svg)
+![WeCase](https://raw.githubusercontent.com/WeCase/WeCase/master/res/wecase.png)
 
 
 A Sina Weibo Client Focusing on Linux.
