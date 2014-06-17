@@ -90,7 +90,7 @@ class WSmileyWidget(QtGui.QWidget):
         # about the size of the image. And we don't want to start
         # it now (for CPU and memory usage).
         # So, we must specific the width and height here.
-        self.smileyLabel.setImageFile(smiley.path, False, smiley.width, smiley.height)
+        self.smileyLabel.setImageFile(smiley.path, smiley.width, smiley.height)
 
     def _smileyClicked(self):
         self.smileyClicked.emit(self._smiley.name)
