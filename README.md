@@ -42,6 +42,9 @@ emerge net-misc/WeCase
 1. Python 3
 2. PyQt4 (python3-pyqt, python3-qt4)
 3. Python-notify2 (aka. python3-notify2, optional dependency)
+4. Development tools for PyQt / Qt (packages names are very different on different distributions)
+5. make
+6. automake
 
 Note: Some distributions use different packages names, or do not contain `python-notify2` in thier packages repositories. We are going to create `.rpm` and `.deb` packages for the dependencies. Before that, please download and install them from PIP.
 
