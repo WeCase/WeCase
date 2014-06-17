@@ -84,12 +84,13 @@ class WSmileyWidget(QtGui.QWidget):
         self._smiley = smiley
         self.smileyLabel = WImageLabel(self)
         self.smileyLabel.setToolTip(smiley.name)
-        self.smileyLabel.setImageFile(smiley.path, False)
-        # HACK: Start and stop animation to let Qt Layout calculate
-        # the size of them correctly.
-        self.smileyLabel.start()
-        self.smileyLabel.stop()
         self.smileyLabel.clicked.connect(self._smileyClicked)
+
+        # Before the animation starts, WImageLabel knows nothing
+        # about the size of the image. And we don't want to start
+        # it now (for CPU and memory usage).
+        # So, we must specific the width and height here.
+        self.smileyLabel.setImageFile(smiley.path, False, smiley.width, smiley.height)
 
     def _smileyClicked(self):
         self.smileyClicked.emit(self._smiley.name)
