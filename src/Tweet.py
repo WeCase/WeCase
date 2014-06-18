@@ -175,8 +175,10 @@ class TweetUserModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
+        if not self._name:
+            self._load_complete_name()
         timeline = self.timeline.get(since_id=self.first_id(),
-                                     uid=self._uid).statuses[::-1]
+                                     uid=self._name).statuses[::-1]
         return timeline
 
     def timeline_old(self):
