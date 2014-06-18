@@ -25,6 +25,7 @@ from WObjectCache import WObjectCache
 from AsyncFetcher import AsyncFetcher
 from Face import FaceModel
 from WeiboErrorHandler import APIErrorWindow
+from WMovie import WMovie
 
 
 class TweetListWidget(QtGui.QWidget):
@@ -608,14 +609,14 @@ class SingleTweetWidget(QtGui.QFrame):
         return self.HASHTAG_RE.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
 
     def _create_animation(self, path):
-        movie = WObjectCache().open(QtGui.QMovie, path)
+        movie = WObjectCache().open(WMovie, path)
         movie.frameChanged.connect(self.drawAnimate, QtCore.Qt.UniqueConnection)
         movie.start()
 
     def drawAnimate(self):
         sender = self.sender()
 
-        if (not isinstance(sender, QtGui.QMovie)) or (not self.tweetText.visibleRegion()):
+        if (not isinstance(sender, WMovie)) or (not self.tweetText.visibleRegion()):
             return
 
         movie = sender

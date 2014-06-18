@@ -163,18 +163,28 @@ class TweetUserModel(TweetTimelineBaseModel):
     def __init__(self, timeline, uid, parent=None):
         super(TweetUserModel, self).__init__(timeline, parent)
         self._uid = uid
+        self._name = ""
+
+    def _load_complete_name(self):
+        self._name = const.client.users.show.get(uid=self._uid).get("screen_name")
 
     def timeline_get(self, page=1):
-        timeline = self.timeline.get(page=page, uid=self._uid).statuses
+        if not self._name:
+            self._load_complete_name()
+        timeline = self.timeline.get(page=page, screen_name=self._name).statuses
         return timeline
 
     def timeline_new(self):
+        if not self._name:
+            self._load_complete_name()
         timeline = self.timeline.get(since_id=self.first_id(),
-                                     uid=self._uid).statuses[::-1]
+                                     screen_name=self._name).statuses[::-1]
         return timeline
 
     def timeline_old(self):
-        timeline = self.timeline.get(max_id=self.last_id(), uid=self._uid).statuses
+        if not self._name:
+            self._load_complete_name()
+        timeline = self.timeline.get(max_id=self.last_id(), screen_name=self._name).statuses
         timeline = timeline[1::]
         return timeline
 

@@ -7,6 +7,7 @@
 
 
 from PyQt4 import QtCore, QtGui
+from WMovie import WMovie
 
 
 class WImageLabel(QtGui.QLabel):
@@ -15,10 +16,10 @@ class WImageLabel(QtGui.QLabel):
 
     def __init__(self, parent=None):
         super(WImageLabel, self).__init__(parent)
-        self._image = None
+        self._imagePath = None
 
     def setImageFile(self, path, width=-1, height=-1):
-        self._image = path
+        self._imagePath = path
 
         size = QtCore.QSize(width, height)
         if size.isValid():
@@ -26,14 +27,17 @@ class WImageLabel(QtGui.QLabel):
 
     def start(self):
         if self.movie():
-            self._image = self.movie().fileName()
+            self._imagePath = self.movie().fileName()
         else:
-            self.setMovie(QtGui.QMovie(self._image))
+            movie = WMovie(self._imagePath)
+            self.setMovie(movie)
         self.movie().start()
 
     def stop(self):
         self.movie().stop()
-        self.setMovie(None)  # free memory
+
+        # free memory
+        self.setMovie(None)
 
     def mouseReleaseEvent(self, e):
         if e.button() == QtCore.Qt.LeftButton:
