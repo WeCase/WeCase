@@ -90,6 +90,7 @@ WeCase_PYTHON = path.py \
 				WTimeParser.py \
 				WTimeParser_test.py \
 				WTimer.py \
+				WMovie.py \
 				WTweetLabel.py \
 				WConfigParser.py \
 				FilterTable.py \
