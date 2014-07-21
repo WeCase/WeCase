@@ -106,7 +106,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             return
 
         view = TweetListWidget()
-        _timeline = TweetUserModel(self.client.statuses.user_timeline, uid,
+        _timeline = TweetUserModel(self.client.api("statuses/user_timeline"), uid,
                                    view)
         timeline = TweetFilterModel(_timeline)
         timeline.setModel(_timeline)
@@ -116,7 +116,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             self._setTabIcon(tab, WObjectCache().open(QtGui.QPixmap, f))
 
         fetcher = AsyncFetcher("".join((path.cache_path, str(self.info["uid"]))))
-        fetcher.addTask(self.client.users.show.get(uid=uid)["profile_image_url"], setAvatar)
+        fetcher.addTask(self.client.api("users/show").get(uid=uid)["profile_image_url"], setAvatar)
 
     def _setupTopicTab(self, topic, switch=True):
         index = self._getSameTab("topic", topic)
@@ -126,7 +126,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             return
 
         view = TweetListWidget()
-        timeline = TweetTopicModel(self.client.search.topics, topic, view)
+        timeline = TweetTopicModel(self.client.api("search/topics"), topic, view)
         tab = self._setupCommonTab(timeline, view, switch, protect=False)
         self._setTabIcon(tab, WObjectCache().open(
             QtGui.QPixmap, ":/IMG/img/topic.jpg"
@@ -402,7 +402,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         setGeometry(self, self.mainWindow_geometry)
 
     def setupModels(self):
-        self._all_timeline = TweetCommonModel(self.client.statuses.home_timeline, self)
+        self._all_timeline = TweetCommonModel(self.client.api("statuses/home_timeline"), self)
         self.all_timeline = TweetFilterModel(self._all_timeline)
         self.all_timeline.setModel(self._all_timeline)
         self._prepareTimeline(self.all_timeline)
@@ -413,19 +413,19 @@ class WeCaseWindow(QtGui.QMainWindow):
 
         self.homeView.setModel(self.all_timeline)
 
-        self._mentions = TweetCommonModel(self.client.statuses.mentions, self)
+        self._mentions = TweetCommonModel(self.client.api("statuses/mentions"), self)
         self.mentions = TweetFilterModel(self._mentions)
         self.mentions.setModel(self._mentions)
         self._prepareTimeline(self.mentions)
         self.mentionsView.setModel(self.mentions)
 
-        self._comment_to_me = TweetCommentModel(self.client.comments.to_me, self)
+        self._comment_to_me = TweetCommentModel(self.client.api("comments/to_me"), self)
         self.comment_to_me = TweetFilterModel(self._comment_to_me)
         self.comment_to_me.setModel(self._comment_to_me)
         self._prepareTimeline(self.comment_to_me)
         self.commentsView.setModel(self.comment_to_me)
 
-        self._comment_mentions = TweetCommentModel(self.client.comments.mentions, self)
+        self._comment_mentions = TweetCommentModel(self.client.api("comments/mentions"), self)
         self.comment_mentions = TweetFilterModel(self._comment_mentions)
         self.comment_mentions.setModel(self._comment_mentions)
         self._prepareTimeline(self.comment_mentions)
@@ -447,19 +447,19 @@ class WeCaseWindow(QtGui.QMainWindow):
             self.tabBadgeChanged.emit(self.tabWidget.currentIndex(), 0)
 
         if typ:
-            self.client.remind.set_count.post(type=typ)
+            self.client.api("remind/set_count").post(type=typ)
 
     def get_remind(self, uid):
         """this function is used to get unread_count
         from Weibo API. uid is necessary."""
 
-        reminds = self.client.remind.unread_count.get(uid=uid)
+        reminds = self.client.api("remind/unread_count").get(uid=uid)
         return reminds
 
     def uid(self):
         """How can I get my uid? here it is"""
         if not self.info.get("uid"):
-            self.info["uid"] = self.client.get("account/get_uid").uid
+            self.info["uid"] = self.client.api("account/get_uid").get().uid
         return self.info["uid"]
 
     def show_notify(self):

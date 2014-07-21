@@ -68,7 +68,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
     nothingLoaded = QtCore.pyqtSignal()
     apiException = QtCore.pyqtSignal(Exception)
 
-    def __init__(self, timeline=None, parent=None):
+    def __init__(self, timeline="", parent=None):
         super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
@@ -166,7 +166,7 @@ class TweetUserModel(TweetTimelineBaseModel):
         self._name = ""
 
     def _load_complete_name(self):
-        self._name = const.client.users.show.get(uid=self._uid).get("screen_name")
+        self._name = const.client.api("users/show").get(uid=self._uid).get("screen_name")
 
     def timeline_get(self, page=1):
         if not self._name:
@@ -478,9 +478,9 @@ class UserItem(QtCore.QObject):
 
     def _loadCompleteInfo(self):
         if self._data.get('id'):
-            self._data = self.client.users.show.get(uid=self._data.get('id'))
+            self._data = self.client.api("users/show").get(uid=self._data.get('id'))
         elif self._data.get('name'):
-            self._data = self.client.users.show.get(screen_name=self._data.get('name'))
+            self._data = self.client.api("users/show").get(screen_name=self._data.get('name'))
 
     @QtCore.pyqtProperty(int, constant=True)
     def id(self):
@@ -676,7 +676,7 @@ class TweetItem(QtCore.QObject):
         return text
 
     def reply(self, text, comment_ori=False, retweet=False):
-        self.client.comments.reply.post(id=self.original.id, cid=self.id,
+        self.client.api("comments/reply").post(id=self.original.id, cid=self.id,
                                         comment=text, comment_ori=int(comment_ori))
         if retweet:
             text = self.append_existing_replies(text)
@@ -684,20 +684,20 @@ class TweetItem(QtCore.QObject):
             self.original.retweet(text)
 
     def retweet(self, text, comment=False, comment_ori=False):
-        self.client.statuses.repost.post(id=self.id, status=text,
+        self.client.api("statuses/repost").post(id=self.id, status=text,
                                          is_comment=int(comment + comment_ori * 2))
 
     def comment(self, text, comment_ori=False, retweet=False):
-        self.client.comments.create.post(id=self.id, comment=text,
+        self.client.api("comments/create").post(id=self.id, comment=text,
                                          comment_ori=int(comment_ori))
         if retweet:
             self.retweet(text)
 
     def delete(self):
         if self.type in [self.TWEET, self.RETWEET]:
-            self.client.statuses.destroy.post(id=self.id)
+            self.client.api("statuses/destroy").post(id=self.id)
         elif self.type == self.COMMENT:
-            self.client.comments.destroy.post(cid=self.id)
+            self.client.api("comments/destroy").post(cid=self.id)
 
     def setFavorite(self, state):
         if self.type not in [self.TWEET, self.RETWEET]:
@@ -705,11 +705,11 @@ class TweetItem(QtCore.QObject):
 
         if state:
             assert(not self.__isFavorite)
-            self.client.favorites.create.post(id=self.id)
+            self.client.api("favorites/create").post(id=self.id)
             self.__isFavorite = True
         else:
             assert(self.__isFavorite)
-            self.client.favorites.destroy.post(id=self.id)
+            self.client.api("favorites/destroy").post(id=self.id)
             self.__isFavorite = False
 
     def setFavoriteForce(self, state):
@@ -717,7 +717,7 @@ class TweetItem(QtCore.QObject):
 
     def refresh(self):
         if self.type in [self.TWEET, self.RETWEET]:
-            self._data = self.client.statuses.show.get(id=self.id)
+            self._data = self.client.api("statuses/show").get(id=self.id)
 
     def _withKeyword(self, keyword):
         if keyword in self.text:

@@ -101,13 +101,13 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
     def _create_tweetWidget(self):
         if self.action == "comment" and self.tweet.comments_count:
             self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
-            self.replyModel = TweetUnderCommentModel(self.client.comments.show, self.tweet.id, self)
+            self.replyModel = TweetUnderCommentModel(self.client.api("comments/show"), self.tweet.id, self)
         elif self.action == "retweet" and self.tweet.retweets_count:
             if self.tweet:
                 self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
             elif self.tweet.original:
                 self.tweetWidget = SingleTweetWidget(self.tweet.original, ["image", "original"], self)
-            self.replyModel = TweetRetweetModel(self.client.statuses.repost_timeline, self.tweet.id, self)
+            self.replyModel = TweetRetweetModel(self.client.api("statuses/repost_timeline"), self.tweet.id, self)
         else:
             return
         self.replyModel.load()
@@ -135,7 +135,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             return []
         if not word.strip():
             return []
-        users = self.client.search.suggestions.at_users.get(q=word, type=0)
+        users = self.client.api("search/suggestions/at_users").get(q=word, type=0)
         for user in users:
             ret_users.append("@" + user['nickname'])
         return ret_users
@@ -207,7 +207,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                     if getsize(self.image) > const.MAX_IMAGE_BYTES:
                         raise ValueError
                     with open(self.image, "rb") as image:
-                        self.client.statuses.upload.post(status=text, pic=image)
+                        self.client.api("statuses/upload").post(status=text, pic=image)
                 except (OSError, IOError):
                     self.commonError.emit(self.tr("File not found"),
                                           self.tr("No such file: %s")
@@ -221,7 +221,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                     self.addImage()  # In fact, remove image...
                     return
             else:
-                self.client.statuses.update.post(status=text)
+                self.client.api("statuses/update").post(status=text)
 
             self.notify.showMessage(self.tr("WeCase"),
                                     self.tr("Tweet Success!"))
