@@ -178,7 +178,7 @@ class TweetUserModel(TweetTimelineBaseModel):
         if not self._name:
             self._load_complete_name()
         timeline = self.timeline.get(since_id=self.first_id(),
-                                     screen_name=self._name).statuses[::-1]
+                                     uid=self._name).statuses[::-1]
         return timeline
 
     def timeline_old(self):
