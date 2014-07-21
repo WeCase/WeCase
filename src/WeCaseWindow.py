@@ -459,7 +459,7 @@ class WeCaseWindow(QtGui.QMainWindow):
     def uid(self):
         """How can I get my uid? here it is"""
         if not self.info.get("uid"):
-            self.info["uid"] = self.client.account.get_uid.get().uid
+            self.info["uid"] = self.client.get("account/get_uid").uid
         return self.info["uid"]
 
     def show_notify(self):
