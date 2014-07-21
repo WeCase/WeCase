@@ -68,7 +68,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
     nothingLoaded = QtCore.pyqtSignal()
     apiException = QtCore.pyqtSignal(Exception)
 
-    def __init__(self, timeline="", parent=None):
+    def __init__(self, timeline=None, parent=None):
         super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
