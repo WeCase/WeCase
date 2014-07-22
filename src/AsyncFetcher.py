@@ -59,6 +59,7 @@ class _AsyncFetcher(QtCore.QObject):
     @staticmethod
     def download(url, filepath):
         curl = pycurl.Curl()
+        curl.setopt(pycurl.NOSIGNAL, True)  # thread-safe
         curl.setopt(pycurl.SSL_VERIFYHOST, 2)
         curl.setopt(pycurl.SSL_VERIFYPEER, True)
         curl.setopt(pycurl.ENCODING, "")  # accept all encodings
