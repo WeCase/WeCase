@@ -338,7 +338,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         new_items = []
 
         for item in items:
-            if not item.author.id in self._userInfo:
+            if item.author.id not in self._userInfo:
                 self._userInfo[item.author.id] = 0
 
             if self._userInfo[item.author.id] > self._maxTweetsPerUser:
@@ -356,7 +356,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             if not item.original:
                 continue
 
-            if not item.original.id in self._appearInfo:
+            if item.original.id not in self._appearInfo:
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
 
             if self._appearInfo[item.original.id]["count"] > self._maxRetweets:
@@ -377,7 +377,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             if not item.original:
                 continue
 
-            if not item.original.id in self._appearInfo:
+            if item.original.id not in self._appearInfo:
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
             info = self._appearInfo[item.original.id]
             info["count"] += 1
@@ -667,7 +667,7 @@ class TweetItem(QtCore.QObject):
 
     def reply(self, text, comment_ori=False, retweet=False):
         self.client.api("comments/reply").post(id=self.original.id, cid=self.id,
-                                        comment=text, comment_ori=int(comment_ori))
+                                               comment=text, comment_ori=int(comment_ori))
         if retweet:
             text = self.append_existing_replies(text)
             text = self._cut_off(text)
@@ -675,11 +675,11 @@ class TweetItem(QtCore.QObject):
 
     def retweet(self, text, comment=False, comment_ori=False):
         self.client.api("statuses/repost").post(id=self.id, status=text,
-                                         is_comment=int(comment + comment_ori * 2))
+                                                is_comment=int(comment + comment_ori * 2))
 
     def comment(self, text, comment_ori=False, retweet=False):
         self.client.api("comments/create").post(id=self.id, comment=text,
-                                         comment_ori=int(comment_ori))
+                                                comment_ori=int(comment_ori))
         if retweet:
             self.retweet(text)
 
