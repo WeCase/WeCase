@@ -103,13 +103,6 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-
-Weibosdir = $(pythondir)/WeCase/weibos
-
-Weibos_PYTHON = weibos/client.py \
-				weibos/helper.py \
-				weibos/__init__.py
-
 metaconfdir = $(pythondir)/WeCase/
 metaconf_DATA = WMetaConfig
 

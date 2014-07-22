@@ -51,7 +51,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = src
-DIST_COMMON = $(WeCase_PYTHON) $(Weibos_PYTHON) $(srcdir)/Makefile.am \
+DIST_COMMON = $(WeCase_PYTHON) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in AUTHORS
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/AC_PYTHON_MODULE.m4 \
@@ -89,8 +89,8 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" \
-	"$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" \
-	"$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"
+	"$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(authorsdir)" \
+	"$(DESTDIR)$(metaconfdir)"
 SCRIPTS = $(bin_SCRIPTS) $(libexec_SCRIPTS)
 SOURCES =
 DIST_SOURCES =
@@ -256,11 +256,6 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-Weibosdir = $(pythondir)/WeCase/weibos
-Weibos_PYTHON = weibos/client.py \
-				weibos/helper.py \
-				weibos/__init__.py
-
 metaconfdir = $(pythondir)/WeCase/
 metaconf_DATA = WMetaConfig
 authorsdir = $(pythondir)/WeCase/
@@ -406,44 +401,6 @@ uninstall-WeCasePYTHON:
 	  $(am__uninstall_files_from_dir) || st=$$?; \
 	done; \
 	exit $$st
-install-WeibosPYTHON: $(Weibos_PYTHON)
-	@$(NORMAL_INSTALL)
-	@list='$(Weibos_PYTHON)'; dlist=; list2=; test -n "$(Weibosdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(Weibosdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(Weibosdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
-	  if test -f $$b$$p; then \
-	    $(am__strip_dir) \
-	    dlist="$$dlist $$f"; \
-	    list2="$$list2 $$b$$p"; \
-	  else :; fi; \
-	done; \
-	for file in $$list2; do echo $$file; done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(Weibosdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(Weibosdir)" || exit $$?; \
-	done || exit $$?; \
-	if test -n "$$dlist"; then \
-	  $(am__py_compile) --destdir "$(DESTDIR)" \
-	                    --basedir "$(Weibosdir)" $$dlist; \
-	else :; fi
-
-uninstall-WeibosPYTHON:
-	@$(NORMAL_UNINSTALL)
-	@list='$(Weibos_PYTHON)'; test -n "$(Weibosdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	dir='$(DESTDIR)$(Weibosdir)'; \
-	filesc=`echo "$$files" | sed 's|$$|c|'`; \
-	fileso=`echo "$$files" | sed 's|$$|o|'`; \
-	st=0; \
-	for files in "$$files" "$$filesc" "$$fileso"; do \
-	  $(am__uninstall_files_from_dir) || st=$$?; \
-	done; \
-	exit $$st
 install-authorsDATA: $(authors_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(authors_DATA)'; test -n "$(authorsdir)" || list=; \
@@ -527,7 +484,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -581,8 +538,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-WeCasePYTHON install-WeibosPYTHON \
-	install-authorsDATA install-metaconfDATA
+install-data-am: install-WeCasePYTHON install-authorsDATA \
+	install-metaconfDATA
 
 install-dvi: install-dvi-am
 
@@ -626,26 +583,26 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
-	uninstall-authorsDATA uninstall-binSCRIPTS \
-	uninstall-libexecSCRIPTS uninstall-metaconfDATA
+uninstall-am: uninstall-WeCasePYTHON uninstall-authorsDATA \
+	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
+	uninstall-metaconfDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
-	install install-WeCasePYTHON install-WeibosPYTHON install-am \
-	install-authorsDATA install-binSCRIPTS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-libexecSCRIPTS install-man \
-	install-metaconfDATA install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
-	uninstall-WeCasePYTHON uninstall-WeibosPYTHON uninstall-am \
-	uninstall-authorsDATA uninstall-binSCRIPTS \
-	uninstall-libexecSCRIPTS uninstall-metaconfDATA
+	install install-WeCasePYTHON install-am install-authorsDATA \
+	install-binSCRIPTS install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am \
+	install-libexecSCRIPTS install-man install-metaconfDATA \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	uninstall-WeCasePYTHON uninstall-am uninstall-authorsDATA \
+	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
+	uninstall-metaconfDATA
 
 
 path.py: path.py.in Makefile
