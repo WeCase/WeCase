@@ -12,9 +12,9 @@ if test $HAVE_PYMOD_PYQT4 = "no"; then
     AC_MSG_ERROR(Could not find Python module PyQt4.)
 fi
 
-AC_PYTHON_MODULE([weibo3])
-if test $HAVE_PYMOD_WEIBO3 = "no"; then
-    AC_MSG_ERROR(Could not find Python module weibo3.)
+AC_PYTHON_MODULE([rpweibo])
+if test $HAVE_PYMOD_RPWEIBO = "no"; then
+    AC_MSG_ERROR(Could not find Python module rpweibo.)
 fi
 
 AC_PYTHON_MODULE([notify2])

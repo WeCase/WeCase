@@ -2483,28 +2483,28 @@ if test $HAVE_PYMOD_PYQT4 = "no"; then
 fi
 
 
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking python module: weibo3" >&5
-$as_echo_n "checking python module: weibo3... " >&6; }
-    $PYTHON -c "import weibo3" 2> /dev/null
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking python module: rpweibo" >&5
+$as_echo_n "checking python module: rpweibo... " >&6; }
+    $PYTHON -c "import rpweibo" 2> /dev/null
     if test $? -eq 0;
     then
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-        eval HAVE_PYMOD_WEIBO3=yes
+        eval HAVE_PYMOD_RPWEIBO=yes
     else
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-        eval HAVE_PYMOD_WEIBO3=no
+        eval HAVE_PYMOD_RPWEIBO=no
         #
         if test -n ""
         then
-            as_fn_error $? "failed to find required module weibo3" "$LINENO" 5
+            as_fn_error $? "failed to find required module rpweibo" "$LINENO" 5
             exit 1
         fi
     fi
 
-if test $HAVE_PYMOD_WEIBO3 = "no"; then
-    as_fn_error $? "Could not find Python module weibo3." "$LINENO" 5
+if test $HAVE_PYMOD_RPWEIBO = "no"; then
+    as_fn_error $? "Could not find Python module rpweibo." "$LINENO" 5
 fi
 
 
