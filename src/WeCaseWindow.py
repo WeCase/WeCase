@@ -23,7 +23,7 @@ from WObjectCache import WObjectCache
 from WeRuntimeInfo import WeRuntimeInfo
 from TweetListWidget import TweetListWidget
 from AsyncFetcher import AsyncFetcher
-from weibo3 import APIError
+from rpweibo import APIError
 from WeiboErrorHandler import APIErrorWindow
 from LoginInfo import LoginInfo
 import logging

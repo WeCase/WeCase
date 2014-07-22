@@ -9,7 +9,7 @@
 from os.path import getsize
 from WeHack import async
 from PyQt4 import QtCore, QtGui
-from weibo3 import APIError
+from rpweibo import APIError
 from Tweet import TweetItem, UserItem, TweetUnderCommentModel, TweetRetweetModel
 from Notify import Notify
 from TweetUtils import tweetLength

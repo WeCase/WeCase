@@ -12,7 +12,7 @@ from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
 from TweetUtils import tweetLength
-from weibo3 import APIError
+from rpweibo import APIError
 import re
 import const
 

@@ -9,7 +9,7 @@
 import re
 from time import sleep
 from WeHack import async, start, UNUSED, openLink
-from weibo3 import APIError
+from rpweibo import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel
