@@ -40,6 +40,7 @@ emerge net-misc/WeCase
 #### Dependencies
 -----
 1. Python 3
+2. [rpweibo](https://github.com/WeCase/rpweibo)
 2. PyQt4 (python3-pyqt, python3-qt4)
 3. Python-notify2 (aka. python3-notify2, optional dependency)
 4. Development tools for PyQt / Qt (packages names are very different on different distributions)
@@ -50,13 +51,14 @@ Note: Some distributions use different packages names, or do not contain `python
 
 #### Build and Install from Source
 
-```
-git clone --recursive git://github.com/WeCase/WeCase.git
+##### Install rpweibo
 
-# SDK Installation
-cd WeCase/sdk
-sudo python3 setup.py install
-cd ..
+See [rpweibo](https://github.com/WeCase/rpweibo)
+
+##### Build
+
+```
+git clone git://github.com/WeCase/WeCase.git
 
 # Build and Install
 ./bootstrap.sh
