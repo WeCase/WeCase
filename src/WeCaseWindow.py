@@ -578,15 +578,6 @@ class NotifyBadgeDrawer():
         p.setFont(QtGui.QFont(QtGui.QWidget().font().family(), size * 1 / 2,
                               QtGui.QFont.Bold))
 
-        # Method 1:
-        #while (size - p.fontMetrics().width(text) < 6):
-        #    pointSize = p.font().pointSize() - 1
-        #    if pointSize < 6:
-        #        weight = QtGui.QFont.Normal
-        #    else:
-        #        weight = QtGui.QFont.Bold
-        #    p.setFont(QtGui.QFont(p.font().family(), p.font().pointSize() - 1, weight))
-        # Method 2:
         extra = (len(text) - 1) * 10
         x -= extra
 
