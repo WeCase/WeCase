@@ -60,7 +60,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def reject(self, status):
         if status in (self.NETWORK_ERROR, self.PASSWORD_ERROR) and self.err_count < 5:
             self.err_count += 1
-            sleep(0.5)
             self.ui_authorize()
             return
         elif status == self.PASSWORD_ERROR:
@@ -141,8 +140,10 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.loginReturn.emit(self.SUCCESS)
             const.client = weibo
         except rpweibo.AuthorizeFailed:
+            sleep(0.5)
             self.loginReturn.emit(self.PASSWORD_ERROR)
         except rpweibo.NetworkError:
+            sleep(0.5)
             self.loginReturn.emit(self.NETWORK_ERROR)
 
     def setPassword(self, username):
