@@ -9,6 +9,7 @@
 
 import sys
 sys.path.append("@PYTHONDIR@")
+sys.path.append("@DATADIR@/wecase")
 
 import os
 import sip

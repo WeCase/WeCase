@@ -59,7 +59,7 @@ wecase_rc.py:
 AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
 
-WeCasedir = $(pythondir)/WeCase
+WeCasedir = $(datarootdir)/wecase
 WeCase_PYTHON = path.py \
 				AboutWindow.py \
 				const.py \
@@ -103,8 +103,8 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-metaconfdir = $(pythondir)/WeCase/
+metaconfdir = $(datarootdir)/wecase/
 metaconf_DATA = WMetaConfig
 
-authorsdir = $(pythondir)/WeCase/
+authorsdir = $(datarootdir)/wecase/
 authors_DATA = AUTHORS
