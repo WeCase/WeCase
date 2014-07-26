@@ -51,8 +51,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = src
-DIST_COMMON = $(WeCase_PYTHON) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in AUTHORS
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in AUTHORS
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/AC_PYTHON_MODULE.m4 \
 	$(top_srcdir)/m4/acx.m4 $(top_srcdir)/configure.ac
@@ -99,9 +98,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-am__py_compile = PYTHON=$(PYTHON) $(SHELL) $(py_compile)
-py_compile = $(top_srcdir)/py-compile
-DATA = $(authors_DATA) $(metaconf_DATA)
+DATA = $(WeCase_DATA) $(authors_DATA) $(metaconf_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -213,7 +210,7 @@ do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 				  -e 's,[@]LIBEXECDIR[@],$(libexecdir),g'
 
 WeCasedir = $(datarootdir)/wecase
-WeCase_PYTHON = path.py \
+WeCase_DATA = path.py \
 				AboutWindow.py \
 				const.py \
 				Face.py \
@@ -363,44 +360,27 @@ uninstall-libexecSCRIPTS:
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(libexecdir)'; $(am__uninstall_files_from_dir)
-install-WeCasePYTHON: $(WeCase_PYTHON)
+install-WeCaseDATA: $(WeCase_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(WeCase_PYTHON)'; dlist=; list2=; test -n "$(WeCasedir)" || list=; \
+	@list='$(WeCase_DATA)'; test -n "$(WeCasedir)" || list=; \
 	if test -n "$$list"; then \
 	  echo " $(MKDIR_P) '$(DESTDIR)$(WeCasedir)'"; \
 	  $(MKDIR_P) "$(DESTDIR)$(WeCasedir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
-	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
-	  if test -f $$b$$p; then \
-	    $(am__strip_dir) \
-	    dlist="$$dlist $$f"; \
-	    list2="$$list2 $$b$$p"; \
-	  else :; fi; \
-	done; \
-	for file in $$list2; do echo $$file; done | $(am__base_list) | \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
 	while read files; do \
 	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(WeCasedir)'"; \
 	  $(INSTALL_DATA) $$files "$(DESTDIR)$(WeCasedir)" || exit $$?; \
-	done || exit $$?; \
-	if test -n "$$dlist"; then \
-	  $(am__py_compile) --destdir "$(DESTDIR)" \
-	                    --basedir "$(WeCasedir)" $$dlist; \
-	else :; fi
+	done
 
-uninstall-WeCasePYTHON:
+uninstall-WeCaseDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(WeCase_PYTHON)'; test -n "$(WeCasedir)" || list=; \
+	@list='$(WeCase_DATA)'; test -n "$(WeCasedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	dir='$(DESTDIR)$(WeCasedir)'; \
-	filesc=`echo "$$files" | sed 's|$$|c|'`; \
-	fileso=`echo "$$files" | sed 's|$$|o|'`; \
-	st=0; \
-	for files in "$$files" "$$filesc" "$$fileso"; do \
-	  $(am__uninstall_files_from_dir) || st=$$?; \
-	done; \
-	exit $$st
+	dir='$(DESTDIR)$(WeCasedir)'; $(am__uninstall_files_from_dir)
 install-authorsDATA: $(authors_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(authors_DATA)'; test -n "$(authorsdir)" || list=; \
@@ -538,7 +518,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-WeCasePYTHON install-authorsDATA \
+install-data-am: install-WeCaseDATA install-authorsDATA \
 	install-metaconfDATA
 
 install-dvi: install-dvi-am
@@ -583,7 +563,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-WeCasePYTHON uninstall-authorsDATA \
+uninstall-am: uninstall-WeCaseDATA uninstall-authorsDATA \
 	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
 	uninstall-metaconfDATA
 
@@ -591,7 +571,7 @@ uninstall-am: uninstall-WeCasePYTHON uninstall-authorsDATA \
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
-	install install-WeCasePYTHON install-am install-authorsDATA \
+	install install-WeCaseDATA install-am install-authorsDATA \
 	install-binSCRIPTS install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am \
@@ -600,7 +580,7 @@ uninstall-am: uninstall-WeCasePYTHON uninstall-authorsDATA \
 	install-strip installcheck installcheck-am installdirs \
 	maintainer-clean maintainer-clean-generic mostlyclean \
 	mostlyclean-generic pdf pdf-am ps ps-am uninstall \
-	uninstall-WeCasePYTHON uninstall-am uninstall-authorsDATA \
+	uninstall-WeCaseDATA uninstall-am uninstall-authorsDATA \
 	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
 	uninstall-metaconfDATA
 

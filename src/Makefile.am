@@ -60,7 +60,7 @@ AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
 
 WeCasedir = $(datarootdir)/wecase
-WeCase_PYTHON = path.py \
+WeCase_DATA = path.py \
 				AboutWindow.py \
 				const.py \
 				Face.py \
