@@ -212,7 +212,7 @@ do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g' \
 				  -e 's,[@]LIBEXECDIR[@],$(libexecdir),g'
 
-WeCasedir = $(pythondir)/WeCase
+WeCasedir = $(datarootdir)/wecase
 WeCase_PYTHON = path.py \
 				AboutWindow.py \
 				const.py \
@@ -256,9 +256,9 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-metaconfdir = $(pythondir)/WeCase/
+metaconfdir = $(datarootdir)/wecase/
 metaconf_DATA = WMetaConfig
-authorsdir = $(pythondir)/WeCase/
+authorsdir = $(datarootdir)/wecase/
 authors_DATA = AUTHORS
 all: all-am
 
