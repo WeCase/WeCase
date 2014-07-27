@@ -8,7 +8,8 @@
 
 import webbrowser
 from WeHack import async
-from weibos.helper import SUCCESS, PASSWORD_ERROR, NETWORK_ERROR, UBAuthorize
+import rpweibo
+import const
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
@@ -20,9 +21,9 @@ from LoginInfo import LoginInfo
 
 class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
-    SUCCESS = SUCCESS
-    PASSWORD_ERROR = PASSWORD_ERROR
-    NETWORK_ERROR = NETWORK_ERROR
+    SUCCESS = 0
+    PASSWORD_ERROR = 1
+    NETWORK_ERROR = 2
     LOGIN_ALREADY = 10
 
     loginReturn = QtCore.pyqtSignal(int)
@@ -59,7 +60,6 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
     def reject(self, status):
         if status in (self.NETWORK_ERROR, self.PASSWORD_ERROR) and self.err_count < 5:
             self.err_count += 1
-            sleep(0.5)
             self.ui_authorize()
             return
         elif status == self.PASSWORD_ERROR:
@@ -132,12 +132,18 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
             self.loginReturn.emit(self.LOGIN_ALREADY)
             return
 
-        result = UBAuthorize(username, password)
-        if result == SUCCESS:
+        wecase = rpweibo.Application(const.APP_KEY, const.APP_SECRET, const.CALLBACK_URL)
+        weibo = rpweibo.Weibo(wecase)
+        authenticator = rpweibo.UserPassAutheticator(username, password)
+        try:
+            weibo.auth(authenticator)
             self.loginReturn.emit(self.SUCCESS)
-        elif result == PASSWORD_ERROR:
+            const.client = weibo
+        except rpweibo.AuthorizeFailed:
+            sleep(0.5)
             self.loginReturn.emit(self.PASSWORD_ERROR)
-        elif result == NETWORK_ERROR:
+        except rpweibo.NetworkError:
+            sleep(0.5)
             self.loginReturn.emit(self.NETWORK_ERROR)
 
     def setPassword(self, username):

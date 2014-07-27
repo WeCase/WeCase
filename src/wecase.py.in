@@ -9,6 +9,7 @@
 
 import sys
 sys.path.append("@PYTHONDIR@")
+sys.path.append("@DATADIR@/wecase")
 
 import os
 import sip
@@ -20,9 +21,7 @@ import path
 import version
 from LoginWindow import LoginWindow
 import WeHack
-
-
-WeHack.UNUSED(None)
+from WeHack import UNUSED
 
 
 def mkconfig():
@@ -88,6 +87,7 @@ def import_warning():
         import dbus
         from dbus.exceptions import DBusException
         notify2.init("WeCase")
+        UNUSED(dbus)
     except ImportError:
         QtGui.QMessageBox.warning(
             None,

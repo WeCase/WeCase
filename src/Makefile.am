@@ -59,8 +59,8 @@ wecase_rc.py:
 AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
 
-WeCasedir = $(pythondir)/WeCase
-WeCase_PYTHON = path.py \
+WeCasedir = $(datarootdir)/wecase
+WeCase_DATA = path.py \
 				AboutWindow.py \
 				const.py \
 				Face.py \
@@ -103,15 +103,8 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-
-Weibosdir = $(pythondir)/WeCase/weibos
-
-Weibos_PYTHON = weibos/client.py \
-				weibos/helper.py \
-				weibos/__init__.py
-
-metaconfdir = $(pythondir)/WeCase/
+metaconfdir = $(datarootdir)/wecase/
 metaconf_DATA = WMetaConfig
 
-authorsdir = $(pythondir)/WeCase/
+authorsdir = $(datarootdir)/wecase/
 authors_DATA = AUTHORS

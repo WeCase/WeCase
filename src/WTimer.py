@@ -16,6 +16,7 @@ class WTimer(Thread):
         self.sleep_time = sleep_time
         self.run_function = run_function
         self._stop_event = Event()
+        self.daemon = 1
 
     def run(self):
         while not self._stop_event.is_set():

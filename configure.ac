@@ -2,7 +2,7 @@
 m4_include([m4/AC_PYTHON_MODULE.m4])
 m4_include([m4/acx.m4])
 
-AC_INIT([WeCase], [0.06-beta7])
+AC_INIT([WeCase], [0.06-beta8])
 
 AM_INIT_AUTOMAKE
 AM_PATH_PYTHON([3.2],, AC_MSG_ERROR(Could not find Python >= 3.2.))
@@ -12,9 +12,9 @@ if test $HAVE_PYMOD_PYQT4 = "no"; then
     AC_MSG_ERROR(Could not find Python module PyQt4.)
 fi
 
-AC_PYTHON_MODULE([weibo3])
-if test $HAVE_PYMOD_WEIBO3 = "no"; then
-    AC_MSG_ERROR(Could not find Python module weibo3.)
+AC_PYTHON_MODULE([rpweibo])
+if test $HAVE_PYMOD_RPWEIBO = "no"; then
+    AC_MSG_ERROR(Could not find Python module rpweibo.)
 fi
 
 AC_PYTHON_MODULE([notify2])

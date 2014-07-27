@@ -165,7 +165,7 @@ def openLink(link):
     if not link:
         # not a link
         pass
-    elif not "://" in link:
+    elif "://" not in link:
         # no protocol
         link = "http://" + link
         webbrowser.open(link)

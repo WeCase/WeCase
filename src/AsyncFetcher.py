@@ -7,9 +7,7 @@
 
 
 from PyQt4 import QtCore
-from urllib.request import urlretrieve
-from urllib.error import URLError, ContentTooShortError
-from http.client import BadStatusLine
+import pycurl
 from WeHack import async, SingletonDecorator
 from threading import Event
 import os
@@ -58,13 +56,31 @@ class _AsyncFetcher(QtCore.QObject):
         url_parts = url.split('/')
         return "%s_%s" % (url_parts[-2], url_parts[-1])
 
+    @staticmethod
+    def download(url, filepath):
+        curl = pycurl.Curl()
+        curl.setopt(pycurl.NOSIGNAL, True)  # thread-safe
+        curl.setopt(pycurl.SSL_VERIFYHOST, 2)
+        curl.setopt(pycurl.SSL_VERIFYPEER, True)
+        curl.setopt(pycurl.ENCODING, "")  # accept all encodings
+        curl.setopt(pycurl.HEADERFUNCTION, lambda x: None)  # disable stdout logging
+
+        curl.setopt(pycurl.HTTPGET, 1)
+        curl.setopt(pycurl.URL, url)
+
+        with open(filepath, "wb") as file:
+            curl.setopt(pycurl.WRITEFUNCTION, file.write)
+            curl.perform()
+            if curl.getinfo(pycurl.RESPONSE_CODE) != 200:
+                raise IOError
+
     @async
     def _download(self, url, filepath):
         while 1:
             try:
-                urlretrieve(url, filepath)
+                self.download(url, filepath)
                 break
-            except (BadStatusLine, ContentTooShortError, URLError, OSError):
+            except (IOError, pycurl.error):
                 logging.warning("Downloading %s failed, retry..." % url)
                 sleep(1)
                 continue

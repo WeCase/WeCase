@@ -188,7 +188,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 CLEANFILES = WeCase_zh_CN.qm
 generate_qm = $(LRELEASE) -compress -nounfinished -removeidentical
-langdir = $(localedir)/WeCase
+langdir = $(datadir)/WeCase/locale
 lang_DATA = WeCase_zh_CN.qm
 all: all-am
 

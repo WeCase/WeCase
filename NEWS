@@ -9,11 +9,19 @@ See the git log and release notes for detailed information.
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+Version 0.06-beta8 (27 July 2014):
+* Switch to rpweibo
+* Move Qt translation files and private Python modules to
+  /usr/share, respect the standards.
+* Bugfixes:
+    . Catch "connection is not unique" exception (#128).
+    . Fixed AttributeError for WCompleteLineEdit (#130).
+
 Version 0.06-beta7 (19 June 2014):
 * New WMovie() to read the faces into RAM, then close them. No longer
   keep many opened gif files.
 * Bugfixes:
-    . Using a bug of Sina's server to break the API limition
+    . Using a bug of Sina's server to break the API restriction
       of the user_timeline (#119).
 
 Version 0.06-beta6 (18 June 2014):

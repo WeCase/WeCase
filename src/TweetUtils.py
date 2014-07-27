@@ -9,7 +9,6 @@
 
 import re
 from math import ceil
-import const
 
 
 def tweetLength(text):
