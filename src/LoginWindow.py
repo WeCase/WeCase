@@ -41,7 +41,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.loginReturn.connect(self.checkLogin)
         self.chk_Remember.clicked.connect(self.uncheckAutoLogin)
 
-    def accept(self):
+    def loginAccept(self):
         if self.chk_Remember.isChecked():
             self.passwd[str(self.username)] = str(self.password)
             self.last_login = str(self.username)
@@ -57,7 +57,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.pushButton_log.setEnabled(True)
         self.done(True)
 
-    def reject(self, status):
+    def loginReject(self, status):
         if status in (self.NETWORK_ERROR, self.PASSWORD_ERROR) and self.err_count < 5:
             self.err_count += 1
             self.ui_authorize()
@@ -79,9 +79,9 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     def checkLogin(self, status):
         if status == self.SUCCESS:
-            self.accept()
+            self.loginAccept()
         else:
-            self.reject(status)
+            self.loginReject(status)
 
     def setupUi(self, widget):
         super(LoginWindow, self).setupUi(widget)
@@ -157,11 +157,3 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
 
     def openRegisterPage(self):
         webbrowser.open("http://weibo.com/signup/signup.php")
-
-    def closeEvent(self, event):
-        # HACK: When a user want to close this window, closeEvent will emit.
-        # But if we don't have closeEvent, Qt will call reject(). We use
-        # reject() to show the error message, so users will see the error and
-        # they can not close this window. So just do nothing there to allow
-        # users to close the window.
-        pass
