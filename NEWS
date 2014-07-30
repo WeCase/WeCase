@@ -16,6 +16,7 @@ Version 0.06-beta8 (27 July 2014):
 * Bugfixes:
     . Catch "connection is not unique" exception (#128).
     . Fixed AttributeError for WCompleteLineEdit (#130).
+    . LoginWindow: avoid override accept() and reject().
 
 Version 0.06-beta7 (19 June 2014):
 * New WMovie() to read the faces into RAM, then close them. No longer
