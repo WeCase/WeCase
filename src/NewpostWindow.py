@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This file implemented NewpostWindow.
@@ -160,7 +159,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     @async
     def retweet(self):
-        text = str(self.textEdit.toPlainText())
+        text = self.textEdit.toPlainText()
         comment = int(self.chk_comment.isChecked())
         comment_ori = int(self.chk_comment_original.isChecked())
         try:
@@ -173,7 +172,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     @async
     def comment(self):
-        text = str(self.textEdit.toPlainText())
+        text = self.textEdit.toPlainText()
         retweet = int(self.chk_repost.isChecked())
         comment_ori = int(self.chk_comment_original.isChecked())
         try:
@@ -186,7 +185,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     @async
     def reply(self):
-        text = str(self.textEdit.toPlainText())
+        text = self.textEdit.toPlainText()
         comment_ori = int(self.chk_comment_original.isChecked())
         retweet = int(self.chk_repost.isChecked())
         try:
@@ -199,7 +198,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
 
     @async
     def new(self):
-        text = str(self.textEdit.toPlainText())
+        text = self.textEdit.toPlainText()
 
         try:
             if self.image:

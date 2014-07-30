@@ -54,7 +54,8 @@ subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in AUTHORS
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/AC_PYTHON_MODULE.m4 \
-	$(top_srcdir)/m4/acx.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/acx.m4 $(top_srcdir)/m4/pyqt4.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -133,13 +134,13 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKGPROVIDER = @PKGPROVIDER@
-PYRCC4_CHECK = @PYRCC4_CHECK@
+PYRCC4 = @PYRCC4@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
 PYTHON_PREFIX = @PYTHON_PREFIX@
 PYTHON_VERSION = @PYTHON_VERSION@
-PYUIC4_CHECK = @PYUIC4_CHECK@
+PYUIC4 = @PYUIC4@
 REPORT_BUGS_TO = @REPORT_BUGS_TO@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -603,19 +604,19 @@ wecase: wecase.in Makefile
 	chmod +x wecase
 
 AboutWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
 
 LoginWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
 
 NewpostWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
 
 SettingWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
 
 wecase_rc.py:
-	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+	@PYRCC4@ $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
 
 AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
