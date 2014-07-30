@@ -42,19 +42,19 @@ wecase: wecase.in Makefile
 	chmod +x wecase
 
 AboutWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
 
 LoginWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
 
 NewpostWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
 
 SettingWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
 
 wecase_rc.py:
-	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+	@PYRCC4@ $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
 
 AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
