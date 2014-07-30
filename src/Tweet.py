@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This model implemented Model and Item for tweets
@@ -12,7 +11,7 @@ from TweetUtils import get_mid
 from WTimeParser import WTimeParser as time_parser
 from WeHack import async, UNUSED
 from TweetUtils import tweetLength
-from weibo3 import APIError
+from rpweibo import APIError
 import re
 import const
 
@@ -163,28 +162,18 @@ class TweetUserModel(TweetTimelineBaseModel):
     def __init__(self, timeline, uid, parent=None):
         super(TweetUserModel, self).__init__(timeline, parent)
         self._uid = uid
-        self._name = ""
-
-    def _load_complete_name(self):
-        self._name = const.client.users.show.get(uid=self._uid).get("screen_name")
 
     def timeline_get(self, page=1):
-        if not self._name:
-            self._load_complete_name()
-        timeline = self.timeline.get(page=page, screen_name=self._name).statuses
+        timeline = self.timeline.get(page=page, uid=self._uid).statuses
         return timeline
 
     def timeline_new(self):
-        if not self._name:
-            self._load_complete_name()
         timeline = self.timeline.get(since_id=self.first_id(),
-                                     screen_name=self._name).statuses[::-1]
+                                     uid=self._uid).statuses[::-1]
         return timeline
 
     def timeline_old(self):
-        if not self._name:
-            self._load_complete_name()
-        timeline = self.timeline.get(max_id=self.last_id(), screen_name=self._name).statuses
+        timeline = self.timeline.get(max_id=self.last_id(), uid=self._uid).statuses
         timeline = timeline[1::]
         return timeline
 
@@ -348,7 +337,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         new_items = []
 
         for item in items:
-            if not item.author.id in self._userInfo:
+            if item.author.id not in self._userInfo:
                 self._userInfo[item.author.id] = 0
 
             if self._userInfo[item.author.id] > self._maxTweetsPerUser:
@@ -366,7 +355,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             if not item.original:
                 continue
 
-            if not item.original.id in self._appearInfo:
+            if item.original.id not in self._appearInfo:
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
 
             if self._appearInfo[item.original.id]["count"] > self._maxRetweets:
@@ -387,7 +376,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             if not item.original:
                 continue
 
-            if not item.original.id in self._appearInfo:
+            if item.original.id not in self._appearInfo:
                 self._appearInfo[item.original.id] = {"count": 0, "wordWarKeywords": 0}
             info = self._appearInfo[item.original.id]
             info["count"] += 1
@@ -478,9 +467,9 @@ class UserItem(QtCore.QObject):
 
     def _loadCompleteInfo(self):
         if self._data.get('id'):
-            self._data = self.client.users.show.get(uid=self._data.get('id'))
+            self._data = self.client.api("users/show").get(uid=self._data.get('id'))
         elif self._data.get('name'):
-            self._data = self.client.users.show.get(screen_name=self._data.get('name'))
+            self._data = self.client.api("users/show").get(screen_name=self._data.get('name'))
 
     @QtCore.pyqtProperty(int, constant=True)
     def id(self):
@@ -676,28 +665,28 @@ class TweetItem(QtCore.QObject):
         return text
 
     def reply(self, text, comment_ori=False, retweet=False):
-        self.client.comments.reply.post(id=self.original.id, cid=self.id,
-                                        comment=text, comment_ori=int(comment_ori))
+        self.client.api("comments/reply").post(id=self.original.id, cid=self.id,
+                                               comment=text, comment_ori=int(comment_ori))
         if retweet:
             text = self.append_existing_replies(text)
             text = self._cut_off(text)
             self.original.retweet(text)
 
     def retweet(self, text, comment=False, comment_ori=False):
-        self.client.statuses.repost.post(id=self.id, status=text,
-                                         is_comment=int(comment + comment_ori * 2))
+        self.client.api("statuses/repost").post(id=self.id, status=text,
+                                                is_comment=int(comment + comment_ori * 2))
 
     def comment(self, text, comment_ori=False, retweet=False):
-        self.client.comments.create.post(id=self.id, comment=text,
-                                         comment_ori=int(comment_ori))
+        self.client.api("comments/create").post(id=self.id, comment=text,
+                                                comment_ori=int(comment_ori))
         if retweet:
             self.retweet(text)
 
     def delete(self):
         if self.type in [self.TWEET, self.RETWEET]:
-            self.client.statuses.destroy.post(id=self.id)
+            self.client.api("statuses/destroy").post(id=self.id)
         elif self.type == self.COMMENT:
-            self.client.comments.destroy.post(cid=self.id)
+            self.client.api("comments/destroy").post(cid=self.id)
 
     def setFavorite(self, state):
         if self.type not in [self.TWEET, self.RETWEET]:
@@ -705,11 +694,11 @@ class TweetItem(QtCore.QObject):
 
         if state:
             assert(not self.__isFavorite)
-            self.client.favorites.create.post(id=self.id)
+            self.client.api("favorites/create").post(id=self.id)
             self.__isFavorite = True
         else:
             assert(self.__isFavorite)
-            self.client.favorites.destroy.post(id=self.id)
+            self.client.api("favorites/destroy").post(id=self.id)
             self.__isFavorite = False
 
     def setFavoriteForce(self, state):
@@ -717,7 +706,7 @@ class TweetItem(QtCore.QObject):
 
     def refresh(self):
         if self.type in [self.TWEET, self.RETWEET]:
-            self._data = self.client.statuses.show.get(id=self.id)
+            self._data = self.client.api("statuses/show").get(id=self.id)
 
     def _withKeyword(self, keyword):
         if keyword in self.text:

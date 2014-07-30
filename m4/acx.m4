@@ -77,25 +77,3 @@ AC_DEFUN([ACX_GIT_COMMIT_SHA1],[
     AC_MSG_RESULT($GIT_COMMIT_SHA1)
     AC_SUBST(GIT_COMMIT_SHA1)
 ])
-
-
-AC_DEFUN([ACX_CHECK_LRELEASE],[
-    AC_MSG_CHECKING(for lrelease)
-
-    lrelease > /dev/null 2>&1
-    if test "$?" != 127; then
-        LRELEASE="lrelease"
-    fi
-
-    lrelease-qt4 > /dev/null 2>&1
-    if test "$?" != 127; then
-        LRELEASE="lrelease-qt4"
-    else
-        if test "$LRELEASE" != "lrelease"; then
-            AC_MSG_ERROR([Could not find lrelease. Please install the development tools of Qt4.])
-        fi
-    fi
-
-    AC_MSG_RESULT($LRELEASE)
-    AC_SUBST(LRELEASE)
-])

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This file implemented a more flexible timer than QTimer.
@@ -16,6 +15,7 @@ class WTimer(Thread):
         self.sleep_time = sleep_time
         self.run_function = run_function
         self._stop_event = Event()
+        self.daemon = 1
 
     def run(self):
         while not self._stop_event.is_set():

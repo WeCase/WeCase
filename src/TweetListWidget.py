@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This file implemented the most widgets for viewing tweets.
@@ -9,7 +8,7 @@
 import re
 from time import sleep
 from WeHack import async, start, UNUSED, openLink
-from weibo3 import APIError
+from rpweibo import APIError
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetItem, UserItem
 from WIconLabel import WIconLabel

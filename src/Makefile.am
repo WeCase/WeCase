@@ -42,25 +42,25 @@ wecase: wecase.in Makefile
 	chmod +x wecase
 
 AboutWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
 
 LoginWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
 
 NewpostWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
 
 SettingWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
 
 wecase_rc.py:
-	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+	@PYRCC4@ $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
 
 AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
 
-WeCasedir = $(pythondir)/WeCase
-WeCase_PYTHON = path.py \
+WeCasedir = $(datarootdir)/wecase
+WeCase_DATA = path.py \
 				AboutWindow.py \
 				const.py \
 				Face.py \
@@ -103,15 +103,8 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-
-Weibosdir = $(pythondir)/WeCase/weibos
-
-Weibos_PYTHON = weibos/client.py \
-				weibos/helper.py \
-				weibos/__init__.py
-
-metaconfdir = $(pythondir)/WeCase/
+metaconfdir = $(datarootdir)/wecase/
 metaconf_DATA = WMetaConfig
 
-authorsdir = $(pythondir)/WeCase/
+authorsdir = $(datarootdir)/wecase/
 authors_DATA = AUTHORS

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This model implemented a general QTextEdit
@@ -57,7 +56,11 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
         raise NotImplementedError
 
     def focusOutEvent(self, event):
-        self.listView.hide()
+        try:
+            self.listView.hide()
+        except AttributeError:
+            # Issue #130.
+            pass
 
     def selectedText(self):
         self.cursor.setPosition(0)
@@ -65,6 +68,14 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
         return self.cursor.selectedText()
 
     def keyPressEvent(self, event):
+        # Issue #130.
+        try:
+            obj = self.listView
+            if not obj:
+                return
+        except AttributeError:
+            return
+
         if not self.listView.isHidden():
             key = event.key()
             rowCount = self.listView.model().rowCount()

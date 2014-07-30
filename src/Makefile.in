@@ -51,11 +51,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = src
-DIST_COMMON = $(WeCase_PYTHON) $(Weibos_PYTHON) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in AUTHORS
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in AUTHORS
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/AC_PYTHON_MODULE.m4 \
-	$(top_srcdir)/m4/acx.m4 $(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/acx.m4 $(top_srcdir)/m4/pyqt4.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -89,8 +89,8 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" \
-	"$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" \
-	"$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"
+	"$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(authorsdir)" \
+	"$(DESTDIR)$(metaconfdir)"
 SCRIPTS = $(bin_SCRIPTS) $(libexec_SCRIPTS)
 SOURCES =
 DIST_SOURCES =
@@ -99,9 +99,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-am__py_compile = PYTHON=$(PYTHON) $(SHELL) $(py_compile)
-py_compile = $(top_srcdir)/py-compile
-DATA = $(authors_DATA) $(metaconf_DATA)
+DATA = $(WeCase_DATA) $(authors_DATA) $(metaconf_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -136,13 +134,13 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKGPROVIDER = @PKGPROVIDER@
-PYRCC4_CHECK = @PYRCC4_CHECK@
+PYRCC4 = @PYRCC4@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
 PYTHON_PREFIX = @PYTHON_PREFIX@
 PYTHON_VERSION = @PYTHON_VERSION@
-PYUIC4_CHECK = @PYUIC4_CHECK@
+PYUIC4 = @PYUIC4@
 REPORT_BUGS_TO = @REPORT_BUGS_TO@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -212,8 +210,8 @@ do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g' \
 				  -e 's,[@]LIBEXECDIR[@],$(libexecdir),g'
 
-WeCasedir = $(pythondir)/WeCase
-WeCase_PYTHON = path.py \
+WeCasedir = $(datarootdir)/wecase
+WeCase_DATA = path.py \
 				AboutWindow.py \
 				const.py \
 				Face.py \
@@ -256,14 +254,9 @@ WeCase_PYTHON = path.py \
 				SettingWindow_ui.py \
 				wecase_rc.py
 
-Weibosdir = $(pythondir)/WeCase/weibos
-Weibos_PYTHON = weibos/client.py \
-				weibos/helper.py \
-				weibos/__init__.py
-
-metaconfdir = $(pythondir)/WeCase/
+metaconfdir = $(datarootdir)/wecase/
 metaconf_DATA = WMetaConfig
-authorsdir = $(pythondir)/WeCase/
+authorsdir = $(datarootdir)/wecase/
 authors_DATA = AUTHORS
 all: all-am
 
@@ -368,82 +361,27 @@ uninstall-libexecSCRIPTS:
 	files=`for p in $$list; do echo "$$p"; done | \
 	       sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(libexecdir)'; $(am__uninstall_files_from_dir)
-install-WeCasePYTHON: $(WeCase_PYTHON)
+install-WeCaseDATA: $(WeCase_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(WeCase_PYTHON)'; dlist=; list2=; test -n "$(WeCasedir)" || list=; \
+	@list='$(WeCase_DATA)'; test -n "$(WeCasedir)" || list=; \
 	if test -n "$$list"; then \
 	  echo " $(MKDIR_P) '$(DESTDIR)$(WeCasedir)'"; \
 	  $(MKDIR_P) "$(DESTDIR)$(WeCasedir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
-	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
-	  if test -f $$b$$p; then \
-	    $(am__strip_dir) \
-	    dlist="$$dlist $$f"; \
-	    list2="$$list2 $$b$$p"; \
-	  else :; fi; \
-	done; \
-	for file in $$list2; do echo $$file; done | $(am__base_list) | \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
 	while read files; do \
 	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(WeCasedir)'"; \
 	  $(INSTALL_DATA) $$files "$(DESTDIR)$(WeCasedir)" || exit $$?; \
-	done || exit $$?; \
-	if test -n "$$dlist"; then \
-	  $(am__py_compile) --destdir "$(DESTDIR)" \
-	                    --basedir "$(WeCasedir)" $$dlist; \
-	else :; fi
+	done
 
-uninstall-WeCasePYTHON:
+uninstall-WeCaseDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(WeCase_PYTHON)'; test -n "$(WeCasedir)" || list=; \
+	@list='$(WeCase_DATA)'; test -n "$(WeCasedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	dir='$(DESTDIR)$(WeCasedir)'; \
-	filesc=`echo "$$files" | sed 's|$$|c|'`; \
-	fileso=`echo "$$files" | sed 's|$$|o|'`; \
-	st=0; \
-	for files in "$$files" "$$filesc" "$$fileso"; do \
-	  $(am__uninstall_files_from_dir) || st=$$?; \
-	done; \
-	exit $$st
-install-WeibosPYTHON: $(Weibos_PYTHON)
-	@$(NORMAL_INSTALL)
-	@list='$(Weibos_PYTHON)'; dlist=; list2=; test -n "$(Weibosdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(Weibosdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(Weibosdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
-	  if test -f $$b$$p; then \
-	    $(am__strip_dir) \
-	    dlist="$$dlist $$f"; \
-	    list2="$$list2 $$b$$p"; \
-	  else :; fi; \
-	done; \
-	for file in $$list2; do echo $$file; done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(Weibosdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(Weibosdir)" || exit $$?; \
-	done || exit $$?; \
-	if test -n "$$dlist"; then \
-	  $(am__py_compile) --destdir "$(DESTDIR)" \
-	                    --basedir "$(Weibosdir)" $$dlist; \
-	else :; fi
-
-uninstall-WeibosPYTHON:
-	@$(NORMAL_UNINSTALL)
-	@list='$(Weibos_PYTHON)'; test -n "$(Weibosdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	dir='$(DESTDIR)$(Weibosdir)'; \
-	filesc=`echo "$$files" | sed 's|$$|c|'`; \
-	fileso=`echo "$$files" | sed 's|$$|o|'`; \
-	st=0; \
-	for files in "$$files" "$$filesc" "$$fileso"; do \
-	  $(am__uninstall_files_from_dir) || st=$$?; \
-	done; \
-	exit $$st
+	dir='$(DESTDIR)$(WeCasedir)'; $(am__uninstall_files_from_dir)
 install-authorsDATA: $(authors_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(authors_DATA)'; test -n "$(authorsdir)" || list=; \
@@ -527,7 +465,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(Weibosdir)" "$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(WeCasedir)" "$(DESTDIR)$(authorsdir)" "$(DESTDIR)$(metaconfdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -581,8 +519,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-WeCasePYTHON install-WeibosPYTHON \
-	install-authorsDATA install-metaconfDATA
+install-data-am: install-WeCaseDATA install-authorsDATA \
+	install-metaconfDATA
 
 install-dvi: install-dvi-am
 
@@ -626,26 +564,26 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-WeCasePYTHON uninstall-WeibosPYTHON \
-	uninstall-authorsDATA uninstall-binSCRIPTS \
-	uninstall-libexecSCRIPTS uninstall-metaconfDATA
+uninstall-am: uninstall-WeCaseDATA uninstall-authorsDATA \
+	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
+	uninstall-metaconfDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
-	install install-WeCasePYTHON install-WeibosPYTHON install-am \
-	install-authorsDATA install-binSCRIPTS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-libexecSCRIPTS install-man \
-	install-metaconfDATA install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
-	uninstall-WeCasePYTHON uninstall-WeibosPYTHON uninstall-am \
-	uninstall-authorsDATA uninstall-binSCRIPTS \
-	uninstall-libexecSCRIPTS uninstall-metaconfDATA
+	install install-WeCaseDATA install-am install-authorsDATA \
+	install-binSCRIPTS install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am \
+	install-libexecSCRIPTS install-man install-metaconfDATA \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	uninstall-WeCaseDATA uninstall-am uninstall-authorsDATA \
+	uninstall-binSCRIPTS uninstall-libexecSCRIPTS \
+	uninstall-metaconfDATA
 
 
 path.py: path.py.in Makefile
@@ -666,19 +604,19 @@ wecase: wecase.in Makefile
 	chmod +x wecase
 
 AboutWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/AboutWindow.ui > AboutWindow_ui.py
 
 LoginWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/LoginWindow.ui > LoginWindow_ui.py
 
 NewpostWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/NewpostWindow.ui > NewpostWindow_ui.py
 
 SettingWindow_ui.py:
-	pyuic4 $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
+	@PYUIC4@ $(srcdir)/../res/ui/SettingWindow.ui > SettingWindow_ui.py
 
 wecase_rc.py:
-	pyrcc4 $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
+	@PYRCC4@ $(srcdir)/../res/ui/wecase.qrc -py3 -compress 9 > wecase_rc.py
 
 AUTHORS:
 	cp $(srcdir)/../AUTHORS ./

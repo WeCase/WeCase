@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This file implemented
@@ -165,7 +164,7 @@ def openLink(link):
     if not link:
         # not a link
         pass
-    elif not "://" in link:
+    elif "://" not in link:
         # no protocol
         link = "http://" + link
         webbrowser.open(link)

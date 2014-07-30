@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 # WeCase -- This model implemented a bug-for-bug compatible
@@ -9,7 +8,6 @@
 
 import re
 from math import ceil
-import const
 
 
 def tweetLength(text):
