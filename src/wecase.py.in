@@ -65,10 +65,19 @@ def my_excepthook(type, value, tback):
     exception = "".join(traceback.format_exception(type, value, tback))
     line1 = App.translate("main", "Oops, there is an unexpected error,\n")
     line2 = App.translate("main", "Please report it to %s\n")
-    line3 = "------------[ cut here ]------------\n\n"
-    line4 = "Version: WeCase %s\n\n"
+    line3 = "------------[ cut here ]------------\n"
+    line4 = "WeCase %s\n"
+    line5 = "Python %s\n"
+    line6 = "\n"
     last_line = "---[ end trace %s ]---"
-    error_info = (line1 + line2 % version.bug_report_url + line3 + line4 % version.pkgversion + "%s" % exception + last_line % hex(id(value)))
+    error_info = (line1 +
+                  line2 % version.bug_report_url +
+                  line3 +
+                  line4 % version.pkgversion +
+                  line5 % sys.version.replace("\n", "") +
+                  line6 +
+                  "%s" % exception +
+                  last_line % hex(id(value)))
 
     if type != last_error:
         last_error = type
