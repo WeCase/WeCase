@@ -110,12 +110,16 @@ class WeCaseWindow(QtGui.QMainWindow):
         timeline = TweetFilterModel(_timeline)
         timeline.setModel(_timeline)
         tab = self._setupCommonTab(timeline, view, switch, myself)
+        fetcher = AsyncFetcher("".join((path.cache_path, str(self.info["uid"]))))
 
         def setAvatar(f):
             self._setTabIcon(tab, WObjectCache().open(QtGui.QPixmap, f))
 
-        fetcher = AsyncFetcher("".join((path.cache_path, str(self.info["uid"]))))
-        fetcher.addTask(self.client.api("users/show").get(uid=uid)["profile_image_url"], setAvatar)
+        def fetchAvatar():
+            url = self.client.api("users/show").get(uid=uid)["profile_image_url"]
+            fetcher.addTask(url, setAvatar)
+
+        fetchAvatar()
 
     def _setupTopicTab(self, topic, switch=True):
         index = self._getSameTab("topic", topic)
