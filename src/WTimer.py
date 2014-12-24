@@ -5,24 +5,21 @@
 # License: GPL v3 or later.
 
 
-from threading import Thread, Event
+from threading import Timer
 
 
-class WTimer(Thread):
+class WTimer(Timer):
 
-    def __init__(self, run_function, sleep_time):
-        super(WTimer, self).__init__()
-        self.sleep_time = sleep_time
-        self.run_function = run_function
-        self._stop_event = Event()
+    def __init__(self, run_function, sleep_time, *args, **kwargs):
+        super().__init__(sleep_time, run_function, args, kwargs)
         self.daemon = 1
+        print("The use of WTimer is deprecated!")
 
     def run(self):
-        while not self._stop_event.is_set():
-            self._stop_event.wait(self.sleep_time)
-            self.run_function()
+        super().run()
+        self.finished.clear()
 
     def stop(self, join=False):
-        self._stop_event.set()
+        super().cancel()
         if join:
             self.join()
