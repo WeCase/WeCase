@@ -119,7 +119,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.setBusy(False, self.TOP)
         self.setBusy(False, self.BOTTOM)
         for index in range(start, end + 1):
-            item = self.model.get_item(index)
+            item = self.model[index]
             widget = SingleTweetWidget(item, self.without, self)
             widget.userClicked.connect(self.userClicked)
             widget.tagClicked.connect(self.tagClicked)
@@ -332,6 +332,19 @@ class SingleTweetWidget(QtGui.QFrame):
             self.timer.start(60 * 60 * 24 * 1000)
 
     def _update_time(self):
+
+        def human_time(passedSeconds):
+            if passedSeconds < 0:
+                return self.tr("Future!")
+            elif passedSeconds < 60:
+                return self.tr("%.0fs ago") % passedSeconds
+            elif passedSeconds < 3600:
+                return self.tr("%.0fm ago") % (passedSeconds / 60)
+            elif passedSeconds < 86400:
+                return self.tr("%.0fh ago") % (passedSeconds / 3600)
+            else:
+                return self.tr("%.0fd ago") % (passedSeconds / 86400)
+
         try:
             if not self.time.visibleRegion() and self.timer.isActive():
                 # Skip update only when timer is active, insure
@@ -343,10 +356,10 @@ class SingleTweetWidget(QtGui.QFrame):
 
             if self.tweet.type != TweetItem.COMMENT:
                 self.time.setText("<a href='%s'>%s</a>" %
-                                  (self.tweet.url, self.tweet.time))
+                                  (self.tweet.url, human_time(self.tweet.passedSeconds)))
             else:
                 self.time.setText("<a href='%s'>%s</a>" %
-                                  (self.tweet.original.url, self.tweet.time))
+                                  (self.tweet.original.url, human_time(self.tweet.passedSeconds)))
             self._setup_timer()
         except:
             # Sometimes, user closed the window and the window

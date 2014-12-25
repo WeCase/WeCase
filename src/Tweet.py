@@ -40,83 +40,50 @@ class WListModel():
     def __init__(self):
         self._items = []
         self._tweets = self._items
-        # self.inserted_event = WEvent()
         self.rowsInserted = WEvent()
 
-    def append(self, items):
-        self._items.append(items)
-        self.rowsInserted.emit(None, len(self), len(self) + len(items) - 1)
-        # self.inserted_event.emit(len(self._items) - 1)
+    def _append(self, items):
+        orig_len = len(self)
+        self._items.extend(items)
+        self.rowsInserted.emit(None, orig_len, orig_len + len(items) - 1)
 
-    def insert(self, idx, items):
-        self._items.insert(idx, items)
-        # self.inserted_event.emit(idx)
-        if isinstance(items, list):
-            self.rowsInserted.emit(None, idx, idx + len(items) - 1)
-        else:
-            self.rowsInserted.emit(None, idx, idx)
+    def _insert(self, idx, items):
+        if idx == len(self) or idx == -1:
+            self._append(items)
+            return
+
+        counter = idx
+        for i in items:
+            self._items.insert(counter, i)
+            counter += 1
+        self.rowsInserted.emit(None, idx, idx + len(items) - 1)
 
     def clear(self):
         self._items.clear()
 
-    def __index__(self, idx):
+    def __getitem__(self, idx):
         return self._items[idx]
 
     def __len__(self):
         return len(self._items)
 
-    def appendRow(self, item):
-        self.insertRow(self.rowCount(), item)
-
     def appendRows(self, items):
-        for item in items:
-            self.insert(self.rowCount(), item)
-            self.rowInserted.emit(self.rowCount())
-
-    def insertRow(self, row, item):
-        self._items.insert(row, item)
-        self.rowInserted.emit(row)
+        self._append(items)
 
     def insertRows(self, row, items):
-        for item in items:
-            self.insert(row, (item))
-            self.rowInserted.emit(row)
-
-    def rowCount(self, parent=None):
-        return len(self._tweets)
+        self._insert(row, items)
 
 
 class TweetSimpleModel(WListModel):
 
     def __init__(self, parent=None):
         super().__init__()
-        self.rowInserted = WEvent()
-
-    def appendRow(self, item):
-        self.insertRow(self.rowCount(), item)
 
     def appendRows(self, items):
-        for item in items:
-            self.insert(self.rowCount(), TweetItem(item))
-            self.rowInserted.emit(self.rowCount())
-
-    def data(self, index, role):
-        return self._items[index.row()].data(role)
-
-    def get_item(self, row):
-        return self._items[row]
-
-    def insertRow(self, row, item):
-        self._items.insert(row, item)
-        self.rowInserted.emit(row)
+        super().appendRows([TweetItem(item) for item in items])
 
     def insertRows(self, row, items):
-        for item in items:
-            self.insert(row, TweetItem(item))
-            self.rowInserted.emit(row)
-
-    def rowCount(self, parent=None):
-        return len(self._tweets)
+        super().insertRows(row, [TweetItem(item) for item in items])
 
 
 class TweetTimelineBaseModel(TweetSimpleModel):
@@ -170,7 +137,8 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         if pos == -1:
             self.appendRows(timeline)
         else:
-            self.insertRows(pos, timeline)
+            self.insertRows(0, timeline)
+
         self.lock = False
 
     def load(self):
@@ -206,7 +174,7 @@ class TweetCommonModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(since_id=self.first_id()).statuses[::-1]
+        timeline = self.timeline.get(since_id=self.first_id()).statuses
         return timeline
 
     def timeline_old(self):
@@ -227,7 +195,7 @@ class TweetUserModel(TweetTimelineBaseModel):
 
     def timeline_new(self):
         timeline = self.timeline.get(since_id=self.first_id(),
-                                     uid=self._uid).statuses[::-1]
+                                     uid=self._uid).statuses
         return timeline
 
     def timeline_old(self):
@@ -250,7 +218,7 @@ class TweetCommentModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(since_id=self.first_id()).comments[::-1]
+        timeline = self.timeline.get(since_id=self.first_id()).comments
         return timeline
 
     def timeline_old(self):
@@ -269,7 +237,7 @@ class TweetUnderCommentModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).comments[::-1]
+        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).comments
         return timeline
 
     def timeline_old(self):
@@ -292,7 +260,7 @@ class TweetRetweetModel(TweetTimelineBaseModel):
         return timeline
 
     def timeline_new(self):
-        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).reposts[::-1]
+        timeline = self.timeline.get(id=self.id, since_id=self.first_id()).reposts
         return timeline
 
     def timeline_old(self):
@@ -316,7 +284,7 @@ class TweetTopicModel(TweetTimelineBaseModel):
         timeline = self.timeline.get(q=self._topic, page=1).statuses
         for tweet in timeline:
             if TweetItem(tweet).id == self.first_id():
-                return list(reversed(timeline[:timeline.index(tweet)]))
+                return list(timeline[:timeline.index(tweet)])
         return timeline
 
     def timeline_old(self):
@@ -330,7 +298,7 @@ class TweetTopicModel(TweetTimelineBaseModel):
 class TweetFilterModel(WListModel):
 
     def __init__(self, parent=None):
-        super(TweetFilterModel, self).__init__()
+        super().__init__()
         self._model = None
         self._appearInfo = {}
         self._userInfo = {}
@@ -343,7 +311,6 @@ class TweetFilterModel(WListModel):
         self._usersBlackList = []
         self.timelineLoaded = WEvent()
         self.nothingLoaded = WEvent()
-        self.rowInserted = WEvent()
 
     def model(self):
         return self._model
@@ -478,26 +445,18 @@ class TweetFilterModel(WListModel):
     def _rowsInserted(self, parent, start, end):
         tweets = []
         for index in range(start, end + 1):
-            item = self._model.get_item(index)
-            tweets.append(item)
+            item = self._model[index]
+            tweets.insert(index, item)
 
         filteredTweets = self.filter(tweets)
         while start != 0 and tweets and not filteredTweets:
             self._model.next()
             return
 
-        if start == 0:
-            row = 0
-        else:
-            row = self.rowCount()
-
         if len(filteredTweets) == 0:
             return
 
-        self.insertRows(row, filteredTweets)
-
-    def rowCount(self, parent=QtCore.QModelIndex()):
-        return len(self._tweets)
+        self.insertRows(start, filteredTweets)
 
     def __getattr__(self, attr):
         return eval("self._model.%s" % attr)
@@ -598,23 +557,6 @@ class TweetItem():
             return self._user
         else:
             return None
-
-    @property
-    def time(self):
-        if not self.timestamp:
-            return
-
-        passedSeconds = self.passedSeconds
-        if passedSeconds < 0:
-            return self.tr("Future!")
-        elif passedSeconds < 60:
-            return self.tr("%.0fs ago") % passedSeconds
-        elif passedSeconds < 3600:
-            return self.tr("%.0fm ago") % (passedSeconds / 60)
-        elif passedSeconds < 86400:
-            return self.tr("%.0fh ago") % (passedSeconds / 3600)
-        else:
-            return self.tr("%.0fd ago") % (passedSeconds / 86400)
 
     @property
     def timestamp(self):
