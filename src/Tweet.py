@@ -64,7 +64,7 @@ class TweetSimpleModel(QtCore.QAbstractListModel):
 class TweetTimelineBaseModel(TweetSimpleModel):
 
     timelineLoaded = QtCore.pyqtSignal()
-    nothingLoaded = QtCore.pyqtSignal()
+    nothingLoaded = QtCore.pyqtSignal(int)
     apiException = QtCore.pyqtSignal(Exception)
 
     def __init__(self, timeline=None, parent=None):
@@ -107,7 +107,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
         if not timeline:
             if pos == -1:
                 self._nomore = True
-            self.nothingLoaded.emit()
+            self.nothingLoaded.emit(pos)
 
         if pos == -1:
             self.appendRows(timeline)
@@ -130,7 +130,7 @@ class TweetTimelineBaseModel(TweetSimpleModel):
 
     def next(self):
         if self._nomore:
-            self.nothingLoaded.emit()
+            self.nothingLoaded.emit(-1)
         elif self._tweets:
             timeline = self.timeline_old
             self._common_get(timeline, -1)
@@ -273,7 +273,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
     rowInserted = QtCore.pyqtSignal(int)
     timelineLoaded = QtCore.pyqtSignal()
-    nothingLoaded = QtCore.pyqtSignal()
+    nothingLoaded = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
         super(TweetFilterModel, self).__init__(parent)
@@ -435,6 +435,9 @@ class TweetFilterModel(QtCore.QAbstractListModel):
             row = 0
         else:
             row = self.rowCount()
+
+        if len(filteredTweets) == 0:
+            return
 
         self.beginInsertRows(QtCore.QModelIndex(), row, row + len(filteredTweets) - 1)
         for index, tweet in enumerate(filteredTweets):
