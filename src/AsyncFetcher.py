@@ -43,6 +43,7 @@ class _AsyncFetcher(QtCore.QObject):
         if path[-1] != "/":
             # fix the non-standard path.
             path += "/"
+            print("Warning: non-standard path")
         if not os.path.exists(path):
             os.makedirs(path)
 

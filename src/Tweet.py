@@ -16,62 +16,100 @@ import re
 import const
 
 
-class TweetSimpleModel(QtCore.QAbstractListModel):
-    rowInserted = QtCore.pyqtSignal(int)
+class WEvent():
+
+    def __init__(self):
+        self._callbacks = []
+
+    def connect(self, func):
+        self._callbacks.append(func)
+
+    def disconnect(self, func):
+        self._callbacks.remove(func)
+
+    def emit(self, *args, **kwargs):
+        for func in self._callbacks:
+            try:
+                func(*args, **kwargs)
+            except TypeError:
+                func.emit(*args, **kwargs)
+
+
+class WListModel():
+
+    def __init__(self):
+        self._items = []
+        self._tweets = self._items
+        # self.inserted_event = WEvent()
+        self.rowsInserted = WEvent()
+
+    def append(self, items):
+        self._items.append(items)
+        self.rowsInserted.emit(None, len(self), len(self) + len(items) - 1)
+        # self.inserted_event.emit(len(self._items) - 1)
+
+    def insert(self, idx, items):
+        self._items.insert(idx, items)
+        # self.inserted_event.emit(idx)
+        if isinstance(items, list):
+            self.rowsInserted.emit(None, idx, idx + len(items) - 1)
+        else:
+            self.rowsInserted.emit(None, idx, idx)
+
+    def clear(self):
+        self._items.clear()
+
+    def __index__(self, idx):
+        return self._items[idx]
+
+    def __len__(self):
+        return len(self._items)
+
+
+class TweetSimpleModel(WListModel):
 
     def __init__(self, parent=None):
-        super(TweetSimpleModel, self).__init__(parent)
-        self._tweets = []
-        self._tweetKeywordBlacklist = []
-        self._usersBlackList = []
+        super().__init__()
+        self.rowInserted = WEvent()
 
     def appendRow(self, item):
         self.insertRow(self.rowCount(), item)
 
     def appendRows(self, items):
-        self.beginInsertRows(QtCore.QModelIndex(), self.rowCount(), self.rowCount() + len(items) - 1)
         for item in items:
-            self._tweets.insert(self.rowCount(), TweetItem(item))
+            self.insert(self.rowCount(), TweetItem(item))
             self.rowInserted.emit(self.rowCount())
-        self.endInsertRows()
-
-    def clear(self):
-        self._tweets = []
 
     def data(self, index, role):
-        return self._tweets[index.row()].data(role)
+        return self._items[index.row()].data(role)
 
     def get_item(self, row):
-        return self._tweets[row]
+        return self._items[row]
 
     def insertRow(self, row, item):
-        self.beginInsertRows(QtCore.QModelIndex(), row, row)
-        self._tweets.insert(row, item)
+        self._items.insert(row, item)
         self.rowInserted.emit(row)
-        self.endInsertRows()
 
     def insertRows(self, row, items):
-        self.beginInsertRows(QtCore.QModelIndex(), row, row + len(items) - 1)
         for item in items:
-            self._tweets.insert(row, TweetItem(item))
+            self.insert(row, TweetItem(item))
             self.rowInserted.emit(row)
-        self.endInsertRows()
 
-    def rowCount(self, parent=QtCore.QModelIndex()):
+    def rowCount(self, parent=None):
         return len(self._tweets)
 
 
 class TweetTimelineBaseModel(TweetSimpleModel):
-
-    timelineLoaded = QtCore.pyqtSignal()
-    nothingLoaded = QtCore.pyqtSignal(int)
-    apiException = QtCore.pyqtSignal(Exception)
 
     def __init__(self, timeline=None, parent=None):
         super(TweetTimelineBaseModel, self).__init__(parent)
         self.timeline = timeline
         self.lock = False
         self._nomore = False
+
+        self.timelineLoaded = WEvent()
+        self.nothingLoaded = WEvent()
+        self.apiException = WEvent()
 
     def timeline_get(self):
         raise NotImplementedError
@@ -271,12 +309,8 @@ class TweetTopicModel(TweetTimelineBaseModel):
 
 class TweetFilterModel(QtCore.QAbstractListModel):
 
-    rowInserted = QtCore.pyqtSignal(int)
-    timelineLoaded = QtCore.pyqtSignal()
-    nothingLoaded = QtCore.pyqtSignal(int)
-
     def __init__(self, parent=None):
-        super(TweetFilterModel, self).__init__(parent)
+        super(TweetFilterModel, self).__init__(None)
         self._model = None
         self._appearInfo = {}
         self._userInfo = {}
@@ -286,13 +320,18 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         self._maxTweetsPerUser = -1
         self._maxRetweets = -1
         self._keywordsAsRegexs = False
+        self._tweetKeywordBlacklist = []
+        self._usersBlackList = []
+        self.timelineLoaded = WEvent()
+        self.nothingLoaded = WEvent()
+        self.rowInserted = WEvent()
 
     def model(self):
         return self._model
 
     def setModel(self, model):
         self._model = model
-        self._model.timelineLoaded.connect(self.timelineLoaded)
+        self._model.timelineLoaded.connect(self.timelineLoaded.emit)
         self._model.nothingLoaded.connect(self.nothingLoaded)
         self._model.rowsInserted.connect(self._rowsInserted)
 

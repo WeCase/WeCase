@@ -80,6 +80,10 @@ class SimpleTweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
+    rowsInserted = QtCore.pyqtSignal(QtCore.QModelIndex, int, int)
+    nothingLoaded = QtCore.pyqtSignal(int)
+    apiException = QtCore.pyqtSignal()
+
     def __init__(self, parent=None, without=()):
         super(SimpleTweetListWidget, self).__init__(parent)
         self.client = const.client
@@ -94,9 +98,12 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
     def setModel(self, model):
         self.model = model
-        self.model.rowsInserted.connect(self._rowsInserted)
-        self.model.nothingLoaded.connect(self._hideBusyIcon)
-        self.model.apiException.connect(self._apiException)
+        self.model.rowsInserted.connect(self.rowsInserted)
+        self.model.nothingLoaded.connect(self.nothingLoaded)
+        self.model.apiException.connect(self.apiException)
+        self.rowsInserted.connect(self._rowsInserted)
+        self.nothingLoaded.connect(self._hideBusyIcon)
+        self.apiException.connect(self._apiException)
 
     def _apiException(self, exception):
         window = APIErrorWindow()
