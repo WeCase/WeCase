@@ -19,7 +19,7 @@ class SignalSender(QtCore.QObject):
     fetched = QtCore.pyqtSignal(str)
 
     def __init__(self, parent=None):
-        super(SignalSender, self).__init__(parent)
+        super().__init__(parent)
 
     def emit(self, target):
         self.fetched.emit(target)
@@ -31,14 +31,14 @@ class SignalSender(QtCore.QObject):
         self.fetched.disconnect(target)
 
 
-class _AsyncFetcher(QtCore.QObject):
+class _AsyncFetcher():
 
     DO_NOT_HAVE = 0
     DOWNLOADED = 1
     DOWNLOADING = 2
 
     def __init__(self, path, parent=None):
-        super(_AsyncFetcher, self).__init__(parent)
+        super().__init__()
 
         if path[-1] != "/":
             # fix the non-standard path.
