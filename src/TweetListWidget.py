@@ -80,7 +80,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
     userClicked = QtCore.pyqtSignal(UserItem, bool)
     tagClicked = QtCore.pyqtSignal(str, bool)
 
-    rowsInserted = QtCore.pyqtSignal(QtCore.QModelIndex, int, int)
+    rowsInserted = QtCore.pyqtSignal(int, int)
     nothingLoaded = QtCore.pyqtSignal(int)
     apiException = QtCore.pyqtSignal()
 
@@ -98,7 +98,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
 
     def setModel(self, model):
         self.model = model
-        self.model.rowsInserted.connect(self.rowsInserted)
+        self.model.rowsInserted.connect(lambda dummy, start, end: self.rowsInserted.emit(start, end))
         self.model.nothingLoaded.connect(self.nothingLoaded)
         self.model.apiException.connect(self.apiException)
         self.rowsInserted.connect(self._rowsInserted)
@@ -115,9 +115,7 @@ class SimpleTweetListWidget(QtGui.QWidget):
         elif pos == 0:
             self.setBusy(False, self.TOP)
 
-    def _rowsInserted(self, parent, start, end):
-        UNUSED(parent)  # parent is useless
-
+    def _rowsInserted(self, start, end):
         self.setBusy(False, self.TOP)
         self.setBusy(False, self.BOTTOM)
         for index in range(start, end + 1):

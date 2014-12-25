@@ -65,6 +65,26 @@ class WListModel():
     def __len__(self):
         return len(self._items)
 
+    def appendRow(self, item):
+        self.insertRow(self.rowCount(), item)
+
+    def appendRows(self, items):
+        for item in items:
+            self.insert(self.rowCount(), item)
+            self.rowInserted.emit(self.rowCount())
+
+    def insertRow(self, row, item):
+        self._items.insert(row, item)
+        self.rowInserted.emit(row)
+
+    def insertRows(self, row, items):
+        for item in items:
+            self.insert(row, (item))
+            self.rowInserted.emit(row)
+
+    def rowCount(self, parent=None):
+        return len(self._tweets)
+
 
 class TweetSimpleModel(WListModel):
 
@@ -307,14 +327,13 @@ class TweetTopicModel(TweetTimelineBaseModel):
         return self._topic
 
 
-class TweetFilterModel(QtCore.QAbstractListModel):
+class TweetFilterModel(WListModel):
 
     def __init__(self, parent=None):
-        super(TweetFilterModel, self).__init__(None)
+        super(TweetFilterModel, self).__init__()
         self._model = None
         self._appearInfo = {}
         self._userInfo = {}
-        self._tweets = []
         self._wordWarKeywords = []
         self._blockWordwars = False
         self._maxTweetsPerUser = -1
@@ -331,12 +350,9 @@ class TweetFilterModel(QtCore.QAbstractListModel):
 
     def setModel(self, model):
         self._model = model
-        self._model.timelineLoaded.connect(self.timelineLoaded.emit)
+        self._model.timelineLoaded.connect(self.timelineLoaded)
         self._model.nothingLoaded.connect(self.nothingLoaded)
         self._model.rowsInserted.connect(self._rowsInserted)
-
-    def get_item(self, index):
-        return self._tweets[index]
 
     def setKeywordsAsRegexs(self, state):
         self._keywordsAsRegexs = bool(state)
@@ -478,13 +494,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         if len(filteredTweets) == 0:
             return
 
-        self.beginInsertRows(QtCore.QModelIndex(), row, row + len(filteredTweets) - 1)
-        for index, tweet in enumerate(filteredTweets):
-            if start == 0:
-                self._tweets.insert(index, tweet)
-            else:
-                self._tweets.append(tweet)
-        self.endInsertRows()
+        self.insertRows(row, filteredTweets)
 
     def rowCount(self, parent=QtCore.QModelIndex()):
         return len(self._tweets)
@@ -493,7 +503,7 @@ class TweetFilterModel(QtCore.QAbstractListModel):
         return eval("self._model.%s" % attr)
 
 
-class UserItem(QtCore.QObject):
+class UserItem():
     def __init__(self, item, parent=None):
         UNUSED(parent)
         # HACK: Ignore parent, can't create a child with different thread.
@@ -513,19 +523,19 @@ class UserItem(QtCore.QObject):
         elif self._data.get('name'):
             self._data = self.client.api("users/show").get(screen_name=self._data.get('name'))
 
-    @QtCore.pyqtProperty(int, constant=True)
+    @property
     def id(self):
         return self._data.get('id')
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def name(self):
         return self._data.get('name')
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def avatar(self):
         return self._data.get('profile_image_url')
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def verify_type(self):
         typ = self._data.get("verified_type")
         if typ == 0:
@@ -535,23 +545,23 @@ class UserItem(QtCore.QObject):
         else:
             return None
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def verify_reason(self):
         return self._data.get("verified_reason")
 
 
-class TweetItem(QtCore.QObject):
+class TweetItem():
     TWEET = 0
     RETWEET = 1
     COMMENT = 2
 
     def __init__(self, data={}, parent=None):
-        super(TweetItem, self).__init__(parent)
+        super(TweetItem, self).__init__()
         self._data = data
         self.client = const.client
         self.__isFavorite = False
 
-    @QtCore.pyqtProperty(int, constant=True)
+    @property
     def type(self):
         if "retweeted_status" in self._data:
             return self.RETWEET
@@ -560,17 +570,17 @@ class TweetItem(QtCore.QObject):
         else:
             return self.TWEET
 
-    @QtCore.pyqtProperty(int, constant=True)
+    @property
     def id(self):
         return self._data.get('id')
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def mid(self):
         decimal_mid = str(self._data.get('mid'))
         encode_mid = get_mid(decimal_mid)
         return encode_mid
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def url(self):
         try:
             uid = self._data['user']['id']
@@ -581,7 +591,7 @@ class TweetItem(QtCore.QObject):
             return ""
         return 'http://weibo.com/%s/%s' % (uid, mid)
 
-    @QtCore.pyqtProperty(QtCore.QObject, constant=True)
+    @property
     def author(self):
         if "user" in self._data:
             self._user = UserItem(self._data.get('user'), self)
@@ -589,7 +599,7 @@ class TweetItem(QtCore.QObject):
         else:
             return None
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def time(self):
         if not self.timestamp:
             return
@@ -606,15 +616,15 @@ class TweetItem(QtCore.QObject):
         else:
             return self.tr("%.0fd ago") % (passedSeconds / 86400)
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def timestamp(self):
         return self._data.get('created_at')
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def text(self):
         return self._data.get('text')
 
-    @QtCore.pyqtProperty(QtCore.QObject, constant=True)
+    @property
     def original(self):
         try:
             return self._original
@@ -630,7 +640,7 @@ class TweetItem(QtCore.QObject):
         else:
             return None
 
-    @QtCore.pyqtProperty(list, constant=True)
+    @property
     def thumbnail_pic(self):
         # Checkout Issue #101.
         results = []
@@ -654,23 +664,23 @@ class TweetItem(QtCore.QObject):
 
         return None
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def original_pic(self):
         return self._data.get('original_pic')
 
-    @QtCore.pyqtProperty(str, constant=True)
+    @property
     def source(self):
         return self._data.get('source')
 
-    @QtCore.pyqtProperty(int, constant=True)
+    @property
     def retweets_count(self):
         return self._data.get('reposts_count', 0)
 
-    @QtCore.pyqtProperty(int, constant=True)
+    @property
     def comments_count(self):
         return self._data.get('comments_count', 0)
 
-    @QtCore.pyqtProperty(int, constant=True)
+    @property
     def passedSeconds(self):
         create = time_parser().parse(self.timestamp)
         create_utc = (create - create.utcoffset()).replace(tzinfo=None)
