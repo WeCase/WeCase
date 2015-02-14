@@ -49,3 +49,6 @@ autom4te.cache
 # Vim
 *.swp
 *~
+
+# Thumbnails
+Thumbs.db
