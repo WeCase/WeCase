@@ -5,6 +5,7 @@
 # License: GPL v3 or later.
 
 
+import tarfile
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
 
@@ -89,7 +90,10 @@ class WSmileyWidget(QtGui.QWidget):
         # about the size of the image. And we don't want to start
         # it now (for CPU and memory usage).
         # So, we must specific the width and height here.
-        self.smileyLabel.setImageFile(smiley.path, smiley.width, smiley.height)
+        faces_tar = tarfile.open(path.myself_path + "faces.tar.gz", "r")
+        smiley_file = faces_tar.extractfile(smiley.path)
+        faces_tar.close()
+        self.smileyLabel.setImageFile(smiley_file, smiley.width, smiley.height)
 
     def _smileyClicked(self):
         self.smileyClicked.emit(self._smiley.name)

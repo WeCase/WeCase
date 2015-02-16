@@ -5,6 +5,7 @@
 # License: GPL v3 or later.
 
 
+import tarfile
 import path
 from WeHack import Singleton
 from collections import OrderedDict
@@ -35,7 +36,7 @@ class FaceItem():
     @property
     def path(self):
         if not self._path:
-            self._path = "%s%s" % (path.face_path, self._xml_node[0].text)
+            self._path = "%s" % (self._xml_node[0].text)
         return self._path
 
     @property
@@ -49,7 +50,9 @@ class FaceModel(metaclass=Singleton):
 
     def __init__(self):
         self._faces = OrderedDict()
-        tree = ElementTree(file=path.face_path + "face.xml")
+        faces_tar = tarfile.open(path.myself_path + "faces.tar.gz", "r")
+        tree = ElementTree(file=faces_tar.extractfile("./face.xml"))
+        faces_tar.close()
 
         category = ""
         for face in tree.iterfind("./FACEINFO/"):
