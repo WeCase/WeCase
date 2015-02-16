@@ -15,21 +15,18 @@ class WImageLabel(QtGui.QLabel):
 
     def __init__(self, parent=None):
         super(WImageLabel, self).__init__(parent)
-        self._imagePath = None
+        self._imageFile = None
 
-    def setImageFile(self, path, width=-1, height=-1):
-        self._imagePath = path
+    def setImageFile(self, file, width=-1, height=-1):
+        self._imageFile = file
 
         size = QtCore.QSize(width, height)
         if size.isValid():
             self.sizeHint = lambda: size
 
     def start(self):
-        if self.movie():
-            self._imagePath = self.movie().fileName()
-        else:
-            movie = WMovie(self._imagePath)
-            self.setMovie(movie)
+        movie = WMovie(self._imageFile)
+        self.setMovie(movie)
         self.movie().start()
 
     def stop(self):
