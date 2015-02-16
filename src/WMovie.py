@@ -10,14 +10,15 @@ from PyQt4 import QtCore, QtGui
 
 class WMovie(QtGui.QMovie):
 
-    def __init__(self, filepath, parent=None):
+    def __init__(self, file, parent=None):
         super().__init__(parent)
-        self._fileName = ""
+        # HACK: allow to use a path
+        if isinstance(file, str):
+            file = open(file, "r")
 
         data = b""
-        with open(filepath, "rb") as file:
-            self._fileName = file.name
-            data = file.read()
+        data = file.read()
+        file.close()
         self._imageData = QtCore.QBuffer()
         self._imageData.setData(data)
         self.setDevice(self._imageData)
