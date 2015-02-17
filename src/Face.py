@@ -7,12 +7,10 @@
 
 import tarfile
 import path
+from WObjectCache import WObjectCache
 from WeHack import Singleton
 from collections import OrderedDict
-try:
-    from xml.etree.cElementTree import ElementTree
-except ImportError:
-    from xml.etree.ElementTree import ElementTree
+from xml.etree import ElementTree
 
 
 class FaceItem():
@@ -36,7 +34,7 @@ class FaceItem():
     @property
     def path(self):
         if not self._path:
-            self._path = "%s" % (self._xml_node[0].text)
+            self._path = "./%s" % (self._xml_node[0].text)
         return self._path
 
     @property
@@ -50,9 +48,9 @@ class FaceModel(metaclass=Singleton):
 
     def __init__(self):
         self._faces = OrderedDict()
-        faces_tar = tarfile.open(path.myself_path + "faces.tar.gz", "r")
-        tree = ElementTree(file=faces_tar.extractfile("./face.xml"))
-        faces_tar.close()
+        faces_tar = WObjectCache().open(tarfile.open, path.myself_path + "faces.tar", "r")
+        xml = faces_tar.extractfile("./face.xml").read()
+        tree = ElementTree.fromstring(xml)
 
         category = ""
         for face in tree.iterfind("./FACEINFO/"):

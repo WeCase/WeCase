@@ -6,6 +6,7 @@
 
 
 import re
+import tarfile
 from time import sleep
 from WeHack import async, start, UNUSED, openLink
 from rpweibo import APIError
@@ -18,7 +19,7 @@ from WImageLabel import WImageLabel
 from WSwitchLabel import WSwitchLabel
 from SimpleLabel import SimpleLabel
 import const
-from path import cache_path
+from path import cache_path, myself_path
 from WeRuntimeInfo import WeRuntimeInfo
 from WObjectCache import WObjectCache
 from AsyncFetcher import AsyncFetcher
@@ -611,7 +612,9 @@ class SingleTweetWidget(QtGui.QFrame):
         return self.HASHTAG_RE.sub(r"""<a href='hashtag:///\1'>\1</a>""", text)
 
     def _create_animation(self, path):
-        movie = WObjectCache().open(WMovie, path)
+        faces_tar = WObjectCache().open(tarfile.open, myself_path + "faces.tar", "r")
+        face = faces_tar.extractfile(path)
+        movie = WObjectCache().open(WMovie, face)
         try:
             movie.frameChanged.connect(self.drawAnimate, QtCore.Qt.UniqueConnection)
         except TypeError:

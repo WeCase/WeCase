@@ -8,6 +8,8 @@
 import tarfile
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
+from WObjectCache import WObjectCache
+import path
 
 
 class WFaceListWidget(QtGui.QWidget):
@@ -90,9 +92,8 @@ class WSmileyWidget(QtGui.QWidget):
         # about the size of the image. And we don't want to start
         # it now (for CPU and memory usage).
         # So, we must specific the width and height here.
-        faces_tar = tarfile.open(path.myself_path + "faces.tar.gz", "r")
+        faces_tar = WObjectCache().open(tarfile.open, path.myself_path + "faces.tar", "r")
         smiley_file = faces_tar.extractfile(smiley.path)
-        faces_tar.close()
         self.smileyLabel.setImageFile(smiley_file, smiley.width, smiley.height)
 
     def _smileyClicked(self):
