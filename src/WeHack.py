@@ -7,6 +7,9 @@
 
 
 from threading import Thread
+import tarfile
+from tarfile import _FileInFile
+from io import BufferedReader
 import sys
 import os
 import platform
@@ -37,6 +40,21 @@ def workaround_excepthook_bug():
     # Monkey patching Thread
     Thread.__init__ = init
 
+def let_tarfile_returns_named_files():
+
+    class NamedExFileObject(BufferedReader):
+
+        def __init__(self, tarfile, tarinfo):
+            self._name = tarinfo.name
+            fileobj = _FileInFile(tarfile.fileobj, tarinfo.offset_data,
+                    tarinfo.size, tarinfo.sparse)
+            super().__init__(fileobj)
+
+        @property
+        def name(self):
+            return self._name
+
+    tarfile.TarFile.fileobject = NamedExFileObject
 
 def async(func):
     def exec_thread(*args):

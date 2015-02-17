@@ -149,6 +149,7 @@ if __name__ == "__main__":
     # So, use signal/slot to avoid threads' issue.
     sys.excepthook = my_excepthook
     WeHack.workaround_excepthook_bug()
+    WeHack.let_tarfile_returns_named_files()
     errorWindow = ErrorWindow()
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
