@@ -13,7 +13,7 @@ desktopdir = $(datadir)/applications
 desktop_DATA = wecase.desktop
 
 install-data-local:
-	tar -cvzf ${DESTDIR}${pkgdatadir}/faces.tar.gz -C ${srcdir}/img/face .
+	tar -cvf ${DESTDIR}${pkgdatadir}/faces.tar -C ${srcdir}/img/face .
 
 uninstall-local:
 	rm -rf $(DESTDIR)$(pkgdatadir)/faces.tar.gz
