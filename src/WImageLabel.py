@@ -25,7 +25,12 @@ class WImageLabel(QtGui.QLabel):
             self.sizeHint = lambda: size
 
     def start(self):
-        movie = WMovie(self._imageFile)
+        if self.movie():
+            movie = self.movie()
+        else:
+            assert self._imageFile
+            movie = WMovie(self._imageFile)
+
         self.setMovie(movie)
         self.movie().start()
 
