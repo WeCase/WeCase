@@ -41,5 +41,5 @@ class APIErrorWindow(QtCore.QObject):
         try:
             error_message = self.ERRORS[int(exception.error_code)]
         except KeyError:
-            error_message = "%d: %s" % (int(exception.error_code), exception.error)
+            error_message = "%d: %s" % (int(exception.error_code), exception.error_message)
         QtGui.QMessageBox.warning(None, self.tr("Error"), error_message)
