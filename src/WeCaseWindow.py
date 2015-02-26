@@ -200,6 +200,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.logoutAction = QtGui.QAction(mainWindow)
         self.exitAction = QtGui.QAction(mainWindow)
         self.settingsAction = QtGui.QAction(mainWindow)
+        self.crashAction = QtGui.QAction(mainWindow)
 
         self.aboutAction.setIcon(QtGui.QIcon(QtGui.QPixmap("./IMG/img/where_s_my_weibo.svg")))
         self.exitAction.setIcon(QtGui.QIcon(QtGui.QPixmap(":/IMG/img/application-exit.svg")))
@@ -220,6 +221,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.mainMenu.addAction(self.logoutAction)
         self.mainMenu.addAction(self.exitAction)
         self.helpMenu.addAction(self.aboutAction)
+        self.helpMenu.addAction(self.crashAction)
         self.optionsMenu.addAction(self.settingsAction)
         self.menubar.addAction(self.mainMenu.menuAction())
         self.menubar.addAction(self.optionsMenu.menuAction())
@@ -230,6 +232,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.settingsAction.triggered.connect(mainWindow.showSettings)
         self.logoutAction.triggered.connect(mainWindow.logout)
         self.refreshAction.triggered.connect(mainWindow.refresh)
+        self.crashAction.triggered.connect(mainWindow.crash)
 
         self.pushButton_refresh = QtGui.QPushButton(self.widget)
         self.pushButton_new = QtGui.QPushButton(self.widget)
@@ -314,6 +317,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.logoutAction.setText(self.tr("&Log out"))
         self.exitAction.setText(self.tr("&Exit"))
         self.settingsAction.setText(self.tr("&Settings"))
+        self.crashAction.setText(self.tr("&Crash"))
 
     def _setupSysTray(self):
         self.systray = QtGui.QSystemTrayIcon()
@@ -564,6 +568,9 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.info["uid"] = None
         LoginInfo().remove_account(self.username)
         logging.info("Die")
+
+    def crash(self):
+        raise RuntimeError("User asked to crash")
 
 
 class NotifyBadgeDrawer():
