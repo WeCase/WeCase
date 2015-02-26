@@ -102,8 +102,11 @@ class SimpleTweetListWidget(QtGui.QWidget):
         window = APIErrorWindow()
         window.raiseException.emit(exception)
 
-    def _hideBusyIcon(self):
-        self.setBusy(False, self.BOTTOM)
+    def _hideBusyIcon(self, pos):
+        if pos == -1:
+            self.setBusy(False, self.BOTTOM)
+        elif pos == 0:
+            self.setBusy(False, self.TOP)
 
     def _rowsInserted(self, parent, start, end):
         UNUSED(parent)  # parent is useless
