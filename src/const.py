@@ -6,6 +6,6 @@
 
 
 APP_KEY = "1011524190"
-APP_SECRET = "1898b3f668368b9f4a6f7ac8ed4a918f"
+APP_SECRET = "83822a8addf08cbcdaca75c76bec558a"
 CALLBACK_URL = 'https://api.weibo.com/oauth2/default.html'
 MAX_IMAGE_BYTES = 5 * 1024 * 1024  # 5 MiB
