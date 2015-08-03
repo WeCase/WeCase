@@ -30,6 +30,7 @@ class APIErrorWindow(QtCore.QObject):
             20021: self.tr("Your tweet contains illegal text."),
             20022: self.tr("Your IP address is in the blacklist."),
             20032: self.tr("Send successful, but your tweet won't display immediately, please wait for a minute."),
+            20034: self.tr("This account is disabled by Sina."),
             20101: self.tr("The tweet does not exist."),
             20111: self.tr("Don't send reperted tweet."),
             21335: self.tr("The API was banned by Sina. I can't fetch any timeline except yours."),
