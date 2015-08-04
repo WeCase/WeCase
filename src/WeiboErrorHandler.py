@@ -18,6 +18,7 @@ class APIErrorWindow(QtCore.QObject):
 
         self.ERRORS = {
             20101: self.tr("This tweet have been deleted."),
+            20112: self.tr("Tried to call the API, but got a 'permission denied'. Nowadays, Sina prevents us to get other people's tweets."),
             20704: self.tr("This tweet have been collected already."),
             20705: self.tr("This tweet doesn't in your collection."),
             20003: self.tr("User doesn't exists."),
