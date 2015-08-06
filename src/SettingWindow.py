@@ -39,16 +39,19 @@ class WeSettingsWindow(QtGui.QDialog, Ui_SettingWindow):
         self.addRuleButton.clicked.connect(self.addRule)
         self.removeRuleButton.clicked.connect(self.removeRule)
 
+    @QtCore.pyqtSlot()
     def addRule(self):
         self.needRestart = True
         self.filterModel.insertRows(self.filterModel.rowCount(), 1)
 
+    @QtCore.pyqtSlot()
     def removeRule(self):
         self.needRestart = True
         row = self.filterTable.currentIndex().row()
         if row >= 0:
             self.filterModel.removeRows(row, 1)
 
+    @QtCore.pyqtSlot()
     def showSize(self):
         self.cacheSizeLabel.setText(self.getHumanReadableCacheSize())
 
