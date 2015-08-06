@@ -39,11 +39,13 @@ class WSwitchLabel(QtGui.QWidget):
 
         self.setLayout(self._layout)
 
+    @QtCore.pyqtSlot()
     def _last(self):
         currentIndex = self._imagesList.index(self._currentImage)
         if currentIndex >= 1:
             self.setPixmap(self._imagesList[currentIndex - 1])
 
+    @QtCore.pyqtSlot()
     def _next(self):
         currentIndex = self._imagesList.index(self._currentImage)
         if currentIndex < len(self._imagesList) - 1:
