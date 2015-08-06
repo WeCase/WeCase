@@ -53,6 +53,7 @@ class TweetListWidget(QtGui.QWidget):
     def setModel(self, model):
         self.tweetListWidget.setModel(model)
 
+    @QtCore.pyqtSlot(int)
     def loadMore(self, value):
         if value == self.scrollArea.verticalScrollBar().maximum():
             self.setBusy(True, SimpleTweetListWidget.BOTTOM)
@@ -98,16 +99,19 @@ class SimpleTweetListWidget(QtGui.QWidget):
         self.model.nothingLoaded.connect(self._hideBusyIcon)
         self.model.apiException.connect(self._apiException)
 
+    @QtCore.pyqtSlot(Exception)
     def _apiException(self, exception):
         window = APIErrorWindow()
         window.raiseException.emit(exception)
 
+    @QtCore.pyqtSlot(int)
     def _hideBusyIcon(self, pos):
         if pos == -1:
             self.setBusy(False, self.BOTTOM)
         elif pos == 0:
             self.setBusy(False, self.TOP)
 
+    @QtCore.pyqtSlot(object, int, int)
     def _rowsInserted(self, parent, start, end):
         UNUSED(parent)  # parent is useless
 
@@ -190,10 +194,7 @@ class SingleTweetWidget(QtGui.QFrame):
         self.client = const.client
         self.without = without
         self.setObjectName("SingleTweetWidget")
-        try:
-            self.setupUi()
-        except RuntimeError:
-            return
+        self.setupUi()
         self.fetcher = AsyncFetcher("".join((cache_path, str(WeRuntimeInfo()["uid"]))))
         self.download_lock = False
         self.__favorite_queue = []
@@ -326,28 +327,23 @@ class SingleTweetWidget(QtGui.QFrame):
         else:
             self.timer.start(60 * 60 * 24 * 1000)
 
+    @QtCore.pyqtSlot()
     def _update_time(self):
-        try:
-            if not self.time.visibleRegion() and self.timer.isActive():
-                # Skip update only when timer is active, insure
-                # at least run once time.
-                return
+        if not self.time.visibleRegion() and self.timer.isActive():
+            # Skip update only when timer is active, insure
+            # at least run once time.
+            return
 
-            if not self.time.toolTip():
-                self.time.setToolTip(self.tweet.timestamp)
+        if not self.time.toolTip():
+            self.time.setToolTip(self.tweet.timestamp)
 
-            if self.tweet.type != TweetItem.COMMENT:
-                self.time.setText("<a href='%s'>%s</a>" %
-                                  (self.tweet.url, self.tweet.time))
-            else:
-                self.time.setText("<a href='%s'>%s</a>" %
-                                  (self.tweet.original.url, self.tweet.time))
-            self._setup_timer()
-        except:
-            # Sometimes, user closed the window and the window
-            # has been garbage collected already, but
-            # the timer is still running. It will cause a runtime error
-            pass
+        if self.tweet.type != TweetItem.COMMENT:
+            self.time.setText("<a href='%s'>%s</a>" %
+                              (self.tweet.url, self.tweet.time))
+        else:
+            self.time.setText("<a href='%s'>%s</a>" %
+                              (self.tweet.original.url, self.tweet.time))
+        self._setup_timer()
 
     def _createOriginalLabel(self):
         widget = QtGui.QWidget(self)
@@ -498,9 +494,11 @@ class SingleTweetWidget(QtGui.QFrame):
                                              "large")  # A simple trick ... ^_^
         self.fetcher.addTask(original_pic, open_pic)
 
+    @QtCore.pyqtSlot()
     def _showFullImage(self):
         self.fetch_open_original_pic(self.imageLabel.url())
 
+    @QtCore.pyqtSlot()
     def _favorite(self):
         needWorker = False
 
@@ -540,12 +538,14 @@ class SingleTweetWidget(QtGui.QFrame):
                 self.errorWindow.raiseException.emit(self._e)
                 return
 
+    @QtCore.pyqtSlot(object)
     def _retweet(self, tweet=None):
         if not tweet:
             tweet = self.tweet
 
         self.exec_newpost_window("retweet", tweet)
 
+    @QtCore.pyqtSlot(object)
     def _comment(self, tweet=None):
         if not tweet:
             tweet = self.tweet
@@ -555,11 +555,13 @@ class SingleTweetWidget(QtGui.QFrame):
 
         self.exec_newpost_window("comment", tweet)
 
+    @QtCore.pyqtSlot(object)
     def _reply(self, tweet=None):
         if not tweet:
             tweet = self.tweet
         self.exec_newpost_window("reply", tweet)
 
+    @QtCore.pyqtSlot(object)
     def _delete(self):
 
         @async
@@ -586,9 +588,11 @@ class SingleTweetWidget(QtGui.QFrame):
         self.timer.stop()
         self.hide()
 
+    @QtCore.pyqtSlot()
     def _original_retweet(self):
         self._retweet(self.tweet.original)
 
+    @Qtcore.pyqtSlot()
     def _original_comment(self):
         self._comment(self.tweet.original)
 
@@ -619,6 +623,7 @@ class SingleTweetWidget(QtGui.QFrame):
             pass
         movie.start()
 
+    @QtCore.pyqtSlot()
     def drawAnimate(self):
         sender = self.sender()
 
@@ -649,12 +654,14 @@ class SingleTweetWidget(QtGui.QFrame):
         except APIError as e:
             self.errorWindow.raiseException.emit(e)
 
+    @QtCore.pyqtSlot(int)
     def _userClicked(self, button):
         openAtBackend = False
         if button == QtCore.Qt.MiddleButton:
             openAtBackend = True
         self.userClicked.emit(self.tweet.author, openAtBackend)
 
+    @QtCore.pyqtSlot(str, int)
     @async
     def _userTextClicked(self, user, button):
         openAtBackend = False
@@ -668,6 +675,7 @@ class SingleTweetWidget(QtGui.QFrame):
             return
         self.userClicked.emit(self.__userItem, openAtBackend)
 
+    @QtCore.pyqtSlot(str, int)
     def _tagClicked(self, tag, button):
         openAtBackend = False
         if button == QtCore.Qt.MiddleButton:
