@@ -592,7 +592,7 @@ class SingleTweetWidget(QtGui.QFrame):
     def _original_retweet(self):
         self._retweet(self.tweet.original)
 
-    @Qtcore.pyqtSlot()
+    @QtCore.pyqtSlot()
     def _original_comment(self):
         self._comment(self.tweet.original)
 
