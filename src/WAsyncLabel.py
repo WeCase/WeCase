@@ -118,6 +118,7 @@ class WAsyncLabel(WImageLabel):
         elif e.button() == QtCore.Qt.MiddleButton and self._image:
             self.clicked.emit(QtCore.Qt.MiddleButton)
 
+    @QtCore.pyqtSlot(int)
     def contextMenu(self, pos):
         if not self._image:
             return
@@ -128,6 +129,7 @@ class WAsyncLabel(WImageLabel):
         menu.addAction(saveAction)
         menu.exec(self.mapToGlobal(pos))
 
+    @QtCore.pyqtSlot()
     def save(self):
         file = QtGui.QFileDialog.getOpenFileName(self,
                                                  self.tr("Choose a path"))
