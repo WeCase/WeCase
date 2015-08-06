@@ -137,8 +137,8 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         authenticator = rpweibo.UserPassAutheticator(username, password)
         try:
             weibo.auth(authenticator)
-            self.loginReturn.emit(self.SUCCESS)
             const.client = weibo
+            self.loginReturn.emit(self.SUCCESS)
         except rpweibo.AuthorizeFailed:
             sleep(0.5)
             self.loginReturn.emit(self.PASSWORD_ERROR)
