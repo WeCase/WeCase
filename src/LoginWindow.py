@@ -76,6 +76,7 @@ class LoginWindow(QtGui.QDialog, Ui_frm_Login):
         self.pushButton_log.setText(self.tr("GO!"))
         self.pushButton_log.setEnabled(True)
 
+    @QtCore.pyqtSlot(int)
     def checkLogin(self, status):
         if status == self.SUCCESS:
             self.loginAccept()
