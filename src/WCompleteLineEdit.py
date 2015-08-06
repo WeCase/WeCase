@@ -117,6 +117,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
     def needComplete(self):
         raise NotImplementedError
 
+    @QtCore.pyqtSlot()
     def setCompleter(self):
         text = self.selectedText()
         text = text.split(self.separator)[-1]
@@ -132,6 +133,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
         self.getCompleteList()
         self.showCompleter(["Loading..."])
 
+    @QtCore.pyqtSlot(list)
     def showCompleter(self, lst):
         self.listView.hide()
         self.model.setStringList(lst)
@@ -150,6 +152,7 @@ class WAbstractCompleteLineEdit(QtGui.QTextEdit):
         self.listView.move(x, y)
         self.listView.show()
 
+    @QtCore.pyqtSlot(int)
     def mouseCompleteText(self, index):
         text = self.getNewText(self.selectedText(), index.data())
         self.cursor.insertText(text)
@@ -181,6 +184,7 @@ class WCompleteLineEdit(WAbstractCompleteLineEdit):
         assert pos != -1, "Cannot find self.mentionFlag."
         return original_text[:pos] + new_text + self.separator
 
+    @QtCore.pyqtSlot()
     def needComplete(self):
         for char in reversed(self.selectedText()):
             if char == self.separator or char in self.endComplete:
