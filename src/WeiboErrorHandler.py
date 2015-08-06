@@ -17,6 +17,7 @@ class APIErrorWindow(QtCore.QObject):
         self.raiseException.connect(self.showAPIException)
 
         self.ERRORS = {
+            10023: self.tr("The client was exceeded the rate limits of Sina. Try again after one hour."),
             20101: self.tr("This tweet have been deleted."),
             20112: self.tr("Tried to call the API, but got a 'permission denied'. Nowadays, Sina prevents us to get other people's tweets."),
             20704: self.tr("This tweet have been collected already."),
