@@ -44,6 +44,7 @@ class WTweetLabel(QtGui.QTextBrowser):
     def adjustMinimumSize(self, size):
         self.setMinimumHeight(size.height() + 2 * self.frameWidth())
 
+    @QtCore.pyqtSlot(object)
     def openLink(self, url):
         url = url.toString()
 
