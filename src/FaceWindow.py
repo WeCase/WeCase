@@ -5,7 +5,7 @@
 # License: GPL v3 or later.
 
 
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui
 from Face import FaceModel
 from FaceWidget import WFaceListWidget
 
@@ -29,6 +29,7 @@ class FaceWindow(QtGui.QDialog):
         self.faceView.setModel(self.faceModel)
         self.faceView.smileyClicked.connect(self.returnSmileyName)
 
+    @QtCore.pyqtSlot()
     def returnSmileyName(self, faceName):
         self.faceName = "[%s]" % faceName
         self.done(True)
