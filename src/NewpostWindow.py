@@ -140,7 +140,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             ret_users.append("@" + user['nickname'])
         return ret_users
 
-    @QtCore.pyqtslot()
+    @QtCore.pyqtSlot()
     def sent(self):
         self._sent = True
         self.close()
