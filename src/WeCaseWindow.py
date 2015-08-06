@@ -135,12 +135,14 @@ class WeCaseWindow(QtGui.QMainWindow):
             QtGui.QPixmap, ":/IMG/img/topic.jpg"
         ))
 
+    @QtCore.pyqtSlot(object, bool)
     def userClicked(self, userItem, openAtBackend):
         try:
             self._setupUserTab(userItem.id, switch=(not openAtBackend))
         except APIError as e:
             self.errorWindow.raiseException.emit(e)
 
+    @QtCore.pyqtSlot(str, bool)
     def tagClicked(self, str, openAtBackend):
         try:
             self._setupTopicTab(str, switch=(not openAtBackend))
@@ -341,12 +343,14 @@ class WeCaseWindow(QtGui.QMainWindow):
 
         self.systray.setContextMenu(self.sysMenu)
 
+    @QtCore.pyqtSlot(int)
     def clickedSystray(self, reason):
         if reason == QtGui.QSystemTrayIcon.Trigger:
             self._switchVisibility()
         elif reason == QtGui.QSystemTrayIcon.Context:
             pass
 
+    @QtCore.pyqtSlot()
     def _switchVisibility(self):
         if self.isVisible():
             self.hide()
@@ -373,6 +377,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             pass
         timeline.load()
 
+    @QtCore.pyqtSlot(int)
     def closeTab(self, index):
         widget = self.tabWidget.widget(index)
         self.tabWidget.removeTab(index)
@@ -512,6 +517,7 @@ class WeCaseWindow(QtGui.QMainWindow):
             self.notify.showMessage(self.tr("WeCase"), msg)
             self._last_reminds_count = reminds_count
 
+    @QtCore.pyqtSlot(int, int)
     def drawNotifyBadge(self, index, count):
         tabIcon = self.tabWidget.tabIcon(index)
         _tabPixmap = self._iconPixmap[tabIcon.cacheKey()]
@@ -522,19 +528,23 @@ class WeCaseWindow(QtGui.QMainWindow):
         self._iconPixmap[icon.cacheKey()] = _tabPixmap
         self.tabWidget.setTabIcon(index, icon)
 
+    @QtCore.pyqtSlot()
     def moveToTop(self):
         self.currentTweetView().moveToTop()
 
+    @QtCore.pyqtSlot()
     def showSettings(self):
         wecase_settings = WeSettingsWindow()
         if wecase_settings.exec_():
             self.loadConfig()
             self.applyConfig()
 
+    @QtCore.pyqtSlot()
     def showAbout(self):
         wecase_about = AboutWindow()
         wecase_about.exec_()
 
+    @QtCore.pyqtSlot()
     def logout(self):
         self.close()
         # This is a model dialog, if we exec it before we close MainWindow
@@ -543,12 +553,14 @@ class WeCaseWindow(QtGui.QMainWindow):
         wecase_login = LoginWindow(allow_auto_login=False)
         wecase_login.exec_()
 
+    @QtCore.pyqtSlot()
     def postTweet(self):
         self.wecase_new = NewpostWindow()
         self.wecase_new.userClicked.connect(self.userClicked)
         self.wecase_new.tagClicked.connect(self.tagClicked)
         self.wecase_new.show()
 
+    @QtCore.pyqtSlot()
     def refresh(self):
         tweetView = self.currentTweetView()
         tweetView.model().timelineLoaded.connect(self.moveToTop)
@@ -573,6 +585,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         LoginInfo().remove_account(self.username)
         logging.info("Die")
 
+    @QtCore.pyqtSlot()
     def crash(self):
         raise RuntimeError("User asked to crash")
 
@@ -643,6 +656,7 @@ class WTabBar(QtGui.QTabBar):
             self.closeTab(e.pos())
         super(WTabBar, self).mouseReleaseEvent(e)
 
+    @QtCore.pyqtSlot(int)
     def contextMenu(self, pos):
         if self.isProtected(pos):
             return
