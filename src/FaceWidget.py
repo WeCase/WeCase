@@ -55,6 +55,7 @@ class WFaceListWidget(QtGui.QWidget):
         self.tabWidget.tabBar().setCurrentIndex(0)
         self.turnAnimation(0)
 
+    @QtCore.pyqtSlot()
     def turnAnimation(self, index):
         self._turnAnimation(self._lastTab, start=False)
         self._turnAnimation(index)
@@ -91,5 +92,6 @@ class WSmileyWidget(QtGui.QWidget):
         # So, we must specific the width and height here.
         self.smileyLabel.setImageFile(smiley.path, smiley.width, smiley.height)
 
+    @QtCore.pyqtSlot()
     def _smileyClicked(self):
         self.smileyClicked.emit(self._smiley.name)
