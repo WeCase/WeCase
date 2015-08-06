@@ -97,6 +97,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             return
         self.tweetRefreshed.emit()
 
+    @QtCore.pyqtSlot()
     def _create_tweetWidget(self):
         if self.action == "comment" and self.tweet.comments_count:
             self.tweetWidget = SingleTweetWidget(self.tweet, ["image", "original"], self)
@@ -139,6 +140,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             ret_users.append("@" + user['nickname'])
         return ret_users
 
+    @QtCore.pyqtslot()
     def sent(self):
         self._sent = True
         self.close()
@@ -246,6 +248,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
                 self.pushButton_picture.setText(self.tr("Remove the picture"))
         self.textEdit.setFocus()
 
+    @QtCore.pyqtSlot(Exception)
     def showException(self, e):
         if "Text too long" in str(e):
             QtGui.QMessageBox.warning(None, self.tr("Text too long!"),
@@ -254,6 +257,7 @@ class NewpostWindow(QtGui.QDialog, Ui_NewPostWindow):
             self.errorWindow.raiseException.emit(e)
         self.pushButton_send.setEnabled(True)
 
+    @QtCore.pyqtSlot()
     def showErrorMessage(self, title, text):
         QtGui.QMessageBox.warning(self, title, text)
 
