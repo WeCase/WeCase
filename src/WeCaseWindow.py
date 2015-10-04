@@ -7,7 +7,7 @@
 
 import os
 import platform
-from WTimer import WTimer
+from threading import Timer
 from PyQt4 import QtCore, QtGui
 from Tweet import TweetCommonModel, TweetCommentModel, TweetUserModel, TweetTopicModel, TweetFilterModel
 from Notify import Notify
@@ -404,11 +404,11 @@ class WeCaseWindow(QtGui.QMainWindow):
 
     def applyConfig(self):
         try:
-            self.timer.stop()
+            self.timer.cancel()
         except AttributeError:
             pass
 
-        self.timer = WTimer(self.show_notify, self.notify_interval)
+        self.timer = Timer(self.notify_interval, self.show_notify)
         self.timer.start()
         self.notify.timeout = self.notify_timeout
         setGeometry(self, self.mainWindow_geometry)
@@ -475,7 +475,7 @@ class WeCaseWindow(QtGui.QMainWindow):
         return self.info["uid"]
 
     def show_notify(self):
-        # This function is run in another thread by WTimer.
+        # This function is run in another thread by Timer.
         # Do not modify UI directly. Send signal and react it in a slot only.
         # We use SIGNAL self.tabTextChanged and SLOT self.setTabText()
         # to display unread count
@@ -579,7 +579,8 @@ class WeCaseWindow(QtGui.QMainWindow):
         self.systray.hide()
         self.hide()
         self.saveConfig()
-        self.timer.stop(True)
+        self.timer.cancel()
+        self.timer.join()
         # Reset uid when the thread exited.
         self.info["uid"] = None
         LoginInfo().remove_account(self.username)
