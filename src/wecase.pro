@@ -12,7 +12,6 @@ SOURCES = wecase.py.in\
           WIconLabel.py\
           WImageLabel.py\
           WTimeParser.py\
-          WTimer.py\
           WeHack.py\
           WeCaseWindow.py\
           LoginWindow.py \

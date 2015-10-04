@@ -89,7 +89,6 @@ WeCase_DATA = path.py \
 				WSwitchLabel.py \
 				WTimeParser.py \
 				WTimeParser_test.py \
-				WTimer.py \
 				WMovie.py \
 				WTweetLabel.py \
 				WConfigParser.py \
