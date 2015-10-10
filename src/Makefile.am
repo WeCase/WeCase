@@ -1,7 +1,7 @@
 bin_SCRIPTS = wecase
 libexec_SCRIPTS = wecase.py
 CLEANFILES = wecase \
-			 path.py \
+			 wecasepath.py \
 			 version.py \
 			 wecase.py \
 			 AboutWindow_ui.py \
@@ -24,8 +24,8 @@ do_substitution = sed -e 's,[@]DATADIR[@],$(datadir),g' \
 			      -e 's,[@]PYTHONDIR[@],$(pythondir)/$(NAME),g' \
 				  -e 's,[@]LIBEXECDIR[@],$(libexecdir),g'
 
-path.py: path.py.in Makefile
-	$(do_substitution) < $(srcdir)/path.py.in > path.py
+wecasepath.py: wecasepath.py.in Makefile
+	$(do_substitution) < $(srcdir)/wecasepath.py.in > wecasepath.py
 
 version.py: version.py.in Makefile
 	sed -e 's,[@]PKGVERSION[@],$(PACKAGE_VERSION)-$(GIT_COMMIT_SHA1),g' \
@@ -60,7 +60,7 @@ AUTHORS:
 	cp $(srcdir)/../AUTHORS ./
 
 WeCasedir = $(datarootdir)/wecase
-WeCase_DATA = path.py \
+WeCase_DATA = wecasepath.py \
 				AboutWindow.py \
 				const.py \
 				Face.py \

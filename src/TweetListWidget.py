@@ -18,7 +18,7 @@ from WImageLabel import WImageLabel
 from WSwitchLabel import WSwitchLabel
 from SimpleLabel import SimpleLabel
 import const
-from path import cache_path
+from wecasepath import cache_path
 from WeRuntimeInfo import WeRuntimeInfo
 from WObjectCache import WObjectCache
 from AsyncFetcher import AsyncFetcher

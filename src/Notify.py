@@ -6,7 +6,7 @@
 
 
 from PyQt4 import QtCore
-import path
+import wecasepath as path
 
 try:
     import notify2 as pynotify

@@ -15,7 +15,7 @@ from NewpostWindow import NewpostWindow
 from SettingWindow import WeSettingsWindow
 from AboutWindow import AboutWindow
 import const
-import path
+import wecasepath as path
 from WConfigParser import WConfigParser
 from WeHack import async, setGeometry, getGeometry, UNUSED
 from WObjectCache import WObjectCache

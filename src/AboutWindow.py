@@ -7,7 +7,7 @@
 
 from PyQt4 import QtGui
 import version
-import path
+import wecasepath as path
 from AboutWindow_ui import Ui_About_Dialog
 
 

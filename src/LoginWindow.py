@@ -12,7 +12,7 @@ import const
 from PyQt4 import QtCore, QtGui
 from LoginWindow_ui import Ui_frm_Login
 from WeCaseWindow import WeCaseWindow
-import path
+import wecasepath as path
 from time import sleep
 from WConfigParser import WConfigParser
 from LoginInfo import LoginInfo

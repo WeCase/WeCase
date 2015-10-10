@@ -5,7 +5,7 @@
 # License: GPL v3 or later.
 
 
-import path
+import wecasepath as path
 from WeHack import Singleton
 from collections import OrderedDict
 try:

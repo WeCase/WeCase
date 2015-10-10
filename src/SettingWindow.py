@@ -8,7 +8,7 @@
 from PyQt4 import QtCore, QtGui
 from SettingWindow_ui import Ui_SettingWindow
 from FilterTable import FilterTableModel
-import path
+import wecasepath as path
 from WConfigParser import WConfigParser
 from WeHack import async, start, getDirSize, clearDir
 

@@ -7,7 +7,7 @@
 
 from PyQt4 import QtCore, QtGui
 from WImageLabel import WImageLabel
-from path import cache_path as down_path
+from wecasepath import cache_path as down_path
 from WObjectCache import WObjectCache
 from AsyncFetcher import AsyncFetcher
 from WeRuntimeInfo import WeRuntimeInfo
