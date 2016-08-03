@@ -77,7 +77,7 @@ Contact & Discuss
 
 ### IRC Channel
 
-[#wecase](https://kiwiirc.com/client/irc.freenode.net/wecase) @ Freenode
+[#wecase](https://kiwiirc.com/client/irc.freenode.net:+7000/wecase) @ Freenode
 
 ### Mailing List
 
